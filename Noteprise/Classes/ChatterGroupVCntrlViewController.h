@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "SFRestAPI.h"
-@interface ChatterGroupVCntrlViewController : UIViewController <SFRestDelegate,UITableViewDataSource,UITableViewDelegate>
+#import "IconDownloader.h"
+@interface ChatterGroupVCntrlViewController : UIViewController <SFRestDelegate,UITableViewDataSource,UITableViewDelegate,IconDownloaderDelegate>
 {
     NSMutableArray *selectedGroupsRow;
     IBOutlet UIActivityIndicatorView *loadingSpinner;
@@ -21,7 +22,8 @@
 }
 @property(nonatomic,retain) NSString *noteTitle;
 @property(nonatomic,retain) NSString *noteContent;
-@property (nonatomic, retain) NSArray *chatterGroupArray;
+@property (nonatomic, retain) NSMutableArray *chatterGroupArray;
 @property (nonatomic, retain) UIImage *selectedImage;
 @property (nonatomic, retain) UIImage *unselectedImage;
+@property (nonatomic, retain) NSMutableDictionary *imageDownloadsInProgress;
 @end

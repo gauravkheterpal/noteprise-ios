@@ -99,9 +99,6 @@
             DebugLog(@"EDAMNotFoundException:%@",exception.reason);
         }
     });
-    
-
-    
 }
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];

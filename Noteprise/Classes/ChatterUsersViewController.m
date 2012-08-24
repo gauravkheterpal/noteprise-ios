@@ -126,7 +126,7 @@
 }
 -(void)fetchListOfFollowingRecords {
     
-    NSString * path = @"v23.0/chatter/users/me/following";
+    NSString * path = @"v23.0/chatter/users/me/following?pageSize=1000";
     SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodGET path:path queryParams:nil];
     [[SFRestAPI sharedInstance] send:request delegate:self];
 }
@@ -209,7 +209,7 @@
     // Return the number of rows in the section.
     return [chatterUsersArray count];
 }
-- (UITableViewCell *) configFolderRowFormat:(NSString *)cellIdentifier {
+- (UITableViewCell *) configRowFormat:(NSString *)cellIdentifier {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [chatterUsersTbl dequeueReusableCellWithIdentifier:CellIdentifier];
     
@@ -253,21 +253,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    /*static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    // Configure the cell...
-    //if you want to add an image to your cell, here's how
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-        
-    }*/
-   UITableViewCell *cell =  [self configFolderRowFormat:@"Cell"];
+   UITableViewCell *cell =  [self configRowFormat:@"Cell"];
     UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:kCellImageViewTag];
 	NSNumber *selectedUser = [selectedUsersRow objectAtIndex:indexPath.row];
 
 	UIImage *image = [UIImage imageNamed:@"Settings.png"];
     UILabel *nameLabel = (UILabel*)[cell.contentView viewWithTag:kCellLabelTag];
+    // Configure the cell to show the data.
     cell.imageView.image = imageView.image = ([selectedUser boolValue]) ? self.selectedImage : self.unselectedImage;
 	cell.contentView.alpha = 1.0;
     if(self.inEditMode) {
@@ -280,7 +273,7 @@
     }
     else 
         cell.imageView.image = image;
-    // Configure the cell to show the data.
+
     ChatterRecord *chatterUser = [chatterUsersArray objectAtIndex:indexPath.row];
 
     DebugLog(@"chatterUserobj:%@",chatterUser);
@@ -504,7 +497,6 @@
                 doneImgView.hidden = NO;
                 [self showLoadingLblWithText:@"Done!"];
                 [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
-                //[Utility showAlert:@"Note successfully saved to Salesforce!"];
 
             [loadingSpinner stopAnimating];
         }
@@ -512,7 +504,6 @@
             [loadingSpinner stopAnimating];
             [self showLoadingLblWithText:@"Posting to Chatter Users failed"];
             [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(hideToastMsg:) userInfo:nil repeats:NO];
-            //[Utility showAlert:@"Problem in mapping Evernote with Salesforce Object."];
         }
         [Utility hideCoverScreen];
     }
@@ -544,5 +535,9 @@
     [Utility hideCoverScreen];
     [self hideDoneToastMsg:nil];
 }
-
+- (void)dealloc {
+	[imageDownloadsInProgress release];
+    [self.chatterUsersArray release];
+    [super dealloc];
+}
 @end

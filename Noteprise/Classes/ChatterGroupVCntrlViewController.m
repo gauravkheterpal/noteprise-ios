@@ -8,12 +8,13 @@
 
 #import "ChatterGroupVCntrlViewController.h"
 #import "Utility.h"
+#import "ChatterRecord.h"
 @interface ChatterGroupVCntrlViewController ()
 
 @end
 
 @implementation ChatterGroupVCntrlViewController
-@synthesize noteContent,noteTitle,chatterGroupArray,selectedImage,unselectedImage;
+@synthesize noteContent,noteTitle,chatterGroupArray,selectedImage,unselectedImage,imageDownloadsInProgress;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -24,6 +25,42 @@
     return self;
 }
 
+-(void)initializeSelectedRow {
+    NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:[chatterGroupArray count]];
+    for (int i=0; i < [chatterGroupArray count]; i++)
+        [array addObject:[NSNumber numberWithBool:NO]];
+    selectedGroupsRow = array;
+    NSLog(@"Array = %@",selectedGroupsRow);
+}
+
+-(void)initToolbarButtons {
+    UIToolbar* toolbar = [[UIToolbar alloc]
+                          initWithFrame:CGRectMake(0, 0, 70, 45)];
+    [toolbar setBarStyle: UIBarStyleBlackTranslucent];
+    
+    // create an array for the buttons
+    NSMutableArray* buttons = [[NSMutableArray alloc] initWithCapacity:4];
+    
+    UIBarButtonItem *addButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(postToSelectedChatterGroups)];
+    [buttons addObject:addButton];
+    [addButton release];
+    // create a spacer between the buttons
+    UIBarButtonItem *spacer1 = [[UIBarButtonItem alloc]
+                                initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                target:nil
+                                action:nil];
+    [buttons addObject:spacer1];
+    [spacer1 release];
+    // put the buttons in the toolbar and release them
+    [toolbar setItems:buttons animated:NO];
+    [buttons release];
+    
+    // place the toolbar into the navigation bar
+    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
+                                               initWithCustomView:toolbar] autorelease];
+    [toolbar release];
+    
+}
 
 -(void)viewDidAppear:(BOOL)animated{
     selectedUserIndex=-999;
@@ -38,14 +75,15 @@
     self.title = @"Chatter Groups";
     self.selectedImage = [UIImage imageNamed:@"btnChecked.png"];
 	self.unselectedImage = [UIImage imageNamed:@"btnUnchecked.png"];
+
     [loadingSpinner startAnimating];
     [Utility showCoverScreen];
     backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
     [self changeBkgrndImgWithOrientation];
-    self.chatterGroupArray = [[NSArray alloc]init];
+    self.chatterGroupArray = [[NSMutableArray alloc]init];
+    self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
     UIBarButtonItem *postToChatterGroupButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(postToSelectedChatterGroups)];
-    //[postToChatterGroupButton release];
     self.navigationItem.rightBarButtonItem = postToChatterGroupButton;
     [self fetchListOfChatterGroup];
 
@@ -67,14 +105,36 @@
 }
 -(void)fetchListOfChatterGroup {
     
-    NSString * path = @"v23.0/chatter/groups";
+    NSString * path = @"v23.0/chatter/users/me/groups?pageSize=250";
     SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodGET path:path queryParams:nil];
     [[SFRestAPI sharedInstance] send:request delegate:self];
 }
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)postToSelectedChatterGroups {
+    if([Utility checkNetwork]) {
+        NSMutableArray *paramArr = [[NSMutableArray alloc]init];
+        NSDictionary *textParam = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",self.noteContent, @"text",nil];
+        ChatterRecord *selectedRecord = (ChatterRecord*)[self.chatterGroupArray objectAtIndex:selectedUserIndex];
+        NSString * path = [NSString stringWithFormat:@"v23.0/chatter/feeds/record/%@/feed-items",selectedRecord.chatterId];
+        NSLog(@"test url for group feed: %@",path);
+        
+        if(selectedUserIndex == -999) {
+            [Utility hideCoverScreen];
+            [Utility showAlert:@"Please select a group to make Chatter Post"];
+        } else {
+            [self showLoadingLblWithText:@"Posting Note to Chatter Group..."];
+            [paramArr addObject:textParam];
+            NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:paramArr,@"messageSegments", nil];
+            NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:message,@"body", nil];
+            
+            NSLog(@"Body = %@",body);
+            SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];
+            [[SFRestAPI sharedInstance] send:request delegate:self];
+        }
+    }
+    
+    else {
+        [Utility showAlert:@"Network Unavailable!Network connection is needed for this action."];
+    }
 }
 
 
@@ -98,7 +158,6 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     // Configure the cell...
-    //if you want to add an image to your cell, here's how
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
         
@@ -106,11 +165,25 @@
 	UIImage *image = [UIImage imageNamed:@"Settings.png"];
     cell.imageView.image = image;
     
-	// Configure the cell to show the data.
-	NSDictionary *chatterGroupObj = [chatterGroupArray objectAtIndex:indexPath.row];
-    DebugLog(@"chatterUserobj:%@",chatterGroupObj);
-    DebugLog(@"chatterUserobj name:%@",[chatterGroupObj valueForKey:@"name"]);
-    cell.textLabel.text = [chatterGroupObj valueForKey:@"name"];
+	ChatterRecord *chatterGroup = [chatterGroupArray objectAtIndex:indexPath.row];
+    
+    DebugLog(@"chatterUserobj:%@",chatterGroup);
+    DebugLog(@"chatterUserobj name:%@",chatterGroup.chatterName);
+    cell.textLabel.text = chatterGroup.chatterName;
+    // Only load cached images; defer new downloads until scrolling ends
+    if (!chatterGroup.chatterIcon)
+    {
+        if (chatterGroupTbl.dragging == NO && chatterGroupTbl.decelerating == NO)
+        {
+            [self startIconDownload:chatterGroup forIndexPath:indexPath];
+        }
+        // if a download is deferred or in progress, return a placeholder image
+        cell.imageView.image = [UIImage imageNamed:@"profile_tab_icon.png"];                
+    }
+    else
+    {
+        cell.imageView.image = chatterGroup.chatterIcon;
+    }
     return cell;
 }
 
@@ -159,7 +232,9 @@
 {
 
         selectedUserIndex=indexPath.row;
-        DebugLog(@"sel obj:%@",[self.chatterGroupArray objectAtIndex:indexPath.row]);
+    ChatterRecord *chatterGroup = [chatterGroupArray objectAtIndex:indexPath.row];
+    
+    DebugLog(@"chatter Group obj:%@",chatterGroup);
 }
 -(void)showLoadingLblWithText:(NSString*)Loadingtext{
     [loadingSpinner startAnimating];
@@ -174,19 +249,105 @@
     [loadingSpinner stopAnimating];
     //[delegate evernoteCreatedSuccessfullyListener];
 }
+#pragma mark -
+#pragma mark Table cell image support
+
+- (void)startIconDownload:(ChatterRecord *)chatterUserRecord forIndexPath:(NSIndexPath *)indexPath
+{
+    IconDownloader *iconDownloader = [imageDownloadsInProgress objectForKey:indexPath];
+    if (iconDownloader == nil) 
+    {
+        iconDownloader = [[IconDownloader alloc] init];
+        iconDownloader.chatterRecord = chatterUserRecord;
+        iconDownloader.indexPathInTableView = indexPath;
+        iconDownloader.delegate = self;
+        [imageDownloadsInProgress setObject:iconDownloader forKey:indexPath];
+        [iconDownloader startDownload];
+        [iconDownloader release];   
+    }
+}
+
+// this method is used in case the user scrolled into a set of cells that don't have their app icons yet
+- (void)loadImagesForOnscreenRows
+{
+    if ([self.chatterGroupArray count] > 0)
+    {
+        NSArray *visiblePaths = [chatterGroupTbl indexPathsForVisibleRows];
+        for (NSIndexPath *indexPath in visiblePaths)
+        {
+            ChatterRecord *chatterUser = [chatterGroupArray objectAtIndex:indexPath.row];
+            if (!chatterUser.chatterIcon) // avoid the app icon download if the app already has an icon
+            {
+                [self startIconDownload:chatterUser forIndexPath:indexPath];
+            }
+        }
+    }
+}
+
+// called by our ImageDownloader when an icon is ready to be displayed
+- (void)appImageDidLoad:(NSIndexPath *)indexPath
+{
+    IconDownloader *iconDownloader = [imageDownloadsInProgress objectForKey:indexPath];
+    DebugLog(@"iconDownloader:%@",iconDownloader);
+    if (iconDownloader != nil)
+    {
+        UITableViewCell *cell = [chatterGroupTbl cellForRowAtIndexPath:iconDownloader.indexPathInTableView];
+        // Display the newly loaded image
+        cell.imageView.image = iconDownloader.chatterRecord.chatterIcon;
+    }
+}
+
+
+#pragma mark -
+#pragma mark Deferred image loading (UIScrollViewDelegate)
+
+// Load images for all onscreen rows when scrolling is finished
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate)
+	{
+        [self loadImagesForOnscreenRows];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self loadImagesForOnscreenRows];
+}
 #pragma mark - SFRestAPIDelegate
 - (void)request:(SFRestRequest *)request didLoadResponse:(id)jsonResponse {
     DebugLog(@"request:%@",[request description]);
     DebugLog(@"jsonResponse:%@",jsonResponse);
     
-    if([[request path] rangeOfString:@"v23.0/chatter/groups"].location != NSNotFound){
+    if([[request path] rangeOfString:@"v23.0/chatter/users/me/groups"].location != NSNotFound){
         //List of following
         if([[jsonResponse objectForKey:@"errors"] count] == 0){
             [Utility hideCoverScreen];
             [loadingSpinner stopAnimating];
             NSArray *records = [jsonResponse objectForKey:@"groups"];
-            //NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"name"  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-            self.chatterGroupArray = records; //[records sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
+            for (NSDictionary *chatterGroupDict in records) {
+                ChatterRecord *chatterGroup = [[ChatterRecord alloc]init];
+                
+                if([chatterGroupDict objectForKey:@"name"] != nil)
+                    chatterGroup.chatterName = [chatterGroupDict valueForKey:@"name"];
+                if([chatterGroupDict objectForKey:@"id"] != nil)
+                    chatterGroup.chatterId = [chatterGroupDict valueForKey:@"id"];
+                if([chatterGroupDict objectForKey:@"photo"] != nil)
+                    chatterGroup.imageURLString = [[chatterGroupDict valueForKey:@"photo"] valueForKey:@"smallPhotoUrl"];
+                
+                [self.chatterGroupArray addObject:chatterGroup];
+                
+            }
+            // Sort the chatter users by name
+            NSSortDescriptor *firstDescriptor =[[[NSSortDescriptor alloc]
+                                                 initWithKey:@"chatterName"
+                                                 ascending:YES
+                                                 selector:@selector(localizedCaseInsensitiveCompare:)] autorelease];
+            
+            NSArray * descriptors = [NSArray arrayWithObjects:firstDescriptor, nil];
+            NSMutableArray * sortedArray = (NSMutableArray*)[self.chatterGroupArray sortedArrayUsingDescriptors:descriptors];
+            self.chatterGroupArray = [sortedArray retain];
+            //self.chatterGroupArray = records; //[records sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
             [self initializeSelectedRow];
             chatterGroupTbl.delegate = self;
             chatterGroupTbl.dataSource = self;
@@ -249,68 +410,15 @@
     [self hideDoneToastMsg:nil];
 }
 
--(void)initializeSelectedRow {
-    NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:[chatterGroupArray count]];
-    for (int i=0; i < [chatterGroupArray count]; i++)
-        [array addObject:[NSNumber numberWithBool:NO]];
-    selectedGroupsRow = array;
-    NSLog(@"Array = %@",selectedGroupsRow);
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
--(void)initToolbarButtons {
-    UIToolbar* toolbar = [[UIToolbar alloc]
-                          initWithFrame:CGRectMake(0, 0, 70, 45)];
-    [toolbar setBarStyle: UIBarStyleBlackTranslucent];
-    
-    // create an array for the buttons
-    NSMutableArray* buttons = [[NSMutableArray alloc] initWithCapacity:4];
-
-     UIBarButtonItem *addButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(postToSelectedChatterGroups)];
-    [buttons addObject:addButton];
-    [addButton release];
-    // create a spacer between the buttons
-    UIBarButtonItem *spacer1 = [[UIBarButtonItem alloc]
-                                initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
-                                target:nil
-                                action:nil];
-    [buttons addObject:spacer1];
-    [spacer1 release];
-    // put the buttons in the toolbar and release them
-    [toolbar setItems:buttons animated:NO];
-    [buttons release];
-    
-    // place the toolbar into the navigation bar
-    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
-                                               initWithCustomView:toolbar] autorelease];
-    [toolbar release];
-    
+- (void)dealloc {
+	[imageDownloadsInProgress release];
+    [self.chatterGroupArray release];
+    [super dealloc];
 }
-
--(void)postToSelectedChatterGroups {
-    if([Utility checkNetwork]) {
-        NSMutableArray *paramArr = [[NSMutableArray alloc]init];
-        NSDictionary *textParam = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",self.noteContent, @"text",nil];
-        NSString * path = [NSString stringWithFormat:@"v23.0/chatter/feeds/record/%@/feed-items",[[self.chatterGroupArray objectAtIndex:selectedUserIndex] valueForKey:@"id"]];
-        NSLog(@"test url for group feed: %@",path); 
-        
-         if(selectedUserIndex == -999) {   
-                [Utility hideCoverScreen];
-                [Utility showAlert:@"Please select a group to make Chatter Post"];
-        } else {
-                    [self showLoadingLblWithText:@"Posting Note to Chatter Group..."];
-                    [paramArr addObject:textParam];
-                    NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:paramArr,@"messageSegments", nil];
-                    NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:message,@"body", nil];
-                    
-                    NSLog(@"Body = %@",body);
-                    SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];
-                    [[SFRestAPI sharedInstance] send:request delegate:self];
-                    }
-                }
-        
-         else {
-                [Utility showAlert:@"Network Unavailable!Network connection is needed for this action."];
-         }
-}
-
 @end
