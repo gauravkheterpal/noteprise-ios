@@ -79,21 +79,11 @@
     NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *sfobjFieldToMapWith = [stdDefaults valueForKey:SFOBJ_FIELD_TO_MAP_KEY];
     DebugLog(@"sfobjFieldToMapWith:%@\n objFields:%@",sfobjFieldToMapWith,[objFields objectAtIndex:indexPath.row]);
-    if(sfobjFieldToMapWith != nil) {
-        
-    }
-    else {
-        if([[[Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY]valueForKey:@"name"]isEqualToString:@"Account"]){
-            //[Utility setSFDefaultMappingValues];
-            NSMutableDictionary *defaultSFFieldToMap = [[NSMutableDictionary alloc]initWithObjectsAndKeys:@"Account Description",@"label",@"Description",@"name", nil];
-            //[stdDefaults setObject:defaultSFFieldToMap forKey:SFOBJ_FIELD_TO_MAP_KEY];
-            //[stdDefaults synchronize];
-            sfobjFieldToMapWith = defaultSFFieldToMap;
-        }
-    }
     cell.textLabel.textColor = [UIColor whiteColor];
-    if([[[objFields objectAtIndex:indexPath.row]valueForKey:@"name"] isEqualToString:[sfobjFieldToMapWith valueForKey:@"name"]])
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    if(sfobjFieldToMapWith != nil) {
+        if([[[objFields objectAtIndex:indexPath.row]valueForKey:@"name"] isEqualToString:[sfobjFieldToMapWith valueForKey:@"name"]])
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
     return cell;
 }
 

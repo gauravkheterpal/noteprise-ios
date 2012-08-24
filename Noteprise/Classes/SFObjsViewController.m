@@ -72,7 +72,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     //if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
         
     //}
     // Configure the cell...
@@ -83,9 +83,6 @@
     if(sfobjToMapWith != nil) {
         if([[[sfObjsList objectAtIndex:indexPath.row]valueForKey:@"name"] isEqualToString:[sfobjToMapWith valueForKey:@"name"]])
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    }
-    else if(indexPath.row==0){
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
     return cell;
 }
@@ -138,8 +135,6 @@
     NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *currentsfObj = [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];
     
-    if(currentsfObj == nil)
-        currentsfObj = [sfObjsList objectAtIndex:0];
     if (currentsfObj != nil) {
         NSInteger index;
         for(int i=0 ;i<[sfObjsList count];i++){
@@ -148,11 +143,11 @@
                 break;
             }
         }
-		//NSInteger index = [sfObjsList indexOfObject:currentsfObj];
 		NSIndexPath *selectionIndexPath = [NSIndexPath indexPathForRow:index inSection:0];
         UITableViewCell *checkedCell = [tableView cellForRowAtIndexPath:selectionIndexPath];
         checkedCell.accessoryType = UITableViewCellAccessoryNone;
     }
+    DebugLog(@"old to set as obj:%@ field:%@",[Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY],[Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY]);
     [stdDefaults setObject:[Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY] forKey:OLD_SFOBJ_TO_MAP_KEY];
     [stdDefaults setObject:[Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] forKey:OLD_SFOBJ_FIELD_TO_MAP_KEY];
     // Set the checkmark accessory for the selected row.
@@ -167,8 +162,8 @@
 }
 -(void)viewDidAppear:(BOOL)animated {
     NSLog(@"Object view appear");
-    NSLog(@"old obj:%@ \n old field:%@ \nfield value:%@",[Utility valueInPrefForKey:@"oldObj"],[Utility valueInPrefForKey:@"oldF"],[Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY]);
-    if([Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] == nil && [Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] !=nil && [Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] != nil) {
+    NSLog(@"old obj:%@ \n old field:%@ \nfield value:%@",[Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY],[Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY],[Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY]);
+    if(([Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] == nil) && [Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] != nil && [Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] != nil) {
         [Utility setValueInPref:[Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] forKey:SFOBJ_TO_MAP_KEY];
         [Utility setValueInPref:[Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] forKey:SFOBJ_FIELD_TO_MAP_KEY];
     }
@@ -176,14 +171,11 @@
 -(void)listMetadataForObj{
     if([Utility checkNetwork]){
         [Utility showCoverScreen];
-        NSString *sfObjtoMap;
-        //selectedObj = [[dataRows objectAtIndex:selectedAccIdx]valueForKey:@"name"];
-        //selectedObjID = [[dataRows objectAtIndex:selectedAccIdx]valueForKey:@"id"];
         NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
-        sfObjtoMap = [[stdDefaults valueForKey:SFOBJ_TO_MAP_KEY]valueForKey:@"name"];
-        if (sfObjtoMap == nil) {
+        NSString *sfObjtoMap = [[stdDefaults valueForKey:SFOBJ_TO_MAP_KEY]valueForKey:@"name"];
+        /*if (sfObjtoMap == nil) {
             sfObjtoMap = @"Account";
-        }
+        }*/
         if(sfObjtoMap) {
             SFRestRequest * request =  [[SFRestAPI sharedInstance] requestForDescribeWithObjectType:sfObjtoMap];
             [[SFRestAPI sharedInstance] send:request delegate:self];

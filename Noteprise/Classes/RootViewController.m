@@ -59,29 +59,6 @@ NSString* selectedObj,*selectedObjID;
         [array addObject:[NSNumber numberWithBool:NO]];
     selectedRow = array;
 }
--(void)addEvernoteToSF {
-    if([Utility checkNetwork]) {
-        [Utility showCoverScreen];
-        NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
-        NSDictionary *sfobj =  [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];
-        NSDictionary *sfobjField =  [stdDefaults valueForKey:SFOBJ_FIELD_TO_MAP_KEY];
-        DebugLog(@"sfobj:%@ sfobjField:%@",sfobj,sfobjField);
-        if(sfobjField){
-            NSMutableDictionary * fields =[[NSMutableDictionary alloc] init];
-            [fields setValue:noteContent forKey:[sfobjField valueForKey:@"name"]];
-            //----------------------------------------------------------------------------------------------------
-             SFRestRequest * request =    [[SFRestAPI sharedInstance] requestForUpdateWithObjectType:[sfobj valueForKey:@"name"] objectId:[[self.dataRows objectAtIndex:selectedAccIdx] valueForKey:@"Id"] fields:fields];
-            [[SFRestAPI sharedInstance] send:request delegate:self];
-        } else {
-            [Utility hideCoverScreen];
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Missing Field" message:@"Please set a SF object field to map Evernote" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
-            [alert release];
-        }
-    } else {
-        [Utility showAlert:@"Network Unavailable!Network connection is needed for this action."];
-    }
-}
 -(void)showLoadingLblWithText:(NSString*)Loadingtext{
     [loadingSpinner startAnimating];
     dialog_imgView.hidden = NO;
@@ -91,7 +68,7 @@ NSString* selectedObj,*selectedObjID;
 -(void)addSelectedEvernoteToSF{
     //[Utility showCoverScreen];
     if([Utility checkNetwork]) {
-        if([Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] == nil && [Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] !=nil && [Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] != nil) {
+        if(([Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] == nil ) && [Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] !=nil && [Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] != nil) {
             [Utility setValueInPref:[Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] forKey:SFOBJ_TO_MAP_KEY];
             [Utility setValueInPref:[Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] forKey:SFOBJ_FIELD_TO_MAP_KEY];
         }
@@ -99,7 +76,7 @@ NSString* selectedObj,*selectedObjID;
         NSDictionary *sfobj =  [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];
         NSDictionary *sfobjField =  [stdDefaults valueForKey:SFOBJ_FIELD_TO_MAP_KEY];
         DebugLog(@"sfobj:%@ sfobjField:%@",sfobj,sfobjField);
-        if(sfobjField){
+        if(sfobjField && sfobj){
             NSMutableDictionary * fields =[[NSMutableDictionary alloc] init];
             [fields setValue:noteContent forKey:[sfobjField valueForKey:@"name"]];
             selectedCount = 0;
@@ -131,9 +108,7 @@ NSString* selectedObj,*selectedObjID;
             }
         } else {
             [Utility hideCoverScreen];
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Missing Field" message:@"Please set a SF object field to map Evernote" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
-            [alert release];
+            [Utility showAlert:@"Please select a object and field through Settings first."];
         }
     } else {
             [Utility showAlert:@"Network Unavailable!Network connection is needed for this action."];
@@ -144,7 +119,13 @@ NSString* selectedObj,*selectedObjID;
 -(void)fetchSelectedObjList {
     if([Utility checkNetwork]) {
         [Utility showCoverScreen];
-        if([Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] == nil && [Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] !=nil && [Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] != nil) {
+        NSLog(@"old obj:%@ \n old field:%@ \nfield value:%@ sf obje:%@",[Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY],[Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY],[Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY],[Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY]);
+        if(([Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY] == nil )&& ([Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] == nil)) {
+            //set previous selected mapping
+            [Utility showAlert:@"Please select a object and field through Settings first."];
+            return;
+        }
+        else if(([Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY] == nil ) && [Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] !=nil && [Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] != nil) {
             //set previous selected mapping
             [Utility setValueInPref:[Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] forKey:SFOBJ_TO_MAP_KEY];
             [Utility setValueInPref:[Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] forKey:SFOBJ_FIELD_TO_MAP_KEY];
@@ -154,54 +135,51 @@ NSString* selectedObj,*selectedObjID;
        
 
         NSDictionary *sfObj = [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];
-        if(sfObj)
-            selectedSFObj = [sfObj valueForKey:@"name"];
-        else {
-            selectedSFObj = @"Account";
-            [Utility setSFDefaultMappingValues];
+        if(sfObj) {
+                selectedSFObj = [sfObj valueForKey:@"name"];
+            NSMutableString *queryString;
+            
+            if ([selectedSFObj isEqualToString:@"Task"]) {
+                 queryString = [NSMutableString stringWithFormat:@"SELECT Id,Subject from %@",selectedSFObj];
+            }
+            else if ([selectedSFObj isEqualToString:@"Case"]) {
+                queryString = [NSMutableString stringWithFormat:@"SELECT Id,CaseNumber from %@",selectedSFObj];
+            }
+            else if ([selectedSFObj isEqualToString:@"CaseComment"]) {
+                queryString = [NSMutableString stringWithFormat:@"SELECT Id,ParentId from %@",selectedSFObj];
+            }
+            else if ([selectedSFObj isEqualToString:@"ContentVersion"]) {
+                queryString = [NSMutableString stringWithFormat:@"SELECT Id,ContentDocumentId from %@",selectedSFObj];
+            }
+            else if ([selectedSFObj isEqualToString:@"Contract"]) {
+                queryString = [NSMutableString stringWithFormat:@"SELECT Id,ContractNumber from %@",selectedSFObj];
+            }
+            else if ([selectedSFObj isEqualToString:@"Event"]) {
+                queryString = [NSMutableString stringWithFormat:@"SELECT Id,Subject from %@",selectedSFObj];
+            }
+            else if ([selectedSFObj isEqualToString:@"Idea"]) {
+                queryString = [NSMutableString stringWithFormat:@"SELECT Id,Title from %@",selectedSFObj];
+            }
+            else if ([selectedSFObj isEqualToString:@"Note"]) {
+                queryString = [NSMutableString stringWithFormat:@"SELECT Id,Title from %@",selectedSFObj];
+            }
+            else if ([selectedSFObj isEqualToString:@"Solution"]) {
+                queryString = [NSMutableString stringWithFormat:@"SELECT Id,SolutionName from %@",selectedSFObj];
+            }
+            else if ([selectedSFObj isEqualToString:@"FeedItem"]||[selectedSFObj isEqualToString:@"FeedComment"]) {
+                queryString = [NSMutableString stringWithFormat:@"SELECT Id from %@",selectedSFObj];//CreatedById
+            }
+            else
+            {
+                queryString = [NSMutableString stringWithFormat:@"SELECT Name,Id from %@",selectedSFObj];
+            }
+            
+           
+            
+            SFRestRequest *request = [[SFRestAPI sharedInstance] requestForQuery:queryString];    
+            [[SFRestAPI sharedInstance] send:request delegate:self];
+            self.title = [NSString stringWithFormat:@"%@",selectedSFObj];
         }
-        NSMutableString *queryString;
-        
-        if ([selectedSFObj isEqualToString:@"Task"]) {
-             queryString = [NSMutableString stringWithFormat:@"SELECT Id,Subject from %@",selectedSFObj];
-        }
-        else if ([selectedSFObj isEqualToString:@"Case"]) {
-            queryString = [NSMutableString stringWithFormat:@"SELECT Id,CaseNumber from %@",selectedSFObj];
-        }
-        else if ([selectedSFObj isEqualToString:@"CaseComment"]) {
-            queryString = [NSMutableString stringWithFormat:@"SELECT Id,ParentId from %@",selectedSFObj];
-        }
-        else if ([selectedSFObj isEqualToString:@"ContentVersion"]) {
-            queryString = [NSMutableString stringWithFormat:@"SELECT Id,ContentDocumentId from %@",selectedSFObj];
-        }
-        else if ([selectedSFObj isEqualToString:@"Contract"]) {
-            queryString = [NSMutableString stringWithFormat:@"SELECT Id,ContractNumber from %@",selectedSFObj];
-        }
-        else if ([selectedSFObj isEqualToString:@"Event"]) {
-            queryString = [NSMutableString stringWithFormat:@"SELECT Id,Subject from %@",selectedSFObj];
-        }
-        else if ([selectedSFObj isEqualToString:@"Idea"]) {
-            queryString = [NSMutableString stringWithFormat:@"SELECT Id,Title from %@",selectedSFObj];
-        }
-        else if ([selectedSFObj isEqualToString:@"Note"]) {
-            queryString = [NSMutableString stringWithFormat:@"SELECT Id,Title from %@",selectedSFObj];
-        }
-        else if ([selectedSFObj isEqualToString:@"Solution"]) {
-            queryString = [NSMutableString stringWithFormat:@"SELECT Id,SolutionName from %@",selectedSFObj];
-        }
-        else if ([selectedSFObj isEqualToString:@"FeedItem"]||[selectedSFObj isEqualToString:@"FeedComment"]) {
-            queryString = [NSMutableString stringWithFormat:@"SELECT Id from %@",selectedSFObj];//CreatedById
-        }
-        else
-        {
-            queryString = [NSMutableString stringWithFormat:@"SELECT Name,Id from %@",selectedSFObj];
-        }
-        
-       
-        
-        SFRestRequest *request = [[SFRestAPI sharedInstance] requestForQuery:queryString];    
-        [[SFRestAPI sharedInstance] send:request delegate:self];
-        self.title = [NSString stringWithFormat:@"%@",selectedSFObj];
     } else {
         [Utility showAlert:@"Network Unavailable!Network connection is needed for this action."];
     }
@@ -329,6 +307,9 @@ NSString* selectedObj,*selectedObjID;
             NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"Name"  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
             self.dataRows = [records sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
             [self initializeSelectedRow];
+            if([self.dataRows count] == 0) {
+                [Utility showAlert:[NSString stringWithFormat:@"No Record in Selected Salesforce object:%@",self.title]];
+            }
             [tableView reloadData];
         }
         else{
@@ -448,122 +429,117 @@ NSString* selectedObj,*selectedObjID;
     
     
     NSDictionary *sfObj = [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];
-    if(sfObj)
-        selectedSFObj = [sfObj valueForKey:@"name"];
-    else {
-        selectedSFObj = @"Account";
-        [Utility setSFDefaultMappingValues];
-    }
-    //NSMutableString *queryString;
-    
-    if ([selectedSFObj isEqualToString:@"Task"]) {
+    if(sfObj) {
+            selectedSFObj = [sfObj valueForKey:@"name"];
+        /*else {
+            selectedSFObj = @"Account";
+            [Utility setSFDefaultMappingValues];
+        }*/
+        //NSMutableString *queryString;
         
-         //queryString = [NSMutableString stringWithFormat:@"SELECT Id,Subject from %@",selectedSFObj];
-        if([obj objectForKey:@"Subject"])
-            cell.textLabel.text =  [obj objectForKey:@"Subject"];
-        else {
+        if ([selectedSFObj isEqualToString:@"Task"]) {
             
+             //queryString = [NSMutableString stringWithFormat:@"SELECT Id,Subject from %@",selectedSFObj];
+            if([obj objectForKey:@"Subject"])
+                cell.textLabel.text =  [obj objectForKey:@"Subject"];
+            else {
+                
+                    cell.textLabel.text =  [obj objectForKey:@"Id"];
+                }
+        }
+        else if ([selectedSFObj isEqualToString:@"Case"]) {
+            //queryString = [NSMutableString stringWithFormat:@"SELECT Id,CaseNumber from %@",selectedSFObj];
+            if([obj objectForKey:@"CaseNumber"])
+                cell.textLabel.text =  [obj objectForKey:@"CaseNumber"];
+            else {
+                
                 cell.textLabel.text =  [obj objectForKey:@"Id"];
             }
-    }
-    else if ([selectedSFObj isEqualToString:@"Case"]) {
-        //queryString = [NSMutableString stringWithFormat:@"SELECT Id,CaseNumber from %@",selectedSFObj];
-        if([obj objectForKey:@"CaseNumber"])
-            cell.textLabel.text =  [obj objectForKey:@"CaseNumber"];
-        else {
-            
-            cell.textLabel.text =  [obj objectForKey:@"Id"];
         }
-    }
-    else if ([selectedSFObj isEqualToString:@"CaseComment"]) {
-        //queryString = [NSMutableString stringWithFormat:@"SELECT Id,ParentId from %@",selectedSFObj];
-        if([obj objectForKey:@"ParentId"])
-            cell.textLabel.text =  [obj objectForKey:@"ParentId"];
-        else {
-            
-            cell.textLabel.text =  [obj objectForKey:@"Id"];
+        else if ([selectedSFObj isEqualToString:@"CaseComment"]) {
+            //queryString = [NSMutableString stringWithFormat:@"SELECT Id,ParentId from %@",selectedSFObj];
+            if([obj objectForKey:@"ParentId"])
+                cell.textLabel.text =  [obj objectForKey:@"ParentId"];
+            else {
+                
+                cell.textLabel.text =  [obj objectForKey:@"Id"];
+            }
         }
-    }
-    else if ([selectedSFObj isEqualToString:@"ContentVersion"]) {
-        //queryString = [NSMutableString stringWithFormat:@"SELECT Id,ContentDocumentId from %@",selectedSFObj];
-        if([obj objectForKey:@"ContentDocumentId"])
-            cell.textLabel.text =  [obj objectForKey:@"ContentDocumentId"];
-        else {
-            
-            cell.textLabel.text =  [obj objectForKey:@"Id"];
+        else if ([selectedSFObj isEqualToString:@"ContentVersion"]) {
+            //queryString = [NSMutableString stringWithFormat:@"SELECT Id,ContentDocumentId from %@",selectedSFObj];
+            if([obj objectForKey:@"ContentDocumentId"])
+                cell.textLabel.text =  [obj objectForKey:@"ContentDocumentId"];
+            else {
+                
+                cell.textLabel.text =  [obj objectForKey:@"Id"];
+            }
         }
-    }
-    else if ([selectedSFObj isEqualToString:@"Contract"]) {
-        //queryString = [NSMutableString stringWithFormat:@"SELECT Id,ContractNumber from %@",selectedSFObj];
-        if([obj objectForKey:@"ContractNumber"])
-            cell.textLabel.text =  [obj objectForKey:@"ContractNumber"];
-        else {
-            
-            cell.textLabel.text =  [obj objectForKey:@"Id"];
+        else if ([selectedSFObj isEqualToString:@"Contract"]) {
+            //queryString = [NSMutableString stringWithFormat:@"SELECT Id,ContractNumber from %@",selectedSFObj];
+            if([obj objectForKey:@"ContractNumber"])
+                cell.textLabel.text =  [obj objectForKey:@"ContractNumber"];
+            else {
+                
+                cell.textLabel.text =  [obj objectForKey:@"Id"];
+            }
         }
-    }
-    else if ([selectedSFObj isEqualToString:@"Event"]) {
-        //queryString = [NSMutableString stringWithFormat:@"SELECT Id,Subject from %@",selectedSFObj];
-        if([obj objectForKey:@"Subject"])
-            cell.textLabel.text =  [obj objectForKey:@"Subject"];
-        else {
-            
-            cell.textLabel.text =  [obj objectForKey:@"Id"];
+        else if ([selectedSFObj isEqualToString:@"Event"]) {
+            //queryString = [NSMutableString stringWithFormat:@"SELECT Id,Subject from %@",selectedSFObj];
+            if([obj objectForKey:@"Subject"])
+                cell.textLabel.text =  [obj objectForKey:@"Subject"];
+            else {
+                
+                cell.textLabel.text =  [obj objectForKey:@"Id"];
+            }
+        
         }
-    
-    }
-    else if ([selectedSFObj isEqualToString:@"Idea"]) {
-        //queryString = [NSMutableString stringWithFormat:@"SELECT Id,Title from %@",selectedSFObj];
-        if([obj objectForKey:@"Title"])
-            cell.textLabel.text =  [obj objectForKey:@"Title"];
-        else {
-            
-            cell.textLabel.text =  [obj objectForKey:@"Id"];
+        else if ([selectedSFObj isEqualToString:@"Idea"]) {
+            //queryString = [NSMutableString stringWithFormat:@"SELECT Id,Title from %@",selectedSFObj];
+            if([obj objectForKey:@"Title"])
+                cell.textLabel.text =  [obj objectForKey:@"Title"];
+            else {
+                
+                cell.textLabel.text =  [obj objectForKey:@"Id"];
+            }
         }
-    }
-    else if ([selectedSFObj isEqualToString:@"Note"]) {
-        //queryString = [NSMutableString stringWithFormat:@"SELECT Id,Title from %@",selectedSFObj];
-        if([obj objectForKey:@"Title"])
-            cell.textLabel.text =  [obj objectForKey:@"Title"];
-        else {
-            
-            cell.textLabel.text =  [obj objectForKey:@"Id"];
+        else if ([selectedSFObj isEqualToString:@"Note"]) {
+            //queryString = [NSMutableString stringWithFormat:@"SELECT Id,Title from %@",selectedSFObj];
+            if([obj objectForKey:@"Title"])
+                cell.textLabel.text =  [obj objectForKey:@"Title"];
+            else {
+                
+                cell.textLabel.text =  [obj objectForKey:@"Id"];
+            }
         }
-    }
-    else if ([selectedSFObj isEqualToString:@"Solution"]) {
-        //queryString = [NSMutableString stringWithFormat:@"SELECT Id,SolutionName from %@",selectedSFObj];
-        if([obj objectForKey:@"SolutionName"])
-            cell.textLabel.text =  [obj objectForKey:@"SolutionName"];
-        else {
-            
-            cell.textLabel.text =  [obj objectForKey:@"Id"];
+        else if ([selectedSFObj isEqualToString:@"Solution"]) {
+            //queryString = [NSMutableString stringWithFormat:@"SELECT Id,SolutionName from %@",selectedSFObj];
+            if([obj objectForKey:@"SolutionName"])
+                cell.textLabel.text =  [obj objectForKey:@"SolutionName"];
+            else {
+                
+                cell.textLabel.text =  [obj objectForKey:@"Id"];
+            }
         }
-    }
-    else
-    {
+        else
+        {
 
-         if([obj objectForKey:@"label"])
-         cell.textLabel.text =  [obj objectForKey:@"label"];
-         else {
-                if([obj valueForKey:@"Name"] != nil) {
-                    cell.textLabel.text =  [obj objectForKey:@"Name"];
-                } 
-                else {
-                        cell.textLabel.text =  [obj objectForKey:@"Id"];
-                }
-         }
+             if([obj objectForKey:@"label"])
+             cell.textLabel.text =  [obj objectForKey:@"label"];
+             else {
+                    if([obj valueForKey:@"Name"] != nil) {
+                        cell.textLabel.text =  [obj objectForKey:@"Name"];
+                    } 
+                    else {
+                            cell.textLabel.text =  [obj objectForKey:@"Id"];
+                    }
+             }
+        }
     }
     
-    
-    
-    
-   
-
 	//this adds the arrow to the right hand side.
     cell.textLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:16];
 	cell.accessoryType = UITableViewCellAccessoryNone;
     cell.textLabel.textColor = [UIColor blackColor];
 	return cell;
-
 }
 @end

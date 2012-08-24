@@ -82,21 +82,31 @@
     // Configure the cell...
     int row = [indexPath section];
     NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *sfObj = [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];
-    if(sfObj == nil){
+    
+    /*if(sfObj == nil){
         [Utility setSFDefaultMappingValues];
     }
-    sfObj = [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];
-    NSDictionary *sfObjField = [stdDefaults valueForKey:SFOBJ_FIELD_TO_MAP_KEY];
+    sfObj = [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];*/
+
     if(row == 0) {
         cell.textLabel.text = @"Objects";
-        cell.detailTextLabel.text = [sfObj valueForKey:@"label"];
+        NSDictionary *sfObj = [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];
+        if(sfObj != nil)
+            cell.detailTextLabel.text = [sfObj valueForKey:@"label"];
+        else {
+            cell.detailTextLabel.text = @"";
+        }
             
     }
     else {
         cell.textLabel.text = @"Field";
-        DebugLog(@"sfObjField:%@",sfObjField);
-        cell.detailTextLabel.text = [sfObjField valueForKey:@"label"];
+        NSDictionary *sfObjField = [stdDefaults valueForKey:SFOBJ_FIELD_TO_MAP_KEY];
+        if(sfObjField != nil)
+            cell.detailTextLabel.text = [sfObjField valueForKey:@"label"];
+        else {
+            cell.detailTextLabel.text = @"";
+        }
+        //cell.detailTextLabel.text = [sfObjField valueForKey:@"label"];
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
@@ -150,6 +160,7 @@
         [self fetchSFObjects];
     } else {
         [self listMetadataForObj];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }
 -(void)fetchSFObjects{
@@ -167,8 +178,7 @@
         NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
         sfObjtoMap = [[stdDefaults valueForKey:SFOBJ_TO_MAP_KEY]valueForKey:@"name"];
         if (sfObjtoMap == nil) {
-            [Utility setSFDefaultMappingValues];
-            sfObjtoMap = @"Account";
+            [Utility showAlert:@"Please select a object first before you can select a field."];
         }
         if(sfObjtoMap) {
             SFRestRequest * request =  [[SFRestAPI sharedInstance] requestForDescribeWithObjectType:sfObjtoMap];

@@ -91,16 +91,6 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^(void) {
             // Loading all the notebooks linked to the account using the evernote API
             [self fetchDataFromEverNote];
-            
-            /*dispatch_async(dispatch_get_main_queue(), ^(void) {
-                [searchBar resignFirstResponder];
-                //[self listAllNotes];
-                [Utility hideCoverScreen];
-                loadingLbl.hidden = YES;
-                notesTbl.delegate =self;
-                notesTbl.dataSource =self;
-                [notesTbl reloadData];
-            });*/
         });
     }
     else {
@@ -173,7 +163,6 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    //[self fetchNoteBasedOnSelectedSegement];
     
 }
 -(void)fetchNoteBasedOnSelectedSegement {
@@ -181,51 +170,10 @@
     loadingLbl.text = @"Loading...";
     loadingLbl.hidden = NO;
     [listOfItems removeAllObjects];
-    //[indexArray removeAllObjects];
     [searchBar resignFirstResponder];
-    //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^(void) {
-        // Loading all the notebooks linked to the account using the evernote API
-        [self fetchDataFromEverNote];
-        
-        /*DebugLog(@"listOfItems:%@",listOfItems);
-        dispatch_async(dispatch_get_main_queue(), ^(void) {
-            switch (searchOptionsChoiceCntrl.selectedSegmentIndex) {
-                case 0:
-                    [searchBar resignFirstResponder];
-                    [self listAllNotes];
-                    break;
-                case 1:
-                    [self searchByNotebook:searchBar.text];
-                    break;
-                case 2:
-                    [self searchByTag:searchBar.text];
-                    break;
-                case 3:
-                    [self searchByKeyword:searchBar.text];
-                    break;
-                default:
-                    break;
-            }  
-            [Utility hideCoverScreen];
-            loadingLbl.hidden = YES;
-            notesTbl.delegate =self;
-            notesTbl.dataSource =self;
-            [notesTbl reloadData];
-        });*/
-    //});
+    // Loading all the notebooks linked to the account using the evernote API
+    [self fetchDataFromEverNote];
 }
-/*-(void)getNoteDetailsForSelectedIndex:(int)mSelectedRowIndex{
-   // DebugLog(@"indexArray:%@",indexArray);
-    //Save.
-    NSString * guid = (NSString *)[[listOfItems objectAtIndex:mSelectedRowIndex]valueForKey:NOTE_GUID_KEY]; 
-    
-    // Load the EDAMNote object that has guid we have stored in the object
-    EDAMNote * note = [(Evernote *)[Evernote sharedInstance] getNote:guid];
-    noteTitle = [note title];
-    noteContent = [Utility flattenNoteBody:[note content]];
-    DebugLog(@"noteTitle:%@",noteTitle);
-        DebugLog(@"noteContent:%@",noteContent);
-}*/
 
 -(void)listAllNotes
 {
@@ -492,16 +440,13 @@
     UINavigationController *addNoteNavCntrl = [[UINavigationController alloc] initWithRootViewController:addNoteVCntrl];
 	addNoteNavCntrl.navigationBar.barStyle = UIBarStyleBlackOpaque;
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
-		//sendSubView.view.frame=CGRectMake(0, 0, 300, 400);
 		[self dissmissPopover];
 		UIPopoverController *popoverSettings = [[UIPopoverController alloc] initWithContentViewController:addNoteNavCntrl]; 
-		//popoverSend.delegate = self;
 		addNoteVCntrl.contentSizeForViewInPopover =CGSizeMake(300, 400);
 		popoverController = popoverSettings;
 		[popoverSettings presentPopoverFromBarButtonItem:addNoteBtn 
                                 permittedArrowDirections:UIPopoverArrowDirectionAny 
                                                 animated:YES];
-        //[popoverSettings release];
         
 	} else {
 		UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered
@@ -542,37 +487,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     selectedRowIndex = indexPath.row;
-    NSString * guid = (NSString *)[ [listOfItems objectAtIndex:indexPath.row]valueForKey:NOTE_GUID_KEY];
-    //NSString * guid = (NSString *)[indexArray objectAtIndex:[indexPath section]]; 
+    NSString * guid = (NSString *)[ [listOfItems objectAtIndex:indexPath.row]valueForKey:NOTE_GUID_KEY]; 
     NoteViewController* noteViewController = [[NoteViewController alloc] init];
     noteViewController.title = (NSString *)[ [listOfItems objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
     [noteViewController setGuid:guid];
     [self.navigationController pushViewController:noteViewController animated:YES];
 }
-/*-(IBAction)linkEvernoteToSF:(id)sender {
-    [Utility showCoverScreen];
-     [self performSelectorInBackground:@selector(navigateToSF) withObject:nil];
-}
--(void)navigateToSF{
-    NSIndexPath *selectedIndexPath = [notesTbl indexPathForSelectedRow];
-    if(selectedIndexPath != nil) {
-        [self getNoteDetailsForSelectedIndex:selectedRowIndex];
-        [self performSelectorOnMainThread:@selector(moveToSF) withObject:nil waitUntilDone:YES];
-    } else {
-        [Utility hideCoverScreen];
-        [Utility showAlert:@"Select a  Evernote to link with Salesforce"];
-    }
-}
--(void)moveToSF{
-    RootViewController * rootVC = [[RootViewController alloc] init];
-    rootVC.fileName = noteTitle;
-    rootVC.noteContent = noteContent;
-    [self.navigationController pushViewController:rootVC animated:YES];
-    [rootVC release];
-    
-    [Utility hideCoverScreen];
-    
-}*/
 
 /************************************************************
  *
@@ -589,17 +509,12 @@
      {
          DebugLog(@"deleteNoteWithGuid %d ::::",success);
          [Utility hideCoverScreen];
-        
          loadingLbl.hidden = YES;
-
-         //self.title = [note title];
      }failure:^(NSError *error) {
          DebugLog(@"note::::::::error %@", error);	  
          [Utility hideCoverScreen];
          loadingLbl.hidden = YES;
      }];
-    // Sending the note to the trash
-   // [[Evernote sharedInstance] deleteNote:guid];
     
     // Removing the note from our cache
     [listOfItems removeObjectAtIndex:[indexPath row]];
@@ -633,9 +548,7 @@
     }
     
     NSString *cellValue = [[listOfItems objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
-    //[[listOfItems objectAtIndex:indexPath.section]objectAtIndex:(indexPath.row*2)];
     cell.textLabel.text = cellValue;
-    //cell.textLabel.font = [UIFont systemFontOfSize:16];
     cell.textLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:16];
     cell.textLabel.textColor = [UIColor blackColor];
     cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
@@ -650,7 +563,6 @@
 - (void)dealloc {
     
     [listOfItems release];
-    //[indexArray release];
     [super dealloc];
 }
 

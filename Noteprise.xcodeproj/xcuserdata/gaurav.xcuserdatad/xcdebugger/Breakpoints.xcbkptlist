@@ -7,139 +7,195 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Noteprise/Classes/ChatterUsersViewController.m"
-         timestampString = "367328801.804939"
+         filePath = "Noteprise/Classes/RootViewController.m"
+         timestampString = "367488094.117793"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "463"
-         endingLineNumber = "463"
-         landmarkName = "-request:didLoadResponse:"
+         startingLineNumber = "148"
+         endingLineNumber = "148"
+         landmarkName = "-fetchSelectedObjList"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Noteprise/Classes/NoteViewController.m"
-         timestampString = "367435945.848915"
+         filePath = "Noteprise/Classes/RootViewController.m"
+         timestampString = "367488094.117793"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "461"
-         endingLineNumber = "461"
-         landmarkName = "-updateNoteEvernote"
+         startingLineNumber = "153"
+         endingLineNumber = "153"
+         landmarkName = "-fetchSelectedObjList"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Noteprise/Classes/NoteViewController.m"
-         timestampString = "367435945.848915"
+         filePath = "Noteprise/Classes/RootViewController.m"
+         timestampString = "367488094.117793"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "455"
-         endingLineNumber = "455"
-         landmarkName = "-updateNoteEvernote"
+         startingLineNumber = "156"
+         endingLineNumber = "156"
+         landmarkName = "-fetchSelectedObjList"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Noteprise/Classes/NoteViewController.m"
-         timestampString = "367435945.848915"
+         filePath = "Noteprise/Classes/RootViewController.m"
+         timestampString = "367488094.117793"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "469"
-         endingLineNumber = "469"
-         landmarkName = "-updateNoteEvernote"
+         startingLineNumber = "161"
+         endingLineNumber = "161"
+         landmarkName = "-fetchSelectedObjList"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Noteprise/Classes/NoteViewController.m"
-         timestampString = "367435945.848915"
+         filePath = "Noteprise/Classes/RootViewController.m"
+         timestampString = "367488094.117793"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "446"
-         endingLineNumber = "446"
-         landmarkName = "-updateNoteEvernote"
+         startingLineNumber = "160"
+         endingLineNumber = "160"
+         landmarkName = "-fetchSelectedObjList"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Noteprise/Classes/IconDownloader.m"
-         timestampString = "367434305.088898"
+         filePath = "Noteprise/Classes/RootViewController.m"
+         timestampString = "367488094.117793"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "103"
-         endingLineNumber = "103"
-         landmarkName = "-cancelDownload"
+         startingLineNumber = "146"
+         endingLineNumber = "146"
+         landmarkName = "-fetchSelectedObjList"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Noteprise/Classes/IconDownloader.m"
-         timestampString = "367434305.088898"
+         filePath = "Noteprise/Classes/SFObjsViewController.m"
+         timestampString = "367501733.597557"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "197"
-         endingLineNumber = "197">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Noteprise/Classes/IconDownloader.m"
-         timestampString = "367434305.088898"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "217"
-         endingLineNumber = "217">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Noteprise/Classes/IconDownloader.m"
-         timestampString = "367434305.088898"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "122"
-         endingLineNumber = "122"
-         landmarkName = "-connection:didFailWithError:"
+         startingLineNumber = "157"
+         endingLineNumber = "157"
+         landmarkName = "-tableView:didSelectRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Noteprise/Classes/NoteViewController.m"
-         timestampString = "367435940.665887"
+         filePath = "Noteprise/Classes/SFObjsViewController.m"
+         timestampString = "367501733.597557"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "83"
-         endingLineNumber = "83"
-         landmarkName = "-viewDidLoad"
+         startingLineNumber = "168"
+         endingLineNumber = "168"
+         landmarkName = "-viewDidAppear:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Noteprise/Classes/NoteViewController.m"
-         timestampString = "367436880.634867"
+         filePath = "Noteprise/Classes/SettingsViewController.m"
+         timestampString = "367500302.900282"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "82"
-         endingLineNumber = "82"
-         landmarkName = "-viewDidLoad"
+         startingLineNumber = "45"
+         endingLineNumber = "45"
+         landmarkName = "-viewWillAppear:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Noteprise/Classes/RootViewController.m"
+         timestampString = "367500989.980488"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "94"
+         endingLineNumber = "94"
+         landmarkName = "-addSelectedEvernoteToSF"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Noteprise/Classes/RootViewController.m"
+         timestampString = "367501201.877933"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "95"
+         endingLineNumber = "95"
+         landmarkName = "-addSelectedEvernoteToSF"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Noteprise/Classes/SFObjsViewController.m"
+         timestampString = "367501733.597557"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "153"
+         endingLineNumber = "153"
+         landmarkName = "-tableView:didSelectRowAtIndexPath:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Noteprise/Classes/SFObjsViewController.m"
+         timestampString = "367501715.999122"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "85"
+         endingLineNumber = "85"
+         landmarkName = "-tableView:cellForRowAtIndexPath:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Noteprise/Classes/SFObjsViewController.m"
+         timestampString = "367501841.646154"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "169"
+         endingLineNumber = "169"
+         landmarkName = "-viewDidAppear:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Noteprise/Classes/SFObjsViewController.m"
+         timestampString = "367501955.723782"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "158"
+         endingLineNumber = "158"
+         landmarkName = "-tableView:didSelectRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
