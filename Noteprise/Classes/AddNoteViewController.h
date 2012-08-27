@@ -30,6 +30,7 @@
     UIPopoverController *popController;
     id <AddNotesViewDelegate> delegate;
     IBOutlet UIImageView *doneImgView;
+    	CGFloat animatedDistance; //textfield correction when keyboard is out
 }
 
 @property (nonatomic, assign) id <NSObject, AddNotesViewDelegate > delegate;

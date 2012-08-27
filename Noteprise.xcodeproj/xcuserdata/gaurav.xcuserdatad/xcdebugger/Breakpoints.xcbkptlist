@@ -208,6 +208,7 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
+<<<<<<< HEAD
          isPathRelative = "1"
          filePath = "Noteprise/Classes/NoteViewController.m"
          timestampString = "367757193.954678"
@@ -216,12 +217,22 @@
          startingLineNumber = "499"
          endingLineNumber = "499"
          landmarkName = "-updateNoteEvernote"
+=======
+         filePath = "Noteprise/Classes/AddNoteViewController.m"
+         timestampString = "367761833.919152"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "620"
+         endingLineNumber = "620"
+         landmarkName = "-webView:shouldStartLoadWithRequest:navigationType:"
+>>>>>>> Issue fixes
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
+<<<<<<< HEAD
          isPathRelative = "1"
          filePath = "Noteprise/Classes/NoteViewController.m"
          timestampString = "367757193.954678"
@@ -258,12 +269,22 @@
          startingLineNumber = "246"
          endingLineNumber = "246"
          landmarkName = "-editPage:"
+=======
+         filePath = "Noteprise/Classes/AddNoteViewController.m"
+         timestampString = "367761833.919152"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "640"
+         endingLineNumber = "640"
+         landmarkName = "-webViewDidFinishLoad:"
+>>>>>>> Issue fixes
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
+<<<<<<< HEAD
          isPathRelative = "1"
          filePath = "Noteprise/Classes/NoteViewController.m"
          timestampString = "367757193.954678"
@@ -300,6 +321,15 @@
          startingLineNumber = "217"
          endingLineNumber = "217"
          landmarkName = "-initToolbarButtons"
+=======
+         filePath = "Noteprise/Classes/AddNoteViewController.m"
+         timestampString = "367759344.902379"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "118"
+         endingLineNumber = "118"
+         landmarkName = "-keyboardWillShow:"
+>>>>>>> Issue fixes
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

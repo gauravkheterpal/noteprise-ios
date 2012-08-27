@@ -10,7 +10,11 @@
 #import "Utility.h"
 #import "NSString+HTML.h"
 //#import "NSDataMD5Additions.h"
-
+static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3;
+static const CGFloat MINIMUM_SCROLL_FRACTION = 0.2;
+static const CGFloat MAXIMUM_SCROLL_FRACTION = 0.5;
+static const CGFloat iPhone_PORTRAIT_KEYBOARD_HEIGHT = 136;
+static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 @implementation AddNoteViewController
 
 
@@ -48,7 +52,12 @@
     //[bodyTxtView loadHTMLString:@"" baseURL:nil];
     
 
-    
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self selector:@selector(keyboardWillShow:)
+     name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self selector:@selector(keyboardWillHide:)
+     name:UIKeyboardWillHideNotification object:nil];
     [self setContentEditable:YES];
     [self setWebViewKeyPressDetectionEnabled:YES];
     [self setWebViewTapDetectionEnabled:YES];    
@@ -56,7 +65,11 @@
     
     
     @try {
-        
+        dialog_imgView.hidden = NO;
+        loadingLbl.text = @"Loading user Notebooks...";
+        //[loadingLbl sizeToFit];
+        loadingLbl.hidden = NO;
+        [Utility showCoverScreen];
         // Loading all the notebooks linked to the account
         EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
         [noteStore listNotebooksWithSuccess:^(NSArray *noteBooksArr) {
@@ -71,9 +84,15 @@
                 [indexArray addObject:[notebook guid]];
                 
             }
+            [Utility hideCoverScreen];
+            dialog_imgView.hidden = YES;
+            loadingLbl.hidden = YES;
         }
         failure:^(NSError *error) {
-            DebugLog(@"error %@", error);                                            
+            DebugLog(@"error %@", error);  
+            [Utility hideCoverScreen];
+            dialog_imgView.hidden = YES;
+            loadingLbl.hidden = YES;
         }];
        // NSArray *noteBooks = (NSArray *)[[Evernote sharedInstance] listNotebooks];
         
@@ -94,8 +113,60 @@
     [super viewDidLoad];
 }
 
+- (void)keyboardWillShow:(NSNotification*)notification {
+    DebugLog(@"%d",[titleNote isFirstResponder]);
+    if(![titleNote isFirstResponder] && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        DebugLog(@"notification:%@",notification);
+        //if([bodyTxtView isFirstResponder]){
+        CGRect textFieldRect = [self.view.window convertRect:bodyTxtView.bounds fromView:bodyTxtView];
+        NSLog(@"textFieldDidBeginEditing phone: %f",textFieldRect.origin.y);
+        
+        CGRect viewRect = [self.view.window convertRect:self.view.bounds fromView:self.view];
+        CGFloat midline = textFieldRect.origin.y + 2 * textFieldRect.size.height;
+        if (textFieldRect.origin.y == 0) {
+        }
+        
+        CGFloat numerator = midline - viewRect.origin.y - MINIMUM_SCROLL_FRACTION * viewRect.size.height;
+        CGFloat denominator = (MAXIMUM_SCROLL_FRACTION - MINIMUM_SCROLL_FRACTION) * viewRect.size.height;
+        CGFloat heightFraction = numerator / denominator;
+        if (heightFraction < 0.0)
+            heightFraction = 0.0;
+        else if (heightFraction > 1.0)
+            heightFraction = 1.0;
+        
+        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+        if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown)
+            animatedDistance = floor(iPhone_PORTRAIT_KEYBOARD_HEIGHT * heightFraction);
+        else
+            animatedDistance = floor(iPhone_LANDSCAPE_KEYBOARD_HEIGHT * heightFraction);
+        
+        CGRect viewFrame = self.view.frame;
+        viewFrame.origin.y -= animatedDistance;
+        
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationDuration:KEYBOARD_ANIMATION_DURATION];
+        
+        [self.view setFrame:viewFrame];
+        
+        [UIView commitAnimations];
+    }
 
-
+}
+- (void)keyboardWillHide:(NSNotification*)notification {
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+    CGRect viewFrame = self.view.frame;
+	viewFrame.origin.y += animatedDistance;
+	
+	[UIView beginAnimations:nil context:NULL];
+	[UIView setAnimationBeginsFromCurrentState:YES];
+	[UIView setAnimationDuration:KEYBOARD_ANIMATION_DURATION];
+	
+	[self.view setFrame:viewFrame];
+	
+	[UIView commitAnimations];
+    }
+}
 
 /************************************************************
  *
@@ -279,6 +350,10 @@
 	[notebooksTbl reloadData];
 }
 -(IBAction)selectNoteBook:(id)sender{
+    if ([listOfItems count] == 0) {
+        [Utility showAlert:@"There isnt any notebook in your Evernote account.Please create a one & try again"];
+        return;
+    }
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         [self selectNoteBookForiPad:sender];
         return;
@@ -393,7 +468,7 @@
     return [listOfItems objectAtIndex:row];
 }
 
-
+#pragma mark -
 
 
 /************************************************************
@@ -423,34 +498,8 @@
 }
 
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc. that aren't in use.
-}
-
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-
-- (void)dealloc
-{
-    //[doneButtonPicker release];
-    [titleNote release];
-    [sendNote release];
-    //[imageView release];
-   // [notebookPicker release];
-    [super dealloc];
-}
-
-
+#pragma mark -
+#pragma mark CLLocationManagerDelegate 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     [manager stopUpdatingLocation];
     DebugLog(@"error desc:%@",[error description]);
@@ -481,7 +530,7 @@
     seconds = decimal * 3600 - minutes * 60;
     NSString *longt = [NSString stringWithFormat:@"%d° %d' %1.4f\"",
                        degrees, minutes, seconds];
-    NSLog(@"lat = %@ , longt = %@",lat,longt);
+    DebugLog(@"lat = %@ , longt = %@",lat,longt);
     // [manager stopUpdatingLocation];
     dialog_imgView.hidden = YES;
     loadingLbl.hidden = YES;
@@ -489,23 +538,7 @@
     [self createEvernoteWithUserLocation:newLocation.coordinate.latitude longitude:newLocation.coordinate.longitude];
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#pragma mark JS webview properties
 - (void)setWebViewTapDetectionEnabled:(BOOL)isEnabled {
     static NSString *const event = @"touchend";
     
@@ -577,7 +610,8 @@
 }
 
 
-
+#pragma mark -
+#pragma mark UIWebView delegates
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
@@ -609,8 +643,37 @@
     [self increaseZoomFactorRange];*/
     
 }
+#pragma mark -
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return YES;
+}
+- (void)didReceiveMemoryWarning
+{
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Release any cached data, images, etc. that aren't in use.
+}
 
 
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+
+
+- (void)dealloc
+{
+    //[doneButtonPicker release];
+    [titleNote release];
+    [sendNote release];
+    //[imageView release];
+    // [notebookPicker release];
+    [super dealloc];
+}
 
 
 
