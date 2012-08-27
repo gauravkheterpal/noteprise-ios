@@ -40,13 +40,28 @@
     backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
     [self changeBkgrndImgWithOrientation];
     
+    self.navigationItem.rightBarButtonItem.title = @"Edit";
+     
+    UIImage* image3 = [UIImage imageNamed:@"edit_icon.png"];
+    CGRect frameimg = CGRectMake(0, 0, 32,32);
+    UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
+    [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+    [someButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
+    [someButton setShowsTouchWhenHighlighted:YES];
+    UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
+    
+    self.navigationItem.rightBarButtonItem = mailbutton;
+     self.navigationItem.rightBarButtonItem.tag = editBtnTag;
+    NSLog(@"tag = %d",self.navigationItem.rightBarButtonItem.tag);
+    /*
     //edit button as right bar button item
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
-                                     style:UIBarButtonItemStyleBordered
-                                    target:self
-                                    action:@selector(editPage:)];
+                                                                   style:UIBarButtonItemStyleBordered
+                                                                  target:self
+                                                                  action:@selector(editPage:)];
     self.navigationItem.rightBarButtonItem = editButton;
     //--------------------------------------------------------------
+    */
     
     
     [Utility showCoverScreen];
@@ -73,7 +88,7 @@
                      content = [content stringByReplacingOccurrencesOfString:@"<en-note>" withString:@"<en-note xmlns=\"http://www.w3.org/1999/xhtml\">"];
                      NSData *d= [content dataUsingEncoding:NSUTF8StringEncoding];
                      [noteContent loadData:d MIMEType:@"application/xhtml+xml" textEncodingName:@"UTF-8" baseURL:nil];
-  
+                     
                      textContent = (NSMutableString *)[[[Utility flattenNoteBody:content]stringByDecodingHTMLEntities] retain];
                      DebugLog(@"%@", textContent);
                      //noteContent.text = [[Utility flattenNoteBody:content]stringByDecodingHTMLEntities] ;
@@ -187,11 +202,22 @@
 }
 -(IBAction)editPage:(id)sender 
 {
-    if ([self.navigationItem.rightBarButtonItem.title isEqualToString:@"Edit"]) {
+    if (self.navigationItem.rightBarButtonItem.tag == editBtnTag) {
         saveToSFBarBtn.enabled = NO;
         postToChatterBarBtn.enabled = NO;
         
         self.navigationItem.rightBarButtonItem.title = @"Save to Evernote";
+        
+        UIImage* image3 = [UIImage imageNamed:@"save_icon.png"];
+        CGRect frameimg = CGRectMake(0, 0, 32,32);
+        UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
+        [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+        [someButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
+        [someButton setShowsTouchWhenHighlighted:YES];
+        UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
+        
+        self.navigationItem.rightBarButtonItem = mailbutton;
+        self.navigationItem.rightBarButtonItem.tag = saveBtnTag;
         dialog_imgView.hidden = NO;
         [loadingSpinner stopAnimating];
         loadingLbl.text = @"Edit mode activated...";
@@ -204,11 +230,23 @@
         [self setWebViewTapDetectionEnabled:YES];    
         [self increaseZoomFactorRange];
     }
-    else if ([self.navigationItem.rightBarButtonItem.title isEqualToString:@"Save to Evernote"]) {
+    else if (self.navigationItem.rightBarButtonItem.tag == saveBtnTag) {
 
         saveToSFBarBtn.enabled = YES;
         postToChatterBarBtn.enabled = YES;
         self.navigationItem.rightBarButtonItem.title = @"Edit";
+       
+        
+        UIImage* image3 = [UIImage imageNamed:@"edit_icon.png"];
+        CGRect frameimg = CGRectMake(0, 0, 32,32);
+        UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
+        [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+        [someButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
+        [someButton setShowsTouchWhenHighlighted:YES];
+        UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
+        
+        self.navigationItem.rightBarButtonItem = mailbutton;
+         self.navigationItem.rightBarButtonItem.tag = editBtnTag;
         [self setContentEditable:NO];
         [self setWebViewKeyPressDetectionEnabled:NO];
         [self setWebViewTapDetectionEnabled:NO];  
@@ -365,6 +403,17 @@
     
     if ([self.navigationItem.rightBarButtonItem.title isEqualToString:@"Edit"]) {
         self.navigationItem.rightBarButtonItem.title = @"Save to Evernote";
+       
+        UIImage* image3 = [UIImage imageNamed:@"save_icon.png"];
+        CGRect frameimg = CGRectMake(0, 0, 32,32);
+        UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
+        [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+        [someButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
+        [someButton setShowsTouchWhenHighlighted:YES];
+        UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
+        
+        self.navigationItem.rightBarButtonItem = mailbutton;
+         self.navigationItem.rightBarButtonItem.tag = saveBtnTag;
         saveToSFBarBtn.enabled = NO;
         postToChatterBarBtn.enabled = NO;
     }
@@ -416,7 +465,7 @@
     NSMutableString *bodyTxt =(NSMutableString *) [noteContent stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
     bodyTxt = (NSMutableString *)[bodyTxt stringByReplacingOccurrencesOfString:@"<en-note xmlns=\"http://www.w3.org/1999/xhtml\" contenteditable=\"false\">" withString:@"<en-note>"];
     
-     NSLog(@"htmlString : %@",bodyTxt); 
+    NSLog(@"htmlString : %@",bodyTxt); 
     NSString * ENML = [NSString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">\n%@",bodyTxt];
     
     
@@ -465,6 +514,17 @@
                                   [Utility hideCoverScreen];
                                   isErrorCreatingnote = YES;
                                   self.navigationItem.rightBarButtonItem.title = @"Edit";
+                                   
+                                  UIImage* image3 = [UIImage imageNamed:@"edit_icon.png"];
+                                  CGRect frameimg = CGRectMake(0, 0, 32,32);
+                                  UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
+                                  [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+                                  [someButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
+                                  [someButton setShowsTouchWhenHighlighted:YES];
+                                  UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
+                                  self.navigationItem.rightBarButtonItem = mailbutton;
+                                   self.navigationItem.rightBarButtonItem.tag = editBtnTag;
+                                  
                                   [self setContentEditable:NO];
                                   [self setWebViewKeyPressDetectionEnabled:NO];
                                   [self setWebViewTapDetectionEnabled:NO];

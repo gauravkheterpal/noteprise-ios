@@ -6,7 +6,8 @@
 #import <UIKit/UIKit.h>
 #import "SFRestAPI.h"
 
-
+static int editBtnTag = 1;
+static int saveBtnTag = 2;
 
 @interface NoteViewController : UIViewController <UIWebViewDelegate,SFRestDelegate,UIActionSheetDelegate>{
 

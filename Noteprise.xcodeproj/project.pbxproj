@@ -37,6 +37,10 @@
 		F438D46A15A013DB006ACD25 /* libSalesforceSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F438D45A15A013DB006ACD25 /* libSalesforceSDK.a */; };
 		F438D46B15A013DB006ACD25 /* libsbjson-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F438D46715A013DB006ACD25 /* libsbjson-ios.a */; };
 		F438D46D15A01563006ACD25 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F438D46C15A01563006ACD25 /* libxml2.dylib */; };
+		F446B88A15E7B2180083FE99 /* edit_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F446B88615E7B2180083FE99 /* edit_icon.png */; };
+		F446B88B15E7B2180083FE99 /* plus_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F446B88715E7B2180083FE99 /* plus_icon.png */; };
+		F446B88C15E7B2180083FE99 /* save_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F446B88815E7B2180083FE99 /* save_icon.png */; };
+		F446B88D15E7B2180083FE99 /* trash_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F446B88915E7B2180083FE99 /* trash_icon.png */; };
 		F44C565F159CB23900DC2B7A /* bgE-320x480.png in Resources */ = {isa = PBXBuildFile; fileRef = F44C565C159CB23900DC2B7A /* bgE-320x480.png */; };
 		F44C5660159CB23900DC2B7A /* bgE-480x320.png in Resources */ = {isa = PBXBuildFile; fileRef = F44C565D159CB23900DC2B7A /* bgE-480x320.png */; };
 		F44C5661159CB23900DC2B7A /* bgE-768x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = F44C565E159CB23900DC2B7A /* bgE-768x1024.png */; };
@@ -244,6 +248,10 @@
 		F438D46615A013DB006ACD25 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		F438D46715A013DB006ACD25 /* libsbjson-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libsbjson-ios.a"; sourceTree = "<group>"; };
 		F438D46C15A01563006ACD25 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		F446B88615E7B2180083FE99 /* edit_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = edit_icon.png; path = Noteprise/Resources/Images/edit_icon.png; sourceTree = SOURCE_ROOT; };
+		F446B88715E7B2180083FE99 /* plus_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = plus_icon.png; path = Noteprise/Resources/Images/plus_icon.png; sourceTree = SOURCE_ROOT; };
+		F446B88815E7B2180083FE99 /* save_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = save_icon.png; path = Noteprise/Resources/Images/save_icon.png; sourceTree = SOURCE_ROOT; };
+		F446B88915E7B2180083FE99 /* trash_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = trash_icon.png; path = Noteprise/Resources/Images/trash_icon.png; sourceTree = SOURCE_ROOT; };
 		F44C565C159CB23900DC2B7A /* bgE-320x480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bgE-320x480.png"; path = "Noteprise/Resources/Images/bgE-320x480.png"; sourceTree = SOURCE_ROOT; };
 		F44C565D159CB23900DC2B7A /* bgE-480x320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bgE-480x320.png"; path = "Noteprise/Resources/Images/bgE-480x320.png"; sourceTree = SOURCE_ROOT; };
 		F44C565E159CB23900DC2B7A /* bgE-768x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bgE-768x1024.png"; path = "Noteprise/Resources/Images/bgE-768x1024.png"; sourceTree = SOURCE_ROOT; };
@@ -933,6 +941,10 @@
 		F4D21301159B2BAB00610A18 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F446B88615E7B2180083FE99 /* edit_icon.png */,
+				F446B88715E7B2180083FE99 /* plus_icon.png */,
+				F446B88815E7B2180083FE99 /* save_icon.png */,
+				F446B88915E7B2180083FE99 /* trash_icon.png */,
 				F488D9F815E3B666001BA368 /* chatter_icon.png */,
 				F4BFE88915E4C49F00F3E261 /* profile_tab_icon.png */,
 				F44C5692159CC75B00DC2B7A /* bgE-480x287.png */,
@@ -1058,6 +1070,10 @@
 				F488D91C15E39028001BA368 /* ChatterGroupVCntrlViewController.xib in Resources */,
 				F488D9F915E3B666001BA368 /* chatter_icon.png in Resources */,
 				F4BFE88A15E4C49F00F3E261 /* profile_tab_icon.png in Resources */,
+				F446B88A15E7B2180083FE99 /* edit_icon.png in Resources */,
+				F446B88B15E7B2180083FE99 /* plus_icon.png in Resources */,
+				F446B88C15E7B2180083FE99 /* save_icon.png in Resources */,
+				F446B88D15E7B2180083FE99 /* trash_icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1157,7 +1173,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				PROVISIONING_PROFILE = "E5140E53-E0FE-4646-9531-D72CE63CADCF";
+				PROVISIONING_PROFILE = "ECED8C21-A1CC-41E1-BA93-36399FD1186C";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1182,7 +1198,7 @@
 					"\"$(SDKROOT)//usr/lib\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "E5140E53-E0FE-4646-9531-D72CE63CADCF";
+				PROVISIONING_PROFILE = "ECED8C21-A1CC-41E1-BA93-36399FD1186C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Ad Hoc";
@@ -1211,7 +1227,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				PROVISIONING_PROFILE = "E5140E53-E0FE-4646-9531-D72CE63CADCF";
+				PROVISIONING_PROFILE = "ECED8C21-A1CC-41E1-BA93-36399FD1186C";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1234,7 +1250,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				PROVISIONING_PROFILE = "E5140E53-E0FE-4646-9531-D72CE63CADCF";
+				PROVISIONING_PROFILE = "ECED8C21-A1CC-41E1-BA93-36399FD1186C";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1258,7 +1274,7 @@
 					"\"$(SDKROOT)//usr/lib\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "E5140E53-E0FE-4646-9531-D72CE63CADCF";
+				PROVISIONING_PROFILE = "ECED8C21-A1CC-41E1-BA93-36399FD1186C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1280,7 +1296,7 @@
 					"\"$(SDKROOT)//usr/lib\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "E5140E53-E0FE-4646-9531-D72CE63CADCF";
+				PROVISIONING_PROFILE = "ECED8C21-A1CC-41E1-BA93-36399FD1186C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

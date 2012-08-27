@@ -194,28 +194,59 @@ NSString* selectedObj,*selectedObjID;
 -(void)initToolbarButtons {
     UIToolbar* toolbar = [[UIToolbar alloc]
                           initWithFrame:CGRectMake(0, 0, 125, 45)];
-    [toolbar setBarStyle: UIBarStyleBlackTranslucent];
+    [toolbar setBarStyle: UIBarStyleBlackOpaque];
     
     // create an array for the buttons
     NSMutableArray* buttons = [[NSMutableArray alloc] initWithCapacity:4];
     UIBarButtonItem *editButton;
     if(!self.inEditMode)
-        editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(toggleEditMode)];
-    else 
+    {
+        UIImage* image3 = [UIImage imageNamed:@"edit_icon.png"];
+        CGRect frameimg = CGRectMake(0, 0, 32,32);
+        UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
+        [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+        [someButton addTarget:self action:@selector(toggleEditMode) forControlEvents:UIControlEventTouchUpInside];
+        [someButton setShowsTouchWhenHighlighted:YES];
+        UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
+        
+        editButton = mailbutton;
+        editButton.tag = 1;
+        // editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(toggleEditMode)];
+    }
+        else 
         editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(toggleEditMode)];
     [buttons addObject:editButton];
     [editButton release];
     // create a spacer between the buttons
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc]
-                               initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                               initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                target:nil
                                action:nil];
     [buttons addObject:spacer];
     [spacer release];
+    
+    
+    UIImage* image3 = [UIImage imageNamed:@"save_icon.png"];
+    CGRect frameimg = CGRectMake(0, 0, 32,32);
+    UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
+    [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+    [someButton addTarget:self action:@selector(addSelectedEvernoteToSF) forControlEvents:UIControlEventTouchUpInside];
+    [someButton setShowsTouchWhenHighlighted:YES];
+    UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
+    
+   [buttons addObject:mailbutton];
+   // self.navigationItem.rightBarButtonItem.tag = saveBtnTag;
+    
+    
+    /*
     UIBarButtonItem *addButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(addSelectedEvernoteToSF)];
     [buttons addObject:addButton];
     [addButton release];
+     */
     // create a spacer between the buttons
+    
+    
+    
     UIBarButtonItem *spacer1 = [[UIBarButtonItem alloc]
                                 initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
                                 target:nil
