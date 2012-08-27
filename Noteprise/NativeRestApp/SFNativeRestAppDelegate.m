@@ -330,12 +330,18 @@ NSString * const kDefaultLoginHost = @"login.salesforce.com";
 
 - (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator didFailWithError:(NSError *)error {
     NSLog(@"oauthCoordinator:didFailWithError: %@", error);
-    [coordinator.view removeFromSuperview];
+    //[coordinator.view removeFromSuperview];
     
     if (error.code == kSFOAuthErrorInvalidGrant) {  //invalid cached refresh token
         //restart the login process asynchronously
         NSLog(@"Logging out because oauth failed with error code: %d",error.code);
         [self performSelector:@selector(logout) withObject:nil afterDelay:0];
+    }
+    else if(error.code == kSFOAuthErrorAccessDenied)
+    {
+        NSLog(@"Logging out because AccessDenied error code: %d",error.code);
+        [self performSelector:@selector(logout) withObject:nil afterDelay:0];
+        
     }
     else {
         // show alert and retry
