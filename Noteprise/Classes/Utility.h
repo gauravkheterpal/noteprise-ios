@@ -14,6 +14,19 @@
 #define EVERNOTE_LOGIN_HOST @"evernote_login_host_pref"
 #define kCellImageViewTag           1000
 #define kCellLabelTag               1001
+
+/*
+ *  System Versioning Preprocessor Macros
+ */ 
+
+#define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
+#define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
+
+
+
 static NSString *const kWebViewDidPressKeyURL   = @"http://didPressKey/";
 static NSString *const kWebViewDidTapURL        = @"http://didTap/";
 static NSString *const kHTML2DOCConverterURL    = @"http://csboxnotes.appspot.com/html2doc";

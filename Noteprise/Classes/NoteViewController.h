@@ -48,5 +48,9 @@ static int saveBtnTag = 2;
 //-(void)setupNavigationButtons ;
 -(void)changeBkgrndImgWithOrientation;
 -(void)hideDoneToastMsg:(id)sender;
+- (NSString *)getDataBetweenFromString:(NSString *)data leftString:(NSString *)leftData rightString:(NSString *)rightData leftOffset:(NSInteger)leftPos;
+-(void)dismissPreviousPopover;
+-(void)showLoadingLblWithText:(NSString*)Loadingtext;
+-(void)postToChatterWall ;
 
 @end
