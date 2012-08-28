@@ -43,7 +43,7 @@
     self.navigationItem.rightBarButtonItem.title = @"Edit";
      
     UIImage* image3 = [UIImage imageNamed:@"edit_icon.png"];
-    CGRect frameimg = CGRectMake(0, 0, 32,32);
+    CGRect frameimg = CGRectMake(0, 0, 27,27);
     UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
     [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
     [someButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
@@ -209,7 +209,7 @@
         self.navigationItem.rightBarButtonItem.title = @"Save to Evernote";
         
         UIImage* image3 = [UIImage imageNamed:@"save_icon.png"];
-        CGRect frameimg = CGRectMake(0, 0, 32,32);
+        CGRect frameimg = CGRectMake(0, 0, 27,27);
         UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
         [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
         [someButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
@@ -238,7 +238,7 @@
        
         
         UIImage* image3 = [UIImage imageNamed:@"edit_icon.png"];
-        CGRect frameimg = CGRectMake(0, 0, 32,32);
+        CGRect frameimg = CGRectMake(0, 0, 27,27);
         UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
         [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
         [someButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
@@ -405,7 +405,7 @@
         self.navigationItem.rightBarButtonItem.title = @"Save to Evernote";
        
         UIImage* image3 = [UIImage imageNamed:@"save_icon.png"];
-        CGRect frameimg = CGRectMake(0, 0, 32,32);
+        CGRect frameimg = CGRectMake(0, 0, 27,27);
         UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
         [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
         [someButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
@@ -516,7 +516,7 @@
                                   self.navigationItem.rightBarButtonItem.title = @"Edit";
                                    
                                   UIImage* image3 = [UIImage imageNamed:@"edit_icon.png"];
-                                  CGRect frameimg = CGRectMake(0, 0, 32,32);
+                                  CGRect frameimg = CGRectMake(0, 0, 27,27);
                                   UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
                                   [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
                                   [someButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];

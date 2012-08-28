@@ -202,7 +202,7 @@ NSString* selectedObj,*selectedObjID;
     if(!self.inEditMode)
     {
         UIImage* image3 = [UIImage imageNamed:@"edit_icon.png"];
-        CGRect frameimg = CGRectMake(0, 0, 32,32);
+        CGRect frameimg = CGRectMake(0, 0, 27,27);
         UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
         [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
         [someButton addTarget:self action:@selector(toggleEditMode) forControlEvents:UIControlEventTouchUpInside];
@@ -227,7 +227,7 @@ NSString* selectedObj,*selectedObjID;
     
     
     UIImage* image3 = [UIImage imageNamed:@"save_icon.png"];
-    CGRect frameimg = CGRectMake(0, 0, 32,32);
+    CGRect frameimg = CGRectMake(0, 0, 27,27);
     UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
     [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
     [someButton addTarget:self action:@selector(addSelectedEvernoteToSF) forControlEvents:UIControlEventTouchUpInside];
