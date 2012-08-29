@@ -69,6 +69,7 @@
 #define SF_FIELDS_LIMIT_CROSSED_ALERT_MSG @"The number of characters in your note exceed the allowed limit on Salesforce Field.Do you want to truncate note content & post?"
 #define CHATTER_LIMIT_CROSSED_ALERT_MSG  @"The number of characters in your note exceed the allowed limit on Salesforce Chatter.Do you want to truncate note content & post?"
 #define CHATTER_LIMIT_CROSSED_ERROR_MSG @"The number of characters in your note exceed the allowed limit on Salesforce Chatter. Please split your content into multiple notes and try again."
+#define CHATTER_MENTIONS_CROSSED_ERROR_MSG @"The number of Mentions exceed the allowed limit on Salesforce Chatter. Please deselect some users and try again."
 #define SF_FIELDS_LIMIT_CROSSED_ERROR_MSG @"The number of characters in your note exceed the length of the Salesforce field. Please choose another field and try again"
 #define CHATTER_API_DISABLED @"Unable to post. Chatter Connect API is disabled."
 

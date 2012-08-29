@@ -133,11 +133,18 @@
 }
 -(void)postToSelectedChatterUsers {
     if([Utility checkNetwork]) {
+        int selectedUsers = 0;
+        for(NSNumber *userRow in selectedUsersRow){
+            selectedUsers += ([userRow boolValue] == YES?1:0); //certain object is @"Apple"
+        }
+        DebugLog(@"occurrences%d",selectedUsers);
         if([self.noteContent length] > 1000){
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Noteprise" message:CHATTER_LIMIT_CROSSED_ALERT_MSG delegate:self cancelButtonTitle:ALERT_NEGATIVE_BUTTON_TEXT otherButtonTitles:ALERT_POSITIVE_BUTTON_TEXT, nil];
             alert.tag = CHATTER_POST_LIMIT_ALERT_TAG;
             [alert show];
             [alert release];
+        } else if (selectedUsers > 25) {
+            [Utility showAlert:CHATTER_MENTIONS_CROSSED_ERROR_MSG];
         }
         else {
             [self createSFRequestToPostToSelectedChatterUsers:self.noteContent];
