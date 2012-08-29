@@ -656,7 +656,7 @@
 
 
 - (void)request:(SFRestRequest*)request didFailLoadWithError:(NSError*)error {
-    DebugLog(@"request:didFailLoadWithError: %@ code:%d", error,error.code);
+    DebugLog(@"request:didFailLoadWithError: %@ code:%d path:%@", error,error.code,request.path);
     DebugLog(@"request:didFailLoadWithError:error.userInfo :%@",error.userInfo);
     [Utility hideCoverScreen];
     [self hideDoneToastMsg:nil];
@@ -664,6 +664,8 @@
     NSString *alertMessaage ;
     if([[error.userInfo valueForKey:@"errorCode"] isEqualToString:@"STRING_TOO_LONG"]) {
         alertMessaage = CHATTER_LIMIT_CROSSED_ERROR_MSG;
+    } else if([[error.userInfo valueForKey:@"errorCode"] isEqualToString:@"API_DISABLED_FOR_ORG"]) {
+        alertMessaage = CHATTER_API_DISABLED;
     }
     else {
         alertMessaage = [error.userInfo valueForKey:@"message"];

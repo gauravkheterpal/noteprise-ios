@@ -33,7 +33,7 @@
     NSString *noteContent;
     int selectedRowIndex;
     IBOutlet UIImageView *backgroundImgView;
-
+    IBOutlet UIImageView *dialog_imgView;
 }
 
 @end

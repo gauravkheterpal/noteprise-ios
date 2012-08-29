@@ -40,19 +40,25 @@
 #define CHATTER_POST_TO_GROUP_LIMIT_ALERT_TAG      3000
 #define SAVE_TO_SFOBJ_LIMIT_ALERT_TAG              4000
 
+#pragma mark - Generic Messages
 #define NETWORK_UNAVAILABLE_MSG  @"No network connectivity!"
 #define ALERT_POSITIVE_BUTTON_TEXT @"Yes"
 #define ALERT_NEGATIVE_BUTTON_TEXT @"No"
 #define ALERT_NEUTRAL_BUTTON_TEXT @"OK"
-
-#define ERROR_AUTHENTICATE_WITH_EVERNOTE_MSG @"Error. Could not authenticate."
-#define EVERNOTE_LOGIN_FAILED_MSG @"Login Failed. Please check your username and password."
+#define LOADING_MSG @"Loading.."
+#define DONE_MSG @"Done!"
 #define SOME_ERROR_OCCURED_MESSAGE @"An error occurred. Please try again."
 
-#define LOADING_MSG @"Loading.."
+#pragma mark - Note related Messages
+#define ERROR_AUTHENTICATE_WITH_EVERNOTE_MSG @"Error. Could not authenticate."
+#define EVERNOTE_LOGIN_FAILED_MSG @"Login Failed. Please check your username and password."
 #define ERROR_LISTING_NOTE_MSG @"Note listing failed.Please retry again later."
 #define LOADING_NOTEBOOKS_MSG @"Loading user Notebooks..."
-#define DONE_MSG @"Done!"
+#define note_please_enter_text_for_search_message @"Please enter the text to be searched"
+#define progress_dialog_tag_search_message @"Searching tag in notes.."
+#define progress_dialog_keyword_search_message @"Searching keyword in notes.."
+#define progress_dialog_note_search_message @"Searching note.."
+#define progress_dialog_notebook_search_message @"Searching notebook.."
 #define NOTE_CREATION_SUCCESS_MSG @"Note successfully created"
 #define NOTE_CREATION_FAILED_MSG @"Note creation failed!"
 #define NOTE_DELETE_SUCCESS_MSG @"Note deleted successfully."
@@ -64,7 +70,7 @@
 #define CHATTER_LIMIT_CROSSED_ALERT_MSG  @"The number of characters in your note exceed the allowed limit on Salesforce Chatter.Do you want to truncate note content & post?"
 #define CHATTER_LIMIT_CROSSED_ERROR_MSG @"The number of characters in your note exceed the allowed limit on Salesforce Chatter. Please split your content into multiple notes and try again."
 #define SF_FIELDS_LIMIT_CROSSED_ERROR_MSG @"The number of characters in your note exceed the length of the Salesforce field. Please choose another field and try again"
-
+#define CHATTER_API_DISABLED @"Unable to post. Chatter Connect API is disabled."
 
 #define NOTEBOOK_MISSING_IN_EVERNOTE_MSG @"There isnt any notebook in your Evernote account.Please create one & try again"
 #define NOTEBOOK_MISSING_MSG @"Please select a Notebook"

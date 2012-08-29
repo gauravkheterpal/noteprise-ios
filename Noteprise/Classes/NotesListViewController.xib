@@ -80,6 +80,19 @@
 						<float key="IBUISectionHeaderHeight">22</float>
 						<float key="IBUISectionFooterHeight">22</float>
 					</object>
+					<object class="IBUIImageView" id="749673749">
+						<reference key="NSNextResponder" ref="119234428"/>
+						<int key="NSvFlags">-2147483355</int>
+						<string key="NSFrame">{{50, 163}, {220, 91}}</string>
+						<reference key="NSSuperview" ref="119234428"/>
+						<reference key="NSWindow"/>
+						<bool key="IBUIUserInteractionEnabled">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<object class="NSCustomResource" key="IBUIImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">alert.png</string>
+						</object>
+					</object>
 					<object class="IBUILabel" id="975928190">
 						<reference key="NSNextResponder" ref="119234428"/>
 						<int key="NSvFlags">-2147483345</int>
@@ -202,7 +215,6 @@
 						<string key="NSFrame">{{0, 372}, {320, 44}}</string>
 						<reference key="NSSuperview" ref="119234428"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -321,6 +333,14 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">dialog_imgView</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="749673749"/>
+					</object>
+					<int key="connectionID">56</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="1032599786"/>
 						<reference key="destination" ref="372490531"/>
@@ -386,12 +406,16 @@
 							<reference ref="975928190"/>
 							<reference ref="882786972"/>
 							<reference ref="22884463"/>
+							<reference ref="749673749"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">13</int>
 						<reference key="object" ref="661413886"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+						</object>
 						<reference key="parent" ref="119234428"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -458,6 +482,11 @@
 						<reference key="object" ref="22884463"/>
 						<reference key="parent" ref="119234428"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">55</int>
+						<reference key="object" ref="749673749"/>
+						<reference key="parent" ref="119234428"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -480,6 +509,7 @@
 					<string>43.IBPluginDependency</string>
 					<string>46.IBPluginDependency</string>
 					<string>51.IBPluginDependency</string>
+					<string>55.IBPluginDependency</string>
 					<string>9.IBPluginDependency</string>
 				</object>
 				<object class="NSArray" key="dict.values">
@@ -493,6 +523,7 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<integer value="3"/>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -515,7 +546,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">53</int>
+			<int key="maxID">56</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -529,6 +560,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addNoteBtn</string>
 							<string>backgroundImgView</string>
+							<string>dialog_imgView</string>
 							<string>loadingLbl</string>
 							<string>notesTbl</string>
 							<string>searchBar</string>
@@ -538,6 +570,7 @@
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>UIBarButtonItem</string>
+							<string>UIImageView</string>
 							<string>UIImageView</string>
 							<string>UILabel</string>
 							<string>UITableView</string>
@@ -552,6 +585,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addNoteBtn</string>
 							<string>backgroundImgView</string>
+							<string>dialog_imgView</string>
 							<string>loadingLbl</string>
 							<string>notesTbl</string>
 							<string>searchBar</string>
@@ -566,6 +600,10 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">backgroundImgView</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">dialog_imgView</string>
 								<string key="candidateClassName">UIImageView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
@@ -614,11 +652,13 @@
 			<object class="NSArray" key="dict.sortedKeys">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>Settings.png</string>
+				<string>alert.png</string>
 				<string>bgE-320x480.png</string>
 			</object>
 			<object class="NSArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>{32, 32}</string>
+				<string>{200, 100}</string>
 				<string>{320, 480}</string>
 			</object>
 		</object>

@@ -425,7 +425,9 @@
     NSString *alertMessaage ;
     if([[error.userInfo valueForKey:@"errorCode"] isEqualToString:@"STRING_TOO_LONG"])
         alertMessaage = CHATTER_LIMIT_CROSSED_ERROR_MSG;
-    else {
+    else if([[error.userInfo valueForKey:@"errorCode"] isEqualToString:@"API_DISABLED_FOR_ORG"]) {
+        alertMessaage = CHATTER_API_DISABLED;
+    } else {
         alertMessaage = [error.userInfo valueForKey:@"message"];
     }
     //add your failed error handling here
