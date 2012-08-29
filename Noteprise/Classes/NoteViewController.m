@@ -64,10 +64,34 @@
         NSLog(@"tag = %d",self.navigationItem.rightBarButtonItem.tag);
     }
 
+
+    self.navigationItem.rightBarButtonItem.title = @"Edit";
+     
+    UIImage* image3 = [UIImage imageNamed:@"edit_icon.png"];
+    CGRect frameimg = CGRectMake(0, 0, 32,32);
+    UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
+    [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+    [someButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
+    [someButton setShowsTouchWhenHighlighted:YES];
+    UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
+    
+    self.navigationItem.rightBarButtonItem = mailbutton;
+     self.navigationItem.rightBarButtonItem.tag = editBtnTag;
+    NSLog(@"tag = %d",self.navigationItem.rightBarButtonItem.tag);
+    /*
+    //edit button as right bar button item
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
+                                                                   style:UIBarButtonItemStyleBordered
+                                                                  target:self
+                                                                  action:@selector(editPage:)];
+    self.navigationItem.rightBarButtonItem = editButton;
+    //--------------------------------------------------------------
+    */
+
     [Utility showCoverScreen];
     [loadingSpinner startAnimating];
     dialog_imgView.hidden = NO;
-    loadingLbl.text = @"Loading...";
+    loadingLbl.text = GETTING_NOTE_DETAILS_MSG;
     loadingLbl.hidden = NO;
     DebugLog(@"guid:%@",guid);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^(void) {
@@ -163,7 +187,23 @@
         }
     }
 }
+#pragma mark - UIAlertViewDelegate
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == CHATTER_POST_LIMIT_ALERT_TAG && alertView.cancelButtonIndex == buttonIndex) {
+    } else if (alertView.tag == CHATTER_POST_LIMIT_ALERT_TAG) {
+        [Utility showCoverScreen];
+        [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_WALL_MSG];
+        //truncationg note text to 1000 character for posting to Chatter
+        textContent = [[textContent substringToIndex:999]mutableCopy];
+        NSString * path = POST_TO_CHATTER_WALL_URL;
+        NSDictionary *param = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",textContent, @"text",nil];
+        NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:param],@"messageSegments", nil];
+        NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:message,@"body", nil];
+        SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];
+        [[SFRestAPI sharedInstance] send:request delegate:self];
+    }
+}
 //0 Post to Wall
 //1 Post to chatter users
 //2 Post to chatter groups
@@ -198,17 +238,26 @@
 }
 
 -(void)postToChatterWall {
-    [Utility showCoverScreen];
-    [self showLoadingLblWithText:@"Posting to Chatter Wall"];
-    NSString * path = @"v23.0/chatter/feeds/news/me/feed-items";
-    NSDictionary *param = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",textContent, @"text",nil];
-    NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:param],@"messageSegments", nil];
-    NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:message,@"body", nil];
-    SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];
-    [[SFRestAPI sharedInstance] send:request delegate:self];
+    
+    if([textContent length] >1000) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Noteprise" message:CHATTER_LIMIT_CROSSED_ALERT_MSG delegate:self cancelButtonTitle:ALERT_NEGATIVE_BUTTON_TEXT otherButtonTitles:ALERT_POSITIVE_BUTTON_TEXT, nil];
+        alert.tag = CHATTER_POST_LIMIT_ALERT_TAG;
+        [alert show];
+        [alert release];
+    } else {
+        [Utility showCoverScreen];
+        [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_WALL_MSG];
+        NSString * path = POST_TO_CHATTER_WALL_URL;
+        NSDictionary *param = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",textContent, @"text",nil];
+        NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:param],@"messageSegments", nil];
+        NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:message,@"body", nil];
+        SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];
+        [[SFRestAPI sharedInstance] send:request delegate:self];
+    }
 }
 
 -(IBAction)linkEvernoteToSF:(id)sender {
+    [self dismissPreviousPopover];
     [Utility showCoverScreen];
     [self moveToSF];
 }
@@ -584,11 +633,11 @@
     DebugLog(@"request:%@",[request description]);
     DebugLog(@"jsonResponse:%@",jsonResponse);
 
-    if([[request path] rangeOfString:@"/chatter/feeds/news/me/feed-items"].location != NSNotFound){
+    if([[request path] rangeOfString:POST_TO_CHATTER_WALL_URL].location != NSNotFound){
         //post to wall
         if([[jsonResponse objectForKey:@"errors"] count]==0){
             [Utility hideCoverScreen];
-            [self showLoadingLblWithText:@"Done!"];
+            [self showLoadingLblWithText:salesforce_chatter_post_self_success_message];
             [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
             [loadingSpinner stopAnimating];
             NSArray *records = [jsonResponse objectForKey:@"records"];
@@ -597,7 +646,7 @@
         }
         else{
             [loadingSpinner stopAnimating];
-            [Utility showAlert:@"Problem in Posting to Chatter feed."];
+            [Utility showAlert:POSTING_NOTE_FAILED_TO_CHATTER_WALL_MSG];
             [Utility hideCoverScreen];
         }
         
@@ -607,11 +656,19 @@
 
 
 - (void)request:(SFRestRequest*)request didFailLoadWithError:(NSError*)error {
-    DebugLog(@"request:didFailLoadWithError: %@", error);
+    DebugLog(@"request:didFailLoadWithError: %@ code:%d", error,error.code);
+    DebugLog(@"request:didFailLoadWithError:error.userInfo :%@",error.userInfo);
     [Utility hideCoverScreen];
     [self hideDoneToastMsg:nil];
     //add your failed error handling here
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:[error.userInfo valueForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    NSString *alertMessaage ;
+    if([[error.userInfo valueForKey:@"errorCode"] isEqualToString:@"STRING_TOO_LONG"]) {
+        alertMessaage = CHATTER_LIMIT_CROSSED_ERROR_MSG;
+    }
+    else {
+        alertMessaage = [error.userInfo valueForKey:@"message"];
+    }
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:alertMessaage delegate:nil cancelButtonTitle:ALERT_NEUTRAL_BUTTON_TEXT otherButtonTitles:nil, nil];
     [alert show];
     [alert release];
 }
@@ -629,7 +686,5 @@
     [Utility hideCoverScreen];
     [self hideDoneToastMsg:nil];
 }
-
-
 
 @end

@@ -89,10 +89,10 @@
     sfObj = [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];*/
 
     if(row == 0) {
-        cell.textLabel.text = @"Objects";
+        cell.textLabel.text = @"Object";
         NSDictionary *sfObj = [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];
         if(sfObj != nil)
-            cell.detailTextLabel.text = [sfObj valueForKey:@"label"];
+            cell.detailTextLabel.text = [sfObj valueForKey:OBJ_LABEL];
         else {
             cell.detailTextLabel.text = @"";
         }
@@ -102,11 +102,10 @@
         cell.textLabel.text = @"Field";
         NSDictionary *sfObjField = [stdDefaults valueForKey:SFOBJ_FIELD_TO_MAP_KEY];
         if(sfObjField != nil)
-            cell.detailTextLabel.text = [sfObjField valueForKey:@"label"];
+            cell.detailTextLabel.text = [sfObjField valueForKey:FIELD_LABEL];
         else {
             cell.detailTextLabel.text = @"";
         }
-        //cell.detailTextLabel.text = [sfObjField valueForKey:@"label"];
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
@@ -168,7 +167,7 @@
         SFRestRequest *request = [[SFRestAPI sharedInstance] requestForDescribeGlobal]; 
         [[SFRestAPI sharedInstance] send:request delegate:self];
     } else {
-        [Utility showAlert:@"Network Unavailable!Network connection is needed for this action."];
+        [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
     }
     
 }
@@ -176,16 +175,16 @@
     if([Utility checkNetwork]) {
         NSString *sfObjtoMap;
         NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
-        sfObjtoMap = [[stdDefaults valueForKey:SFOBJ_TO_MAP_KEY]valueForKey:@"name"];
+        sfObjtoMap = [[stdDefaults valueForKey:SFOBJ_TO_MAP_KEY]valueForKey:OBJ_NAME];
         if (sfObjtoMap == nil) {
-            [Utility showAlert:@"Please select a object first before you can select a field."];
+            [Utility showAlert:SF_OBJECT_MISSING_MSG];
         }
         if(sfObjtoMap) {
             SFRestRequest * request =  [[SFRestAPI sharedInstance] requestForDescribeWithObjectType:sfObjtoMap];
             [[SFRestAPI sharedInstance] send:request delegate:self];
         }
     } else {
-        [Utility showAlert:@"Network Unavailable!Network connection is needed for this action."];
+        [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
     }
 }
 #pragma mark - SFRestAPIDelegate
@@ -216,7 +215,7 @@
             
             SFObjsViewController *sfObjs = [[SFObjsViewController alloc]init];
             sfObjs.delegate = popover_delegate;
-            NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"name"  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+            NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:OBJ_NAME  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
             updateableObjArray = [updateableObjArray sortedArrayUsingDescriptors:[NSMutableArray arrayWithObjects:descriptor,nil]];
             sfObjs.sfObjsList = updateableObjArray ;
             //DebugLog(@"records:%@", sfObjs.sfObjsList);
@@ -224,7 +223,7 @@
             [self.navigationController pushViewController:sfObjs animated:YES];
         }
         else{
-            [Utility showAlert:@"Problem in fetching sobjects."];
+            [Utility showAlert:ERROR_LISTING_SFOBJECTS_MSG];
             [Utility hideCoverScreen];
         }
         
@@ -244,72 +243,21 @@
                    
                 }
             }
-           
-            /*BOOL hasNameField = false;
-            for (int i=0;i<[fieldsRows count];i++) {
-                if(!([[fieldsRows objectAtIndex:i]  valueForKey:@"name"] == [NSNull null])) 
-                    {
-                        if ([[[fieldsRows objectAtIndex:i]  valueForKey:@"name"] isEqualToString:@"Name"]||[[[fieldsRows objectAtIndex:i]  valueForKey:@"name"] isEqualToString:@"name"]) {
-                            hasNameField = true;
-                        }
-                    }
-            }
-            if(hasNameField == true)
-                DebugLog(@"name field exist");
-            else
-                DebugLog(@"Name field not exist");*/ 
             
             FieldsViewController *fieldsVCntrl = [[FieldsViewController alloc]init];
-            NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"label"  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+            NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:FIELD_LABEL  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
             fieldsRows = [[fieldsRows sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
             fieldsVCntrl.objFields = fieldsRows;
             fieldsVCntrl.delegate = popover_delegate;
             [self.navigationController pushViewController:fieldsVCntrl animated:YES];
         }
         else{
-            [Utility showAlert:@"Problem in fetching descriptions of selected sobjects."];
+            [Utility showAlert:ERROR_LISTING_SFOBJECT_METADATA_MSG];
             [Utility hideCoverScreen];
         }
     }
-    else if([[request description] rangeOfString:@"SELECT Name,Id"].location != NSNotFound){
-        
-        if([[jsonResponse objectForKey:@"errors"] count]==0){
-            NSArray *records = [jsonResponse objectForKey:@"records"];
-            DebugLog(@"request:didLoadResponse: #records: %d records %@ req %@ rsp %@", records.count,records,request,jsonResponse);
-            //self.dataRows = records;
-            //[self.tableView reloadData];
-        }
-        else{
-            [Utility showAlert:@"Problem in fetching Task."];
-            [Utility hideCoverScreen];
-        }
-        
-        
-    }
-    else if([[request description] rangeOfString:@"Created from Noteprise"].location != NSNotFound){
-        
-        if([[jsonResponse objectForKey:@"errors"] count]==0){
-            NSArray *records = [jsonResponse objectForKey:@"records"];
-            DebugLog(@"request:didLoadResponse: #records: %d records %@ req %@ rsp %@", records.count,records,request,jsonResponse);
-            DebugLog(@"class %@",[[jsonResponse objectForKey:@"errors"] class]);
-            //parrentTaskID = [jsonResponse objectForKey:@"id"];
-            //[self addAttachment];
-            
-        }
-        else{
-            [Utility showAlert:@"Problem in adding Task."];
-            [Utility hideCoverScreen];
-        }
-        
-    }
+
     else{
-        
-        if([[jsonResponse objectForKey:@"errors"] count]==0){
-            [Utility showAlert:@"Task added to SalesForce SuccessFully"];
-        }
-        else{
-            [Utility showAlert:@"Problem in adding attachment to the Task."];
-        }
         [Utility hideCoverScreen];
     }
 }

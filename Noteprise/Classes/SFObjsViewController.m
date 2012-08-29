@@ -77,11 +77,11 @@
     //}
     // Configure the cell...
     cell.textLabel.textColor = [UIColor whiteColor];
-    cell.textLabel.text = [[sfObjsList objectAtIndex:indexPath.row]valueForKey:@"name"];
+    cell.textLabel.text = [[sfObjsList objectAtIndex:indexPath.row]valueForKey:OBJ_NAME];
     NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *sfobjToMapWith = [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];
     if(sfobjToMapWith != nil) {
-        if([[[sfObjsList objectAtIndex:indexPath.row]valueForKey:@"name"] isEqualToString:[sfobjToMapWith valueForKey:@"name"]])
+        if([[[sfObjsList objectAtIndex:indexPath.row]valueForKey:OBJ_NAME] isEqualToString:[sfobjToMapWith valueForKey:OBJ_NAME]])
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
     return cell;
@@ -138,7 +138,7 @@
     if (currentsfObj != nil) {
         NSInteger index;
         for(int i=0 ;i<[sfObjsList count];i++){
-            if ([[[sfObjsList objectAtIndex:i] valueForKey:@"name"] isEqualToString:[currentsfObj valueForKey:@"name"]]) {
+            if ([[[sfObjsList objectAtIndex:i] valueForKey:OBJ_NAME] isEqualToString:[currentsfObj valueForKey:OBJ_NAME]]) {
                 index = i;
                 break;
             }
@@ -152,7 +152,7 @@
     [stdDefaults setObject:[Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] forKey:OLD_SFOBJ_FIELD_TO_MAP_KEY];
     // Set the checkmark accessory for the selected row.
     [[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:UITableViewCellAccessoryCheckmark]; 
-    NSDictionary *dict = [[NSMutableDictionary alloc]initWithObjectsAndKeys:[[sfObjsList objectAtIndex:indexPath.row]valueForKey:@"name"],@"name",[[sfObjsList objectAtIndex:indexPath.row]valueForKey:@"label"],@"label", nil];
+    NSDictionary *dict = [[NSMutableDictionary alloc]initWithObjectsAndKeys:[[sfObjsList objectAtIndex:indexPath.row]valueForKey:OBJ_NAME],OBJ_NAME,[[sfObjsList objectAtIndex:indexPath.row]valueForKey:OBJ_LABEL],OBJ_LABEL, nil];
     [stdDefaults setObject:dict forKey:SFOBJ_TO_MAP_KEY];
     [stdDefaults removeObjectForKey:SFOBJ_FIELD_TO_MAP_KEY];
     [stdDefaults synchronize];
@@ -172,7 +172,7 @@
     if([Utility checkNetwork]){
         [Utility showCoverScreen];
         NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
-        NSString *sfObjtoMap = [[stdDefaults valueForKey:SFOBJ_TO_MAP_KEY]valueForKey:@"name"];
+        NSString *sfObjtoMap = [[stdDefaults valueForKey:SFOBJ_TO_MAP_KEY]valueForKey:OBJ_NAME];
         /*if (sfObjtoMap == nil) {
             sfObjtoMap = @"Account";
         }*/
@@ -181,7 +181,7 @@
             [[SFRestAPI sharedInstance] send:request delegate:self];
         }
     } else {
-        [Utility showAlert:@"Network Unavailable!Network connection is needed for this action."];
+        [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
     }
 }
 
@@ -208,7 +208,7 @@
             
             FieldsViewController *fieldsVCntrl = [[FieldsViewController alloc]init];
             fieldsVCntrl.delegate = self.delegate;
-            NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"label" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+            NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:FIELD_LABEL ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
             fieldsRows = [[fieldsRows sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
             fieldsVCntrl.objFields = fieldsRows;
             [self.navigationController pushViewController:fieldsVCntrl animated:YES];
@@ -217,17 +217,11 @@
             //[self.tableView reloadData];
         }
         else{
-            [Utility showAlert:@"Problem in fetching descriptions of selected sobjects."];
+            [Utility showAlert:ERROR_LISTING_SFOBJECT_METADATA_MSG];
             [Utility hideCoverScreen];
         }
     } else{
-        
-        if([[jsonResponse objectForKey:@"errors"] count]==0){
-            [Utility showAlert:@"Evernote Successfully mapped with Saleforce"];
-        }
-        else{
-            [Utility showAlert:@"Problem in mapping Evernote with Salesforce Object."];
-        }
+        [Utility showAlert:ERROR_LISTING_SFOBJECT_METADATA_MSG];
         [Utility hideCoverScreen];
     }
 }
@@ -237,7 +231,7 @@
     NSLog(@"request:didFailLoadWithError: %@", error);
     [Utility hideCoverScreen];
     //add your failed error handling here
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:[error.userInfo valueForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:[error.userInfo valueForKey:@"message"] delegate:nil cancelButtonTitle:ALERT_NEUTRAL_BUTTON_TEXT otherButtonTitles:nil, nil];
     [alert show];
     [alert release];
 }

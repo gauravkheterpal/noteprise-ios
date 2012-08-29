@@ -59,61 +59,131 @@ NSString* selectedObj,*selectedObjID;
         [array addObject:[NSNumber numberWithBool:NO]];
     selectedRow = array;
 }
+- (void)viewDidLoad
+{
+    backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
+    [self changeBkgrndImgWithOrientation];
+    self.fieldsRows = [[NSMutableArray alloc]init];
+    [self fetchSelectedObjList];
+    //selectedRow = [[NSMutableArray alloc]init];
+    self.inEditMode = NO;
+	self.selectedImage = [UIImage imageNamed:@"btnChecked.png"];
+	self.unselectedImage = [UIImage imageNamed:@"btnUnchecked.png"];
+    
+    DebugLog(@"subview:%@",[self.view subviews]);
+    
+}
+-(void)viewDidAppear:(BOOL)animated{
+    selectedAccIdx=-999;
+    // create a toolbar where we can place some buttons
+    [self initToolbarButtons];
+    
+}
+-(void)initToolbarButtons {
+    UIToolbar* toolbar = [[UIToolbar alloc]
+                          initWithFrame:CGRectMake(0, 0, 125, 45)];
+    [toolbar setBarStyle: UIBarStyleBlackOpaque];
+    
+    // create an array for the buttons
+    NSMutableArray* buttons = [[NSMutableArray alloc] initWithCapacity:4];
+    UIBarButtonItem *editButton;
+    if(!self.inEditMode)
+    {
+        UIImage* image3 = [UIImage imageNamed:@"edit_icon.png"];
+        CGRect frameimg = CGRectMake(0, 0, 27,27);
+        UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
+        [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+        [someButton addTarget:self action:@selector(toggleEditMode) forControlEvents:UIControlEventTouchUpInside];
+        [someButton setShowsTouchWhenHighlighted:YES];
+        UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
+        
+        editButton = mailbutton;
+        editButton.tag = 1;
+        // editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(toggleEditMode)];
+    }
+    else 
+        editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(toggleEditMode)];
+    [buttons addObject:editButton];
+    [editButton release];
+    // create a spacer between the buttons
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc]
+                               initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                               target:nil
+                               action:nil];
+    [buttons addObject:spacer];
+    [spacer release];
+    
+    
+    UIImage* image3 = [UIImage imageNamed:@"save_icon.png"];
+    CGRect frameimg = CGRectMake(0, 0, 27,27);
+    UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
+    [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+    [someButton addTarget:self action:@selector(addSelectedEvernoteToSF) forControlEvents:UIControlEventTouchUpInside];
+    [someButton setShowsTouchWhenHighlighted:YES];
+    UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
+    
+    [buttons addObject:mailbutton];
+    // self.navigationItem.rightBarButtonItem.tag = saveBtnTag;
+    
+    
+    /*
+     UIBarButtonItem *addButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(addSelectedEvernoteToSF)];
+     [buttons addObject:addButton];
+     [addButton release];
+     */
+    // create a spacer between the buttons
+    
+    
+    
+    UIBarButtonItem *spacer1 = [[UIBarButtonItem alloc]
+                                initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                target:nil
+                                action:nil];
+    [buttons addObject:spacer1];
+    [spacer1 release];
+    // put the buttons in the toolbar and release them
+    [toolbar setItems:buttons animated:NO];
+    [buttons release];
+    
+    // place the toolbar into the navigation bar
+    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
+                                               initWithCustomView:toolbar] autorelease];
+    [toolbar release];
+    
+}
+
+-(IBAction)toggleEditMode{
+	DebugLog(@"toggleEditMode");
+	self.inEditMode = !self.inEditMode;
+    self.navigationItem.rightBarButtonItem = nil;
+    [self initToolbarButtons];
+    if(!self.inEditMode)
+        [self initializeSelectedRow];
+    
+	[tableView reloadData];
+}
+
+-(void)changeBkgrndImgWithOrientation {
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
+        if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
+            backgroundImgView.image = [UIImage imageNamed:@"bgE-480x287.png"];
+        else {
+            backgroundImgView.image = [UIImage imageNamed:@"bgE-320x480.png"];
+        }
+    } else {
+        if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
+            backgroundImgView.image = [UIImage imageNamed:@"bgE-1024x704.png"];
+        else {
+            backgroundImgView.image = [UIImage imageNamed:@"bgE-768x1024.png"];
+        }
+    }
+}
 -(void)showLoadingLblWithText:(NSString*)Loadingtext{
     [loadingSpinner startAnimating];
     dialog_imgView.hidden = NO;
     loadingLbl.text = Loadingtext;
     loadingLbl.hidden = NO;
-}
--(void)addSelectedEvernoteToSF{
-    //[Utility showCoverScreen];
-    if([Utility checkNetwork]) {
-        if(([Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] == nil ) && [Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] !=nil && [Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] != nil) {
-            [Utility setValueInPref:[Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] forKey:SFOBJ_TO_MAP_KEY];
-            [Utility setValueInPref:[Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] forKey:SFOBJ_FIELD_TO_MAP_KEY];
-        }
-        NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
-        NSDictionary *sfobj =  [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];
-        NSDictionary *sfobjField =  [stdDefaults valueForKey:SFOBJ_FIELD_TO_MAP_KEY];
-        DebugLog(@"sfobj:%@ sfobjField:%@",sfobj,sfobjField);
-        if(sfobjField && sfobj){
-            NSMutableDictionary * fields =[[NSMutableDictionary alloc] init];
-            [fields setValue:noteContent forKey:[sfobjField valueForKey:@"name"]];
-            selectedCount = 0;
-            if(self.inEditMode){
-                for(int i = 0;i < [selectedRow count] ; i++) {
-                    if ([[selectedRow objectAtIndex:i] boolValue] == YES) {
-                        [self showLoadingLblWithText:@"Sending Note..."];
-                        SFRestRequest * request =  [[SFRestAPI sharedInstance] requestForUpdateWithObjectType:[sfobj valueForKey:@"name"] objectId:[[self.dataRows objectAtIndex:i] valueForKey:@"Id"] fields:fields];
-                        [[SFRestAPI sharedInstance] send:request delegate:self];
-                        selectedCount ++;
-                    }
-                }
-                
-            }
-            else {
-                
-            //----------------------------------------------------------------------------------------------------
-            selectedCount = 0;
-                if(selectedAccIdx == -999) {   
-                    [Utility hideCoverScreen];
-                    [Utility showAlert:[NSString stringWithFormat:@"Please select %@ to map with",[sfobj valueForKey:@"name"]]];
-                } else {
-                    [self showLoadingLblWithText:@"Sending Note..."];
-                    SFRestRequest * request =    [[SFRestAPI sharedInstance] requestForUpdateWithObjectType:[sfobj valueForKey:@"name"] objectId:[[self.dataRows objectAtIndex:selectedAccIdx] valueForKey:@"Id"] fields:fields];
-                    [[SFRestAPI sharedInstance] send:request delegate:self];
-                    selectedCount ++;
-                }
-            
-            }
-        } else {
-            [Utility hideCoverScreen];
-            [Utility showAlert:@"Please select a object and field through Settings first."];
-        }
-    } else {
-            [Utility showAlert:@"Network Unavailable!Network connection is needed for this action."];
-    }
-    
 }
 
 -(void)fetchSelectedObjList {
@@ -122,7 +192,7 @@ NSString* selectedObj,*selectedObjID;
         NSLog(@"old obj:%@ \n old field:%@ \nfield value:%@ sf obje:%@",[Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY],[Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY],[Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY],[Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY]);
         if(([Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY] == nil )&& ([Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] == nil)) {
             //set previous selected mapping
-            [Utility showAlert:@"Please select a object and field through Settings first."];
+            [Utility showAlert:SF_OBJECT_FIELD_MISSING_MSG];
             return;
         }
         else if(([Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY] == nil ) && [Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] !=nil && [Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] != nil) {
@@ -132,15 +202,15 @@ NSString* selectedObj,*selectedObjID;
         }
         NSString *selectedSFObj;
         NSUserDefaults* stdDefaults = [NSUserDefaults standardUserDefaults];
-       
-
+        
+        
         NSDictionary *sfObj = [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];
         if(sfObj) {
-                selectedSFObj = [sfObj valueForKey:@"name"];
+            selectedSFObj = [sfObj valueForKey:OBJ_NAME];
             NSMutableString *queryString;
             
             if ([selectedSFObj isEqualToString:@"Task"]) {
-                 queryString = [NSMutableString stringWithFormat:@"SELECT Id,Subject from %@",selectedSFObj];
+                queryString = [NSMutableString stringWithFormat:@"SELECT Id,Subject from %@",selectedSFObj];
             }
             else if ([selectedSFObj isEqualToString:@"Case"]) {
                 queryString = [NSMutableString stringWithFormat:@"SELECT Id,CaseNumber from %@",selectedSFObj];
@@ -174,136 +244,98 @@ NSString* selectedObj,*selectedObjID;
                 queryString = [NSMutableString stringWithFormat:@"SELECT Name,Id from %@",selectedSFObj];
             }
             
-           
             
+            [self showLoadingLblWithText:progress_dialog_salesforce_getting_record_list_message];
             SFRestRequest *request = [[SFRestAPI sharedInstance] requestForQuery:queryString];    
             [[SFRestAPI sharedInstance] send:request delegate:self];
             self.title = [NSString stringWithFormat:@"%@",selectedSFObj];
         }
     } else {
-        [Utility showAlert:@"Network Unavailable!Network connection is needed for this action."];
+        [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
     }
 }
 
--(void)viewDidAppear:(BOOL)animated{
-    selectedAccIdx=-999;
-    // create a toolbar where we can place some buttons
-    [self initToolbarButtons];
-
-}
--(void)initToolbarButtons {
-    UIToolbar* toolbar = [[UIToolbar alloc]
-                          initWithFrame:CGRectMake(0, 0, 125, 45)];
-    [toolbar setBarStyle: UIBarStyleBlackOpaque];
-    
-    // create an array for the buttons
-    NSMutableArray* buttons = [[NSMutableArray alloc] initWithCapacity:4];
-    UIBarButtonItem *editButton;
-    if(!self.inEditMode)
-    {
-        UIImage* image3 = [UIImage imageNamed:@"edit_icon.png"];
-        CGRect frameimg = CGRectMake(0, 0, 27,27);
-        UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
-        [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
-        [someButton addTarget:self action:@selector(toggleEditMode) forControlEvents:UIControlEventTouchUpInside];
-        [someButton setShowsTouchWhenHighlighted:YES];
-        UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
-        
-        editButton = mailbutton;
-        editButton.tag = 1;
-        // editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(toggleEditMode)];
-    }
-        else 
-        editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(toggleEditMode)];
-    [buttons addObject:editButton];
-    [editButton release];
-    // create a spacer between the buttons
-    UIBarButtonItem *spacer = [[UIBarButtonItem alloc]
-                               initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                               target:nil
-                               action:nil];
-    [buttons addObject:spacer];
-    [spacer release];
-    
-    
-    UIImage* image3 = [UIImage imageNamed:@"save_icon.png"];
-    CGRect frameimg = CGRectMake(0, 0, 27,27);
-    UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
-    [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
-    [someButton addTarget:self action:@selector(addSelectedEvernoteToSF) forControlEvents:UIControlEventTouchUpInside];
-    [someButton setShowsTouchWhenHighlighted:YES];
-    UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
-    
-   [buttons addObject:mailbutton];
-   // self.navigationItem.rightBarButtonItem.tag = saveBtnTag;
-    
-    
-    /*
-    UIBarButtonItem *addButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(addSelectedEvernoteToSF)];
-    [buttons addObject:addButton];
-    [addButton release];
-     */
-    // create a spacer between the buttons
-    
-    
-    
-    UIBarButtonItem *spacer1 = [[UIBarButtonItem alloc]
-                                initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
-                                target:nil
-                                action:nil];
-    [buttons addObject:spacer1];
-    [spacer1 release];
-    // put the buttons in the toolbar and release them
-    [toolbar setItems:buttons animated:NO];
-    [buttons release];
-    
-    // place the toolbar into the navigation bar
-    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
-                                               initWithCustomView:toolbar] autorelease];
-    [toolbar release];
-
-}
-
--(IBAction)toggleEditMode{
-	DebugLog(@"toggleEditMode");
-	self.inEditMode = !self.inEditMode;
-    self.navigationItem.rightBarButtonItem = nil;
-    [self initToolbarButtons];
-    if(!self.inEditMode)
-        [self initializeSelectedRow];
-
-	[tableView reloadData];
-}
-- (void)viewDidLoad
-{
-    backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-    backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
-    [self changeBkgrndImgWithOrientation];
-    self.fieldsRows = [[NSMutableArray alloc]init];
-    [self fetchSelectedObjList];
-    //selectedRow = [[NSMutableArray alloc]init];
-    self.inEditMode = NO;
-	self.selectedImage = [UIImage imageNamed:@"btnChecked.png"];
-	self.unselectedImage = [UIImage imageNamed:@"btnUnchecked.png"];
-    
-    DebugLog(@"subview:%@",[self.view subviews]);
-    
-}
--(void)changeBkgrndImgWithOrientation {
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
-        if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
-            backgroundImgView.image = [UIImage imageNamed:@"bgE-480x287.png"];
+-(void)addSelectedEvernoteToSF{
+    //[Utility showCoverScreen];
+    if([Utility checkNetwork]) {
+        NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
+        NSDictionary *sfobjField =  [stdDefaults valueForKey:SFOBJ_FIELD_TO_MAP_KEY];
+        if([self.noteContent length] <= [[sfobjField objectForKey:FIELD_LIMIT]intValue])
+            [self createSFRequestToSaveSelectedNoteWithContent:self.noteContent];
         else {
-            backgroundImgView.image = [UIImage imageNamed:@"bgE-320x480.png"];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Noteprise" message:SF_FIELDS_LIMIT_CROSSED_ALERT_MSG delegate:self cancelButtonTitle:ALERT_NEGATIVE_BUTTON_TEXT otherButtonTitles:ALERT_POSITIVE_BUTTON_TEXT, nil];
+            alert.tag = SAVE_TO_SFOBJ_LIMIT_ALERT_TAG;
+            [alert show];
+            [alert release];
         }
     } else {
-        if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
-            backgroundImgView.image = [UIImage imageNamed:@"bgE-1024x704.png"];
-        else {
-            backgroundImgView.image = [UIImage imageNamed:@"bgE-768x1024.png"];
+            [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
+    }
+    
+}
+-(void)createSFRequestToSaveSelectedNoteWithContent:(NSString*)evernoteContent {
+    
+    if(([Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] == nil ) && [Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] !=nil && [Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] != nil) {
+        [Utility setValueInPref:[Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] forKey:SFOBJ_TO_MAP_KEY];
+        [Utility setValueInPref:[Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] forKey:SFOBJ_FIELD_TO_MAP_KEY];
+    }
+    NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *sfobj =  [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];
+    NSDictionary *sfobjField =  [stdDefaults valueForKey:SFOBJ_FIELD_TO_MAP_KEY];
+    DebugLog(@"sfobj:%@ sfobjField:%@",sfobj,sfobjField);
+    if(sfobjField && sfobj){
+        NSMutableDictionary * fields =[[NSMutableDictionary alloc] init];
+        [fields setValue:evernoteContent forKey:[sfobjField valueForKey:FIELD_NAME]];
+        selectedCount = 0;
+        if(self.inEditMode){
+            for(int i = 0;i < [selectedRow count] ; i++) {
+                if ([[selectedRow objectAtIndex:i] boolValue] == YES) {
+                    [self showLoadingLblWithText:progress_dialog_salesforce_record_updating_message];
+                    SFRestRequest * request =  [[SFRestAPI sharedInstance] requestForUpdateWithObjectType:[sfobj valueForKey:OBJ_NAME] objectId:[[self.dataRows objectAtIndex:i] valueForKey:@"Id"] fields:fields];
+                    [[SFRestAPI sharedInstance] send:request delegate:self];
+                    selectedCount ++;
+                }
+            }
+            
         }
+        else {
+            
+            //----------------------------------------------------------------------------------------------------
+            selectedCount = 0;
+            if(selectedAccIdx == -999) {   
+                [Utility hideCoverScreen];
+                [Utility showAlert:[NSString stringWithFormat:@"Please select %@ to map with",[sfobj valueForKey:OBJ_NAME]]];
+            } else {
+                [self showLoadingLblWithText:progress_dialog_salesforce_record_updating_message];
+                SFRestRequest * request =    [[SFRestAPI sharedInstance] requestForUpdateWithObjectType:[sfobj valueForKey:OBJ_NAME] objectId:[[self.dataRows objectAtIndex:selectedAccIdx] valueForKey:@"Id"] fields:fields];
+                [[SFRestAPI sharedInstance] send:request delegate:self];
+                selectedCount ++;
+            }
+            
+        }
+    } else {
+        [Utility hideCoverScreen];
+        [Utility showAlert:SF_OBJECT_FIELD_MISSING_MSG];
+    }
+
+}
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == SAVE_TO_SFOBJ_LIMIT_ALERT_TAG && alertView.cancelButtonIndex == buttonIndex) {
+    } else if (alertView.tag == SAVE_TO_SFOBJ_LIMIT_ALERT_TAG) {
+        [Utility showCoverScreen];
+        [self showLoadingLblWithText:progress_dialog_salesforce_record_updating_message];
+        //truncationg note text to 1000 character for posting to Chatter
+        DebugLog(@"old length:%d", [self.noteContent length]);
+        NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
+        NSDictionary *sfobjField =  [stdDefaults valueForKey:SFOBJ_FIELD_TO_MAP_KEY];
+        int field_limit = [[sfobjField objectForKey:FIELD_LIMIT]intValue];
+        NSString *truncateNoteContent = [[self.noteContent substringToIndex:field_limit-1]mutableCopy];
+        DebugLog(@"new length:%d", [truncateNoteContent length]);
+        [self createSFRequestToSaveSelectedNoteWithContent:truncateNoteContent];
     }
 }
+#pragma mark -
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return YES;
@@ -332,6 +364,11 @@ NSString* selectedObj,*selectedObjID;
     if([[request description] rangeOfString:@"SELECT"].location != NSNotFound){
         
         if([[jsonResponse objectForKey:@"errors"] count]==0){
+            [Utility hideCoverScreen];
+            dialog_imgView.hidden = YES;
+            loadingLbl.hidden = YES;
+            doneImgView.hidden = YES;
+            [loadingSpinner stopAnimating];
             NSArray *records = [jsonResponse objectForKey:@"records"];
             DebugLog(@"request:didLoadResponse: #records: %d records %@ req %@ rsp %@", records.count,records,request,jsonResponse);
             
@@ -339,12 +376,12 @@ NSString* selectedObj,*selectedObjID;
             self.dataRows = [records sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
             [self initializeSelectedRow];
             if([self.dataRows count] == 0) {
-                [Utility showAlert:[NSString stringWithFormat:@"No Record in Selected Salesforce object:%@",self.title]];
+                [Utility showAlert:[NSString stringWithFormat:@"%@%@",NO_RECORD_IN_SF_OBJ_MSG,self.title]];
             }
             [tableView reloadData];
         }
         else{
-            [Utility showAlert:@"Problem in fetching Task."];
+            [Utility showAlert:ERROR_LISTING_SF_OBJECT_MSG];
             [Utility hideCoverScreen];
         }
         
@@ -356,17 +393,15 @@ NSString* selectedObj,*selectedObjID;
             if(selectedCount == 0 ) {
                 [loadingSpinner stopAnimating];
                 doneImgView.hidden = NO;
-                [self showLoadingLblWithText:@"Done!"];
+                [self showLoadingLblWithText:progress_dialog_salesforce_record_updated_success_message];
                 [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
-                //[Utility showAlert:@"Note successfully saved to Salesforce!"];
             }
             [loadingSpinner stopAnimating];
         }
         else{
             [loadingSpinner stopAnimating];
-            [self showLoadingLblWithText:@"Note Save failed"];
+            [self showLoadingLblWithText:salesforce_record_saving_failed_message];
             [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(hideToastMsg:) userInfo:nil repeats:NO];
-            //[Utility showAlert:@"Problem in mapping Evernote with Salesforce Object."];
         }
         [Utility hideCoverScreen];
     }
@@ -374,11 +409,18 @@ NSString* selectedObj,*selectedObjID;
 
 
 - (void)request:(SFRestRequest*)request didFailLoadWithError:(NSError*)error {
-    DebugLog(@"request:didFailLoadWithError: %@", error);
+    DebugLog(@"request:didFailLoadWithError: %@ code:%d", error,error.code);
     [Utility hideCoverScreen];
     [self hideToastMsg:nil];
     //add your failed error handling here
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:[error.userInfo valueForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    NSString *alertMessaage ;
+    if([[error.userInfo valueForKey:@"errorCode"] isEqualToString:@"STRING_TOO_LONG"]) {
+        alertMessaage = SF_FIELDS_LIMIT_CROSSED_ERROR_MSG;
+    }
+    else {
+        alertMessaage = [error.userInfo valueForKey:@"message"];
+    }
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:alertMessaage delegate:nil cancelButtonTitle:ALERT_NEUTRAL_BUTTON_TEXT otherButtonTitles:nil, nil];
     [alert show];
     [alert release];
 }
@@ -399,20 +441,6 @@ NSString* selectedObj,*selectedObjID;
 
 
 #pragma mark - Table view data source
-
-- (void)tableView:(UITableView *)_tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(self.inEditMode) {
-        BOOL selected = [[selectedRow objectAtIndex:[indexPath row]] boolValue];
-        [selectedRow replaceObjectAtIndex:[indexPath row] withObject:[NSNumber numberWithBool:!selected]];
-        DebugLog(@"%@",selectedRow);
-        [_tableView deselectRowAtIndexPath:indexPath animated:YES];
-        [_tableView reloadData];
-    } else {
-        selectedAccIdx=indexPath.row;
-    }
-    DebugLog(@"sel obj:%@",[self.dataRows objectAtIndex:indexPath.row]);
-}
-
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -461,7 +489,7 @@ NSString* selectedObj,*selectedObjID;
     
     NSDictionary *sfObj = [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];
     if(sfObj) {
-            selectedSFObj = [sfObj valueForKey:@"name"];
+            selectedSFObj = [sfObj valueForKey:OBJ_NAME];
         /*else {
             selectedSFObj = @"Account";
             [Utility setSFDefaultMappingValues];
@@ -573,4 +601,19 @@ NSString* selectedObj,*selectedObjID;
     cell.textLabel.textColor = [UIColor blackColor];
 	return cell;
 }
+
+#pragma mark - Table view delegate
+- (void)tableView:(UITableView *)_tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(self.inEditMode) {
+        BOOL selected = [[selectedRow objectAtIndex:[indexPath row]] boolValue];
+        [selectedRow replaceObjectAtIndex:[indexPath row] withObject:[NSNumber numberWithBool:!selected]];
+        DebugLog(@"%@",selectedRow);
+        [_tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [_tableView reloadData];
+    } else {
+        selectedAccIdx=indexPath.row;
+    }
+    DebugLog(@"sel obj:%@",[self.dataRows objectAtIndex:indexPath.row]);
+}
+
 @end

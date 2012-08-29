@@ -26,6 +26,85 @@
 #define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
 
 
+#define POST_TO_CHATTER_WALL_URL @"v23.0/chatter/feeds/news/me/feed-items"
+#define LIST_OF_CHATTER_FOLLOWING_URL @"/services/data/v23.0/chatter/users/me/following?filterType=005&pageSize=1000"
+#define LIST_OF_CHATTER_GROUP_URL @"v23.0/chatter/users/me/groups?pageSize=250"
+
+#define OBJ_NAME @"name"
+#define OBJ_LABEL @"label"
+#define FIELD_NAME @"name"
+#define FIELD_LABEL @"label"
+#define FIELD_LIMIT @"length"
+
+#define CHATTER_POST_LIMIT_ALERT_TAG               2000
+#define CHATTER_POST_TO_GROUP_LIMIT_ALERT_TAG      3000
+#define SAVE_TO_SFOBJ_LIMIT_ALERT_TAG              4000
+
+#define NETWORK_UNAVAILABLE_MSG  @"No network connectivity!"
+#define ALERT_POSITIVE_BUTTON_TEXT @"Yes"
+#define ALERT_NEGATIVE_BUTTON_TEXT @"No"
+#define ALERT_NEUTRAL_BUTTON_TEXT @"OK"
+
+#define ERROR_AUTHENTICATE_WITH_EVERNOTE_MSG @"Error. Could not authenticate."
+#define EVERNOTE_LOGIN_FAILED_MSG @"Login Failed. Please check your username and password."
+#define SOME_ERROR_OCCURED_MESSAGE @"An error occurred. Please try again."
+
+#define LOADING_MSG @"Loading.."
+#define ERROR_LISTING_NOTE_MSG @"Note listing failed.Please retry again later."
+#define LOADING_NOTEBOOKS_MSG @"Loading user Notebooks..."
+#define DONE_MSG @"Done!"
+#define NOTE_CREATION_SUCCESS_MSG @"Note successfully created"
+#define NOTE_CREATION_FAILED_MSG @"Note creation failed!"
+#define NOTE_DELETE_SUCCESS_MSG @"Note deleted successfully."
+#define NOTE_DELETE_FAILED_MSG @"Note could not be deleted!"
+#define NOTE_CREATING_MSG @"Creating Note..."
+#define GETTING_NOTE_DETAILS_MSG @"Getting note details.."
+
+#define SF_FIELDS_LIMIT_CROSSED_ALERT_MSG @"The number of characters in your note exceed the allowed limit on Salesforce Field.Do you want to truncate note content & post?"
+#define CHATTER_LIMIT_CROSSED_ALERT_MSG  @"The number of characters in your note exceed the allowed limit on Salesforce Chatter.Do you want to truncate note content & post?"
+#define CHATTER_LIMIT_CROSSED_ERROR_MSG @"The number of characters in your note exceed the allowed limit on Salesforce Chatter. Please split your content into multiple notes and try again."
+#define SF_FIELDS_LIMIT_CROSSED_ERROR_MSG @"The number of characters in your note exceed the length of the Salesforce field. Please choose another field and try again"
+
+
+#define NOTEBOOK_MISSING_IN_EVERNOTE_MSG @"There isnt any notebook in your Evernote account.Please create one & try again"
+#define NOTEBOOK_MISSING_MSG @"Please select a Notebook"
+#define NOTE_CREATION_ALL_FIELDS_REQUIRED_MSG @"All fields are required."
+#define LOCATION_TRACKING_DISABLED_MSG @"To re-enable & attach location with Note, please go to Settings and turn on Location Service for this app."
+#define ATTACHING_USER_LOCATION_TO_NOTE_MSG @"Attaching user location..."
+#define FAILED_RETRIEVE_USER_LOCATION_MSG @"Failed to retrieve user location!"
+
+#pragma mark - Salesforce Related messages
+#define SF_OBJECT_FIELD_MISSING_MSG @"Please select a object and field through Settings first."
+#define SF_OBJECT_MISSING_MSG @"Please select a object first before you can select a field."
+#define salesforce_record_saving_failed_message @"Failed to save record(s)."
+#define progress_dialog_salesforce_getting_record_list_message @"Getting records list.."
+#define CHATTER_POST_USER_MISSING_MSG @"Please select a user to make Chatter Post"
+#define CHATTER_POST_GROUP_MISSING_MSG @"Please select a group to make Chatter Post"
+
+#define NO_RECORD_IN_SF_OBJ_MSG @"No Record in Selected Salesforce object:"
+#define ERROR_LISTING_SFOBJECTS_MSG @"Error in fetching sobjects."
+#define ERROR_LISTING_SF_OBJECT_MSG @"Error in fetching selected SF object listing."
+#define ERROR_LISTING_SFOBJECT_METADATA_MSG @"Error in fetching descriptions of selected sobjects."
+#define progress_dialog_salesforce_record_updated_success_message @"Record(s) updated successfully."
+#define progress_dialog_salesforce_record_updating_message @"Updating selected record(s)..."
+#define progress_dialog_salesforce_save_record_message @"Saving record.."
+
+#pragma mark - Chatter Related messages
+#define POSTING_NOTE_TO_CHATTER_WALL_MSG @"Publishing to your feed.."
+#define POSTING_NOTE_TO_CHATTER_USER_MSG @"Publishing to your Chatter feed.."
+#define POSTING_NOTE_TO_CHATTER_GROUP_MSG @"Publishing to Chatter group feed.."
+#define progress_dialog_chatter_getting_following_data_message @"Getting list of Chatter users.."
+#define progress_dialog_chatter_getting_group_data_message @"Getting list of Chatter groups.."
+#define salesforce_chatter_post_self_success_message @"The selected note has been succesfully posted to your Chatter feed."
+#define salesforce_chatter_post_user_with_mentions_success_message @"The selected note has been succesfully posted to the chosen Chatter user feeds."
+#define salesforce_chatter_post_group_success_message @"The selected note has been succesfully posted to the chosen Chatter group feed."
+
+
+#define ERROR_SAVING_NOTE_TO_EVERNOTE_MSG @"Error saving note:"
+#define POSTING_NOTE_FAILED_TO_CHATTER_WALL_MSG @"Posting to Chatter Wall failed"
+#define ERROR_LISTING_CHATTER_USERS_MSG @"Error in Listing to Chatter Users."
+#define POSTING_NOTE_FAILED_TO_CHATTER_USER_MSG @"Posting to Chatter Users failed"
+#define ERROR_LISTING_CHATTER_GROUPS_MSG @"Error in Listing to Chatter Groups."
 
 static NSString *const kWebViewDidPressKeyURL   = @"http://didPressKey/";
 static NSString *const kWebViewDidTapURL        = @"http://didTap/";

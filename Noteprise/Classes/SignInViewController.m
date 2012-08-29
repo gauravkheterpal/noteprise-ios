@@ -24,8 +24,6 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 205;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-     //   backgroundImg.image = [UIImage imageNamed:@"evernoteBg.png"];
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     [self changeBkgrndImgWithOrientation:orientation];
 	// Do any additional setup after loading the view, typically from a nib.
@@ -56,35 +54,6 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 205;
                 }
            }
 }
-//-(void)changeBkgrndImgWithOrientation {
-//    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
-//        if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
-//            backgroundImg.image = [UIImage imageNamed:@"evernoteBg480x300.png"];
-//        else {
-//            backgroundImg.image = [UIImage imageNamed:@"evernoteBg320x460.png"];
-//        }
-//    } else {
-//        
-//        if(self.interfaceOrientation == UIInterfaceOrientationLandscapeRight || self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft) {
-//            DebugLog(@"land");
-//            backgroundImg.image = [UIImage imageNamed:@"evernoteBg-1024x748.png"];
-//            signInBtn.frame = CGRectMake(400, 520, 235, 57);
-//        }
-//        else {
-//                        DebugLog(@"port");
-//            backgroundImg.image = [UIImage imageNamed:@"evernoteBg768x1024.png"];
-//                        signInBtn.frame = CGRectMake(270, 700, 235, 57);
-//        }
-//    }
-//}
-/*
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    [self changeBkgrndImgWithOrientation];
-    return YES;
-    //return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-}
- */
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [self changeBkgrndImgWithOrientation:toInterfaceOrientation];
 }
@@ -122,13 +91,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 205;
                 // show an alert, etc
                 // ...
                 DebugLog(@"authenticateWithViewController error:%d desc:%@",error.code,error.description);
-                [Utility showAlert:@"Error. Could not authenticate."];
-                /*UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Error" 
-                                                                 message:@"Could not authenticate" 
-                                                                delegate:nil 
-                                                       cancelButtonTitle:@"OK" 
-                                                       otherButtonTitles:nil] autorelease];
-                [alert show];*/
+                [Utility showAlert:ERROR_AUTHENTICATE_WITH_EVERNOTE_MSG];
             } else {
                 DebugLog(@"authenticated! noteStoreUrl:%@ webApiUrlPrefix:%@", session.noteStoreUrl, session.webApiUrlPrefix);
                 // authentication succeeded :)
@@ -138,7 +101,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 205;
             } 
         }];
     } else {
-        [Utility showAlert:@"Network connectivity needed to login to Evernote"];
+        [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
     }
 }
 - (void)loadNotesListAfterAuthentication 

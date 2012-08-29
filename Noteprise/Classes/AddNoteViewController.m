@@ -52,12 +52,14 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
     //[bodyTxtView loadHTMLString:@"" baseURL:nil];
     
 
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self selector:@selector(keyboardWillShow:)
-     name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self selector:@selector(keyboardWillHide:)
-     name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification 
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification 
+                                               object:nil];
     [self setContentEditable:YES];
     [self setWebViewKeyPressDetectionEnabled:YES];
     [self setWebViewTapDetectionEnabled:YES];    
@@ -66,7 +68,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
     
     @try {
         dialog_imgView.hidden = NO;
-        loadingLbl.text = @"Loading user Notebooks...";
+        loadingLbl.text = LOADING_NOTEBOOKS_MSG;
         //[loadingLbl sizeToFit];
         loadingLbl.hidden = NO;
         [Utility showCoverScreen];
@@ -101,13 +103,13 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
     }
     @catch (EDAMUserException *exception) {
         DebugLog(@"Recvd Exception:%d",exception.errorCode );
-        [Utility showAlert:@"Login Failed. Please check your username and password."];
+        [Utility showAlert:EVERNOTE_LOGIN_FAILED_MSG];
     }
     @catch (EDAMSystemException *exception) {
         [Utility showExceptionAlert:exception.description];
     }   
     @catch (EDAMNotFoundException *exception) {
-        [Utility showExceptionAlert:@"Reason Unknown"];
+        [Utility showExceptionAlert:SOME_ERROR_OCCURED_MESSAGE];
     }
     
     [super viewDidLoad];
@@ -178,8 +180,8 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 -(IBAction)createNoteEvernote:(id)sender{
     NSMutableString *bodyTxt =(NSMutableString *) [bodyTxtView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML"];
     DebugLog(@"outerhtml:%@",bodyTxt);
-    if([titleNote.text isEqualToString:@""] || [bodyTxt isEqualToString:@""]){
-        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Missing Field" message:@"Please Enter Note Title & Note Body text" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    if([titleNote.text isEqualToString:@""] || [bodyTxt isEqualToString:@""] || [bodyTxt isEqualToString:@"<br>"]){
+        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Missing Field" message:NOTE_CREATION_ALL_FIELDS_REQUIRED_MSG delegate:nil cancelButtonTitle:ALERT_NEUTRAL_BUTTON_TEXT otherButtonTitles:nil, nil];
         [alert show];
         [alert release];
         return;
@@ -196,7 +198,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
     BOOL locationAllowed = [CLLocationManager locationServicesEnabled];
     if (locationAllowed==NO) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Service Disabled"
-                                                        message:@"To re-enable & attach location with Note, please go to Settings and turn on Location Service for this app."
+                                                        message:LOCATION_TRACKING_DISABLED_MSG
                                                        delegate:nil
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
@@ -206,7 +208,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
     } else {
         [locationManager startUpdatingLocation];
         dialog_imgView.hidden = NO;
-        loadingLbl.text = @"Attaching user location...";
+        loadingLbl.text = ATTACHING_USER_LOCATION_TO_NOTE_MSG;
         //[loadingLbl sizeToFit];
         loadingLbl.hidden = NO;
     }
@@ -248,7 +250,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
         [loadingSpinner startAnimating];
         dialog_imgView.hidden = NO;
         
-        loadingLbl.text = @"Creating Note...";
+        loadingLbl.text = NOTE_CREATING_MSG;
         loadingLbl.hidden = NO;
         __block BOOL isErrorCreatingnote = NO;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^(void) {
@@ -265,7 +267,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
                              dialog_imgView.hidden = NO;
                              doneImgView.hidden = NO;
                              [loadingSpinner stopAnimating];
-                             loadingLbl.text = @"Note was saved!";
+                             loadingLbl.text = NOTE_CREATION_SUCCESS_MSG;
                              DebugLog(@"note desc:lat:%f long:%f",[note attributes].latitude,[note attributes].longitude);
                              DebugLog(@"note desc:%@",[note description]);
                              [Utility hideCoverScreen];
@@ -288,11 +290,10 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
                                   });
                                   
                               }];
-                //[[Evernote sharedInstance] createNote:note];
             }
             @catch (id  exception) {
                 dispatch_async(dispatch_get_main_queue(), ^(void) {
-                    NSString * errorMessage = [NSString stringWithFormat:@"Error saving note: error code %i", [exception errorCode]];
+                    NSString * errorMessage = [NSString stringWithFormat:@"%@ error code %i",ERROR_SAVING_NOTE_TO_EVERNOTE_MSG,[exception errorCode]];
                     [Utility showAlert:errorMessage];
                     dialog_imgView.hidden = YES;
                     loadingLbl.hidden = YES;
@@ -305,7 +306,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
             }
         });
     } else {
-        [Utility showAlert:@"Please select a notebook"];
+        [Utility showAlert:NOTEBOOK_MISSING_MSG];
     }
     
 }
@@ -351,7 +352,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 }
 -(IBAction)selectNoteBook:(id)sender{
     if ([listOfItems count] == 0) {
-        [Utility showAlert:@"There isnt any notebook in your Evernote account.Please create a one & try again"];
+        [Utility showAlert:NOTEBOOK_MISSING_IN_EVERNOTE_MSG];
         return;
     }
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -506,7 +507,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
     //if ([error code] != kCLErrorLocationUnknown) {
     [manager stopUpdatingLocation];
     manager.delegate = nil;
-    loadingLbl.text = @"Failed to retrieve user location!";
+    loadingLbl.text = FAILED_RETRIEVE_USER_LOCATION_MSG;
     [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
     [Utility hideCoverScreen];
     [self createEvernoteWithUserLocation:0.0 longitude:0.0];
@@ -655,7 +656,11 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
     
     // Release any cached data, images, etc. that aren't in use.
 }
-
+-(void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [super viewWillDisappear:animated];
+}
 
 - (void)viewDidUnload
 {

@@ -76,7 +76,7 @@
     self.selectedImage = [UIImage imageNamed:@"btnChecked.png"];
 	self.unselectedImage = [UIImage imageNamed:@"btnUnchecked.png"];
 
-    [loadingSpinner startAnimating];
+    //[loadingSpinner startAnimating];
     [Utility showCoverScreen];
     backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
@@ -104,40 +104,67 @@
     }
 }
 -(void)fetchListOfChatterGroup {
-    
-    NSString * path = @"v23.0/chatter/users/me/groups?pageSize=250";
+    [Utility showCoverScreen];
+    [self showLoadingLblWithText:progress_dialog_chatter_getting_group_data_message];
+    NSString * path = LIST_OF_CHATTER_GROUP_URL;
     SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodGET path:path queryParams:nil];
     [[SFRestAPI sharedInstance] send:request delegate:self];
 }
 -(void)postToSelectedChatterGroups {
     if([Utility checkNetwork]) {
-        NSMutableArray *paramArr = [[NSMutableArray alloc]init];
-        NSDictionary *textParam = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",self.noteContent, @"text",nil];
-        ChatterRecord *selectedRecord = (ChatterRecord*)[self.chatterGroupArray objectAtIndex:selectedUserIndex];
-        NSString * path = [NSString stringWithFormat:@"v23.0/chatter/feeds/record/%@/feed-items",selectedRecord.chatterId];
-        NSLog(@"test url for group feed: %@",path);
-        
-        if(selectedUserIndex == -999) {
-            [Utility hideCoverScreen];
-            [Utility showAlert:@"Please select a group to make Chatter Post"];
-        } else {
-            [self showLoadingLblWithText:@"Posting Note to Chatter Group..."];
-            [paramArr addObject:textParam];
-            NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:paramArr,@"messageSegments", nil];
-            NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:message,@"body", nil];
-            
-            NSLog(@"Body = %@",body);
-            SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];
-            [[SFRestAPI sharedInstance] send:request delegate:self];
+        if([self.noteContent length] > 1000){
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Noteprise" message:CHATTER_LIMIT_CROSSED_ALERT_MSG delegate:self cancelButtonTitle:ALERT_NEGATIVE_BUTTON_TEXT otherButtonTitles:ALERT_POSITIVE_BUTTON_TEXT, nil];
+            alert.tag = CHATTER_POST_TO_GROUP_LIMIT_ALERT_TAG;
+            [alert show];
+            [alert release];
+        }
+        else {
+            [self createSFRequestToPostToSelectedChatterGroup:self.noteContent];
         }
     }
     
     else {
-        [Utility showAlert:@"Network Unavailable!Network connection is needed for this action."];
+        [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
     }
 }
+-(void)createSFRequestToPostToSelectedChatterGroup:(NSString*)evernoteContent
+{
+    
+    NSMutableArray *paramArr = [[NSMutableArray alloc]init];
+    NSDictionary *textParam = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",evernoteContent, @"text",nil];
+    ChatterRecord *selectedRecord = (ChatterRecord*)[self.chatterGroupArray objectAtIndex:selectedUserIndex];
+    NSString * path = [NSString stringWithFormat:@"v23.0/chatter/feeds/record/%@/feed-items",selectedRecord.chatterId];
+    NSLog(@"test url for group feed: %@",path);
+    
+    if(selectedUserIndex == -999) {
+        [Utility hideCoverScreen];
+        [Utility showAlert:CHATTER_POST_GROUP_MISSING_MSG];
+    } else {
+        [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_GROUP_MSG];
+        [paramArr addObject:textParam];
+        NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:paramArr,@"messageSegments", nil];
+        NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:message,@"body", nil];
+        
+        NSLog(@"Body = %@",body);
+        SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];
+        [[SFRestAPI sharedInstance] send:request delegate:self];
+    }
 
+}
+#pragma mark - UIAlertViewDelegate
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == CHATTER_POST_TO_GROUP_LIMIT_ALERT_TAG && alertView.cancelButtonIndex == buttonIndex) {
+    } else if (alertView.tag == CHATTER_POST_TO_GROUP_LIMIT_ALERT_TAG) {
+        [Utility showCoverScreen];
+        [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_GROUP_MSG];
+        //truncationg note text to 1000 character for posting to Chatter
+        DebugLog(@"old length:%d", [self.noteContent length]);
+        NSString *truncateNoteContent = [[self.noteContent substringToIndex:999]mutableCopy];
+        DebugLog(@"new length:%d", [truncateNoteContent length]);
+        [self createSFRequestToPostToSelectedChatterGroup:truncateNoteContent];
+    }
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -237,7 +264,7 @@
     DebugLog(@"chatter Group obj:%@",chatterGroup);
 }
 -(void)showLoadingLblWithText:(NSString*)Loadingtext{
-    [loadingSpinner startAnimating];
+    //[loadingSpinner startAnimating];
     dialog_imgView.hidden = NO;
     loadingLbl.text = Loadingtext;
     loadingLbl.hidden = NO;
@@ -319,10 +346,13 @@
     DebugLog(@"request:%@",[request description]);
     DebugLog(@"jsonResponse:%@",jsonResponse);
     
-    if([[request path] rangeOfString:@"v23.0/chatter/users/me/groups"].location != NSNotFound){
+    if([[request path] rangeOfString:LIST_OF_CHATTER_GROUP_URL].location != NSNotFound){
         //List of following
         if([[jsonResponse objectForKey:@"errors"] count] == 0){
             [Utility hideCoverScreen];
+            dialog_imgView.hidden = YES;
+            loadingLbl.hidden = YES;
+            doneImgView.hidden = YES;
             [loadingSpinner stopAnimating];
             NSArray *records = [jsonResponse objectForKey:@"groups"];
             for (NSDictionary *chatterGroupDict in records) {
@@ -356,28 +386,30 @@
             
         }
         else{
+            [Utility hideCoverScreen];
+            dialog_imgView.hidden = YES;
+            loadingLbl.hidden = YES;
+            doneImgView.hidden = YES;
             [loadingSpinner stopAnimating];
-            [Utility showAlert:@"Problem in Listing to Chatter Users."];
+            [Utility showAlert:ERROR_LISTING_CHATTER_GROUPS_MSG];
             [Utility hideCoverScreen];
         }
         
     }
-    else {
+    else  if([[request path] rangeOfString:@"feed-items"].location != NSNotFound){
         if([[jsonResponse objectForKey:@"errors"] count]==0){
             
             [loadingSpinner stopAnimating];
             doneImgView.hidden = NO;
-            [self showLoadingLblWithText:@"Done!"];
+            [self showLoadingLblWithText:salesforce_chatter_post_group_success_message];
             [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
-            //[Utility showAlert:@"Note successfully saved to Salesforce!"];
             
             [loadingSpinner stopAnimating];
         }
         else{
             [loadingSpinner stopAnimating];
-            [self showLoadingLblWithText:@"Posting to Chatter Users failed"];
+            [self showLoadingLblWithText:POSTING_NOTE_FAILED_TO_CHATTER_USER_MSG];
             [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(hideToastMsg:) userInfo:nil repeats:NO];
-            //[Utility showAlert:@"Problem in mapping Evernote with Salesforce Object."];
         }
         [Utility hideCoverScreen];
     }
@@ -390,7 +422,14 @@
     [loadingSpinner stopAnimating];
     [self hideDoneToastMsg:nil];
     //add your failed error handling here
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:[error.userInfo valueForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    NSString *alertMessaage ;
+    if([[error.userInfo valueForKey:@"errorCode"] isEqualToString:@"STRING_TOO_LONG"])
+        alertMessaage = CHATTER_LIMIT_CROSSED_ERROR_MSG;
+    else {
+        alertMessaage = [error.userInfo valueForKey:@"message"];
+    }
+    //add your failed error handling here
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:alertMessaage delegate:nil cancelButtonTitle:ALERT_NEUTRAL_BUTTON_TEXT otherButtonTitles:nil, nil];
     [alert show];
     [alert release];
 }

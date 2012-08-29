@@ -75,13 +75,13 @@
         
     //}
     // Configure the cell...
-    cell.textLabel.text = [[objFields objectAtIndex:indexPath.row]valueForKey:@"label"];
+    cell.textLabel.text = [[objFields objectAtIndex:indexPath.row]valueForKey:FIELD_LABEL];
     NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *sfobjFieldToMapWith = [stdDefaults valueForKey:SFOBJ_FIELD_TO_MAP_KEY];
     DebugLog(@"sfobjFieldToMapWith:%@\n objFields:%@",sfobjFieldToMapWith,[objFields objectAtIndex:indexPath.row]);
     cell.textLabel.textColor = [UIColor whiteColor];
     if(sfobjFieldToMapWith != nil) {
-        if([[[objFields objectAtIndex:indexPath.row]valueForKey:@"name"] isEqualToString:[sfobjFieldToMapWith valueForKey:@"name"]])
+        if([[[objFields objectAtIndex:indexPath.row]valueForKey:FIELD_NAME] isEqualToString:[sfobjFieldToMapWith valueForKey:FIELD_NAME]])
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
     return cell;
@@ -144,7 +144,7 @@
     DebugLog(@"obj%@",[objFields objectAtIndex:indexPath.row]);
     // Set the checkmark accessory for the selected row.
     [[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:UITableViewCellAccessoryCheckmark]; 
-    NSDictionary *dict = [[NSMutableDictionary alloc]initWithObjectsAndKeys:[[objFields objectAtIndex:indexPath.row]valueForKey:@"name"],@"name",[[objFields objectAtIndex:indexPath.row]valueForKey:@"label"],@"label", nil];
+    NSDictionary *dict = [[NSMutableDictionary alloc]initWithObjectsAndKeys:[[objFields objectAtIndex:indexPath.row]valueForKey:FIELD_NAME],FIELD_NAME,[[objFields objectAtIndex:indexPath.row]valueForKey:FIELD_LABEL],FIELD_LABEL,[[objFields objectAtIndex:indexPath.row]valueForKey:FIELD_LIMIT],FIELD_LIMIT,nil];
     [stdDefaults setObject:dict forKey:SFOBJ_FIELD_TO_MAP_KEY];
     [stdDefaults synchronize];
     [dict release];
@@ -153,28 +153,6 @@
     else {
         [delegate dissmissPopover];
     }
-}
-#pragma mark - SFRestAPIDelegate
-#import "Utility.h"
-- (void)request:(SFRestRequest *)request didLoadResponse:(id)jsonResponse {
-    DebugLog(@"request:%@",[request description]);
-    DebugLog(@"jsonResponse:%@",jsonResponse);
-    [Utility hideCoverScreen];
-}
-- (void)request:(SFRestRequest*)request didFailLoadWithError:(NSError*)error {
-    DebugLog(@"request:didFailLoadWithError: %@", error);
-    //add your failed error handling here
-    [Utility hideCoverScreen];
-}
-
-- (void)requestDidCancelLoad:(SFRestRequest *)request {
-    DebugLog(@"requestDidCancelLoad: %@", request);
-    //add your failed error handling here
-}
-
-- (void)requestDidTimeout:(SFRestRequest *)request {
-    DebugLog(@"requestDidTimeout: %@", request);
-    //add your failed error handling here
 }
 -(void)dealloc {
         DebugLog(@"field viewDidUnload:%@",[Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY]);

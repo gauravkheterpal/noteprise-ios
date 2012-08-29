@@ -135,7 +135,7 @@
 					<object class="IBUILabel" id="828948678">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">-2147483353</int>
-						<string key="NSFrame">{{66, 198}, {190, 21}}</string>
+						<string key="NSFrame">{{66, 192.5}, {190, 32}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="855083457"/>
@@ -173,7 +173,12 @@
 								<string key="NSFrame">{{234, 6}, {32, 33}}</string>
 								<reference key="NSSuperview" ref="855083457"/>
 								<reference key="NSWindow"/>
+<<<<<<< HEAD
 								<reference key="NSNextKeyView" ref="651924762"/>
+=======
+								<reference key="NSNextKeyView"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+>>>>>>> Bug fixes
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>

@@ -141,9 +141,9 @@ UIImageView *imgView;
 }
 +(void)setSFDefaultMappingValues{
     NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *defaultSFObjValue = [NSDictionary dictionaryWithObjectsAndKeys:@"Account",@"name",@"Account",@"label", nil];
+    NSDictionary *defaultSFObjValue = [NSDictionary dictionaryWithObjectsAndKeys:@"Account",OBJ_NAME,@"Account",OBJ_LABEL, nil];
     [stdDefaults setValue:defaultSFObjValue forKey:SFOBJ_TO_MAP_KEY];
-    NSDictionary *defaultSFFieldValue = [NSDictionary dictionaryWithObjectsAndKeys:@"Account Description",@"label",@"Description",@"name", nil];
+    NSDictionary *defaultSFFieldValue = [NSDictionary dictionaryWithObjectsAndKeys:@"Account Description",FIELD_LABEL,@"Description",FIELD_NAME, nil];
     [stdDefaults setValue:defaultSFFieldValue forKey:SFOBJ_FIELD_TO_MAP_KEY];
     [stdDefaults synchronize];
     
@@ -219,4 +219,5 @@ UIImageView *imgView;
 	return NO;
     
 }
+
 @end

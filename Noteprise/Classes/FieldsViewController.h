@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SFRestAPI.h"
 #import "Utility.h"
 #import "SettingsViewController.h"
 @interface FieldsViewController : UITableViewController <SFRestDelegate>{

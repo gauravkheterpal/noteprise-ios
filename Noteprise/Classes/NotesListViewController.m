@@ -31,6 +31,10 @@
     [self changeBkgrndImgWithOrientation];
     [self fetchNoteBasedOnSelectedSegement];
 }
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+}
 -(void)changeBkgrndImgWithOrientation {
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
         if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
@@ -150,24 +154,21 @@
         }
         @catch (EDAMUserException *exception) {
             DebugLog(@"Recvd Exception:%d",exception.errorCode );
-            [Utility showAlert:@"Login Failed. Please check your username and password."];
+            [Utility showAlert:EVERNOTE_LOGIN_FAILED_MSG];
         }
         @catch (EDAMSystemException *exception) {
             [Utility showExceptionAlert:exception.description];
         }   
         @catch (EDAMNotFoundException *exception) {
-            [Utility showExceptionAlert:@"Reason Unknown"];
+            [Utility showExceptionAlert:SOME_ERROR_OCCURED_MESSAGE];
         }
     });
 }
 
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    
-}
+
 -(void)fetchNoteBasedOnSelectedSegement {
     [Utility showCoverScreen];
-    loadingLbl.text = @"Loading...";
+    loadingLbl.text = LOADING_MSG;
     loadingLbl.hidden = NO;
     [listOfItems removeAllObjects];
     [searchBar resignFirstResponder];
@@ -219,11 +220,11 @@
         [Utility showExceptionAlert:exception.description];
     }   
     @catch (EDAMNotFoundException *exception) {
-        [Utility showExceptionAlert:@"Reason Unknown"];
+        [Utility showExceptionAlert:SOME_ERROR_OCCURED_MESSAGE];
     }
     @catch (id exception) {
         DebugLog(@"Recvd Exception");
-        [Utility showExceptionAlert:@"Note listing failed.Please retry again later."];
+        [Utility showExceptionAlert:ERROR_LISTING_NOTE_MSG];
     }
    
 }
@@ -289,11 +290,11 @@
             [Utility showExceptionAlert:exception.description];
         }   
         @catch (EDAMNotFoundException *exception) {
-            [Utility showExceptionAlert:@"Reason Unknown"];
+            [Utility showExceptionAlert:SOME_ERROR_OCCURED_MESSAGE];
         }
         @catch (id exception) {
             DebugLog(@"Recvd Exception");
-            [Utility showExceptionAlert:@"Note listing failed.Please retry again later."];
+            [Utility showExceptionAlert:ERROR_LISTING_NOTE_MSG];
         }
     }
     else
@@ -354,11 +355,11 @@
         [Utility showExceptionAlert:exception.description];
     }   
     @catch (EDAMNotFoundException *exception) {
-        [Utility showExceptionAlert:@"Reason Unknown"];
+        [Utility showExceptionAlert:SOME_ERROR_OCCURED_MESSAGE];
     }
     @catch (id exception) {
         DebugLog(@"Recvd Exception");
-        [Utility showExceptionAlert:@"Note listing failed.Please retry again later."];
+        [Utility showExceptionAlert:ERROR_LISTING_NOTE_MSG];
     }
     
 }
@@ -402,13 +403,15 @@
         [Utility showExceptionAlert:exception.description];
     }   
     @catch (EDAMNotFoundException *exception) {
-        [Utility showExceptionAlert:@"Reason Unknown"];
+        [Utility showExceptionAlert:SOME_ERROR_OCCURED_MESSAGE];
     }
     @catch (id exception) {
         DebugLog(@"Recvd Exception");
-        [Utility showExceptionAlert:@"Note listing failed.Please retry again later."];
+        [Utility showExceptionAlert:ERROR_LISTING_NOTE_MSG];
     }
 }
+#pragma mark -
+#pragma mark UISearchBar Delegate
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
     DebugLog(@"searchBarShouldBeginEditing");
     return YES;
@@ -483,7 +486,8 @@
  *  Function opening the next view
  *
  ************************************************************/
-
+#pragma mark -
+#pragma mark UITableView delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     selectedRowIndex = indexPath.row;
@@ -507,11 +511,13 @@
     // As an example, we are going to show the first element if it is an image
     [noteStore deleteNoteWithGuid:guid success:^(int32_t success)
      {
+         [Utility showAlert:NOTE_DELETE_SUCCESS_MSG];
          DebugLog(@"deleteNoteWithGuid %d ::::",success);
          [Utility hideCoverScreen];
          loadingLbl.hidden = YES;
      }failure:^(NSError *error) {
-         DebugLog(@"note::::::::error %@", error);	  
+         DebugLog(@"note::::::::error %@", error);	
+        [Utility showAlert:NOTE_DELETE_FAILED_MSG];
          [Utility hideCoverScreen];
          loadingLbl.hidden = YES;
      }];
@@ -554,7 +560,7 @@
     cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     return cell;
 }
-
+#pragma mark -
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return YES;
