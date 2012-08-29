@@ -149,10 +149,13 @@ UIImageView *imgView;
     
 }
 + (NSString *)flattenNoteBody:(NSString *)noteBobyContent {
-    //html =@"abcd<en-note>abc</en-note>";
+    DebugLog(@"string to flatten:%@",noteBobyContent);
     
-    NSRange start = [noteBobyContent rangeOfString:@"<en-note>"];
-    NSRange end = [noteBobyContent rangeOfString:@"</en-note>"];
+    NSString * startEnNoteTag = [NSString stringWithFormat:@"%@>",[self getDataBetweenFromString:noteBobyContent leftString:@"<en-note" rightString:@">" leftOffset:0]];
+    NSString * endEnNoteTag = [NSString stringWithFormat:@"%@>",[self getDataBetweenFromString:noteBobyContent leftString:@"</en-note" rightString:@">" leftOffset:0]];
+    
+    NSRange start = [noteBobyContent rangeOfString:startEnNoteTag];
+    NSRange end = [noteBobyContent rangeOfString:endEnNoteTag];
     if(start.location !=NSNotFound){
         noteBobyContent = [noteBobyContent substringWithRange:NSMakeRange(start.location+start.length, end.location-(start.location+start.length))]; 
         DebugLog(@"html:%@",noteBobyContent);
@@ -169,6 +172,22 @@ UIImageView *imgView;
     
     
 }
+
++ (NSString *)getDataBetweenFromString:(NSString *)data leftString:(NSString *)leftData rightString:(NSString *)rightData leftOffset:(NSInteger)leftPos 
+{         
+    NSInteger left, right;         
+    NSString *foundData;
+    NSScanner *scanner=[NSScanner scannerWithString:data];                  
+    [scanner scanUpToString:leftData intoString: nil];         
+    left = [scanner scanLocation];         
+    [scanner setScanLocation:left + leftPos];         
+    [scanner scanUpToString:rightData intoString: nil];         
+    right = [scanner scanLocation] + 1;         
+    left += leftPos;         
+    foundData = [data substringWithRange: NSMakeRange(left, (right - left) - 1)];         return foundData; 
+}
+
+
 + (NSString *)flattenHTML:(NSString *)html {
     
     NSScanner *theScanner;

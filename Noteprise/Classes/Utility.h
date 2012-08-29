@@ -101,10 +101,10 @@
 
 
 #define ERROR_SAVING_NOTE_TO_EVERNOTE_MSG @"Error saving note:"
-#define POSTING_NOTE_FAILED_TO_CHATTER_WALL_MSG @"Posting to Chatter Wall failed"
-#define ERROR_LISTING_CHATTER_USERS_MSG @"Error in Listing to Chatter Users."
-#define POSTING_NOTE_FAILED_TO_CHATTER_USER_MSG @"Posting to Chatter Users failed"
-#define ERROR_LISTING_CHATTER_GROUPS_MSG @"Error in Listing to Chatter Groups."
+#define POSTING_NOTE_FAILED_TO_CHATTER_WALL_MSG @"Failed to publish the selected note to your Chatter feed"
+#define ERROR_LISTING_CHATTER_USERS_MSG @"Error in getting list of Chatter Users"
+#define POSTING_NOTE_FAILED_TO_CHATTER_USER_MSG @"Failed to publish the selected note to chosen Chatter users"
+#define ERROR_LISTING_CHATTER_GROUPS_MSG @"Failed to publish the selected note to chosen Chatter groups"
 
 static NSString *const kWebViewDidPressKeyURL   = @"http://didPressKey/";
 static NSString *const kWebViewDidTapURL        = @"http://didTap/";
@@ -134,4 +134,5 @@ static NSString *const kHTML2DOCConverterURL    = @"http://csboxnotes.appspot.co
 +(NSString*)valueInPrefForEvernoteHost;
 + (BOOL) checkNetwork;
 +(void)showExceptionAlert:(NSString*)message;
++ (NSString *)getDataBetweenFromString:(NSString *)data leftString:(NSString *)leftData rightString:(NSString *)rightData leftOffset:(NSInteger)leftPos;
 @end
