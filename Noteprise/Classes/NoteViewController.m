@@ -119,6 +119,8 @@
                      
                      
                      content = [content stringByReplacingOccurrencesOfString:stringToReplace withString:updatedString];
+                     content = [content stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@"&#160;"];
+                     content = [content stringByReplacingOccurrencesOfString:@"&mdash;" withString:@"&#151;"];
                      DebugLog(@"updatedContent = %@", content);
                      
                      NSData *d= [content dataUsingEncoding:NSUTF8StringEncoding];
