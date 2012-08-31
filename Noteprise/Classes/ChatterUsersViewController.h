@@ -20,6 +20,7 @@
     IBOutlet UITableView *chatterUsersTbl; 
     int selectedUserIndex;
     NSMutableDictionary *imageDownloadsInProgress;  // the set of IconDownloader objects for each app
+    int mentionUsersCharacterCount;
 }
 @property(nonatomic,retain) NSString *noteTitle; 
 @property(nonatomic,retain) NSString *noteContent;

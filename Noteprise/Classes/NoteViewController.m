@@ -197,9 +197,9 @@
         [Utility showCoverScreen];
         [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_WALL_MSG];
         //truncationg note text to 1000 character for posting to Chatter
-        textContent = [[textContent substringToIndex:999]mutableCopy];
+        NSString *truncatedTextContent = [[textContent substringToIndex:999]mutableCopy];
         NSString * path = POST_TO_CHATTER_WALL_URL;
-        NSDictionary *param = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",textContent, @"text",nil];
+        NSDictionary *param = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",truncatedTextContent, @"text",nil];
         NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:param],@"messageSegments", nil];
         NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:message,@"body", nil];
         SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];

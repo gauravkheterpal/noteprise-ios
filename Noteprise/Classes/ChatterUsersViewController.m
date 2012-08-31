@@ -137,8 +137,17 @@
         for(NSNumber *userRow in selectedUsersRow){
             selectedUsers += ([userRow boolValue] == YES?1:0); //certain object is @"Apple"
         }
-        DebugLog(@"occurrences%d",selectedUsers);
-        if([self.noteContent length] > 1000){
+        DebugLog(@"occurrences%d length:%d",selectedUsers,[self.noteContent length]);
+        mentionUsersCharacterCount= 0;
+        for(int i = 0;i < [selectedUsersRow count] ; i++) {
+            if ([[selectedUsersRow objectAtIndex:i] boolValue] == YES) {
+                ChatterRecord *selectedRecord = (ChatterRecord*)[self.chatterUsersArray objectAtIndex:i];
+                mentionUsersCharacterCount += ([selectedRecord.chatterName length]+12);
+            }
+        }
+        //mentionUsersCharacterCount +=20;
+        DebugLog(@"mentionUsersCharacterCount:%d",mentionUsersCharacterCount);
+        if([self.noteContent length] > 1000-mentionUsersCharacterCount){
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Noteprise" message:CHATTER_LIMIT_CROSSED_ALERT_MSG delegate:self cancelButtonTitle:ALERT_NEGATIVE_BUTTON_TEXT otherButtonTitles:ALERT_POSITIVE_BUTTON_TEXT, nil];
             alert.tag = CHATTER_POST_LIMIT_ALERT_TAG;
             [alert show];
@@ -218,7 +227,7 @@
         [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_WALL_MSG];
         //truncationg note text to 1000 character for posting to Chatter
         DebugLog(@"old length:%d", [self.noteContent length]);
-        NSString *truncateNoteContent = [[self.noteContent substringToIndex:999]mutableCopy];
+        NSString *truncateNoteContent = [[self.noteContent substringToIndex:1000-mentionUsersCharacterCount]mutableCopy];
         DebugLog(@"new length:%d", [truncateNoteContent length]);
         [self createSFRequestToPostToSelectedChatterUsers:truncateNoteContent];
     }
