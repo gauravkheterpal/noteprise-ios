@@ -8,13 +8,14 @@
 
 #import "ChatterGroupVCntrlViewController.h"
 #import "Utility.h"
+#import "IconDownloader.h"
 #import "ChatterRecord.h"
 @interface ChatterGroupVCntrlViewController ()
 
 @end
 
 @implementation ChatterGroupVCntrlViewController
-@synthesize noteContent,noteTitle,chatterGroupArray,selectedImage,unselectedImage,imageDownloadsInProgress;
+@synthesize noteContent,noteTitle,chatterGroupArray,selectedImage,unselectedImage,imageDownloadsInProgress,inEditMode;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -24,16 +25,101 @@
     }
     return self;
 }
+ 
+
+-(IBAction)toggleEditMode{
+	DebugLog(@"toggleEditMode");
+	self.inEditMode = !self.inEditMode;
+    self.navigationItem.rightBarButtonItem = nil;
+    [self initToolbarButtons];
+    if(!self.inEditMode)
+        [self initializeSelectedRow];
+    
+	[chatterGroupTbl reloadData];
+}
 
 -(void)initializeSelectedRow {
     NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:[chatterGroupArray count]];
     for (int i=0; i < [chatterGroupArray count]; i++)
         [array addObject:[NSNumber numberWithBool:NO]];
     selectedGroupsRow = array;
-    NSLog(@"Array = %@",selectedGroupsRow);
+    NSLog(@"Selected Group Array = %@",selectedGroupsRow);
 }
 
 -(void)initToolbarButtons {
+    UIToolbar* toolbar = [[UIToolbar alloc]
+                          initWithFrame:CGRectMake(0, 0, 125, 45)];
+    [toolbar setBarStyle: UIBarStyleBlackOpaque];
+    
+    // create an array for the buttons
+    NSMutableArray* buttons = [[NSMutableArray alloc] initWithCapacity:4];
+    UIBarButtonItem *editButton;
+    if(!self.inEditMode)
+    {
+        UIImage* image3 = [UIImage imageNamed:@"edit_icon.png"];
+        CGRect frameimg = CGRectMake(0, 0, 27,27);
+        UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
+        [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+        [someButton addTarget:self action:@selector(toggleEditMode) forControlEvents:UIControlEventTouchUpInside];
+        [someButton setShowsTouchWhenHighlighted:YES];
+        UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
+        
+        editButton = mailbutton;
+        editButton.tag = 1;
+        // editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(toggleEditMode)];
+    }
+    else 
+        editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(toggleEditMode)];
+    [buttons addObject:editButton];
+    [editButton release];
+    // create a spacer between the buttons
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc]
+                               initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                               target:nil
+                               action:nil];
+    [buttons addObject:spacer];
+    [spacer release];
+    
+    
+    UIImage* image3 = [UIImage imageNamed:@"save_icon.png"];
+    CGRect frameimg = CGRectMake(0, 0, 27,27);
+    UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
+    [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+    [someButton addTarget:self action:@selector(postToSelectedChatterGroups) forControlEvents:UIControlEventTouchUpInside];
+    [someButton setShowsTouchWhenHighlighted:YES];
+    UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
+    
+    [buttons addObject:mailbutton];
+    // self.navigationItem.rightBarButtonItem.tag = saveBtnTag;
+    
+    
+    /*
+     UIBarButtonItem *addButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(addSelectedEvernoteToSF)];
+     [buttons addObject:addButton];
+     [addButton release];
+     */
+    // create a spacer between the buttons
+    
+    
+    
+    UIBarButtonItem *spacer1 = [[UIBarButtonItem alloc]
+                                initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                target:nil
+                                action:nil];
+    [buttons addObject:spacer1];
+    [spacer1 release];
+    // put the buttons in the toolbar and release them
+    [toolbar setItems:buttons animated:NO];
+    [buttons release];
+    
+    // place the toolbar into the navigation bar
+    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
+                                               initWithCustomView:toolbar] autorelease];
+    [toolbar release];
+    
+}
+
+/*{
     UIToolbar* toolbar = [[UIToolbar alloc]
                           initWithFrame:CGRectMake(0, 0, 70, 45)];
     [toolbar setBarStyle: UIBarStyleBlackTranslucent];
@@ -60,10 +146,10 @@
                                                initWithCustomView:toolbar] autorelease];
     [toolbar release];
     
-}
+}*/
 
 -(void)viewDidAppear:(BOOL)animated{
-    selectedUserIndex=-999;
+    selectedGroupIndex=-999;
     // create a toolbar where we can place some buttons
     [self initToolbarButtons];
     
@@ -71,6 +157,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+	self.inEditMode = NO;
     // Do any additional setup after loading the view from its nib.
     self.title = @"Chatter Groups";
     self.selectedImage = [UIImage imageNamed:@"btnChecked.png"];
@@ -83,8 +171,8 @@
     [self changeBkgrndImgWithOrientation];
     self.chatterGroupArray = [[NSMutableArray alloc]init];
     self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
-    UIBarButtonItem *postToChatterGroupButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(postToSelectedChatterGroups)];
-    self.navigationItem.rightBarButtonItem = postToChatterGroupButton;
+   // UIBarButtonItem *postToChatterGroupButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(postToSelectedChatterGroups)];
+    //self.navigationItem.rightBarButtonItem = postToChatterGroupButton;
     [self fetchListOfChatterGroup];
 
 }
@@ -112,6 +200,13 @@
 }
 -(void)postToSelectedChatterGroups {
     if([Utility checkNetwork]) {
+        for(int i = 0;i < [selectedGroupsRow count] ; i++) {
+            if ([[selectedGroupsRow objectAtIndex:i] boolValue] == YES) {
+                ChatterRecord *selectedRecord = (ChatterRecord*)[self.chatterGroupArray objectAtIndex:i];
+               // mentionUsersCharacterCount += ([selectedRecord.chatterName length]+12);
+            }
+        }
+        
         if([self.noteContent length] > 1000){
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Noteprise" message:CHATTER_LIMIT_CROSSED_ALERT_MSG delegate:self cancelButtonTitle:ALERT_NEGATIVE_BUTTON_TEXT otherButtonTitles:ALERT_POSITIVE_BUTTON_TEXT, nil];
             alert.tag = CHATTER_POST_TO_GROUP_LIMIT_ALERT_TAG;
@@ -132,22 +227,55 @@
     
     NSMutableArray *paramArr = [[NSMutableArray alloc]init];
     NSDictionary *textParam = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",evernoteContent, @"text",nil];
-    ChatterRecord *selectedRecord = (ChatterRecord*)[self.chatterGroupArray objectAtIndex:selectedUserIndex];
-    NSString * path = [NSString stringWithFormat:@"v23.0/chatter/feeds/record/%@/feed-items",selectedRecord.chatterId];
-    NSLog(@"test url for group feed: %@",path);
     
-    if(selectedUserIndex == -999) {
-        [Utility hideCoverScreen];
-        [Utility showAlert:CHATTER_POST_GROUP_MISSING_MSG];
-    } else {
-        [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_GROUP_MSG];
-        [paramArr addObject:textParam];
-        NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:paramArr,@"messageSegments", nil];
-        NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:message,@"body", nil];
-        
-        NSLog(@"Body = %@",body);
-        SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];
-        [[SFRestAPI sharedInstance] send:request delegate:self];
+    if(self.inEditMode)
+    {
+        for(int i = 0;i < [selectedGroupsRow count] ; i++) 
+        {
+            if ([[selectedGroupsRow objectAtIndex:i] boolValue] == YES) 
+            {
+                NSMutableArray *paramArr = [[NSMutableArray alloc]init];
+                NSDictionary *textParam = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",evernoteContent, @"text",nil];
+                ChatterRecord *selectedRecord = (ChatterRecord*)[self.chatterGroupArray objectAtIndex:i];
+                //ChatterRecord *selectedRecord = (ChatterRecord*)[self.chatterGroupArray objectAtIndex:selectedGroupIndex];
+                NSString * path = [NSString stringWithFormat:@"v23.0/chatter/feeds/record/%@/feed-items",selectedRecord.chatterId];
+                NSLog(@"test url for group feed: %@",path);
+                [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_GROUP_MSG];
+                [paramArr addObject:textParam];
+                NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:paramArr,@"messageSegments", nil];
+                NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:message,@"body", nil];
+                NSLog(@"Body = %@",body);
+                SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];
+                [[SFRestAPI sharedInstance] send:request delegate:self];
+                [paramArr release];
+                [textParam release];
+                    
+            }
+        }
+    }
+    else 
+    {
+        if(selectedGroupIndex == -999) {   
+            [Utility hideCoverScreen];
+            [Utility showAlert:CHATTER_POST_USER_MISSING_MSG];
+        } else {
+            {
+                NSMutableArray *paramArr = [[NSMutableArray alloc]init];
+                NSDictionary *textParam = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",evernoteContent, @"text",nil];
+                ChatterRecord *selectedRecord = (ChatterRecord*)[self.chatterGroupArray objectAtIndex:selectedGroupIndex];
+                NSString * path = [NSString stringWithFormat:@"v23.0/chatter/feeds/record/%@/feed-items",selectedRecord.chatterId];
+                NSLog(@"test url for group feed: %@",path);
+                [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_GROUP_MSG];
+                [paramArr addObject:textParam];
+                NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:paramArr,@"messageSegments", nil];
+                NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:message,@"body", nil];
+            NSLog(@"Body = %@",body);
+                SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];
+                [[SFRestAPI sharedInstance] send:request delegate:self];
+                [paramArr release];
+                [textParam release];
+            }
+        }
     }
 
 }
@@ -181,6 +309,61 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    UITableViewCell *cell =  [self configRowFormat:@"Cell"];
+    UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:kCellImageViewTag];
+	NSNumber *selectedUser = [selectedGroupsRow objectAtIndex:indexPath.row];
+    
+	UIImage *image = [UIImage imageNamed:@"Settings.png"];
+    UILabel *nameLabel = (UILabel*)[cell.contentView viewWithTag:kCellLabelTag];
+    // Configure the cell to show the data.
+    cell.imageView.image = imageView.image = ([selectedUser boolValue]) ? self.selectedImage : self.unselectedImage;
+	cell.contentView.alpha = 1.0;
+    if(self.inEditMode) {
+        NSNumber *selectedForChatterPost = [selectedGroupsRow objectAtIndex:indexPath.row];
+        if([selectedForChatterPost boolValue]) 
+            cell.imageView.image = self.selectedImage;
+        else {
+            cell.imageView.image = self.unselectedImage;
+        }
+    }
+    else 
+        cell.imageView.image = image;
+    
+    ChatterRecord *chatterUser = [chatterGroupArray objectAtIndex:indexPath.row];
+    
+    DebugLog(@"chatterUserobj:%@",chatterUser);
+    DebugLog(@"chatterUserobj name:%@ id=%@",chatterUser.chatterName,chatterUser.chatterId);
+    nameLabel.text = chatterUser.chatterName;
+    if (self.inEditMode) {
+        
+		
+        imageView.frame=CGRectMake(40, 5, 40, 34);
+        
+	} else {
+        
+		
+        imageView.frame=CGRectMake(5, 5, 40, 34);
+		cell.imageView.image=NULL;
+        
+	}
+    // Only load cached images; defer new downloads until scrolling ends
+    if (!chatterUser.chatterIcon)
+    {
+        if (chatterGroupTbl.dragging == NO && chatterGroupTbl.decelerating == NO)
+        {
+            [self startIconDownload:chatterUser forIndexPath:indexPath];
+        }
+        // if a download is deferred or in progress, return a placeholder image
+        imageView.image = [UIImage imageNamed:@"profile_tab_icon.png"];                
+    }
+    else
+    {
+        imageView.image = chatterUser.chatterIcon;
+    }
+    return cell;
+}
+/*{
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
@@ -212,7 +395,7 @@
         cell.imageView.image = chatterGroup.chatterIcon;
     }
     return cell;
-}
+}*/
 
 /*
  // Override to support conditional editing of the table view.
@@ -253,16 +436,72 @@
  }
  */
 
+
+- (UITableViewCell *) configRowFormat:(NSString *)cellIdentifier {
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [chatterGroupTbl dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    // Configure the cell...
+    //if you want to add an image to your cell, here's how
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        
+    }
+	UITableViewCell *customCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"folderCell"] autorelease];
+	customCell.accessoryType = UITableViewCellAccessoryNone;
+    CGRect nameLabelFrame;
+    UIImageView *cellImg = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"unselected.png"]] autorelease];
+    //cellImg.frame = CGRectMake(5.0, 5.0, 23.0, 23.0);
+    cellImg.frame = CGRectMake(5, 5, 40, 34);
+    [customCell.contentView addSubview:cellImg];
+    cellImg.tag =  kCellImageViewTag;
+    if(self.inEditMode) {
+        if (self.interfaceOrientation == UIInterfaceOrientationPortrait||self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
+            nameLabelFrame = CGRectMake(84, 5, 236, 35);//portrait iPhone in Edit
+        }
+        else{
+            nameLabelFrame = CGRectMake(84, 5, 390, 35);//landscape iPhone in Edit
+        }
+    } else {
+        if (self.interfaceOrientation == UIInterfaceOrientationPortrait||self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
+            nameLabelFrame = CGRectMake(54, 5, 266, 35);//portrait iPhone not Edit
+        }
+        else{
+            nameLabelFrame = CGRectMake(54, 5, 420, 35);//landscape iPhone not Edit
+        }
+    }
+	//Initialize Label with tag 1.
+    UILabel *namelabel = [[[UILabel alloc] initWithFrame:nameLabelFrame] autorelease];
+    namelabel.font = [UIFont boldSystemFontOfSize:16];
+    namelabel.tag = kCellLabelTag;
+    namelabel.backgroundColor = [UIColor clearColor];
+    [customCell.contentView addSubview:namelabel];
+	return customCell;
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(self.inEditMode) {
+        BOOL selected = [[selectedGroupsRow objectAtIndex:[indexPath row]] boolValue];
+        [selectedGroupsRow replaceObjectAtIndex:[indexPath row] withObject:[NSNumber numberWithBool:!selected]];
+        DebugLog(@"%@",selectedGroupsRow);
+        [chatterGroupTbl deselectRowAtIndexPath:indexPath animated:YES];
+        [chatterGroupTbl reloadData];
+    } else {
+        selectedGroupIndex=indexPath.row;
+    }
 
-        selectedUserIndex=indexPath.row;
+}
+/*{
+
+        selectedGroupIndex=indexPath.row;
     ChatterRecord *chatterGroup = [chatterGroupArray objectAtIndex:indexPath.row];
     
     DebugLog(@"chatter Group obj:%@",chatterGroup);
-}
+}*/
+
 -(void)showLoadingLblWithText:(NSString*)Loadingtext{
     //[loadingSpinner startAnimating];
     dialog_imgView.hidden = NO;
@@ -279,13 +518,13 @@
 #pragma mark -
 #pragma mark Table cell image support
 
-- (void)startIconDownload:(ChatterRecord *)chatterUserRecord forIndexPath:(NSIndexPath *)indexPath
+- (void)startIconDownload:(ChatterRecord *)chatterGroupRecord forIndexPath:(NSIndexPath *)indexPath
 {
     IconDownloader *iconDownloader = [imageDownloadsInProgress objectForKey:indexPath];
     if (iconDownloader == nil) 
     {
         iconDownloader = [[IconDownloader alloc] init];
-        iconDownloader.chatterRecord = chatterUserRecord;
+        iconDownloader.chatterRecord = chatterGroupRecord;
         iconDownloader.indexPathInTableView = indexPath;
         iconDownloader.delegate = self;
         [imageDownloadsInProgress setObject:iconDownloader forKey:indexPath];
@@ -319,8 +558,9 @@
     if (iconDownloader != nil)
     {
         UITableViewCell *cell = [chatterGroupTbl cellForRowAtIndexPath:iconDownloader.indexPathInTableView];
+        UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:kCellImageViewTag];
         // Display the newly loaded image
-        cell.imageView.image = iconDownloader.chatterRecord.chatterIcon;
+        imageView.image = iconDownloader.chatterRecord.chatterIcon;
     }
 }
 
@@ -458,7 +698,7 @@
 }
 
 - (void)dealloc {
-	[imageDownloadsInProgress release];
+    [imageDownloadsInProgress release];
     [self.chatterGroupArray release];
     [super dealloc];
 }

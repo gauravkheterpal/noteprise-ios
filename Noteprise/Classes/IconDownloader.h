@@ -66,7 +66,7 @@
 }
 @property (nonatomic, retain) ChatterRecord *chatterRecord;
 @property (nonatomic, retain) NSIndexPath *indexPathInTableView;
-@property (nonatomic, assign) id <IconDownloaderDelegate> delegate;
+@property (nonatomic, retain) id <IconDownloaderDelegate> delegate;
 
 @property (nonatomic, retain) NSMutableData *activeDownload;
 @property (nonatomic, retain) NSURLConnection *imageConnection;

@@ -18,7 +18,8 @@
     IBOutlet UIImageView *doneImgView;
     IBOutlet UIImageView *backgroundImgView;
     IBOutlet UITableView *chatterGroupTbl;
-    int selectedUserIndex;
+    int selectedGroupIndex;
+    NSMutableDictionary *imageDownloadsInProgress;  // the set of IconDownloader objects for each app
 }
 @property(nonatomic,retain) NSString *noteTitle;
 @property(nonatomic,retain) NSString *noteContent;
@@ -26,4 +27,5 @@
 @property (nonatomic, retain) UIImage *selectedImage;
 @property (nonatomic, retain) UIImage *unselectedImage;
 @property (nonatomic, retain) NSMutableDictionary *imageDownloadsInProgress;
+@property (assign) BOOL inEditMode;
 @end
