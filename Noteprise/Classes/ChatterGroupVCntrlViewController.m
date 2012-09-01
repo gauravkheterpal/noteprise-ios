@@ -161,14 +161,16 @@
 	self.inEditMode = NO;
     // Do any additional setup after loading the view from its nib.
     self.title = @"Chatter Groups";
-    self.selectedImage = [UIImage imageNamed:@"btnChecked.png"];
-	self.unselectedImage = [UIImage imageNamed:@"btnUnchecked.png"];
+    
+    self.selectedImage = [UIImage imageNamed:@"Checkbox_checked.png"];
+	self.unselectedImage = [UIImage imageNamed:@"Checkbox.png"];
 
     //[loadingSpinner startAnimating];
     [Utility showCoverScreen];
-    backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    chatterGroupTbl.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background_pattern_tableview.png"]];
+    /*backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
-    [self changeBkgrndImgWithOrientation];
+    [self changeBkgrndImgWithOrientation];*/
     self.chatterGroupArray = [[NSMutableArray alloc]init];
     self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
    // UIBarButtonItem *postToChatterGroupButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(postToSelectedChatterGroups)];

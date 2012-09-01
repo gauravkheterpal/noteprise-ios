@@ -29,7 +29,7 @@
 {
     [super viewDidLoad];
     self.title = @"Salesforce Mapping";
-    UIImageView *tempImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg.PNG"]];
+    UIImageView *tempImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Select_note_bcg.png"]];
     [tempImageView setFrame:self.tableView.frame]; 
     
     self.tableView.backgroundView = tempImageView;
@@ -159,6 +159,7 @@
         [self fetchSFObjects];
     } else {
         [self listMetadataForObj];
+        tableView.userInteractionEnabled = NO;
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }
@@ -192,6 +193,7 @@
 - (void)request:(SFRestRequest *)request didLoadResponse:(id)jsonResponse {
     DebugLog(@"request:%@ path:%@",[request description],request.path);
     DebugLog(@"jsonResponse:%@",jsonResponse);
+    self.tableView.userInteractionEnabled = YES;
     if([[request path] isEqualToString:@"/v23.0/sobjects"]){
         //returned all sobjects
         if([[jsonResponse objectForKey:@"errors"] count]==0){
@@ -265,16 +267,19 @@
 
 - (void)request:(SFRestRequest*)request didFailLoadWithError:(NSError*)error {
     DebugLog(@"request:didFailLoadWithError: %@", error);
+        self.tableView.userInteractionEnabled = YES;
     //add your failed error handling here
 }
 
 - (void)requestDidCancelLoad:(SFRestRequest *)request {
     DebugLog(@"requestDidCancelLoad: %@", request);
+        self.tableView.userInteractionEnabled = YES;
     //add your failed error handling here
 }
 
 - (void)requestDidTimeout:(SFRestRequest *)request {
     DebugLog(@"requestDidTimeout: %@", request);
+        self.tableView.userInteractionEnabled = YES;
     //add your failed error handling here
 }
 -(void)dismissPopover {

@@ -15,6 +15,10 @@
 		F40E54F915B0258A003EC3F4 /* Button-evernoteBg320x460.png in Resources */ = {isa = PBXBuildFile; fileRef = F40E54F815B0258A003EC3F4 /* Button-evernoteBg320x460.png */; };
 		F40E54FD15B02AAE003EC3F4 /* evernoteBg480x300.png in Resources */ = {isa = PBXBuildFile; fileRef = F40E54FB15B02AAE003EC3F4 /* evernoteBg480x300.png */; };
 		F40E552A15B0334B003EC3F4 /* evernoteBg768x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = F40E552915B0334B003EC3F4 /* evernoteBg768x1024.png */; };
+		F41D4AF615F1D2970070BDDB /* Search_bar_background_1x44.png in Resources */ = {isa = PBXBuildFile; fileRef = F41D4AF515F1D2970070BDDB /* Search_bar_background_1x44.png */; };
+		F41D4B2515F1DFB90070BDDB /* Logout.png in Resources */ = {isa = PBXBuildFile; fileRef = F41D4B2415F1DFB90070BDDB /* Logout.png */; };
+		F41D4B2715F1DFD70070BDDB /* settings_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F41D4B2615F1DFD70070BDDB /* settings_icon.png */; };
+		F41D4B2915F1E10A0070BDDB /* noteprise_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F41D4B2815F1E10A0070BDDB /* noteprise_logo.png */; };
 		F424255E159E19170038EA52 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = F424255D159E19170038EA52 /* Entitlements.plist */; };
 		F4242562159E1C1A0038EA52 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = F424255F159E1C1A0038EA52 /* Icon-72.png */; };
 		F4242563159E1C1A0038EA52 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F4242560159E1C1A0038EA52 /* Icon.png */; };
@@ -26,7 +30,6 @@
 		F42D1C99159B2E1700ECF3F4 /* evernoteBg.png in Resources */ = {isa = PBXBuildFile; fileRef = F42D1C8C159B2E1700ECF3F4 /* evernoteBg.png */; };
 		F42D1C9A159B2E1700ECF3F4 /* evernoteBg320x460.png in Resources */ = {isa = PBXBuildFile; fileRef = F42D1C8D159B2E1700ECF3F4 /* evernoteBg320x460.png */; };
 		F42D1C9B159B2E1700ECF3F4 /* newNote.PNG in Resources */ = {isa = PBXBuildFile; fileRef = F42D1C8E159B2E1700ECF3F4 /* newNote.PNG */; };
-		F42D1C9C159B2E1700ECF3F4 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = F42D1C8F159B2E1700ECF3F4 /* Settings.png */; };
 		F42D1C9F159B2E1700ECF3F4 /* top_icon_settings.png in Resources */ = {isa = PBXBuildFile; fileRef = F42D1C92159B2E1700ECF3F4 /* top_icon_settings.png */; };
 		F42D1CA0159B2E1700ECF3F4 /* top_icon_settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F42D1C93159B2E1700ECF3F4 /* top_icon_settings@2x.png */; };
 		F42D1CAE159B2E9F00ECF3F4 /* SFObj.png in Resources */ = {isa = PBXBuildFile; fileRef = F42D1CAC159B2E9F00ECF3F4 /* SFObj.png */; };
@@ -37,6 +40,15 @@
 		F438D46A15A013DB006ACD25 /* libSalesforceSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F438D45A15A013DB006ACD25 /* libSalesforceSDK.a */; };
 		F438D46B15A013DB006ACD25 /* libsbjson-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F438D46715A013DB006ACD25 /* libsbjson-ios.a */; };
 		F438D46D15A01563006ACD25 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F438D46C15A01563006ACD25 /* libxml2.dylib */; };
+		F43D3CD615F108C300CD0EA9 /* Top_nav_768x44.png in Resources */ = {isa = PBXBuildFile; fileRef = F43D3CD515F108C300CD0EA9 /* Top_nav_768x44.png */; };
+		F43D3CD815F1142300CD0EA9 /* Logout_down.png in Resources */ = {isa = PBXBuildFile; fileRef = F43D3CD715F1142300CD0EA9 /* Logout_down.png */; };
+		F43D3CDC15F117BC00CD0EA9 /* Add.png in Resources */ = {isa = PBXBuildFile; fileRef = F43D3CDB15F117BC00CD0EA9 /* Add.png */; };
+		F43D3CDE15F118D000CD0EA9 /* Toolbar_768x44.png in Resources */ = {isa = PBXBuildFile; fileRef = F43D3CDD15F118D000CD0EA9 /* Toolbar_768x44.png */; };
+		F43D3CE115F11D4000CD0EA9 /* CustomBlueToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = F43D3CE015F11D4000CD0EA9 /* CustomBlueToolbar.m */; };
+		F43D3CF815F132A900CD0EA9 /* White_bordered_background.png in Resources */ = {isa = PBXBuildFile; fileRef = F43D3CF715F132A900CD0EA9 /* White_bordered_background.png */; };
+		F43D3CFC15F133AC00CD0EA9 /* Blue_arrow_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = F43D3CFB15F133AC00CD0EA9 /* Blue_arrow_30x30.png */; };
+		F43D3CFF15F13DC400CD0EA9 /* Segment_control_button_unpressed.png in Resources */ = {isa = PBXBuildFile; fileRef = F43D3CFD15F13DC300CD0EA9 /* Segment_control_button_unpressed.png */; };
+		F43D3D0015F13DC400CD0EA9 /* Segment_control_button_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = F43D3CFE15F13DC400CD0EA9 /* Segment_control_button_pressed.png */; };
 		F446B88A15E7B2180083FE99 /* edit_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F446B88615E7B2180083FE99 /* edit_icon.png */; };
 		F446B88B15E7B2180083FE99 /* plus_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F446B88715E7B2180083FE99 /* plus_icon.png */; };
 		F446B88C15E7B2180083FE99 /* save_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F446B88815E7B2180083FE99 /* save_icon.png */; };
@@ -118,6 +130,32 @@
 		F4D2133A159B2CBC00610A18 /* SFObjsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D2132D159B2CBC00610A18 /* SFObjsViewController.m */; };
 		F4D2133B159B2CBC00610A18 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D2132F159B2CBC00610A18 /* SignInViewController.m */; };
 		F4D2133C159B2CBC00610A18 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4D21330159B2CBC00610A18 /* SignInViewController.xib */; };
+		F4F115C515F1F12D0009FC97 /* Segment_control_button_tag_unpressed.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115C115F1F12D0009FC97 /* Segment_control_button_tag_unpressed.png */; };
+		F4F115C615F1F12D0009FC97 /* Segment_control_button_notebook_unpressed.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115C215F1F12D0009FC97 /* Segment_control_button_notebook_unpressed.png */; };
+		F4F115C815F1F12D0009FC97 /* Segment_control_button_all_unpressed.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115C415F1F12D0009FC97 /* Segment_control_button_all_unpressed.png */; };
+		F4F115CB15F1F15F0009FC97 /* Background_pattern_tableview.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115CA15F1F15F0009FC97 /* Background_pattern_tableview.png */; };
+		F4F115D115F1F3010009FC97 /* Segment_control_button_keyword_unpressed.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115D015F1F3010009FC97 /* Segment_control_button_keyword_unpressed.png */; };
+		F4F115D615F1F4150009FC97 /* Segment_control_button_tag_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115D215F1F4150009FC97 /* Segment_control_button_tag_pressed.png */; };
+		F4F115D715F1F4150009FC97 /* Segment_control_button_notebook_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115D315F1F4150009FC97 /* Segment_control_button_notebook_pressed.png */; };
+		F4F115D815F1F4150009FC97 /* Segment_control_button_keyword_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115D415F1F4150009FC97 /* Segment_control_button_keyword_pressed.png */; };
+		F4F115D915F1F4150009FC97 /* Segment_control_button_all_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115D515F1F4150009FC97 /* Segment_control_button_all_pressed.png */; };
+		F4F115DB15F1F5A80009FC97 /* SF_Mapping.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115DA15F1F5A80009FC97 /* SF_Mapping.png */; };
+		F4F115DE15F1F8110009FC97 /* Create.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115DC15F1F8110009FC97 /* Create.png */; };
+		F4F115DF15F1F8110009FC97 /* Create_down.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115DD15F1F8110009FC97 /* Create_down.png */; };
+		F4F115E115F1F8680009FC97 /* bcg.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115E015F1F8680009FC97 /* bcg.png */; };
+		F4F115E315F1FA230009FC97 /* Select_note_bcg.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115E215F1FA230009FC97 /* Select_note_bcg.png */; };
+		F4F115E615F204980009FC97 /* Edit_down.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115E415F204980009FC97 /* Edit_down.png */; };
+		F4F115E715F204980009FC97 /* Edit.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115E515F204980009FC97 /* Edit.png */; };
+		F4F115EA15F204C20009FC97 /* Cancel_down.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115E815F204C20009FC97 /* Cancel_down.png */; };
+		F4F115EB15F204C20009FC97 /* Cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115E915F204C20009FC97 /* Cancel.png */; };
+		F4F115EE15F211130009FC97 /* Save.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115EC15F211130009FC97 /* Save.png */; };
+		F4F115EF15F211130009FC97 /* Save_down.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115ED15F211130009FC97 /* Save_down.png */; };
+		F4F115F315F211E60009FC97 /* Loader_bcg.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115F215F211E60009FC97 /* Loader_bcg.png */; };
+		F4F115F615F2128F0009FC97 /* Checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115F415F2128F0009FC97 /* Checkbox.png */; };
+		F4F115F715F2128F0009FC97 /* Checkbox_checked.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115F515F2128F0009FC97 /* Checkbox_checked.png */; };
+		F4F115F915F213760009FC97 /* Record_listing_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115F815F213760009FC97 /* Record_listing_icon.png */; };
+		F4F115FB15F2160D0009FC97 /* Save_to_SF.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115FA15F2160D0009FC97 /* Save_to_SF.png */; };
+		F4F115FD15F224360009FC97 /* folder_SF.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115FC15F224350009FC97 /* folder_SF.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -131,6 +169,10 @@
 		F40E54F815B0258A003EC3F4 /* Button-evernoteBg320x460.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Button-evernoteBg320x460.png"; path = "Noteprise/Resources/Images/Button-evernoteBg320x460.png"; sourceTree = SOURCE_ROOT; };
 		F40E54FB15B02AAE003EC3F4 /* evernoteBg480x300.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = evernoteBg480x300.png; path = Noteprise/Resources/Images/evernoteBg480x300.png; sourceTree = SOURCE_ROOT; };
 		F40E552915B0334B003EC3F4 /* evernoteBg768x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = evernoteBg768x1024.png; path = Noteprise/Resources/Images/evernoteBg768x1024.png; sourceTree = SOURCE_ROOT; };
+		F41D4AF515F1D2970070BDDB /* Search_bar_background_1x44.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Search_bar_background_1x44.png; path = Noteprise/Resources/Images/Search_bar_background_1x44.png; sourceTree = SOURCE_ROOT; };
+		F41D4B2415F1DFB90070BDDB /* Logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Logout.png; path = Noteprise/Resources/Images/Logout.png; sourceTree = SOURCE_ROOT; };
+		F41D4B2615F1DFD70070BDDB /* settings_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settings_icon.png; path = Noteprise/Resources/Images/settings_icon.png; sourceTree = SOURCE_ROOT; };
+		F41D4B2815F1E10A0070BDDB /* noteprise_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = noteprise_logo.png; path = Noteprise/Resources/Images/noteprise_logo.png; sourceTree = SOURCE_ROOT; };
 		F424255D159E19170038EA52 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		F424255F159E1C1A0038EA52 /* Icon-72.png */ = {isa = PBXFileReference; explicitFileType = image.icns; name = "Icon-72.png"; path = "Resources/icons/Icon-72.png"; sourceTree = "<group>"; };
 		F4242560159E1C1A0038EA52 /* Icon.png */ = {isa = PBXFileReference; explicitFileType = image.icns; name = Icon.png; path = Resources/icons/Icon.png; sourceTree = "<group>"; };
@@ -142,7 +184,6 @@
 		F42D1C8C159B2E1700ECF3F4 /* evernoteBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = evernoteBg.png; path = Noteprise/Resources/Images/evernoteBg.png; sourceTree = SOURCE_ROOT; };
 		F42D1C8D159B2E1700ECF3F4 /* evernoteBg320x460.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = evernoteBg320x460.png; path = Noteprise/Resources/Images/evernoteBg320x460.png; sourceTree = SOURCE_ROOT; };
 		F42D1C8E159B2E1700ECF3F4 /* newNote.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = newNote.PNG; path = Noteprise/Resources/Images/newNote.PNG; sourceTree = SOURCE_ROOT; };
-		F42D1C8F159B2E1700ECF3F4 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Settings.png; path = Noteprise/Resources/Images/Settings.png; sourceTree = SOURCE_ROOT; };
 		F42D1C92159B2E1700ECF3F4 /* top_icon_settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = top_icon_settings.png; path = Noteprise/Resources/Images/top_icon_settings.png; sourceTree = SOURCE_ROOT; };
 		F42D1C93159B2E1700ECF3F4 /* top_icon_settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "top_icon_settings@2x.png"; path = "Noteprise/Resources/Images/top_icon_settings@2x.png"; sourceTree = SOURCE_ROOT; };
 		F42D1CAC159B2E9F00ECF3F4 /* SFObj.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SFObj.png; path = Noteprise/Resources/Images/SFObj.png; sourceTree = SOURCE_ROOT; };
@@ -248,6 +289,16 @@
 		F438D46615A013DB006ACD25 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		F438D46715A013DB006ACD25 /* libsbjson-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libsbjson-ios.a"; sourceTree = "<group>"; };
 		F438D46C15A01563006ACD25 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		F43D3CD515F108C300CD0EA9 /* Top_nav_768x44.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Top_nav_768x44.png; path = Noteprise/Resources/Images/Top_nav_768x44.png; sourceTree = SOURCE_ROOT; };
+		F43D3CD715F1142300CD0EA9 /* Logout_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Logout_down.png; path = Noteprise/Resources/Images/Logout_down.png; sourceTree = SOURCE_ROOT; };
+		F43D3CDB15F117BC00CD0EA9 /* Add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Add.png; path = Noteprise/Resources/Images/Add.png; sourceTree = SOURCE_ROOT; };
+		F43D3CDD15F118D000CD0EA9 /* Toolbar_768x44.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Toolbar_768x44.png; path = Noteprise/Resources/Images/Toolbar_768x44.png; sourceTree = SOURCE_ROOT; };
+		F43D3CDF15F11D4000CD0EA9 /* CustomBlueToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomBlueToolbar.h; path = Classes/CustomBlueToolbar.h; sourceTree = "<group>"; };
+		F43D3CE015F11D4000CD0EA9 /* CustomBlueToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomBlueToolbar.m; path = Classes/CustomBlueToolbar.m; sourceTree = "<group>"; };
+		F43D3CF715F132A900CD0EA9 /* White_bordered_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = White_bordered_background.png; path = Noteprise/Resources/Images/White_bordered_background.png; sourceTree = SOURCE_ROOT; };
+		F43D3CFB15F133AC00CD0EA9 /* Blue_arrow_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Blue_arrow_30x30.png; path = Noteprise/Resources/Images/Blue_arrow_30x30.png; sourceTree = SOURCE_ROOT; };
+		F43D3CFD15F13DC300CD0EA9 /* Segment_control_button_unpressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_unpressed.png; path = Noteprise/Resources/Images/Segment_control_button_unpressed.png; sourceTree = SOURCE_ROOT; };
+		F43D3CFE15F13DC400CD0EA9 /* Segment_control_button_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_pressed.png; path = Noteprise/Resources/Images/Segment_control_button_pressed.png; sourceTree = SOURCE_ROOT; };
 		F446B88615E7B2180083FE99 /* edit_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = edit_icon.png; path = Noteprise/Resources/Images/edit_icon.png; sourceTree = SOURCE_ROOT; };
 		F446B88715E7B2180083FE99 /* plus_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = plus_icon.png; path = Noteprise/Resources/Images/plus_icon.png; sourceTree = SOURCE_ROOT; };
 		F446B88815E7B2180083FE99 /* save_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = save_icon.png; path = Noteprise/Resources/Images/save_icon.png; sourceTree = SOURCE_ROOT; };
@@ -391,6 +442,32 @@
 		F4D2132E159B2CBC00610A18 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignInViewController.h; path = Classes/SignInViewController.h; sourceTree = "<group>"; };
 		F4D2132F159B2CBC00610A18 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignInViewController.m; path = Classes/SignInViewController.m; sourceTree = "<group>"; };
 		F4D21330159B2CBC00610A18 /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SignInViewController.xib; path = Classes/SignInViewController.xib; sourceTree = "<group>"; };
+		F4F115C115F1F12D0009FC97 /* Segment_control_button_tag_unpressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_tag_unpressed.png; path = Noteprise/Resources/Images/Segment_control_button_tag_unpressed.png; sourceTree = SOURCE_ROOT; };
+		F4F115C215F1F12D0009FC97 /* Segment_control_button_notebook_unpressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_notebook_unpressed.png; path = Noteprise/Resources/Images/Segment_control_button_notebook_unpressed.png; sourceTree = SOURCE_ROOT; };
+		F4F115C415F1F12D0009FC97 /* Segment_control_button_all_unpressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_all_unpressed.png; path = Noteprise/Resources/Images/Segment_control_button_all_unpressed.png; sourceTree = SOURCE_ROOT; };
+		F4F115CA15F1F15F0009FC97 /* Background_pattern_tableview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Background_pattern_tableview.png; path = Noteprise/Resources/Images/Background_pattern_tableview.png; sourceTree = SOURCE_ROOT; };
+		F4F115D015F1F3010009FC97 /* Segment_control_button_keyword_unpressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_keyword_unpressed.png; path = Noteprise/Resources/Images/Segment_control_button_keyword_unpressed.png; sourceTree = SOURCE_ROOT; };
+		F4F115D215F1F4150009FC97 /* Segment_control_button_tag_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_tag_pressed.png; path = Noteprise/Resources/Images/Segment_control_button_tag_pressed.png; sourceTree = SOURCE_ROOT; };
+		F4F115D315F1F4150009FC97 /* Segment_control_button_notebook_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_notebook_pressed.png; path = Noteprise/Resources/Images/Segment_control_button_notebook_pressed.png; sourceTree = SOURCE_ROOT; };
+		F4F115D415F1F4150009FC97 /* Segment_control_button_keyword_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_keyword_pressed.png; path = Noteprise/Resources/Images/Segment_control_button_keyword_pressed.png; sourceTree = SOURCE_ROOT; };
+		F4F115D515F1F4150009FC97 /* Segment_control_button_all_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_all_pressed.png; path = Noteprise/Resources/Images/Segment_control_button_all_pressed.png; sourceTree = SOURCE_ROOT; };
+		F4F115DA15F1F5A80009FC97 /* SF_Mapping.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SF_Mapping.png; path = Noteprise/Resources/Images/SF_Mapping.png; sourceTree = SOURCE_ROOT; };
+		F4F115DC15F1F8110009FC97 /* Create.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Create.png; path = Noteprise/Resources/Images/Create.png; sourceTree = SOURCE_ROOT; };
+		F4F115DD15F1F8110009FC97 /* Create_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Create_down.png; path = Noteprise/Resources/Images/Create_down.png; sourceTree = SOURCE_ROOT; };
+		F4F115E015F1F8680009FC97 /* bcg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bcg.png; path = Noteprise/Resources/Images/bcg.png; sourceTree = SOURCE_ROOT; };
+		F4F115E215F1FA230009FC97 /* Select_note_bcg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Select_note_bcg.png; path = Noteprise/Resources/Images/Select_note_bcg.png; sourceTree = SOURCE_ROOT; };
+		F4F115E415F204980009FC97 /* Edit_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Edit_down.png; path = Noteprise/Resources/Images/Edit_down.png; sourceTree = SOURCE_ROOT; };
+		F4F115E515F204980009FC97 /* Edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Edit.png; path = Noteprise/Resources/Images/Edit.png; sourceTree = SOURCE_ROOT; };
+		F4F115E815F204C20009FC97 /* Cancel_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Cancel_down.png; path = Noteprise/Resources/Images/Cancel_down.png; sourceTree = SOURCE_ROOT; };
+		F4F115E915F204C20009FC97 /* Cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Cancel.png; path = Noteprise/Resources/Images/Cancel.png; sourceTree = SOURCE_ROOT; };
+		F4F115EC15F211130009FC97 /* Save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Save.png; path = Noteprise/Resources/Images/Save.png; sourceTree = SOURCE_ROOT; };
+		F4F115ED15F211130009FC97 /* Save_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Save_down.png; path = Noteprise/Resources/Images/Save_down.png; sourceTree = SOURCE_ROOT; };
+		F4F115F215F211E60009FC97 /* Loader_bcg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Loader_bcg.png; path = Noteprise/Resources/Images/Loader_bcg.png; sourceTree = SOURCE_ROOT; };
+		F4F115F415F2128F0009FC97 /* Checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Checkbox.png; path = Noteprise/Resources/Images/Checkbox.png; sourceTree = SOURCE_ROOT; };
+		F4F115F515F2128F0009FC97 /* Checkbox_checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Checkbox_checked.png; path = Noteprise/Resources/Images/Checkbox_checked.png; sourceTree = SOURCE_ROOT; };
+		F4F115F815F213760009FC97 /* Record_listing_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Record_listing_icon.png; path = Noteprise/Resources/Images/Record_listing_icon.png; sourceTree = SOURCE_ROOT; };
+		F4F115FA15F2160D0009FC97 /* Save_to_SF.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Save_to_SF.png; path = Noteprise/Resources/Images/Save_to_SF.png; sourceTree = SOURCE_ROOT; };
+		F4F115FC15F224350009FC97 /* folder_SF.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = folder_SF.png; path = Noteprise/Resources/Images/folder_SF.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -914,6 +991,8 @@
 				F486345615E29BE200262355 /* ChatterGroupVCntrlViewController.h */,
 				F486345715E29BE200262355 /* ChatterGroupVCntrlViewController.m */,
 				F488D91B15E39028001BA368 /* ChatterGroupVCntrlViewController.xib */,
+				F43D3CDF15F11D4000CD0EA9 /* CustomBlueToolbar.h */,
+				F43D3CE015F11D4000CD0EA9 /* CustomBlueToolbar.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -941,7 +1020,45 @@
 		F4D21301159B2BAB00610A18 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F4F115FC15F224350009FC97 /* folder_SF.png */,
+				F4F115FA15F2160D0009FC97 /* Save_to_SF.png */,
+				F4F115F815F213760009FC97 /* Record_listing_icon.png */,
+				F4F115F415F2128F0009FC97 /* Checkbox.png */,
+				F4F115F515F2128F0009FC97 /* Checkbox_checked.png */,
+				F4F115EC15F211130009FC97 /* Save.png */,
+				F4F115F215F211E60009FC97 /* Loader_bcg.png */,
+				F4F115ED15F211130009FC97 /* Save_down.png */,
+				F4F115E815F204C20009FC97 /* Cancel_down.png */,
+				F4F115E915F204C20009FC97 /* Cancel.png */,
+				F4F115E415F204980009FC97 /* Edit_down.png */,
+				F4F115E515F204980009FC97 /* Edit.png */,
+				F4F115E215F1FA230009FC97 /* Select_note_bcg.png */,
+				F4F115E015F1F8680009FC97 /* bcg.png */,
+				F4F115DC15F1F8110009FC97 /* Create.png */,
+				F4F115DD15F1F8110009FC97 /* Create_down.png */,
+				F4F115DA15F1F5A80009FC97 /* SF_Mapping.png */,
+				F4F115CA15F1F15F0009FC97 /* Background_pattern_tableview.png */,
+				F4F115D215F1F4150009FC97 /* Segment_control_button_tag_pressed.png */,
+				F4F115D315F1F4150009FC97 /* Segment_control_button_notebook_pressed.png */,
+				F4F115D415F1F4150009FC97 /* Segment_control_button_keyword_pressed.png */,
+				F4F115D515F1F4150009FC97 /* Segment_control_button_all_pressed.png */,
+				F4F115C115F1F12D0009FC97 /* Segment_control_button_tag_unpressed.png */,
+				F4F115C215F1F12D0009FC97 /* Segment_control_button_notebook_unpressed.png */,
+				F4F115C415F1F12D0009FC97 /* Segment_control_button_all_unpressed.png */,
+				F4F115D015F1F3010009FC97 /* Segment_control_button_keyword_unpressed.png */,
+				F41D4B2815F1E10A0070BDDB /* noteprise_logo.png */,
+				F41D4B2415F1DFB90070BDDB /* Logout.png */,
+				F41D4AF515F1D2970070BDDB /* Search_bar_background_1x44.png */,
+				F43D3CFD15F13DC300CD0EA9 /* Segment_control_button_unpressed.png */,
+				F43D3CFE15F13DC400CD0EA9 /* Segment_control_button_pressed.png */,
+				F41D4B2615F1DFD70070BDDB /* settings_icon.png */,
+				F43D3CDD15F118D000CD0EA9 /* Toolbar_768x44.png */,
+				F43D3CFB15F133AC00CD0EA9 /* Blue_arrow_30x30.png */,
+				F43D3CF715F132A900CD0EA9 /* White_bordered_background.png */,
+				F43D3CDB15F117BC00CD0EA9 /* Add.png */,
 				F446B88615E7B2180083FE99 /* edit_icon.png */,
+				F43D3CD715F1142300CD0EA9 /* Logout_down.png */,
+				F43D3CD515F108C300CD0EA9 /* Top_nav_768x44.png */,
 				F446B88715E7B2180083FE99 /* plus_icon.png */,
 				F446B88815E7B2180083FE99 /* save_icon.png */,
 				F446B88915E7B2180083FE99 /* trash_icon.png */,
@@ -967,7 +1084,6 @@
 				F40E54FB15B02AAE003EC3F4 /* evernoteBg480x300.png */,
 				F40E54F815B0258A003EC3F4 /* Button-evernoteBg320x460.png */,
 				F42D1C8E159B2E1700ECF3F4 /* newNote.PNG */,
-				F42D1C8F159B2E1700ECF3F4 /* Settings.png */,
 				F42D1C92159B2E1700ECF3F4 /* top_icon_settings.png */,
 				F42D1C93159B2E1700ECF3F4 /* top_icon_settings@2x.png */,
 			);
@@ -1045,7 +1161,6 @@
 				F42D1C99159B2E1700ECF3F4 /* evernoteBg.png in Resources */,
 				F42D1C9A159B2E1700ECF3F4 /* evernoteBg320x460.png in Resources */,
 				F42D1C9B159B2E1700ECF3F4 /* newNote.PNG in Resources */,
-				F42D1C9C159B2E1700ECF3F4 /* Settings.png in Resources */,
 				F42D1C9F159B2E1700ECF3F4 /* top_icon_settings.png in Resources */,
 				F42D1CA0159B2E1700ECF3F4 /* top_icon_settings@2x.png in Resources */,
 				F42D1CAE159B2E9F00ECF3F4 /* SFObj.png in Resources */,
@@ -1074,6 +1189,44 @@
 				F446B88B15E7B2180083FE99 /* plus_icon.png in Resources */,
 				F446B88C15E7B2180083FE99 /* save_icon.png in Resources */,
 				F446B88D15E7B2180083FE99 /* trash_icon.png in Resources */,
+				F43D3CD615F108C300CD0EA9 /* Top_nav_768x44.png in Resources */,
+				F43D3CD815F1142300CD0EA9 /* Logout_down.png in Resources */,
+				F43D3CDC15F117BC00CD0EA9 /* Add.png in Resources */,
+				F43D3CDE15F118D000CD0EA9 /* Toolbar_768x44.png in Resources */,
+				F43D3CF815F132A900CD0EA9 /* White_bordered_background.png in Resources */,
+				F43D3CFC15F133AC00CD0EA9 /* Blue_arrow_30x30.png in Resources */,
+				F43D3CFF15F13DC400CD0EA9 /* Segment_control_button_unpressed.png in Resources */,
+				F43D3D0015F13DC400CD0EA9 /* Segment_control_button_pressed.png in Resources */,
+				F41D4AF615F1D2970070BDDB /* Search_bar_background_1x44.png in Resources */,
+				F41D4B2515F1DFB90070BDDB /* Logout.png in Resources */,
+				F41D4B2715F1DFD70070BDDB /* settings_icon.png in Resources */,
+				F41D4B2915F1E10A0070BDDB /* noteprise_logo.png in Resources */,
+				F4F115C515F1F12D0009FC97 /* Segment_control_button_tag_unpressed.png in Resources */,
+				F4F115C615F1F12D0009FC97 /* Segment_control_button_notebook_unpressed.png in Resources */,
+				F4F115C815F1F12D0009FC97 /* Segment_control_button_all_unpressed.png in Resources */,
+				F4F115CB15F1F15F0009FC97 /* Background_pattern_tableview.png in Resources */,
+				F4F115D115F1F3010009FC97 /* Segment_control_button_keyword_unpressed.png in Resources */,
+				F4F115D615F1F4150009FC97 /* Segment_control_button_tag_pressed.png in Resources */,
+				F4F115D715F1F4150009FC97 /* Segment_control_button_notebook_pressed.png in Resources */,
+				F4F115D815F1F4150009FC97 /* Segment_control_button_keyword_pressed.png in Resources */,
+				F4F115D915F1F4150009FC97 /* Segment_control_button_all_pressed.png in Resources */,
+				F4F115DB15F1F5A80009FC97 /* SF_Mapping.png in Resources */,
+				F4F115DE15F1F8110009FC97 /* Create.png in Resources */,
+				F4F115DF15F1F8110009FC97 /* Create_down.png in Resources */,
+				F4F115E115F1F8680009FC97 /* bcg.png in Resources */,
+				F4F115E315F1FA230009FC97 /* Select_note_bcg.png in Resources */,
+				F4F115E615F204980009FC97 /* Edit_down.png in Resources */,
+				F4F115E715F204980009FC97 /* Edit.png in Resources */,
+				F4F115EA15F204C20009FC97 /* Cancel_down.png in Resources */,
+				F4F115EB15F204C20009FC97 /* Cancel.png in Resources */,
+				F4F115EE15F211130009FC97 /* Save.png in Resources */,
+				F4F115EF15F211130009FC97 /* Save_down.png in Resources */,
+				F4F115F315F211E60009FC97 /* Loader_bcg.png in Resources */,
+				F4F115F615F2128F0009FC97 /* Checkbox.png in Resources */,
+				F4F115F715F2128F0009FC97 /* Checkbox_checked.png in Resources */,
+				F4F115F915F213760009FC97 /* Record_listing_icon.png in Resources */,
+				F4F115FB15F2160D0009FC97 /* Save_to_SF.png in Resources */,
+				F4F115FD15F224360009FC97 /* folder_SF.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1132,6 +1285,7 @@
 				F486345915E29BE200262355 /* ChatterGroupVCntrlViewController.m in Sources */,
 				F4BFE88515E4AEE200F3E261 /* IconDownloader.m in Sources */,
 				F4BFE88815E4B5B700F3E261 /* ChatterRecord.m in Sources */,
+				F43D3CE115F11D4000CD0EA9 /* CustomBlueToolbar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

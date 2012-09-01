@@ -143,3 +143,27 @@ static NSString *const kHTML2DOCConverterURL    = @"http://csboxnotes.appspot.co
 +(void)showExceptionAlert:(NSString*)message;
 + (NSString *)getDataBetweenFromString:(NSString *)data leftString:(NSString *)leftData rightString:(NSString *)rightData leftOffset:(NSInteger)leftPos;
 @end
+@interface UINavigationBar (CustomImage)
+- (void) setBackgroundImage:(UIImage*)image;
+- (void) clearBackgroundImage;
+@end
+@implementation UINavigationBar (CustomImage)
+
+- (void) setBackgroundImage:(UIImage*)image {
+    if (image == NULL) return;
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    imageView.frame = CGRectMake(0, 0, 320, 44);
+    [self insertSubview:imageView atIndex:0];
+    [imageView release];
+}
+
+- (void) clearBackgroundImage {
+    NSArray *subviews = [self subviews];
+    for (int i=0; i<[subviews count]; i++) {
+        if ([[subviews objectAtIndex:i]  isMemberOfClass:[UIImageView class]]) {
+            [[subviews objectAtIndex:i] removeFromSuperview];
+        }
+    }    
+}
+
+@end

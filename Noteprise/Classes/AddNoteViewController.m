@@ -31,10 +31,25 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
     bodyTxtView.layer.cornerRadius = 8;
 	bodyTxtView.layer.borderWidth = 2;
 	bodyTxtView.layer.borderColor = [[UIColor blackColor] CGColor];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Create" 
+    UIImage *buttonImage = [UIImage imageNamed:@"Create.png"];
+    UIImage *buttonSelectedImage = [UIImage imageNamed:@"Create_down.png"];
+    
+    //create the button and assign the image
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setImage:buttonImage forState:UIControlStateNormal];
+    [button setImage:buttonSelectedImage forState:UIControlStateSelected];
+    
+    //sets the frame of the button to the size of the image
+    button.frame = CGRectMake(0, 0, buttonImage.size.width, buttonImage.size.height);
+    //creates a UIBarButtonItem with the button as a custom view
+    UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    [customBarItem setAction:@selector(createNoteEvernote:)];
+    [customBarItem setTarget:self];
+    self.navigationItem.rightBarButtonItem = customBarItem;
+    /*self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Create" 
                                                                              style:UIBarButtonItemStyleBordered 
                                                                             target:self 
-                                                                            action:@selector(createNoteEvernote:)];
+                                                                            action:@selector(createNoteEvernote:)];*/
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         self.contentSizeForViewInPopover = CGSizeMake(320.0, 480);
 
@@ -332,7 +347,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 -(IBAction)selectNoteBookForiPad:(id)sender{
     UITableViewController* popoverContent = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
 	popoverContent.tableView=notebooksTbl;
-    UIImageView *tempImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg.PNG"]];
+    UIImageView *tempImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Select_note_bcg.png"]];
     [tempImageView setFrame:notebooksTbl.frame]; 
     
     notebooksTbl.backgroundView = tempImageView;

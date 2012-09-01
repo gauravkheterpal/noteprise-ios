@@ -30,7 +30,7 @@
 #import "SFRestRequest.h"
 #import "NSData+Base64.h"
 #import "Utility.h"
-
+#import "CustomBlueToolbar.h"
 NSString * parrentTaskID ;
 NSString * accountID ;
 int selectedAccIdx;
@@ -61,15 +61,16 @@ NSString* selectedObj,*selectedObjID;
 }
 - (void)viewDidLoad
 {
-    backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-    backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
-    [self changeBkgrndImgWithOrientation];
+    tableView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background_pattern_tableview.png"]];
+    //backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    //backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
+    //[self changeBkgrndImgWithOrientation];
     self.fieldsRows = [[NSMutableArray alloc]init];
     [self fetchSelectedObjList];
     //selectedRow = [[NSMutableArray alloc]init];
     self.inEditMode = NO;
-	self.selectedImage = [UIImage imageNamed:@"btnChecked.png"];
-	self.unselectedImage = [UIImage imageNamed:@"btnUnchecked.png"];
+	self.selectedImage = [UIImage imageNamed:@"Checkbox_checked.png"];
+	self.unselectedImage = [UIImage imageNamed:@"Checkbox.png"];
     
     DebugLog(@"subview:%@",[self.view subviews]);
     
@@ -81,19 +82,21 @@ NSString* selectedObj,*selectedObjID;
     
 }
 -(void)initToolbarButtons {
-    UIToolbar* toolbar = [[UIToolbar alloc]
+    CustomBlueToolbar* toolbar = [[CustomBlueToolbar alloc]
                           initWithFrame:CGRectMake(0, 0, 125, 45)];
-    [toolbar setBarStyle: UIBarStyleBlackOpaque];
+    //[toolbar setBarStyle: UIBarStyleBlackOpaque];
     
     // create an array for the buttons
     NSMutableArray* buttons = [[NSMutableArray alloc] initWithCapacity:4];
     UIBarButtonItem *editButton;
     if(!self.inEditMode)
     {
-        UIImage* image3 = [UIImage imageNamed:@"edit_icon.png"];
+        UIImage *editButtonImage = [UIImage imageNamed:@"Edit.png"];
+        UIImage *editButtonSelectedImage = [UIImage imageNamed:@"Edit_down.png"];
         CGRect frameimg = CGRectMake(0, 0, 27,27);
         UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
-        [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+        [someButton setBackgroundImage:editButtonImage forState:UIControlStateNormal];
+        [someButton setBackgroundImage:editButtonSelectedImage forState:UIControlStateHighlighted];
         [someButton addTarget:self action:@selector(toggleEditMode) forControlEvents:UIControlEventTouchUpInside];
         [someButton setShowsTouchWhenHighlighted:YES];
         UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
@@ -114,11 +117,12 @@ NSString* selectedObj,*selectedObjID;
     [buttons addObject:spacer];
     [spacer release];
     
-    
-    UIImage* image3 = [UIImage imageNamed:@"save_icon.png"];
+    UIImage *saveButtonImage = [UIImage imageNamed:@"Save.png"];
+    UIImage *saveButtonSelectedImage = [UIImage imageNamed:@"Save_down.png"];
     CGRect frameimg = CGRectMake(0, 0, 27,27);
     UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
-    [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+    [someButton setBackgroundImage:saveButtonImage forState:UIControlStateNormal];
+    [someButton setBackgroundImage:saveButtonSelectedImage forState:UIControlStateNormal];
     [someButton addTarget:self action:@selector(addSelectedEvernoteToSF) forControlEvents:UIControlEventTouchUpInside];
     [someButton setShowsTouchWhenHighlighted:YES];
     UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
@@ -463,7 +467,7 @@ NSString* selectedObj,*selectedObjID;
 
     }
 	//if you want to add an image to your cell, here's how
-	UIImage *image = [UIImage imageNamed:@"Settings.png"];
+	UIImage *image = [UIImage imageNamed:@"folder_SF.png"];
     if(self.inEditMode) {
         NSNumber *selectedForDelete = [selectedRow objectAtIndex:indexPath.row];
         if([selectedForDelete boolValue]) 

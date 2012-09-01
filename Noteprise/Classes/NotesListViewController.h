@@ -34,6 +34,8 @@
     int selectedRowIndex;
     IBOutlet UIImageView *backgroundImgView;
     IBOutlet UIImageView *dialog_imgView;
+    IBOutlet UIToolbar *bottom_bar;
+    IBOutlet UIToolbar *toolbar;
 }
 
 @end

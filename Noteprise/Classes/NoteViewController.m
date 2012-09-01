@@ -36,11 +36,11 @@
 {
     
     [super viewDidLoad];
-    backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background_pattern_tableview.png"]];
+    /*backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
-    [self changeBkgrndImgWithOrientation];
-    
-   
+    [self changeBkgrndImgWithOrientation];*/
+    self.navigationItem.backBarButtonItem.tintColor = [UIColor whiteColor];
     
     
     
@@ -51,13 +51,16 @@
     {
         self.navigationItem.rightBarButtonItem.title = @"Edit";
         
-        UIImage* image3 = [UIImage imageNamed:@"edit_icon.png"];
+        UIImage *editButtonImage = [UIImage imageNamed:@"Edit.png"];
+        UIImage *editButtonSelectedImage = [UIImage imageNamed:@"Edit_down.png"];
+
         CGRect frameimg = CGRectMake(0, 0, 32,32);
-        UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
-        [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
-        [someButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
-        [someButton setShowsTouchWhenHighlighted:YES];
-        UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
+        UIButton *editButton = [[UIButton alloc] initWithFrame:frameimg];
+        [editButton setBackgroundImage:editButtonImage forState:UIControlStateNormal];
+        [editButton setBackgroundImage:editButtonSelectedImage forState:UIControlStateHighlighted];
+        [editButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
+        [editButton setShowsTouchWhenHighlighted:YES];
+        UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:editButton];
         
         self.navigationItem.rightBarButtonItem = mailbutton;
         self.navigationItem.rightBarButtonItem.tag = editBtnTag;
@@ -67,7 +70,7 @@
 
     self.navigationItem.rightBarButtonItem.title = @"Edit";
      
-    UIImage* image3 = [UIImage imageNamed:@"edit_icon.png"];
+   /* UIImage* image3 = [UIImage imageNamed:@"edit_icon.png"];
     CGRect frameimg = CGRectMake(0, 0, 32,32);
     UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
     [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
@@ -75,7 +78,7 @@
     [someButton setShowsTouchWhenHighlighted:YES];
     UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
     
-    self.navigationItem.rightBarButtonItem = mailbutton;
+    self.navigationItem.rightBarButtonItem = mailbutton;*/
      self.navigationItem.rightBarButtonItem.tag = editBtnTag;
     NSLog(@"tag = %d",self.navigationItem.rightBarButtonItem.tag);
     /*

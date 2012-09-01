@@ -75,17 +75,17 @@
 {
     [super viewDidLoad];
     self.title = @"Chatter Users";
-    //[loadingSpinner startAnimating];
+    chatterUsersTbl.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background_pattern_tableview.png"]];
     [Utility showCoverScreen];
-    backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    /*backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
-    [self changeBkgrndImgWithOrientation];
+    [self changeBkgrndImgWithOrientation];*/
     self.chatterUsersArray = [[NSMutableArray alloc]init];
     self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
     [self fetchListOfFollowingRecords];
     self.inEditMode = NO;
-	self.selectedImage = [UIImage imageNamed:@"btnChecked.png"];
-	self.unselectedImage = [UIImage imageNamed:@"btnUnchecked.png"];
+	self.selectedImage = [UIImage imageNamed:@"Checkbox_checked.png"];
+	self.unselectedImage = [UIImage imageNamed:@"Checkbox.png"];
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         UILabel *bigLabel = [[UILabel alloc] init];
         bigLabel.text = self.title;

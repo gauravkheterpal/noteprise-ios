@@ -26,7 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIImageView *tempImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg.PNG"]];
+    UIImageView *tempImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Select_note_bcg.png"]];
     [tempImageView setFrame:self.tableView.frame]; 
     
     self.tableView.backgroundView = tempImageView;
@@ -79,7 +79,7 @@
     NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *sfobjFieldToMapWith = [stdDefaults valueForKey:SFOBJ_FIELD_TO_MAP_KEY];
     DebugLog(@"sfobjFieldToMapWith:%@\n objFields:%@",sfobjFieldToMapWith,[objFields objectAtIndex:indexPath.row]);
-    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.textLabel.textColor = [UIColor blackColor];
     if(sfobjFieldToMapWith != nil) {
         if([[[objFields objectAtIndex:indexPath.row]valueForKey:FIELD_NAME] isEqualToString:[sfobjFieldToMapWith valueForKey:FIELD_NAME]])
             cell.accessoryType = UITableViewCellAccessoryCheckmark;

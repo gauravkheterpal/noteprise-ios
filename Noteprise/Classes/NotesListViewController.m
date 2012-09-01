@@ -20,15 +20,62 @@
 //viewDidLoad method declared in RootViewController.m
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"Noteprise";
-    
+    //self.title = @"Noteprise";
+    if ([self.navigationController.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Top_nav_768x44.png"] forBarMetrics:UIBarMetricsDefault];
+    }
     //Initialize the arrays
     listOfItems = [[NSMutableArray alloc] init];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Logout" style:UIBarButtonItemStyleBordered target:self action:@selector(logout)];
+    //self.navigationItem.leftBarButtonItem.width = 40;
+    //self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Logout_down.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(logout)];
+    
+    //[[UIBarButtonItem alloc]initWithTitle:@"Logout" style:UIBarButtonItemStyleBordered target:self action:@selector(logout)];
     backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
-    [self changeBkgrndImgWithOrientation];
+    //[self changeBkgrndImgWithOrientation];
     [self fetchNoteBasedOnSelectedSegement];
+    toolbar.backgroundColor = [UIColor clearColor];
+    UIImage *buttonImage = [UIImage imageNamed:@"Logout.png"];
+    UIImage *buttonSelectedImage = [UIImage imageNamed:@"Logout_down.png"];
+    
+    //create the button and assign the image
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setImage:buttonImage forState:UIControlStateNormal];
+    [button setImage:buttonSelectedImage forState:UIControlStateSelected];
+    
+    //sets the frame of the button to the size of the image
+    button.frame = CGRectMake(0, 0, buttonImage.size.width, buttonImage.size.height);
+    //creates a UIBarButtonItem with the button as a custom view
+    UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    [customBarItem setAction:@selector(logout)];
+    [customBarItem setTarget:self];
+    self.navigationItem.leftBarButtonItem = customBarItem;
+    UIImageView * logo = [[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 187.0f, 31.0f)];
+    logo.image = [UIImage imageNamed:@"logo.png"];
+    logo.center = [self.navigationController.navigationBar center];
+    self.navigationItem.titleView = logo;
+    notesTbl.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background_pattern_tableview.png"]];
+    
+    //Customize segement control buttons
+    [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_all_pressed.png"] forSegmentAtIndex:0];
+    [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_notebook_unpressed.png"] forSegmentAtIndex:1];
+    [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_tag_unpressed.png"] forSegmentAtIndex:2];
+     [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_keyword_unpressed.png"] forSegmentAtIndex:3];
+
+    [searchOptionsChoiceCntrl setBackgroundColor:[UIColor whiteColor]];
+    //Customize segement control search bar
+    for (UIView *subview in searchBar.subviews) {
+        if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
+            DebugLog(@"width:%f",subview.frame.size.width);
+            UIView *bg = [[UIView alloc] initWithFrame:subview.frame];
+            bg.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+            bg.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Search_bar_background_1x44.png"]];
+            [searchBar insertSubview:bg aboveSubview:subview];
+            [subview removeFromSuperview];
+            break;
+        }
+    }
+
 }
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
@@ -57,7 +104,7 @@
     settingsView.popover_delegate = self;
     UINavigationController *settingsNavCntrl = [[UINavigationController alloc] initWithRootViewController:settingsView];
 	settingsNavCntrl.navigationBar.barStyle = UIBarStyleBlackOpaque;
-    
+    [settingsNavCntrl.navigationBar setBackgroundImage:[UIImage imageNamed:@"Top_nav_768x44.png"]];
 	if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
 		//sendSubView.view.frame=CGRectMake(0, 0, 300, 400);
 		[self dissmissPopover];
@@ -82,6 +129,10 @@
 }
 -(IBAction)showNotes:(id)sender{
     if(searchOptionsChoiceCntrl.selectedSegmentIndex == 0){
+        [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_all_pressed.png"] forSegmentAtIndex:0];
+        [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_notebook_unpressed.png"] forSegmentAtIndex:1];
+        [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_tag_unpressed.png"] forSegmentAtIndex:2];
+        [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_keyword_unpressed.png"] forSegmentAtIndex:3];
         searchBar.userInteractionEnabled = NO;
         searchBar.alpha = 0.75;
         searchBar.text = @"";
@@ -96,6 +147,22 @@
         });
     }
     else {
+        if(searchOptionsChoiceCntrl.selectedSegmentIndex == 1){
+            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_all_unpressed.png"] forSegmentAtIndex:0];
+            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_notebook_pressed.png"] forSegmentAtIndex:1];
+            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_tag_unpressed.png"] forSegmentAtIndex:2];
+            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_keyword_unpressed.png"] forSegmentAtIndex:3];
+        } else if(searchOptionsChoiceCntrl.selectedSegmentIndex == 2){
+            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_all_unpressed.png"] forSegmentAtIndex:0];
+            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_notebook_unpressed.png"] forSegmentAtIndex:1];
+            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_tag_pressed.png"] forSegmentAtIndex:2];
+            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_keyword_unpressed.png"] forSegmentAtIndex:3];
+        } else if(searchOptionsChoiceCntrl.selectedSegmentIndex == 3){
+            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_all_unpressed.png"] forSegmentAtIndex:0];
+            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_notebook_unpressed.png"] forSegmentAtIndex:1];
+            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_tag_unpressed.png"] forSegmentAtIndex:2];
+            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_keyword_pressed.png"] forSegmentAtIndex:3];
+        }
         searchBar.alpha = 1.0;
         searchBar.userInteractionEnabled = YES;
         [searchBar becomeFirstResponder];
@@ -474,6 +541,7 @@
     addNoteVCntrl.delegate =self;
     UINavigationController *addNoteNavCntrl = [[UINavigationController alloc] initWithRootViewController:addNoteVCntrl];
 	addNoteNavCntrl.navigationBar.barStyle = UIBarStyleBlackOpaque;
+    [addNoteNavCntrl.navigationBar setBackgroundImage:[UIImage imageNamed:@"Top_nav_768x44.png"]];
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
 		[self dissmissPopover];
 		UIPopoverController *popoverSettings = [[UIPopoverController alloc] initWithContentViewController:addNoteNavCntrl]; 
@@ -587,8 +655,16 @@
     
     NSString *cellValue = [[listOfItems objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
     cell.textLabel.text = cellValue;
-    cell.textLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:16];
+    cell.textLabel.font = [UIFont fontWithName:@"Verdana" size:13];
     cell.textLabel.textColor = [UIColor blackColor];
+    //cell.backgroundColor = [UIColor clearColor];
+    //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"White_bordered_background.png"]];
+    
+    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    UIImageView *accIMGView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
+    accIMGView.image =[UIImage imageNamed:@"Blue_arrow_30x30.png"];
+    cell.accessoryView = accIMGView;
+    cell.accessoryView.backgroundColor  =[UIColor clearColor];
     cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     return cell;
 }
