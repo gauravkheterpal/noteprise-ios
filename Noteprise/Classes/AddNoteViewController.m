@@ -9,6 +9,7 @@
 #import "EvernoteSDK.h"
 #import "Utility.h"
 #import "NSString+HTML.h"
+#import "CustomBlueToolbar.h"
 //#import "NSDataMD5Additions.h"
 static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3;
 static const CGFloat MINIMUM_SCROLL_FRACTION = 0.2;
@@ -38,13 +39,13 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setImage:buttonImage forState:UIControlStateNormal];
     [button setImage:buttonSelectedImage forState:UIControlStateSelected];
-    
+    [button addTarget:self action:@selector(createNoteEvernote:) forControlEvents:UIControlEventTouchUpInside];
     //sets the frame of the button to the size of the image
     button.frame = CGRectMake(0, 0, buttonImage.size.width, buttonImage.size.height);
     //creates a UIBarButtonItem with the button as a custom view
     UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    [customBarItem setAction:@selector(createNoteEvernote:)];
-    [customBarItem setTarget:self];
+    //[customBarItem setAction:@selector(createNoteEvernote:)];
+    //[customBarItem setTarget:self];
     self.navigationItem.rightBarButtonItem = customBarItem;
     /*self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Create" 
                                                                              style:UIBarButtonItemStyleBordered 
@@ -136,7 +137,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
         DebugLog(@"notification:%@",notification);
         //if([bodyTxtView isFirstResponder]){
         CGRect textFieldRect = [self.view.window convertRect:bodyTxtView.bounds fromView:bodyTxtView];
-        NSLog(@"textFieldDidBeginEditing phone: %f",textFieldRect.origin.y);
+        DebugLog(@"textFieldDidBeginEditing phone: %f",textFieldRect.origin.y);
         
         CGRect viewRect = [self.view.window convertRect:self.view.bounds fromView:self.view];
         CGFloat midline = textFieldRect.origin.y + 2 * textFieldRect.size.height;
@@ -381,14 +382,16 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 	notebookPicker.showsSelectionIndicator = YES;  
 	notebookPicker.dataSource = self;
 	notebookPicker.delegate = self;
-    
-    UIToolbar *pickerDateToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
-	pickerDateToolbar.barStyle = UIBarStyleBlackOpaque;
+    CustomBlueToolbar *pickerDateToolbar = [[CustomBlueToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+    pickerDateToolbar.tintColor = [UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1]; 
+	//pickerDateToolbar.barStyle = UIBarStyleBlackOpaque;
     
     NSMutableArray *barItems = [[NSMutableArray alloc] init];
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 200, 20)];
     label.backgroundColor = [UIColor clearColor];
     label.text = @"Select Notebook";
+    label.font = [UIFont fontWithName:@"Verdana" size:16];
+    label.font = [UIFont boldSystemFontOfSize:16];
     label.textColor = [UIColor blackColor];
     UIBarButtonItem *titleLbl = [[UIBarButtonItem alloc] initWithCustomView:label];
     [barItems addObject:titleLbl];
@@ -409,7 +412,6 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
     }
     
     sortTypeActionSheet = [[UIActionSheet alloc] initWithTitle:@"Default Sort" delegate:nil cancelButtonTitle:@"Cancel Button" destructiveButtonTitle:@"Destructive Button" otherButtonTitles:@"Other Button 1", nil];
-    
     sortTypeActionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
     [sortTypeActionSheet addSubview:pickerDateToolbar];
     [sortTypeActionSheet addSubview:notebookPicker];
@@ -576,7 +578,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
     
     NSString *result = [bodyTxtView stringByEvaluatingJavaScriptFromString:js];
     
-    NSLog(@"%@",result);
+    DebugLog(@"%@",result);
 }
 
 - (void)setWebViewKeyPressDetectionEnabled:(BOOL)isEnabled {
@@ -599,7 +601,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
         js = removeKeyPressEventJS;
     
     NSString *result = [bodyTxtView stringByEvaluatingJavaScriptFromString:js];
-    NSLog(@"%@",result);
+    DebugLog(@"%@",result);
 }
 
 
@@ -609,7 +611,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
     
     NSString *result = [bodyTxtView stringByEvaluatingJavaScriptFromString:jsEnableEditing];
     
-    NSLog(@"editable %@",result);
+    DebugLog(@"editable %@",result);
 }
 
 - (void)increaseZoomFactorRange {

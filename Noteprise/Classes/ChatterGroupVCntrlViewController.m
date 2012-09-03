@@ -10,6 +10,7 @@
 #import "Utility.h"
 #import "IconDownloader.h"
 #import "ChatterRecord.h"
+#import "CustomBlueToolbar.h"
 @interface ChatterGroupVCntrlViewController ()
 
 @end
@@ -43,35 +44,18 @@
     for (int i=0; i < [chatterGroupArray count]; i++)
         [array addObject:[NSNumber numberWithBool:NO]];
     selectedGroupsRow = array;
-    NSLog(@"Selected Group Array = %@",selectedGroupsRow);
+    DebugLog(@"Selected Group Array = %@",selectedGroupsRow);
 }
 
 -(void)initToolbarButtons {
-    UIToolbar* toolbar = [[UIToolbar alloc]
-                          initWithFrame:CGRectMake(0, 0, 125, 45)];
-    [toolbar setBarStyle: UIBarStyleBlackOpaque];
+    CustomBlueToolbar* toolbar = [[CustomBlueToolbar alloc]
+                                  initWithFrame:CGRectMake(0, 0, 125, 44)];
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && (self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight))
+        toolbar.frame = CGRectMake(0, 0, 125, 32);
+    //[toolbar setBarStyle: UIBarStyleBlackOpaque];
     
     // create an array for the buttons
-    NSMutableArray* buttons = [[NSMutableArray alloc] initWithCapacity:4];
-    UIBarButtonItem *editButton;
-    if(!self.inEditMode)
-    {
-        UIImage* image3 = [UIImage imageNamed:@"edit_icon.png"];
-        CGRect frameimg = CGRectMake(0, 0, 27,27);
-        UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
-        [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
-        [someButton addTarget:self action:@selector(toggleEditMode) forControlEvents:UIControlEventTouchUpInside];
-        [someButton setShowsTouchWhenHighlighted:YES];
-        UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
-        
-        editButton = mailbutton;
-        editButton.tag = 1;
-        // editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(toggleEditMode)];
-    }
-    else 
-        editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(toggleEditMode)];
-    [buttons addObject:editButton];
-    [editButton release];
+    NSMutableArray* buttons = [[NSMutableArray alloc] initWithCapacity:3];
     // create a spacer between the buttons
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc]
                                initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
@@ -79,38 +63,45 @@
                                action:nil];
     [buttons addObject:spacer];
     [spacer release];
+    if(!self.inEditMode)
+    {
+        UIImage* editBtnImg = [UIImage imageNamed:@"Edit.png"];
+        UIImage* editBtnDownImg = [UIImage imageNamed:@"Edit_down.png"];
+        UIButton *editButton = [[UIButton alloc] initWithFrame:BAR_BUTTON_FRAME];
+        [editButton setBackgroundImage:editBtnImg forState:UIControlStateNormal];
+        [editButton setBackgroundImage:editBtnDownImg forState:UIControlStateHighlighted];
+        [editButton addTarget:self action:@selector(toggleEditMode) forControlEvents:UIControlEventTouchUpInside];
+        [editButton setShowsTouchWhenHighlighted:YES];
+        UIBarButtonItem *editBarButton =[[UIBarButtonItem alloc] initWithCustomView:editButton];
+        [buttons addObject:editBarButton];
+        [editButton release];
+    }
+    else {
+        UIImage* cancelBtnImg = [UIImage imageNamed:@"Cancel.png"];
+        UIImage* cancelBtnDownImg = [UIImage imageNamed:@"Cancel_down.png"];
+        UIButton *cancelButton = [[UIButton alloc] initWithFrame:BAR_BUTTON_FRAME];
+        [cancelButton setBackgroundImage:cancelBtnImg forState:UIControlStateNormal];
+        [cancelButton setBackgroundImage:cancelBtnDownImg forState:UIControlStateHighlighted];
+        [cancelButton addTarget:self action:@selector(toggleEditMode) forControlEvents:UIControlEventTouchUpInside];
+        [cancelButton setShowsTouchWhenHighlighted:YES];
+        UIBarButtonItem *cancelBarButton =[[UIBarButtonItem alloc] initWithCustomView:cancelButton];
+        [buttons addObject:cancelBarButton];
+        [cancelButton release];
+    }
     
     
-    UIImage* image3 = [UIImage imageNamed:@"save_icon.png"];
-    CGRect frameimg = CGRectMake(0, 0, 27,27);
-    UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
-    [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
-    [someButton addTarget:self action:@selector(postToSelectedChatterGroups) forControlEvents:UIControlEventTouchUpInside];
-    [someButton setShowsTouchWhenHighlighted:YES];
-    UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
+    UIImage* saveBtnImage = [UIImage imageNamed:@"Save.png"];
+    UIImage* saveBtnDoneImage = [UIImage imageNamed:@"Save_down.png"];
+    UIButton *saveButton = [[UIButton alloc] initWithFrame:BAR_BUTTON_FRAME];
+    [saveButton setBackgroundImage:saveBtnImage forState:UIControlStateNormal];
+    [saveButton setBackgroundImage:saveBtnDoneImage forState:UIControlStateHighlighted];
+    [saveButton addTarget:self action:@selector(postToSelectedChatterGroups) forControlEvents:UIControlEventTouchUpInside];
+    [saveButton setShowsTouchWhenHighlighted:YES];
+    UIBarButtonItem *saveBarButton =[[UIBarButtonItem alloc] initWithCustomView:saveButton];
     
-    [buttons addObject:mailbutton];
-    // self.navigationItem.rightBarButtonItem.tag = saveBtnTag;
-    
-    
-    /*
-     UIBarButtonItem *addButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(addSelectedEvernoteToSF)];
-     [buttons addObject:addButton];
-     [addButton release];
-     */
-    // create a spacer between the buttons
-    
-    
-    
-    UIBarButtonItem *spacer1 = [[UIBarButtonItem alloc]
-                                initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
-                                target:nil
-                                action:nil];
-    [buttons addObject:spacer1];
-    [spacer1 release];
-    // put the buttons in the toolbar and release them
-    [toolbar setItems:buttons animated:NO];
-    [buttons release];
+    [buttons addObject:saveBarButton];
+    [saveButton release];
+    [toolbar setItems:buttons];
     
     // place the toolbar into the navigation bar
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
@@ -118,35 +109,6 @@
     [toolbar release];
     
 }
-
-/*{
-    UIToolbar* toolbar = [[UIToolbar alloc]
-                          initWithFrame:CGRectMake(0, 0, 70, 45)];
-    [toolbar setBarStyle: UIBarStyleBlackTranslucent];
-    
-    // create an array for the buttons
-    NSMutableArray* buttons = [[NSMutableArray alloc] initWithCapacity:4];
-    
-    UIBarButtonItem *addButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(postToSelectedChatterGroups)];
-    [buttons addObject:addButton];
-    [addButton release];
-    // create a spacer between the buttons
-    UIBarButtonItem *spacer1 = [[UIBarButtonItem alloc]
-                                initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
-                                target:nil
-                                action:nil];
-    [buttons addObject:spacer1];
-    [spacer1 release];
-    // put the buttons in the toolbar and release them
-    [toolbar setItems:buttons animated:NO];
-    [buttons release];
-    
-    // place the toolbar into the navigation bar
-    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
-                                               initWithCustomView:toolbar] autorelease];
-    [toolbar release];
-    
-}*/
 
 -(void)viewDidAppear:(BOOL)animated{
     selectedGroupIndex=-999;
@@ -168,15 +130,29 @@
     //[loadingSpinner startAnimating];
     [Utility showCoverScreen];
     chatterGroupTbl.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background_pattern_tableview.png"]];
-    /*backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-    backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
-    [self changeBkgrndImgWithOrientation];*/
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        UILabel *bigLabel = [[UILabel alloc] init];
+        bigLabel.text = self.title;
+        [bigLabel setBackgroundColor:[UIColor clearColor]];
+        [bigLabel setTextColor:[UIColor whiteColor]];
+        [UIFont fontWithName:@"Verdana" size:16];
+        bigLabel.font = [UIFont boldSystemFontOfSize: 16.0];
+        [bigLabel sizeToFit];
+        self.navigationItem.titleView = bigLabel;
+        [bigLabel release];
+        
+    }
     self.chatterGroupArray = [[NSMutableArray alloc]init];
     self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
-   // UIBarButtonItem *postToChatterGroupButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(postToSelectedChatterGroups)];
-    //self.navigationItem.rightBarButtonItem = postToChatterGroupButton;
     [self fetchListOfChatterGroup];
 
+}
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return YES;
+}
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration{
+    [self initToolbarButtons];
 }
 -(void)changeBkgrndImgWithOrientation {
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
@@ -202,12 +178,12 @@
 }
 -(void)postToSelectedChatterGroups {
     if([Utility checkNetwork]) {
-        for(int i = 0;i < [selectedGroupsRow count] ; i++) {
+        /*for(int i = 0;i < [selectedGroupsRow count] ; i++) {
             if ([[selectedGroupsRow objectAtIndex:i] boolValue] == YES) {
                 ChatterRecord *selectedRecord = (ChatterRecord*)[self.chatterGroupArray objectAtIndex:i];
                // mentionUsersCharacterCount += ([selectedRecord.chatterName length]+12);
             }
-        }
+        }*/
         
         if([self.noteContent length] > 1000){
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Noteprise" message:CHATTER_LIMIT_CROSSED_ALERT_MSG delegate:self cancelButtonTitle:ALERT_NEGATIVE_BUTTON_TEXT otherButtonTitles:ALERT_POSITIVE_BUTTON_TEXT, nil];
@@ -227,8 +203,8 @@
 -(void)createSFRequestToPostToSelectedChatterGroup:(NSString*)evernoteContent
 {
     
-    NSMutableArray *paramArr = [[NSMutableArray alloc]init];
-    NSDictionary *textParam = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",evernoteContent, @"text",nil];
+    //NSMutableArray *paramArr = [[NSMutableArray alloc]init];
+    //NSDictionary *textParam = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",evernoteContent, @"text",nil];
     
     if(self.inEditMode)
     {
@@ -241,12 +217,12 @@
                 ChatterRecord *selectedRecord = (ChatterRecord*)[self.chatterGroupArray objectAtIndex:i];
                 //ChatterRecord *selectedRecord = (ChatterRecord*)[self.chatterGroupArray objectAtIndex:selectedGroupIndex];
                 NSString * path = [NSString stringWithFormat:@"v23.0/chatter/feeds/record/%@/feed-items",selectedRecord.chatterId];
-                NSLog(@"test url for group feed: %@",path);
+                DebugLog(@"test url for group feed: %@",path);
                 [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_GROUP_MSG];
                 [paramArr addObject:textParam];
                 NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:paramArr,@"messageSegments", nil];
                 NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:message,@"body", nil];
-                NSLog(@"Body = %@",body);
+                DebugLog(@"Body = %@",body);
                 SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];
                 [[SFRestAPI sharedInstance] send:request delegate:self];
                 [paramArr release];
@@ -260,18 +236,19 @@
         if(selectedGroupIndex == -999) {   
             [Utility hideCoverScreen];
             [Utility showAlert:CHATTER_POST_USER_MISSING_MSG];
+            return;
         } else {
             {
                 NSMutableArray *paramArr = [[NSMutableArray alloc]init];
                 NSDictionary *textParam = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",evernoteContent, @"text",nil];
                 ChatterRecord *selectedRecord = (ChatterRecord*)[self.chatterGroupArray objectAtIndex:selectedGroupIndex];
                 NSString * path = [NSString stringWithFormat:@"v23.0/chatter/feeds/record/%@/feed-items",selectedRecord.chatterId];
-                NSLog(@"test url for group feed: %@",path);
+                DebugLog(@"test url for group feed: %@",path);
                 [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_GROUP_MSG];
                 [paramArr addObject:textParam];
                 NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:paramArr,@"messageSegments", nil];
                 NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:message,@"body", nil];
-            NSLog(@"Body = %@",body);
+            DebugLog(@"Body = %@",body);
                 SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];
                 [[SFRestAPI sharedInstance] send:request delegate:self];
                 [paramArr release];
@@ -316,7 +293,7 @@
     UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:kCellImageViewTag];
 	NSNumber *selectedUser = [selectedGroupsRow objectAtIndex:indexPath.row];
     
-	UIImage *image = [UIImage imageNamed:@"Settings.png"];
+	UIImage *image = [UIImage imageNamed:@"default_group_image_40x34.png"];
     UILabel *nameLabel = (UILabel*)[cell.contentView viewWithTag:kCellLabelTag];
     // Configure the cell to show the data.
     cell.imageView.image = imageView.image = ([selectedUser boolValue]) ? self.selectedImage : self.unselectedImage;
@@ -357,7 +334,7 @@
             [self startIconDownload:chatterUser forIndexPath:indexPath];
         }
         // if a download is deferred or in progress, return a placeholder image
-        imageView.image = [UIImage imageNamed:@"profile_tab_icon.png"];                
+        imageView.image = [UIImage imageNamed:@"default_group_image_40x34.png"];                
     }
     else
     {
@@ -474,6 +451,7 @@
     }
 	//Initialize Label with tag 1.
     UILabel *namelabel = [[[UILabel alloc] initWithFrame:nameLabelFrame] autorelease];
+    namelabel.font = [UIFont fontWithName:@"Verdana" size:13];
     namelabel.font = [UIFont boldSystemFontOfSize:16];
     namelabel.tag = kCellLabelTag;
     namelabel.backgroundColor = [UIColor clearColor];
@@ -496,13 +474,7 @@
     }
 
 }
-/*{
 
-        selectedGroupIndex=indexPath.row;
-    ChatterRecord *chatterGroup = [chatterGroupArray objectAtIndex:indexPath.row];
-    
-    DebugLog(@"chatter Group obj:%@",chatterGroup);
-}*/
 
 -(void)showLoadingLblWithText:(NSString*)Loadingtext{
     //[loadingSpinner startAnimating];

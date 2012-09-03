@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "IconDownloader.h"
 #import "ChatterRecord.h"
+#import "CustomBlueToolbar.h"
 @interface ChatterUsersViewController ()
 
 @end
@@ -25,39 +26,60 @@
     selectedUsersRow = array;
 }
 -(void)initToolbarButtons {
-    UIToolbar* toolbar = [[UIToolbar alloc]
-                          initWithFrame:CGRectMake(0, 0, 125, 45)];
-    [toolbar setBarStyle: UIBarStyleBlackTranslucent];
+    CustomBlueToolbar* toolbar = [[CustomBlueToolbar alloc]
+                                  initWithFrame:CGRectMake(0, 0, 125, 44)];
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && (self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight))
+        toolbar.frame = CGRectMake(0, 0, 125, 32);
+    //[toolbar setBarStyle: UIBarStyleBlackOpaque];
     
     // create an array for the buttons
-    NSMutableArray* buttons = [[NSMutableArray alloc] initWithCapacity:4];
-    UIBarButtonItem *editButton;
-    if(!self.inEditMode)
-        editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(toggleEditMode)];
-    else 
-        editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(toggleEditMode)];
-    [buttons addObject:editButton];
-    [editButton release];
+    NSMutableArray* buttons = [[NSMutableArray alloc] initWithCapacity:3];
     // create a spacer between the buttons
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc]
-                               initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                               initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                target:nil
                                action:nil];
     [buttons addObject:spacer];
     [spacer release];
-    UIBarButtonItem *addButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(postToSelectedChatterUsers)];
-    [buttons addObject:addButton];
-    [addButton release];
-    // create a spacer between the buttons
-    UIBarButtonItem *spacer1 = [[UIBarButtonItem alloc]
-                                initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
-                                target:nil
-                                action:nil];
-    [buttons addObject:spacer1];
-    [spacer1 release];
-    // put the buttons in the toolbar and release them
-    [toolbar setItems:buttons animated:NO];
-    [buttons release];
+    if(!self.inEditMode)
+    {
+        UIImage* editBtnImg = [UIImage imageNamed:@"Edit.png"];
+        UIImage* editBtnDownImg = [UIImage imageNamed:@"Edit_down.png"];
+        UIButton *editButton = [[UIButton alloc] initWithFrame:BAR_BUTTON_FRAME];
+        [editButton setBackgroundImage:editBtnImg forState:UIControlStateNormal];
+        [editButton setBackgroundImage:editBtnDownImg forState:UIControlStateHighlighted];
+        [editButton addTarget:self action:@selector(toggleEditMode) forControlEvents:UIControlEventTouchUpInside];
+        [editButton setShowsTouchWhenHighlighted:YES];
+        UIBarButtonItem *editBarButton =[[UIBarButtonItem alloc] initWithCustomView:editButton];
+        [buttons addObject:editBarButton];
+        [editButton release];
+    }
+    else {
+        UIImage* cancelBtnImg = [UIImage imageNamed:@"Cancel.png"];
+        UIImage* cancelBtnDownImg = [UIImage imageNamed:@"Cancel_down.png"];
+        UIButton *cancelButton = [[UIButton alloc] initWithFrame:BAR_BUTTON_FRAME];
+        [cancelButton setBackgroundImage:cancelBtnImg forState:UIControlStateNormal];
+        [cancelButton setBackgroundImage:cancelBtnDownImg forState:UIControlStateHighlighted];
+        [cancelButton addTarget:self action:@selector(toggleEditMode) forControlEvents:UIControlEventTouchUpInside];
+        [cancelButton setShowsTouchWhenHighlighted:YES];
+        UIBarButtonItem *cancelBarButton =[[UIBarButtonItem alloc] initWithCustomView:cancelButton];
+        [buttons addObject:cancelBarButton];
+        [cancelButton release];
+    }
+    
+    
+    UIImage* saveBtnImage = [UIImage imageNamed:@"Save.png"];
+    UIImage* saveBtnDoneImage = [UIImage imageNamed:@"Save_down.png"];
+    UIButton *saveButton = [[UIButton alloc] initWithFrame:BAR_BUTTON_FRAME];
+    [saveButton setBackgroundImage:saveBtnImage forState:UIControlStateNormal];
+    [saveButton setBackgroundImage:saveBtnDoneImage forState:UIControlStateHighlighted];
+    [saveButton addTarget:self action:@selector(postToSelectedChatterUsers) forControlEvents:UIControlEventTouchUpInside];
+    [saveButton setShowsTouchWhenHighlighted:YES];
+    UIBarButtonItem *saveBarButton =[[UIBarButtonItem alloc] initWithCustomView:saveButton];
+    
+    [buttons addObject:saveBarButton];
+    [saveButton release];
+    [toolbar setItems:buttons];
     
     // place the toolbar into the navigation bar
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
@@ -65,6 +87,7 @@
     [toolbar release];
     
 }
+
 -(void)viewDidAppear:(BOOL)animated{
     selectedUserIndex=-999;
     // create a toolbar where we can place some buttons
@@ -77,9 +100,6 @@
     self.title = @"Chatter Users";
     chatterUsersTbl.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background_pattern_tableview.png"]];
     [Utility showCoverScreen];
-    /*backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-    backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
-    [self changeBkgrndImgWithOrientation];*/
     self.chatterUsersArray = [[NSMutableArray alloc]init];
     self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
     [self fetchListOfFollowingRecords];
@@ -91,7 +111,7 @@
         bigLabel.text = self.title;
         [bigLabel setBackgroundColor:[UIColor clearColor]];
         [bigLabel setTextColor:[UIColor whiteColor]];
-        
+        [UIFont fontWithName:@"Verdana" size:16];
         bigLabel.font = [UIFont boldSystemFontOfSize: 16.0];
         [bigLabel sizeToFit];
         self.navigationItem.titleView = bigLabel;
@@ -185,6 +205,8 @@
         if(selectedUserIndex == -999) {   
             [Utility hideCoverScreen];
             [Utility showAlert:CHATTER_POST_USER_MISSING_MSG];
+            [paramArr release];
+            return;
         } else {
             [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_USER_MSG];
             ChatterRecord *selectedRecord = (ChatterRecord*)[self.chatterUsersArray objectAtIndex:selectedUserIndex];
@@ -217,6 +239,9 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return YES;
+}
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration{
+    [self initToolbarButtons];
 }
 #pragma mark - UIAlertViewDelegate
 
@@ -280,6 +305,7 @@
     }
 	//Initialize Label with tag 1.
     UILabel *namelabel = [[[UILabel alloc] initWithFrame:nameLabelFrame] autorelease];
+    namelabel.font = [UIFont fontWithName:@"Verdana" size:13];
     namelabel.font = [UIFont boldSystemFontOfSize:16];
     namelabel.tag = kCellLabelTag;
     namelabel.backgroundColor = [UIColor clearColor];
@@ -294,7 +320,7 @@
     UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:kCellImageViewTag];
 	NSNumber *selectedUser = [selectedUsersRow objectAtIndex:indexPath.row];
 
-	UIImage *image = [UIImage imageNamed:@"Settings.png"];
+	UIImage *image = [UIImage imageNamed:@"default_user_image_40x34.png"];
     UILabel *nameLabel = (UILabel*)[cell.contentView viewWithTag:kCellLabelTag];
     // Configure the cell to show the data.
     cell.imageView.image = imageView.image = ([selectedUser boolValue]) ? self.selectedImage : self.unselectedImage;
@@ -335,7 +361,7 @@
             [self startIconDownload:chatterUser forIndexPath:indexPath];
         }
         // if a download is deferred or in progress, return a placeholder image
-        imageView.image = [UIImage imageNamed:@"profile_tab_icon.png"];                
+        imageView.image = [UIImage imageNamed:@"default_user_image_40x34.png"];                
     }
     else
     {

@@ -12,11 +12,12 @@
 
 - (void)drawRect:(CGRect)rect {
     [super drawRect:rect];
+    self.tintColor = [UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1];
     //UIColor *color = [UIColor colorWithRed:0.547 green:0.344 blue:0.118 alpha:1.000]; //wood tan color
     UIImage *img  = [UIImage imageNamed: @"Toolbar_768x44.png"];
     [img drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
     [img release];
-    self.tintColor = [UIColor clearColor];
+    //self.tintColor = [UIColor clearColor];
     
 }
 

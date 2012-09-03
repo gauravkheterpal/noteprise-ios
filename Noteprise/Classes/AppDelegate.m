@@ -40,12 +40,6 @@
 static NSString *const RemoteAccessConsumerKey = @"3MVG9Y6d_Btp4xp7TYnbVJx2W7iPeWGju0BzaRrm4HDO0q32dR3xmWgh4DCGWOhPZ2SF2RHFQIPME.KaoCQcm";
 static NSString *const OAuthRedirectURI = @"https://login.salesforce.com/services/oauth2/success";;//@"sdfc://success";
 
-@implementation UINavigationBar (UINavigationBarCategory)
-- (void)drawRect:(CGRect)rect {
-    UIImage *img = [UIImage imageNamed:@"Top_nav_768x44.png"];
-    [img drawInRect:rect];
-}
-@end
 @implementation AppDelegate
 
 

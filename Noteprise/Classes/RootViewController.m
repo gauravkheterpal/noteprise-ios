@@ -83,32 +83,13 @@ NSString* selectedObj,*selectedObjID;
 }
 -(void)initToolbarButtons {
     CustomBlueToolbar* toolbar = [[CustomBlueToolbar alloc]
-                          initWithFrame:CGRectMake(0, 0, 125, 45)];
+                          initWithFrame:CGRectMake(0, 0, 125, 44)];
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && (self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight))
+            toolbar.frame = CGRectMake(0, 0, 125, 32);
     //[toolbar setBarStyle: UIBarStyleBlackOpaque];
     
     // create an array for the buttons
-    NSMutableArray* buttons = [[NSMutableArray alloc] initWithCapacity:4];
-    UIBarButtonItem *editButton;
-    if(!self.inEditMode)
-    {
-        UIImage *editButtonImage = [UIImage imageNamed:@"Edit.png"];
-        UIImage *editButtonSelectedImage = [UIImage imageNamed:@"Edit_down.png"];
-        CGRect frameimg = CGRectMake(0, 0, 27,27);
-        UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
-        [someButton setBackgroundImage:editButtonImage forState:UIControlStateNormal];
-        [someButton setBackgroundImage:editButtonSelectedImage forState:UIControlStateHighlighted];
-        [someButton addTarget:self action:@selector(toggleEditMode) forControlEvents:UIControlEventTouchUpInside];
-        [someButton setShowsTouchWhenHighlighted:YES];
-        UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
-        
-        editButton = mailbutton;
-        editButton.tag = 1;
-        // editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(toggleEditMode)];
-    }
-    else 
-        editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(toggleEditMode)];
-    [buttons addObject:editButton];
-    [editButton release];
+    NSMutableArray* buttons = [[NSMutableArray alloc] initWithCapacity:3];
     // create a spacer between the buttons
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc]
                                initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
@@ -116,40 +97,46 @@ NSString* selectedObj,*selectedObjID;
                                action:nil];
     [buttons addObject:spacer];
     [spacer release];
+    if(!self.inEditMode)
+    {
+        UIImage* editBtnImg = [UIImage imageNamed:@"Edit.png"];
+        UIImage* editBtnDownImg = [UIImage imageNamed:@"Edit_down.png"];
+        UIButton *editButton = [[UIButton alloc] initWithFrame:BAR_BUTTON_FRAME];
+        [editButton setBackgroundImage:editBtnImg forState:UIControlStateNormal];
+        [editButton setBackgroundImage:editBtnDownImg forState:UIControlStateHighlighted];
+        [editButton addTarget:self action:@selector(toggleEditMode) forControlEvents:UIControlEventTouchUpInside];
+        [editButton setShowsTouchWhenHighlighted:YES];
+        UIBarButtonItem *editBarButton =[[UIBarButtonItem alloc] initWithCustomView:editButton];
+        [buttons addObject:editBarButton];
+        [editButton release];
+    }
+    else {
+        UIImage* cancelBtnImg = [UIImage imageNamed:@"Cancel.png"];
+        UIImage* cancelBtnDownImg = [UIImage imageNamed:@"Cancel_down.png"];
+        UIButton *cancelButton = [[UIButton alloc] initWithFrame:BAR_BUTTON_FRAME];
+        [cancelButton setBackgroundImage:cancelBtnImg forState:UIControlStateNormal];
+        [cancelButton setBackgroundImage:cancelBtnDownImg forState:UIControlStateHighlighted];
+        [cancelButton addTarget:self action:@selector(toggleEditMode) forControlEvents:UIControlEventTouchUpInside];
+        [cancelButton setShowsTouchWhenHighlighted:YES];
+        UIBarButtonItem *cancelBarButton =[[UIBarButtonItem alloc] initWithCustomView:cancelButton];
+        [buttons addObject:cancelBarButton];
+        [cancelButton release];
+    }
     
-    UIImage *saveButtonImage = [UIImage imageNamed:@"Save.png"];
-    UIImage *saveButtonSelectedImage = [UIImage imageNamed:@"Save_down.png"];
-    CGRect frameimg = CGRectMake(0, 0, 27,27);
-    UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
-    [someButton setBackgroundImage:saveButtonImage forState:UIControlStateNormal];
-    [someButton setBackgroundImage:saveButtonSelectedImage forState:UIControlStateNormal];
-    [someButton addTarget:self action:@selector(addSelectedEvernoteToSF) forControlEvents:UIControlEventTouchUpInside];
-    [someButton setShowsTouchWhenHighlighted:YES];
-    UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
     
-    [buttons addObject:mailbutton];
-    // self.navigationItem.rightBarButtonItem.tag = saveBtnTag;
+    UIImage* saveBtnImage = [UIImage imageNamed:@"Save.png"];
+    UIImage* saveBtnDoneImage = [UIImage imageNamed:@"Save_down.png"];
+    UIButton *saveButton = [[UIButton alloc] initWithFrame:BAR_BUTTON_FRAME];
+    [saveButton setBackgroundImage:saveBtnImage forState:UIControlStateNormal];
+    [saveButton setBackgroundImage:saveBtnDoneImage forState:UIControlStateHighlighted];
+    [saveButton addTarget:self action:@selector(addSelectedEvernoteToSF) forControlEvents:UIControlEventTouchUpInside];
+    [saveButton setShowsTouchWhenHighlighted:YES];
+    UIBarButtonItem *saveBarButton =[[UIBarButtonItem alloc] initWithCustomView:saveButton];
     
-    
-    /*
-     UIBarButtonItem *addButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(addSelectedEvernoteToSF)];
-     [buttons addObject:addButton];
-     [addButton release];
-     */
-    // create a spacer between the buttons
-    
-    
-    
-    UIBarButtonItem *spacer1 = [[UIBarButtonItem alloc]
-                                initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
-                                target:nil
-                                action:nil];
-    [buttons addObject:spacer1];
-    [spacer1 release];
-    // put the buttons in the toolbar and release them
-    [toolbar setItems:buttons animated:NO];
-    [buttons release];
-    
+    [buttons addObject:saveBarButton];
+    [saveButton release];
+        
+    [toolbar setItems:buttons];
     // place the toolbar into the navigation bar
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
                                                initWithCustomView:toolbar] autorelease];
@@ -193,7 +180,7 @@ NSString* selectedObj,*selectedObjID;
 -(void)fetchSelectedObjList {
     if([Utility checkNetwork]) {
         [Utility showCoverScreen];
-        NSLog(@"old obj:%@ \n old field:%@ \nfield value:%@ sf obje:%@",[Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY],[Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY],[Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY],[Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY]);
+        DebugLog(@"old obj:%@ \n old field:%@ \nfield value:%@ sf obje:%@",[Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY],[Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY],[Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY],[Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY]);
         if(([Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY] == nil )&& ([Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] == nil)) {
             //set previous selected mapping
             [Utility showAlert:SF_OBJECT_FIELD_MISSING_MSG];
@@ -345,7 +332,8 @@ NSString* selectedObj,*selectedObjID;
     return YES;
 }
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration{
-    [self changeBkgrndImgWithOrientation];
+    //[self changeBkgrndImgWithOrientation];
+    [self initToolbarButtons];
 }
 -(void)hideToastMsg:(id)sender{
 	dialog_imgView.hidden = YES;
@@ -467,7 +455,7 @@ NSString* selectedObj,*selectedObjID;
 
     }
 	//if you want to add an image to your cell, here's how
-	UIImage *image = [UIImage imageNamed:@"folder_SF.png"];
+	UIImage *image = [UIImage imageNamed:@"Record.png"];
     if(self.inEditMode) {
         NSNumber *selectedForDelete = [selectedRow objectAtIndex:indexPath.row];
         if([selectedForDelete boolValue]) 
@@ -600,7 +588,8 @@ NSString* selectedObj,*selectedObjID;
     }
     
 	//this adds the arrow to the right hand side.
-    cell.textLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:16];
+    cell.textLabel.font = [UIFont fontWithName:@"Verdana" size:13];
+    //cell.textLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:16];
 	cell.accessoryType = UITableViewCellAccessoryNone;
     cell.textLabel.textColor = [UIColor blackColor];
 	return cell;

@@ -36,6 +36,7 @@
 {
     
     [super viewDidLoad];
+    
     self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background_pattern_tableview.png"]];
     /*backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
@@ -54,33 +55,24 @@
         UIImage *editButtonImage = [UIImage imageNamed:@"Edit.png"];
         UIImage *editButtonSelectedImage = [UIImage imageNamed:@"Edit_down.png"];
 
-        CGRect frameimg = CGRectMake(0, 0, 32,32);
+        CGRect frameimg = BAR_BUTTON_FRAME;
         UIButton *editButton = [[UIButton alloc] initWithFrame:frameimg];
         [editButton setBackgroundImage:editButtonImage forState:UIControlStateNormal];
         [editButton setBackgroundImage:editButtonSelectedImage forState:UIControlStateHighlighted];
         [editButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
         [editButton setShowsTouchWhenHighlighted:YES];
-        UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:editButton];
+        UIBarButtonItem *editBarbutton =[[UIBarButtonItem alloc] initWithCustomView:editButton];
         
-        self.navigationItem.rightBarButtonItem = mailbutton;
+        self.navigationItem.rightBarButtonItem = editBarbutton;
         self.navigationItem.rightBarButtonItem.tag = editBtnTag;
-        NSLog(@"tag = %d",self.navigationItem.rightBarButtonItem.tag);
+        DebugLog(@"tag = %d",self.navigationItem.rightBarButtonItem.tag);
     }
 
 
     self.navigationItem.rightBarButtonItem.title = @"Edit";
      
-   /* UIImage* image3 = [UIImage imageNamed:@"edit_icon.png"];
-    CGRect frameimg = CGRectMake(0, 0, 32,32);
-    UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
-    [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
-    [someButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
-    [someButton setShowsTouchWhenHighlighted:YES];
-    UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
-    
-    self.navigationItem.rightBarButtonItem = mailbutton;*/
      self.navigationItem.rightBarButtonItem.tag = editBtnTag;
-    NSLog(@"tag = %d",self.navigationItem.rightBarButtonItem.tag);
+    DebugLog(@"tag = %d",self.navigationItem.rightBarButtonItem.tag);
     /*
     //edit button as right bar button item
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
@@ -152,8 +144,8 @@
             DebugLog(@"EDAMNotFoundException:%@",exception.reason);
         }
     });
-    
-    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"5.0"))
+        [[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1]];
     
 }
 
@@ -285,21 +277,25 @@
 }
 -(IBAction)editPage:(id)sender 
 {
+    CGRect frameimg = CGRectMake(0, 0, 27,27);
     if (self.navigationItem.rightBarButtonItem.tag == editBtnTag) {
         saveToSFBarBtn.enabled = NO;
         postToChatterBarBtn.enabled = NO;
         
         self.navigationItem.rightBarButtonItem.title = @"Save to Evernote";
         
-        UIImage* image3 = [UIImage imageNamed:@"save_icon.png"];
-        CGRect frameimg = CGRectMake(0, 0, 27,27);
-        UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
-        [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
-        [someButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
-        [someButton setShowsTouchWhenHighlighted:YES];
-        UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
+        UIImage* saveImg = [UIImage imageNamed:@"Save.png"];
+        UIImage* saveDoneImg = [UIImage imageNamed:@"Save_down.png"];
         
-        self.navigationItem.rightBarButtonItem = mailbutton;
+        UIButton *saveButton = [[UIButton alloc] initWithFrame:frameimg];
+        [saveButton setBackgroundImage:saveImg forState:UIControlStateNormal];
+        [saveButton setBackgroundImage:saveDoneImg forState:UIControlStateHighlighted];
+        [saveButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
+        [saveButton setShowsTouchWhenHighlighted:YES];
+        UIBarButtonItem *saveBarButton =[[UIBarButtonItem alloc] initWithCustomView:saveButton];
+        
+        self.navigationItem.rightBarButtonItem = saveBarButton;
+        [saveButton release];
         self.navigationItem.rightBarButtonItem.tag = saveBtnTag;
         dialog_imgView.hidden = NO;
         [loadingSpinner stopAnimating];
@@ -320,15 +316,17 @@
         self.navigationItem.rightBarButtonItem.title = @"Edit";
        
         
-        UIImage* image3 = [UIImage imageNamed:@"edit_icon.png"];
-        CGRect frameimg = CGRectMake(0, 0, 27,27);
-        UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
-        [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
-        [someButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
-        [someButton setShowsTouchWhenHighlighted:YES];
-        UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
+        UIImage* editImg = [UIImage imageNamed:@"Edit.png"];
+        UIImage* editDownImg = [UIImage imageNamed:@"Edit_down.png"];
+        UIButton *editButton = [[UIButton alloc] initWithFrame:frameimg];
+        [editButton setBackgroundImage:editImg forState:UIControlStateNormal];
+        [editButton setBackgroundImage:editDownImg forState:UIControlStateHighlighted];
+        [editButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
+        [editButton setShowsTouchWhenHighlighted:YES];
+        UIBarButtonItem *editBarButton =[[UIBarButtonItem alloc] initWithCustomView:editButton];
         
-        self.navigationItem.rightBarButtonItem = mailbutton;
+        self.navigationItem.rightBarButtonItem = editBarButton;
+        [editButton release];
          self.navigationItem.rightBarButtonItem.tag = editBtnTag;
         [self setContentEditable:NO];
         [self setWebViewKeyPressDetectionEnabled:NO];
@@ -337,7 +335,7 @@
         [noteContent resignFirstResponder];
         //[self increaseZoomFactorRange];
         // NSString *htmlString = [noteContent stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
-        // NSLog(@"htmlString : %@",htmlString);
+        // DebugLog(@"htmlString : %@",htmlString);
         [self updateNoteEvernote];
     }
   
@@ -427,7 +425,7 @@
     
     NSString *result = [noteContent stringByEvaluatingJavaScriptFromString:js];
     
-    NSLog(@"%@",result);
+    DebugLog(@"%@",result);
 }
 
 - (void)setWebViewKeyPressDetectionEnabled:(BOOL)isEnabled {
@@ -450,7 +448,7 @@
         js = removeKeyPressEventJS;
     
     NSString *result = [noteContent stringByEvaluatingJavaScriptFromString:js];
-    NSLog(@"%@",result);
+    DebugLog(@"%@",result);
 }
 
 
@@ -465,7 +463,7 @@
     NSString *result = [noteContent stringByEvaluatingJavaScriptFromString:jsEnableEditing];
      */
     
-    NSLog(@"editable %@",result);
+    DebugLog(@"editable %@",result);
 }
 
 - (void)increaseZoomFactorRange {
@@ -584,15 +582,18 @@
                                   isErrorCreatingnote = YES;
                                   self.navigationItem.rightBarButtonItem.title = @"Edit";
                                   
-                                  UIImage* image3 = [UIImage imageNamed:@"edit_icon.png"];
-                                  CGRect frameimg = CGRectMake(0, 0, 32,32);
-                                  UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
-                                  [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
-                                  [someButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
-                                  [someButton setShowsTouchWhenHighlighted:YES];
-                                  UIBarButtonItem *mailbutton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
-                                  self.navigationItem.rightBarButtonItem = mailbutton;
+                                  UIImage* editImg = [UIImage imageNamed:@"Edit.png"];
+                                  UIImage* editDownImg = [UIImage imageNamed:@"Edit_down.png"];
+                                  CGRect frameimg = CGRectMake(0, 0, 27,27);
+                                  UIButton *editButton = [[UIButton alloc] initWithFrame:frameimg];
+                                  [editButton setBackgroundImage:editImg forState:UIControlStateNormal];
+                                  [editButton setBackgroundImage:editDownImg forState:UIControlStateNormal];
+                                  [editButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
+                                  [editButton setShowsTouchWhenHighlighted:YES];
+                                  UIBarButtonItem *editBarButton =[[UIBarButtonItem alloc] initWithCustomView:editButton];
+                                  self.navigationItem.rightBarButtonItem = editBarButton;
                                   self.navigationItem.rightBarButtonItem.tag = editBtnTag;
+                                  [editButton release];
                                   
                                   [self setContentEditable:NO];
                                   [self setWebViewKeyPressDetectionEnabled:NO];

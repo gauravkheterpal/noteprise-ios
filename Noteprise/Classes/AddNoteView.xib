@@ -113,7 +113,6 @@
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<int key="IBUIButtonType">1</int>
-						<string key="IBUINormalTitle">Select</string>
 						<object class="NSColor" key="IBUIHighlightedTitleColor" id="91976394">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MQA</bytes>
@@ -125,6 +124,10 @@
 						<object class="NSColor" key="IBUINormalTitleShadowColor">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MC41AA</bytes>
+						</object>
+						<object class="NSCustomResource" key="IBUINormalBackgroundImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">Add_note_select.png</string>
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
 							<string key="name">Helvetica-Bold</string>
@@ -187,7 +190,7 @@
 					<object class="IBUIImageView" id="56179448">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">-2147483355</int>
-						<string key="NSFrame">{{50, 108}, {220, 91}}</string>
+						<string key="NSFrame">{{50, 137}, {220, 91}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="134313990"/>
@@ -195,13 +198,13 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">alert.png</string>
+							<string key="NSResourceName">Loader.png</string>
 						</object>
 					</object>
 					<object class="IBUIImageView" id="134313990">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">-2147483355</int>
-						<string key="NSFrame">{{149, 122}, {22, 22}}</string>
+						<string key="NSFrame">{{149, 151}, {22, 22}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1022288229"/>
@@ -209,15 +212,16 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">btnChecked.png</string>
+							<string key="NSResourceName">Checkbox_checked.png</string>
 						</object>
 					</object>
 					<object class="IBUILabel" id="1022288229">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">-2147483355</int>
-						<string key="NSFrame">{{57, 152}, {207, 38}}</string>
+						<string key="NSFrame">{{57, 181}, {207, 38}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -276,7 +280,7 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 			<object class="IBUIView" id="830597209">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUITableView" id="142311412">
@@ -284,6 +288,8 @@
 						<int key="NSvFlags">274</int>
 						<string key="NSFrameSize">{320, 500}</string>
 						<reference key="NSSuperview" ref="830597209"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<reference key="IBUIBackgroundColor" ref="91976394"/>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -297,6 +303,8 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{320, 480}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="142311412"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
@@ -616,9 +624,10 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="alert.png">{200, 100}</string>
+			<string key="Add_note_select.png">{67, 28}</string>
+			<string key="Checkbox_checked.png">{16, 16}</string>
+			<string key="Loader.png">{317, 95}</string>
 			<string key="bcg.png">{335, 392}</string>
-			<string key="btnChecked.png">{25, 25}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1181</string>
 	</data>

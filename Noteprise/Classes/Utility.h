@@ -112,7 +112,7 @@
 #define ERROR_LISTING_CHATTER_USERS_MSG @"Error in getting list of Chatter Users"
 #define POSTING_NOTE_FAILED_TO_CHATTER_USER_MSG @"Failed to publish the selected note to chosen Chatter users"
 #define ERROR_LISTING_CHATTER_GROUPS_MSG @"Failed to publish the selected note to chosen Chatter groups"
-
+#define BAR_BUTTON_FRAME    CGRectMake(0,0,30,30)
 static NSString *const kWebViewDidPressKeyURL   = @"http://didPressKey/";
 static NSString *const kWebViewDidTapURL        = @"http://didTap/";
 static NSString *const kHTML2DOCConverterURL    = @"http://csboxnotes.appspot.com/html2doc";
@@ -143,12 +143,17 @@ static NSString *const kHTML2DOCConverterURL    = @"http://csboxnotes.appspot.co
 +(void)showExceptionAlert:(NSString*)message;
 + (NSString *)getDataBetweenFromString:(NSString *)data leftString:(NSString *)leftData rightString:(NSString *)rightData leftOffset:(NSInteger)leftPos;
 @end
+#pragma mark - UINavigation bar customize
 @interface UINavigationBar (CustomImage)
 - (void) setBackgroundImage:(UIImage*)image;
 - (void) clearBackgroundImage;
 @end
 @implementation UINavigationBar (CustomImage)
-
+- (void)drawRect:(CGRect)rect {
+    UIImage *img = [UIImage imageNamed:@"Top_nav_768x44.png"];
+    self.tintColor = [UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1];
+    [img drawInRect:rect];
+}
 - (void) setBackgroundImage:(UIImage*)image {
     if (image == NULL) return;
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
@@ -165,5 +170,5 @@ static NSString *const kHTML2DOCConverterURL    = @"http://csboxnotes.appspot.co
         }
     }    
 }
-
 @end
+

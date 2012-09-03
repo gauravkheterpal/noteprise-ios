@@ -27,11 +27,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"Choose Object";
     UIImageView *tempImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Select_note_bcg.png"]];
     [tempImageView setFrame:self.tableView.frame]; 
     
     self.tableView.backgroundView = tempImageView;
     [tempImageView release];
+    UILabel *bigLabel = [[UILabel alloc] init];
+    bigLabel.text = self.title;
+    [bigLabel setBackgroundColor:[UIColor clearColor]];
+    [bigLabel setTextColor:[UIColor whiteColor]];
+    [UIFont fontWithName:@"Verdana" size:16];
+    bigLabel.font = [UIFont boldSystemFontOfSize: 16.0];
+    [bigLabel sizeToFit];
+    self.navigationItem.titleView = bigLabel;
+    [bigLabel release];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -161,8 +171,8 @@
     [self listMetadataForObj];
 }
 -(void)viewDidAppear:(BOOL)animated {
-    NSLog(@"Object view appear");
-    NSLog(@"old obj:%@ \n old field:%@ \nfield value:%@",[Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY],[Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY],[Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY]);
+    DebugLog(@"Object view appear");
+    DebugLog(@"old obj:%@ \n old field:%@ \nfield value:%@",[Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY],[Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY],[Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY]);
     if(([Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] == nil) && [Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] != nil && [Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] != nil) {
         [Utility setValueInPref:[Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] forKey:SFOBJ_TO_MAP_KEY];
         [Utility setValueInPref:[Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] forKey:SFOBJ_FIELD_TO_MAP_KEY];
@@ -189,14 +199,14 @@
 #import "Utility.h"
 - (void)request:(SFRestRequest *)request didLoadResponse:(id)jsonResponse {
     [Utility hideCoverScreen];
-    NSLog(@"request:%@",[request description]);
-    NSLog(@"jsonResponse:%@",jsonResponse);
+    DebugLog(@"request:%@",[request description]);
+    DebugLog(@"jsonResponse:%@",jsonResponse);
     if ([[request path] rangeOfString:@"describe"].location != NSNotFound) {
         //retrive all fields
         if([[jsonResponse objectForKey:@"errors"] count]==0){
             NSArray *fields = [jsonResponse objectForKey:@"fields"];
             NSMutableArray *fieldsRows = [[NSMutableArray alloc]init];
-            NSLog(@"request:didLoadResponse: #fields: %d records %@ req %@ rsp %@", fields.count,fields,request,jsonResponse);
+            DebugLog(@"request:didLoadResponse: #fields: %d records %@ req %@ rsp %@", fields.count,fields,request,jsonResponse);
             for (NSDictionary *field in fields) {
                 if([[field valueForKey:@"type"]isEqualToString:@"string"]||[[field valueForKey:@"type"]isEqualToString:@"textarea"]){
                     if ([[field valueForKey:@"updateable"] boolValue] == true) {
@@ -228,7 +238,7 @@
 
 
 - (void)request:(SFRestRequest*)request didFailLoadWithError:(NSError*)error {
-    NSLog(@"request:didFailLoadWithError: %@", error);
+    DebugLog(@"request:didFailLoadWithError: %@", error);
     [Utility hideCoverScreen];
     //add your failed error handling here
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:[error.userInfo valueForKey:@"message"] delegate:nil cancelButtonTitle:ALERT_NEUTRAL_BUTTON_TEXT otherButtonTitles:nil, nil];
@@ -237,13 +247,13 @@
 }
 
 - (void)requestDidCancelLoad:(SFRestRequest *)request {
-    NSLog(@"requestDidCancelLoad: %@", request);
+    DebugLog(@"requestDidCancelLoad: %@", request);
     //add your failed error handling here
     [Utility hideCoverScreen];
 }
 
 - (void)requestDidTimeout:(SFRestRequest *)request {
-    NSLog(@"requestDidTimeout: %@", request);
+    DebugLog(@"requestDidTimeout: %@", request);
     //add your failed error handling here
     [Utility hideCoverScreen];
 }

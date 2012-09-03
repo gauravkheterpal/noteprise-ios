@@ -115,7 +115,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">alert.png</string>
+							<string key="NSResourceName">Loader.png</string>
 						</object>
 					</object>
 					<object class="IBUIImageView" id="760258769">
@@ -129,7 +129,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">btnChecked.png</string>
+							<string key="NSResourceName">Checkbox_checked.png</string>
 						</object>
 					</object>
 					<object class="IBUILabel" id="828948678">
@@ -211,6 +211,7 @@
 								<string key="NSFrame">{{276, 6}, {32, 33}}</string>
 								<reference key="NSSuperview" ref="855083457"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
@@ -363,18 +364,18 @@
 						<string key="label">postToChatter:</string>
 						<reference key="source" ref="651924762"/>
 						<reference key="destination" ref="372490531"/>
-						<int key="IBEventType">1</int>
+						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">62</int>
+					<int key="connectionID">79</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">linkEvernoteToSF:</string>
 						<reference key="source" ref="82654995"/>
 						<reference key="destination" ref="372490531"/>
-						<int key="IBEventType">1</int>
+						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">78</int>
+					<int key="connectionID">80</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -507,7 +508,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">78</int>
+			<int key="maxID">80</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -591,10 +592,10 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="Checkbox_checked.png">{16, 16}</string>
+			<string key="Loader.png">{317, 95}</string>
 			<string key="Save_to_SF.png">{110, 30}</string>
-			<string key="alert.png">{200, 100}</string>
-			<string key="bgE-320x480.png">{320, 480}</string>
-			<string key="btnChecked.png">{25, 25}</string>
+			<string key="bgE-320x480.png">{16, 16}</string>
 			<string key="chatter_icon.png">{32, 32}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1181</string>

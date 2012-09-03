@@ -23,18 +23,15 @@
     //self.title = @"Noteprise";
     if ([self.navigationController.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Top_nav_768x44.png"] forBarMetrics:UIBarMetricsDefault];
+        self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1];
     }
     //Initialize the arrays
     listOfItems = [[NSMutableArray alloc] init];
-    //self.navigationItem.leftBarButtonItem.width = 40;
-    //self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Logout_down.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(logout)];
     
-    //[[UIBarButtonItem alloc]initWithTitle:@"Logout" style:UIBarButtonItemStyleBordered target:self action:@selector(logout)];
     backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
-    //[self changeBkgrndImgWithOrientation];
     [self fetchNoteBasedOnSelectedSegement];
-    toolbar.backgroundColor = [UIColor clearColor];
+    //toolbar.backgroundColor = [UIColor clearColor];
     UIImage *buttonImage = [UIImage imageNamed:@"Logout.png"];
     UIImage *buttonSelectedImage = [UIImage imageNamed:@"Logout_down.png"];
     
@@ -42,25 +39,39 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setImage:buttonImage forState:UIControlStateNormal];
     [button setImage:buttonSelectedImage forState:UIControlStateSelected];
-    
+    [button addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
     //sets the frame of the button to the size of the image
     button.frame = CGRectMake(0, 0, buttonImage.size.width, buttonImage.size.height);
     //creates a UIBarButtonItem with the button as a custom view
     UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    [customBarItem setAction:@selector(logout)];
-    [customBarItem setTarget:self];
+    
     self.navigationItem.leftBarButtonItem = customBarItem;
     UIImageView * logo = [[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 187.0f, 31.0f)];
-    logo.image = [UIImage imageNamed:@"logo.png"];
+    logo.image = [UIImage imageNamed:@"noteprise_logo.png"];
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+       logo.image = [UIImage imageNamed:@"Noteprise_icon_iPhone.png"];
     logo.center = [self.navigationController.navigationBar center];
     self.navigationItem.titleView = logo;
     notesTbl.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background_pattern_tableview.png"]];
-    
+    NSString *device,*orientation;
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
+        device = @"iPhone";
+        if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight) 
+                orientation = @"landscape";
+            else 
+                orientation = @"potrait";
+    } else {
+        device = @"iPad";
+        if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
+            orientation = @"landscape";
+        else 
+            orientation = @"potrait"; 
+    }
     //Customize segement control buttons
-    [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_all_pressed.png"] forSegmentAtIndex:0];
-    [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_notebook_unpressed.png"] forSegmentAtIndex:1];
-    [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_tag_unpressed.png"] forSegmentAtIndex:2];
-     [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_keyword_unpressed.png"] forSegmentAtIndex:3];
+    [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_all_pressed_%@_%@.png",device,orientation]] forSegmentAtIndex:0];
+    [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_notebook_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:1];
+    [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_tag_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:2];
+     [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_keyword_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:3];
 
     [searchOptionsChoiceCntrl setBackgroundColor:[UIColor whiteColor]];
     //Customize segement control search bar
@@ -75,13 +86,46 @@
             break;
         }
     }
+    
 
+}
+-(void)changeSegmentControlBtnsWithOrientationAndDevice {
+    NSString *device,*orientation;
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
+        device = @"iPhone";
+        if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight) 
+            orientation = @"landscape";
+        else 
+            orientation = @"potrait";
+    } else {
+        device = @"iPad";
+        if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
+            orientation = @"landscape";
+        else 
+            orientation = @"potrait"; 
+    }
+    //Customize segement control buttons
+    if([searchOptionsChoiceCntrl selectedSegmentIndex] == 0)
+        [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_all_pressed_%@_%@.png",device,orientation]] forSegmentAtIndex:0];
+    else
+        [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_all_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:0];
+    if([searchOptionsChoiceCntrl selectedSegmentIndex] == 1)
+        [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_notebook_pressed_%@_%@.png",device,orientation]] forSegmentAtIndex:1];
+    else [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_notebook_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:1];
+    if([searchOptionsChoiceCntrl selectedSegmentIndex] == 2)
+        [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_tag_pressed_%@_%@.png",device,orientation]] forSegmentAtIndex:2];
+    else
+        [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_tag_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:2];
+    if([searchOptionsChoiceCntrl selectedSegmentIndex] == 3)
+        [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_keyword_pressed_%@_%@.png",device,orientation]] forSegmentAtIndex:3];
+    else 
+        [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_keyword_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:3];
 }
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
 }
--(void)changeBkgrndImgWithOrientation {
+/*-(void)changeBkgrndImgWithOrientation {
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
         if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
             backgroundImgView.image = [UIImage imageNamed:@"bgE-480x287.png"];
@@ -95,22 +139,25 @@
             backgroundImgView.image = [UIImage imageNamed:@"bgE-768x1024.png"];
         }
     }
-}
+}*/
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration{
-     [self changeBkgrndImgWithOrientation];
+     [self changeSegmentControlBtnsWithOrientationAndDevice];
 }
 -(IBAction)showSettings:(id)sender{
     SettingsViewController *settingsView = [[SettingsViewController alloc]initWithStyle:UITableViewStyleGrouped];
     settingsView.popover_delegate = self;
     UINavigationController *settingsNavCntrl = [[UINavigationController alloc] initWithRootViewController:settingsView];
 	settingsNavCntrl.navigationBar.barStyle = UIBarStyleBlackOpaque;
-    [settingsNavCntrl.navigationBar setBackgroundImage:[UIImage imageNamed:@"Top_nav_768x44.png"]];
+    if ([settingsNavCntrl.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
+        [settingsNavCntrl.navigationBar setBackgroundImage:[UIImage imageNamed:@"blue_bcg_iPhone.png"] forBarMetrics:UIBarMetricsDefault];
+       settingsNavCntrl.navigationBar.tintColor = [UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1];
+    }
 	if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
 		//sendSubView.view.frame=CGRectMake(0, 0, 300, 400);
 		[self dissmissPopover];
 		UIPopoverController *popoverSettings = [[UIPopoverController alloc] initWithContentViewController:settingsNavCntrl]; 
 		//popoverSend.delegate = self;
-		settingsView.contentSizeForViewInPopover =CGSizeMake(300, 400);
+		settingsView.contentSizeForViewInPopover =CGSizeMake(320, 400);
 		popoverController = popoverSettings;
 		[popoverSettings presentPopoverFromBarButtonItem:settingsBtn 
                                 permittedArrowDirections:UIPopoverArrowDirectionAny 
@@ -128,11 +175,8 @@
     
 }
 -(IBAction)showNotes:(id)sender{
+    [self changeSegmentControlBtnsWithOrientationAndDevice];
     if(searchOptionsChoiceCntrl.selectedSegmentIndex == 0){
-        [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_all_pressed.png"] forSegmentAtIndex:0];
-        [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_notebook_unpressed.png"] forSegmentAtIndex:1];
-        [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_tag_unpressed.png"] forSegmentAtIndex:2];
-        [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_keyword_unpressed.png"] forSegmentAtIndex:3];
         searchBar.userInteractionEnabled = NO;
         searchBar.alpha = 0.75;
         searchBar.text = @"";
@@ -147,22 +191,6 @@
         });
     }
     else {
-        if(searchOptionsChoiceCntrl.selectedSegmentIndex == 1){
-            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_all_unpressed.png"] forSegmentAtIndex:0];
-            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_notebook_pressed.png"] forSegmentAtIndex:1];
-            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_tag_unpressed.png"] forSegmentAtIndex:2];
-            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_keyword_unpressed.png"] forSegmentAtIndex:3];
-        } else if(searchOptionsChoiceCntrl.selectedSegmentIndex == 2){
-            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_all_unpressed.png"] forSegmentAtIndex:0];
-            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_notebook_unpressed.png"] forSegmentAtIndex:1];
-            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_tag_pressed.png"] forSegmentAtIndex:2];
-            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_keyword_unpressed.png"] forSegmentAtIndex:3];
-        } else if(searchOptionsChoiceCntrl.selectedSegmentIndex == 3){
-            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_all_unpressed.png"] forSegmentAtIndex:0];
-            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_notebook_unpressed.png"] forSegmentAtIndex:1];
-            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_tag_unpressed.png"] forSegmentAtIndex:2];
-            [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:@"Segment_control_button_keyword_pressed.png"] forSegmentAtIndex:3];
-        }
         searchBar.alpha = 1.0;
         searchBar.userInteractionEnabled = YES;
         [searchBar becomeFirstResponder];
@@ -541,11 +569,15 @@
     addNoteVCntrl.delegate =self;
     UINavigationController *addNoteNavCntrl = [[UINavigationController alloc] initWithRootViewController:addNoteVCntrl];
 	addNoteNavCntrl.navigationBar.barStyle = UIBarStyleBlackOpaque;
-    [addNoteNavCntrl.navigationBar setBackgroundImage:[UIImage imageNamed:@"Top_nav_768x44.png"]];
+    //[addNoteNavCntrl.navigationBar setBackgroundImage:[UIImage imageNamed:@"blue_bcg_iPhone.png"]];
+    if ([addNoteNavCntrl.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
+        [addNoteNavCntrl.navigationBar setBackgroundImage:[UIImage imageNamed:@"blue_bcg_iPhone.png"] forBarMetrics:UIBarMetricsDefault];
+        addNoteNavCntrl.navigationBar.tintColor = [UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1];
+    }
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
 		[self dissmissPopover];
 		UIPopoverController *popoverSettings = [[UIPopoverController alloc] initWithContentViewController:addNoteNavCntrl]; 
-		addNoteVCntrl.contentSizeForViewInPopover =CGSizeMake(300, 400);
+		addNoteVCntrl.contentSizeForViewInPopover =CGSizeMake(320, 400);
 		popoverController = popoverSettings;
 		[popoverSettings presentPopoverFromBarButtonItem:addNoteBtn 
                                 permittedArrowDirections:UIPopoverArrowDirectionAny 
