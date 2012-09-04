@@ -160,14 +160,15 @@
     int row = [indexPath section];
     if(row == 0){
         [self fetchSFObjects];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
     } else {
         [self listMetadataForObj];
-        tableView.userInteractionEnabled = NO;
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }
 -(void)fetchSFObjects{
     if([Utility checkNetwork]) {
+        self.tableView.userInteractionEnabled = NO;
         SFRestRequest *request = [[SFRestAPI sharedInstance] requestForDescribeGlobal]; 
         [[SFRestAPI sharedInstance] send:request delegate:self];
     } else {
@@ -184,6 +185,7 @@
             [Utility showAlert:SF_OBJECT_MISSING_MSG];
         }
         if(sfObjtoMap) {
+            self.tableView.userInteractionEnabled = NO;
             SFRestRequest * request =  [[SFRestAPI sharedInstance] requestForDescribeWithObjectType:sfObjtoMap];
             [[SFRestAPI sharedInstance] send:request delegate:self];
         }

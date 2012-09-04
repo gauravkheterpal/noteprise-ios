@@ -15,6 +15,7 @@
 @interface SettingsViewController : UITableViewController <SFRestDelegate>
 {
     NSMutableArray *dataRows;
+    
 }
 @property (nonatomic, retain) NSArray *dataRows;
 @property (nonatomic, assign) id<MyPopoverDelegate> popover_delegate; 
