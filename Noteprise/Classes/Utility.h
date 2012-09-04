@@ -87,7 +87,7 @@
 #define SF_OBJECT_MISSING_MSG @"Please select a object first before you can select a field."
 #define salesforce_record_saving_failed_message @"Failed to save record(s)."
 #define progress_dialog_salesforce_getting_record_list_message @"Getting records list.."
-#define CHATTER_POST_USER_MISSING_MSG @"Please select a user to make Chatter Post"
+#define CHATTER_POST_USER_MISSING_MSG @"Please select one or more Chatter users"
 #define CHATTER_POST_GROUP_MISSING_MSG @"Please select a group to make Chatter Post"
 
 #define NO_RECORD_IN_SF_OBJ_MSG @"No Record in Selected Salesforce object:"
