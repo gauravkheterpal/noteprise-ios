@@ -9,6 +9,7 @@
 #import "NSString+HTML.h"
 #import "ChatterUsersViewController.h"
 #import "ChatterGroupVCntrlViewController.h"
+#import "Utility.h"
 @implementation NoteViewController {
 }
 
@@ -310,7 +311,7 @@
         [self increaseZoomFactorRange];
     }
     else if (self.navigationItem.rightBarButtonItem.tag == saveBtnTag) {
-
+        [self.view endEditing:YES];
         saveToSFBarBtn.enabled = YES;
         postToChatterBarBtn.enabled = YES;
         self.navigationItem.rightBarButtonItem.title = @"Edit";
@@ -634,7 +635,6 @@
     //[delegate evernoteCreatedSuccessfullyListener];
 }
 #pragma mark - SFRestAPIDelegate
-#import "Utility.h"
 - (void)request:(SFRestRequest *)request didLoadResponse:(id)jsonResponse {
     DebugLog(@"request:%@",[request description]);
     DebugLog(@"jsonResponse:%@",jsonResponse);
