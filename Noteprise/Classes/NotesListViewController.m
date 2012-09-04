@@ -340,73 +340,84 @@
     [notesTbl reloadData];
 }
 -(void)searchByTag:(NSString*)searchTag {
-   
-    [listOfItems removeAllObjects];
-    EDAMNoteFilter * filter  = nil;
-    EDAMTag * tag = nil;
-   
-    for(EDAMTag * aTag in tags)
-    {
-        if([[aTag name] rangeOfString:searchTag options:NSCaseInsensitiveSearch].location!=NSNotFound){
-            tag = aTag;
-        }
-    }
-    if((!tag && ![Utility isBlank:searchTag]) || tag){
-        @try {
-            [Utility showCoverScreen];
-            [self showLoadingLblWithText:progress_dialog_tag_search_message];
-            for (int i = 0; i < [noteBooks count]; i++) {
-                
-                // Accessing notebook
-                EDAMNotebook* notebook = (EDAMNotebook*)[noteBooks objectAtIndex:i];
-                EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
-                // Creating & configuring filter to load specific notebook 
-                filter = [[EDAMNoteFilter alloc] init];
-                [filter setNotebookGuid:[notebook guid]];
-                
-                //Search By Tag
-                if([tag guid])
-                    [filter setTagGuids:[NSArray arrayWithObject:[tag guid]]];
-                
-                // Searching on the Evernote API
-                [noteStore findNotesWithFilter:filter offset:0 maxNotes:100 success:^(EDAMNoteList *noteList){
-                    for (EDAMNote *noteRead in noteList.notes) {
-                        // Populating the arrays
-                        NSMutableDictionary *noteListDict = [[NSMutableDictionary alloc]init];
-                        [noteListDict setValue:[noteRead title] forKey:NOTE_KEY];
-                        [noteListDict setValue:[noteRead guid] forKey:NOTE_GUID_KEY];
-                        [listOfItems addObject:noteListDict];
-                        [noteListDict release];
-                    }
-                    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-                    listOfItems = [[listOfItems sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
-                    DebugLog(@"listOfItems: tag%@",listOfItems);
-                    [self reloadNotesTable];
-                } failure:^(NSError *error) {
+            if(![Utility isBlank:searchTag]){
+            [listOfItems removeAllObjects];
+            EDAMNoteFilter * filter  = nil;
+            EDAMTag * tag = nil;
+           
+            for(EDAMTag * aTag in tags)
+            {
+                if([[aTag name] rangeOfString:searchTag options:NSCaseInsensitiveSearch].location!=NSNotFound){
+                    tag = aTag;
+                    
+                }
+            }
+            if(tag){
+                @try {
+                    [Utility showCoverScreen];
+                    [self showLoadingLblWithText:progress_dialog_tag_search_message];
+                    for (int i = 0; i < [noteBooks count]; i++) {
+                        
+                        // Accessing notebook
+                        EDAMNotebook* notebook = (EDAMNotebook*)[noteBooks objectAtIndex:i];
+                        EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
+                        // Creating & configuring filter to load specific notebook 
+                        filter = [[EDAMNoteFilter alloc] init];
+                        [filter setNotebookGuid:[notebook guid]];
+                        
+                        
+                        
+                        
+                        //Search By Tag
+                        if([tag guid])
+                            [filter setTagGuids:[NSArray arrayWithObject:[tag guid]]];
+                        
+                        // Searching on the Evernote API
+                        [noteStore findNotesWithFilter:filter offset:0 maxNotes:100 success:^(EDAMNoteList *noteList){
+                            for (EDAMNote *noteRead in noteList.notes) {
+                                // Populating the arrays
+                                NSMutableDictionary *noteListDict = [[NSMutableDictionary alloc]init];
+                                [noteListDict setValue:[noteRead title] forKey:NOTE_KEY];
+                                [noteListDict setValue:[noteRead guid] forKey:NOTE_GUID_KEY];
+                                [listOfItems addObject:noteListDict];
+                                [noteListDict release];
+                            }
+                            NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+                            listOfItems = [[listOfItems sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
+                            DebugLog(@"listOfItems: tag%@",listOfItems);
+                            [self reloadNotesTable];
+                        } failure:^(NSError *error) {
+                            [Utility hideCoverScreen];
+                            loadingLbl.hidden = YES;
+                            DebugLog(@" findNotesWithFilter error %@", error);    
+                            [Utility showExceptionAlert:error.description];
+                        }];
+                }
+                }
+                @catch (EDAMSystemException *exception) {
                     [Utility hideCoverScreen];
-                    loadingLbl.hidden = YES;
-                    DebugLog(@" findNotesWithFilter error %@", error);    
-                    [Utility showExceptionAlert:error.description];
-                }];
-        }
-        }
-        @catch (EDAMSystemException *exception) {
-            [Utility hideCoverScreen];
-            [self hideDoneToastMsg:nil];
-            [Utility showExceptionAlert:exception.description];
-        }   
-        @catch (EDAMNotFoundException *exception) {
-            [Utility hideCoverScreen];
-            [self hideDoneToastMsg:nil];
-            [Utility showExceptionAlert:SOME_ERROR_OCCURED_MESSAGE];
-        }
-        @catch (id exception) {
-            [Utility hideCoverScreen];
-            [self hideDoneToastMsg:nil];
-            DebugLog(@"Recvd Exception");
-            [Utility showExceptionAlert:ERROR_LISTING_NOTE_MSG];
-        }
-    }
+                    [self hideDoneToastMsg:nil];
+                    [Utility showExceptionAlert:exception.description];
+                }   
+                @catch (EDAMNotFoundException *exception) {
+                    [Utility hideCoverScreen];
+                    [self hideDoneToastMsg:nil];
+                    [Utility showExceptionAlert:SOME_ERROR_OCCURED_MESSAGE];
+                }
+                @catch (id exception) {
+                    [Utility hideCoverScreen];
+                    [self hideDoneToastMsg:nil];
+                    DebugLog(@"Recvd Exception");
+                    [Utility showExceptionAlert:ERROR_LISTING_NOTE_MSG];
+                }
+            }
+                else{ 
+                    [Utility hideCoverScreen];
+                    [self hideDoneToastMsg:nil];
+                    [Utility showAlert:no_note_found_with_tag_search_message];
+                    [self reloadNotesTable];
+                }
+            }
     else{ 
         [Utility hideCoverScreen];
         [self hideDoneToastMsg:nil];
@@ -415,6 +426,8 @@
     }
 }
 -(void)searchByNotebook:(NSString*)searchNotebook {
+   
+    if((![Utility isBlank:searchNotebook])){
     @try {
         
         for (int i = 0; i < [noteBooks count]; i++)
@@ -434,7 +447,7 @@
             if([[notebook name] rangeOfString:searchNotebook options:NSCaseInsensitiveSearch].location==NSNotFound)
             {
                 if(i == [noteBooks count]- 1) {
-                    [Utility showAlert:note_please_enter_text_for_search_message];
+                    [Utility showAlert:no_note_found_with_noteBook_search_message];
                     [self reloadNotesTable];
                 }
                 continue;
@@ -474,6 +487,15 @@
         DebugLog(@"Recvd Exception");
         [Utility showExceptionAlert:ERROR_LISTING_NOTE_MSG];
     }
+    
+    }
+    else{ 
+        [Utility hideCoverScreen];
+        [self hideDoneToastMsg:nil];
+        [Utility showAlert:note_please_enter_text_for_search_message];
+        [self reloadNotesTable];
+    }
+
     
 }
 -(void)searchByKeyword:(NSString*)searchKeyword {

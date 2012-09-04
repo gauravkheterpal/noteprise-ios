@@ -55,6 +55,8 @@
 #define ERROR_LISTING_NOTE_MSG @"Note listing failed.Please retry again later."
 #define LOADING_NOTEBOOKS_MSG @"Loading user Notebooks..."
 #define note_please_enter_text_for_search_message @"Please enter the text to be searched"
+#define no_note_found_with_noteBook_search_message @"No notebook exists with that name, try another keyword"
+#define no_note_found_with_tag_search_message @"No note found with that keyword, please try another keyword"
 #define progress_dialog_tag_search_message @"Searching tag in notes.."
 #define progress_dialog_keyword_search_message @"Searching keyword in notes.."
 #define progress_dialog_note_search_message @"Searching note.."
