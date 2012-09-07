@@ -20,6 +20,9 @@
 //viewDidLoad method declared in RootViewController.m
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (SYSTEM_VERSION_LESS_THAN(@"5.0")) {
+        addNoteBtn.enabled = NO;
+    }
     //self.title = @"Noteprise";
     if ([self.navigationController.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Top_nav_768x44.png"] forBarMetrics:UIBarMetricsDefault];

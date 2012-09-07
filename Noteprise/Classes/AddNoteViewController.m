@@ -133,6 +133,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 
 - (void)keyboardWillShow:(NSNotification*)notification {
     DebugLog(@"%d",[titleNote isFirstResponder]);
+    DebugLog(@"frmae y:%d",self.view.frame.origin.y);
     if(![titleNote isFirstResponder] && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         DebugLog(@"notification:%@",notification);
         //if([bodyTxtView isFirstResponder]){
@@ -172,10 +173,11 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 
 }
 - (void)keyboardWillHide:(NSNotification*)notification {
+    DebugLog(@"%d  webview:%d",[titleNote isFirstResponder],[bodyTxtView isFirstResponder]);
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
     CGRect viewFrame = self.view.frame;
 	viewFrame.origin.y += animatedDistance;
-	
+    viewFrame.origin.y = 0;
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationBeginsFromCurrentState:YES];
 	[UIView setAnimationDuration:KEYBOARD_ANIMATION_DURATION];
