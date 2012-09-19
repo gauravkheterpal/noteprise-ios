@@ -572,6 +572,16 @@
                  dispatch_async(dispatch_get_main_queue(), ^(void) {
                      DebugLog(@"update note success%@ :::: ",note);
                      if(isErrorCreatingnote == NO) {
+                         NSString *stringToReplace = [NSString stringWithFormat:@"<en-note%@>",[self getDataBetweenFromString:ENML leftString:@"<en-note" rightString:@">" leftOffset:8]];
+                         
+                         NSString *updatedString = [NSString stringWithFormat:@"<en-note%@ xmlns=\"http://www.w3.org/1999/xhtml\">",[self getDataBetweenFromString:ENML leftString:@"<en-note" rightString:@">" leftOffset:8]];
+                         
+                         NSString *updatedContent = [ENML stringByReplacingOccurrencesOfString:stringToReplace withString:updatedString];
+                         updatedContent = [updatedContent stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@"&#160;"];
+                         updatedContent = [updatedContent stringByReplacingOccurrencesOfString:@"&mdash;" withString:@"&#151;"];
+                         
+                         textContent = (NSMutableString *)[[[Utility flattenNoteBody:updatedContent]stringByDecodingHTMLEntities] retain];
+                         DebugLog(@"update textcontent:%@", textContent);
                          // Alerting the user that the note was created
                          dialog_imgView.hidden = NO;
                          doneImgView.hidden = NO;
