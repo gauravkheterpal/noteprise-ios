@@ -201,11 +201,24 @@
 }
 -(void)logout
 {
-    [[EvernoteSession sharedSession] logout];
-    SignInViewController *loginView = [[SignInViewController alloc]init];
-    [[[UIApplication sharedApplication]delegate]window].rootViewController = loginView;
-    [loginView release];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logout" message:@"Are you want to logout ?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+    [alert show];
+    [alert release];
+    
+    
 }
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if(buttonIndex == 1)
+    {
+        [[EvernoteSession sharedSession] logout];
+        SignInViewController *loginView = [[SignInViewController alloc]init];
+        [[[UIApplication sharedApplication]delegate]window].rootViewController = loginView;
+        [loginView release];
+    }
+   
+}
+
 -(void)fetchDataFromEverNote{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^(void) {
         // Loading all the notebook & tags linked to the account using the evernote API

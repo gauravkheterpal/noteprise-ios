@@ -39,6 +39,9 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background_pattern_tableview.png"]];
+   // editTitleField = [[[UITextField alloc] init] autorelease];
+    orgNoteTitle = self.title;
+    
     /*backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
     [self changeBkgrndImgWithOrientation];*/
@@ -465,6 +468,29 @@
 
 
 - (void)setContentEditable:(BOOL)isEditable {
+    
+    
+    if(isEditable)
+    {
+        self.title = @"Edit Note";
+        NSLog(@"..edit %d",isEditable);
+        noteContent.frame = CGRectMake(15, 100, 290, 250);
+        editTitleField = [[[UITextField alloc]initWithFrame:CGRectMake(15,31,290,30)] autorelease];
+        editTitleField.text = orgNoteTitle;
+        editTitleField.borderStyle = UITextBorderStyleRoundedRect;
+        editTitleField.delegate=self;
+        [self.view addSubview:editTitleField];
+        
+    }
+    else
+    {
+        editTitleField.hidden = TRUE;
+         noteContent.frame = CGRectMake(15,0,320,370);
+        NSLog(@"..edit false %d",isEditable);
+        self.title = editTitleField.text;
+        
+    }
+                                                    
     NSString *jsEnableEditing = 
     
     [NSString stringWithFormat:@"document.documentElement.contentEditable=%@;", isEditable ? @"true" : @"false"];
@@ -474,7 +500,8 @@
     [NSString stringWithFormat:@"document.body.contentEditable=%@;", isEditable ? @"true" : @"false"];
     NSString *result = [noteContent stringByEvaluatingJavaScriptFromString:jsEnableEditing];
      */
-    
+   
+   // NSLog(@"subview:%@",[self.view subviews]);
     DebugLog(@"editable %@",result);
 }
 
@@ -534,7 +561,6 @@
     // Creating the Note Object
     EDAMNote * note = [[[EDAMNote alloc] init]autorelease];
     note.title =self.title;
-    
     
     NSMutableString *bodyTxt =(NSMutableString *) [noteContent stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
     DebugLog(@"htmlString : %@",bodyTxt); 

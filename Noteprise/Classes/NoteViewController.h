@@ -9,8 +9,8 @@
 static int editBtnTag = 1;
 static int saveBtnTag = 2;
 
-@interface NoteViewController : UIViewController <UIWebViewDelegate,SFRestDelegate,UIActionSheetDelegate>{
-
+@interface NoteViewController : UIViewController <UIWebViewDelegate,SFRestDelegate,UIActionSheetDelegate,UITextFieldDelegate>{
+    NSString *orgNoteTitle;
     UINavigationBar * noteNavigation;
     //UITextView * noteContent;
     UIWebView * noteContent;
@@ -23,15 +23,18 @@ static int saveBtnTag = 2;
     //UIBarButtonItem *saveButton;
     //UIBarButtonItem *editButton;
     //UIToolbar* toolbar;
+    UITextField *editTitleField;
     IBOutlet UIImageView *doneImgView;
     UIActionSheet *postToChatterOptionActionSheet;
     IBOutlet UIBarButtonItem *saveToSFBarBtn;
     IBOutlet UIBarButtonItem *postToChatterBarBtn;
 
+
 }
 
 @property(nonatomic, assign) NSString * guid;
 //@property (nonatomic, retain) IBOutlet UIImageView * noteImage;
+
 @property (nonatomic, retain) IBOutlet UINavigationBar * noteNavigation;
 //@property (nonatomic, retain) IBOutlet UITextView * noteContent;
 @property (nonatomic, retain) IBOutlet UIWebView * noteContent;
