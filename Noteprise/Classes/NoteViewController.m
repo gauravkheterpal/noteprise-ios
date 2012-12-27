@@ -14,7 +14,7 @@
 }
 
 
-@synthesize guid, noteNavigation, noteContent,textContent;
+@synthesize guid, readProp, noteNavigation, noteContent,textContent;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -293,6 +293,8 @@
 -(IBAction)editPage:(id)sender 
 {
     CGRect frameimg = CGRectMake(0, 0, 27,27);
+    if([ readProp isEqualToString:@"No"])
+    {
     if (self.navigationItem.rightBarButtonItem.tag == editBtnTag) {
         saveToSFBarBtn.enabled = NO;
         postToChatterBarBtn.enabled = NO;
@@ -354,7 +356,18 @@
         [self updateNoteEvernote];
     }
   
-   
+    }
+    else
+    {
+        dialog_imgView.hidden = NO;
+        doneImgView.image = [UIImage imageNamed:@"2.png"];
+        doneImgView.hidden = NO;
+        [loadingSpinner stopAnimating];
+        loadingLbl.text = @"Note is ReadOnly";
+        loadingLbl.hidden = NO;
+        [Utility hideCoverScreen];
+        [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
+    }
     
     
 }
@@ -469,32 +482,36 @@
 
 - (void)setContentEditable:(BOOL)isEditable {
     
+   
+        if(isEditable)
+        {
+        
+            self.title = @"Edit Note";
+            NSLog(@"..edit %d",isEditable);
+            noteContent.frame = CGRectMake(15, 100, 290, 250);
+            editTitleField = [[[UITextField alloc]initWithFrame:CGRectMake(15,31,290,30)] autorelease];
+            editTitleField.text = orgNoteTitle;
+            editTitleField.borderStyle = UITextBorderStyleRoundedRect;
+            editTitleField.delegate=self;
+            [self.view addSubview:editTitleField];
+       
+        }
+        else
+        {
+            editTitleField.hidden = TRUE;
+            noteContent.frame = CGRectMake(15,0,320,370);
+            NSLog(@"..edit false %d",isEditable);
+            self.title = editTitleField.text;
+        
+        }
     
-    if(isEditable)
-    {
-        self.title = @"Edit Note";
-        NSLog(@"..edit %d",isEditable);
-        noteContent.frame = CGRectMake(15, 100, 290, 250);
-        editTitleField = [[[UITextField alloc]initWithFrame:CGRectMake(15,31,290,30)] autorelease];
-        editTitleField.text = orgNoteTitle;
-        editTitleField.borderStyle = UITextBorderStyleRoundedRect;
-        editTitleField.delegate=self;
-        [self.view addSubview:editTitleField];
-        
-    }
-    else
-    {
-        editTitleField.hidden = TRUE;
-         noteContent.frame = CGRectMake(15,0,320,370);
-        NSLog(@"..edit false %d",isEditable);
-        self.title = editTitleField.text;
-        
-    }
                                                     
-    NSString *jsEnableEditing = 
+        NSString *jsEnableEditing =
     
-    [NSString stringWithFormat:@"document.documentElement.contentEditable=%@;", isEditable ? @"true" : @"false"];
-    NSString *result = [noteContent stringByEvaluatingJavaScriptFromString:jsEnableEditing];
+        [NSString stringWithFormat:@"document.documentElement.contentEditable=%@;", isEditable ? @"true" : @"false"];
+        NSString *result = [noteContent stringByEvaluatingJavaScriptFromString:jsEnableEditing];
+       
+    
    
     /*
     [NSString stringWithFormat:@"document.body.contentEditable=%@;", isEditable ? @"true" : @"false"];
@@ -502,7 +519,8 @@
      */
    
    // NSLog(@"subview:%@",[self.view subviews]);
-    DebugLog(@"editable %@",result);
+     DebugLog(@"editable %@",result);
+    
 }
 
 - (void)increaseZoomFactorRange {
@@ -740,6 +758,11 @@
     //add your failed error handling here
     [Utility hideCoverScreen];
     [self hideDoneToastMsg:nil];
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    return [textField resignFirstResponder];
 }
 
 @end

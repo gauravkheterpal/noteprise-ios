@@ -33,6 +33,7 @@ static int saveBtnTag = 2;
 }
 
 @property(nonatomic, assign) NSString * guid;
+@property(nonatomic, assign) NSString *readProp;
 //@property (nonatomic, retain) IBOutlet UIImageView * noteImage;
 
 @property (nonatomic, retain) IBOutlet UINavigationBar * noteNavigation;

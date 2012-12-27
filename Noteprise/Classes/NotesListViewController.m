@@ -74,7 +74,6 @@
     [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_all_pressed_%@_%@.png",device,orientation]] forSegmentAtIndex:0];
     [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_notebook_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:1];
     [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_tag_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:2];
-     [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_keyword_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:3];
 
     [searchOptionsChoiceCntrl setBackgroundColor:[UIColor whiteColor]];
     //Customize segement control search bar
@@ -119,10 +118,6 @@
         [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_tag_pressed_%@_%@.png",device,orientation]] forSegmentAtIndex:2];
     else
         [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_tag_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:2];
-    if([searchOptionsChoiceCntrl selectedSegmentIndex] == 3)
-        [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_keyword_pressed_%@_%@.png",device,orientation]] forSegmentAtIndex:3];
-    else 
-        [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_keyword_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:3];
 }
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
@@ -319,9 +314,17 @@
                 for (EDAMNote *noteRead in noteList.notes) {
                     // Populating the arrays
                     NSMutableDictionary *noteListDict = [[NSMutableDictionary alloc]init];
+                    
                     [noteListDict setValue:[noteRead title] forKey:NOTE_KEY];
                     [noteListDict setValue:[noteRead guid] forKey:NOTE_GUID_KEY];
+                    NSString *readProp = noteRead.attributes.contentClass?@"Yes":@"No";
+                    [noteListDict setValue:readProp forKey:@"READABLE"];
+                    NSLog(@"!!!!!!!!!!!");
+                    NSLog(@"note Type %@",noteRead.attributes.contentClass);
+                    NSLog(@"!!!!!!!!!!!");
+                    
                     [listOfItems addObject:noteListDict];
+            
                     [noteListDict release];
                 }
                 NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
@@ -661,10 +664,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     selectedRowIndex = indexPath.row;
-    NSString * guid = (NSString *)[ [listOfItems objectAtIndex:indexPath.row]valueForKey:NOTE_GUID_KEY]; 
+    NSString * guid = (NSString *)[ [listOfItems objectAtIndex:indexPath.row]valueForKey:NOTE_GUID_KEY];
+    NSString *readProp = (NSString *)[ [listOfItems objectAtIndex:indexPath.row]valueForKey:@"READABLE"];
     NoteViewController* noteViewController = [[NoteViewController alloc] init];
     noteViewController.title = (NSString *)[ [listOfItems objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
+    [noteViewController setReadProp:readProp];
     [noteViewController setGuid:guid];
+    
+    
     [self.navigationController pushViewController:noteViewController animated:YES];
 }
 
@@ -729,7 +736,7 @@
     cell.textLabel.textColor = [UIColor blackColor];
     //cell.backgroundColor = [UIColor clearColor];
     //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"White_bordered_background.png"]];
-    
+       
     cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     UIImageView *accIMGView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
     accIMGView.image =[UIImage imageNamed:@"Blue_arrow_30x30.png"];

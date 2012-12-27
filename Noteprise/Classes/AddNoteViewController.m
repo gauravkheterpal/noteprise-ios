@@ -19,7 +19,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 @implementation AddNoteViewController
 
 
-@synthesize titleNote, sendNote, imageView,delegate;
+@synthesize titleNote, sendNote,imageView,delegate;
 
 
 
@@ -76,11 +76,12 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification 
                                                object:nil];
-    [self setContentEditable:YES];
-    [self setWebViewKeyPressDetectionEnabled:YES];
-    [self setWebViewTapDetectionEnabled:YES];    
-    [self increaseZoomFactorRange];
-    
+   
+        [self setContentEditable:YES];
+        [self setWebViewKeyPressDetectionEnabled:YES];
+        [self setWebViewTapDetectionEnabled:YES];    
+        [self increaseZoomFactorRange];
+   
     
     @try {
         dialog_imgView.hidden = NO;

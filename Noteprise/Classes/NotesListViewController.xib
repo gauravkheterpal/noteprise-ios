@@ -151,18 +151,16 @@
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBSegmentControlStyle">2</int>
-								<int key="IBNumberOfSegments">4</int>
+								<int key="IBNumberOfSegments">3</int>
 								<int key="IBSelectedSegmentIndex">0</int>
 								<object class="NSArray" key="IBSegmentTitles">
 									<bool key="EncodedWithXMLCoder">YES</bool>
 									<string>All</string>
 									<string>Notebook</string>
 									<string>Tag</string>
-									<string>Keyword</string>
 								</object>
 								<object class="NSMutableArray" key="IBSegmentWidths">
 									<bool key="EncodedWithXMLCoder">YES</bool>
-									<real value="0.0"/>
 									<real value="0.0"/>
 									<real value="0.0"/>
 									<real value="0.0"/>
@@ -172,11 +170,9 @@
 									<boolean value="YES"/>
 									<boolean value="YES"/>
 									<boolean value="YES"/>
-									<boolean value="YES"/>
 								</object>
 								<object class="NSMutableArray" key="IBSegmentContentOffsets">
 									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>{0, 0}</string>
 									<string>{0, 0}</string>
 									<string>{0, 0}</string>
 									<string>{0, 0}</string>
@@ -186,11 +182,10 @@
 									<object class="NSNull" id="4"/>
 									<reference ref="4"/>
 									<reference ref="4"/>
-									<reference ref="4"/>
 								</object>
 							</object>
 						</object>
-						<string key="NSFrame">{{0, -3}, {320, 44}}</string>
+						<string key="NSFrameSize">{320, 44}</string>
 						<reference key="NSSuperview" ref="119234428"/>
 						<reference key="NSNextKeyView" ref="59262787"/>
 						<bool key="IBUIOpaque">NO</bool>
@@ -477,11 +472,11 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="661413886"/>
 							<reference ref="1032599786"/>
-							<reference ref="559973876"/>
 							<reference ref="882786972"/>
 							<reference ref="22884463"/>
 							<reference ref="749673749"/>
 							<reference ref="975928190"/>
+							<reference ref="559973876"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -618,7 +613,7 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<integer value="3"/>
+					<integer value="2"/>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>CustomBlueToolbar</string>

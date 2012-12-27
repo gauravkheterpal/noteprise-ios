@@ -7,45 +7,98 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F405F57315F4B6C000678842 /* Noteprise_icon_iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = F405F57215F4B6C000678842 /* Noteprise_icon_iPhone.png */; };
-		F405F57B15F4C28400678842 /* default_user_image_40x34.png in Resources */ = {isa = PBXBuildFile; fileRef = F405F57915F4C28400678842 /* default_user_image_40x34.png */; };
-		F405F57C15F4C28400678842 /* default_group_image_40x34.png in Resources */ = {isa = PBXBuildFile; fileRef = F405F57A15F4C28400678842 /* default_group_image_40x34.png */; };
+		A634C775168C73CF007955F5 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = A634C774168C73CF007955F5 /* 2.png */; };
+		A6E15400168C147E00DB646F /* Add.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153B5168C147E00DB646F /* Add.png */; };
+		A6E15401168C147E00DB646F /* Add_note_select.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153B6168C147E00DB646F /* Add_note_select.png */; };
+		A6E15402168C147E00DB646F /* Background_pattern_tableview.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153B7168C147E00DB646F /* Background_pattern_tableview.png */; };
+		A6E15403168C147E00DB646F /* Blue_arrow_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153B8168C147E00DB646F /* Blue_arrow_30x30.png */; };
+		A6E15404168C147E00DB646F /* Button-evernoteBg320x460.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153B9168C147E00DB646F /* Button-evernoteBg320x460.png */; };
+		A6E15405168C147E00DB646F /* Cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153BA168C147E00DB646F /* Cancel.png */; };
+		A6E15406168C147E00DB646F /* Cancel_down.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153BB168C147E00DB646F /* Cancel_down.png */; };
+		A6E15407168C147E00DB646F /* Checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153BC168C147E00DB646F /* Checkbox.png */; };
+		A6E15408168C147E00DB646F /* Checkbox_checked.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153BD168C147E00DB646F /* Checkbox_checked.png */; };
+		A6E15409168C147E00DB646F /* Create.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153BE168C147E00DB646F /* Create.png */; };
+		A6E1540A168C147E00DB646F /* Create_down.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153BF168C147E00DB646F /* Create_down.png */; };
+		A6E1540B168C147E00DB646F /* Edit.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153C0168C147E00DB646F /* Edit.png */; };
+		A6E1540C168C147E00DB646F /* Edit_down.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153C1168C147E00DB646F /* Edit_down.png */; };
+		A6E1540D168C147E00DB646F /* Loader.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153C2168C147E00DB646F /* Loader.png */; };
+		A6E1540E168C147E00DB646F /* Logout.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153C3168C147E00DB646F /* Logout.png */; };
+		A6E1540F168C147E00DB646F /* Logout_down.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153C4168C147E00DB646F /* Logout_down.png */; };
+		A6E15410168C147E00DB646F /* Noteprise_icon_iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153C5168C147E00DB646F /* Noteprise_icon_iPhone.png */; };
+		A6E15411168C147E00DB646F /* Record.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153C6168C147E00DB646F /* Record.png */; };
+		A6E15412168C147E00DB646F /* SF_Mapping.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153C7168C147E00DB646F /* SF_Mapping.png */; };
+		A6E15413168C147E00DB646F /* Save.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153C8168C147E00DB646F /* Save.png */; };
+		A6E15414168C147E00DB646F /* Save_down.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153C9168C147E00DB646F /* Save_down.png */; };
+		A6E15415168C147E00DB646F /* Save_to_SF.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153CA168C147E00DB646F /* Save_to_SF.png */; };
+		A6E15416168C147E00DB646F /* Save_to_SF_down.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153CB168C147E00DB646F /* Save_to_SF_down.png */; };
+		A6E15417168C147E00DB646F /* Search_bar_background_1x44.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153CC168C147E00DB646F /* Search_bar_background_1x44.png */; };
+		A6E15418168C147E00DB646F /* Segment_control_button_all_pressed_iPad_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153CD168C147E00DB646F /* Segment_control_button_all_pressed_iPad_landscape.png */; };
+		A6E15419168C147E00DB646F /* Segment_control_button_all_pressed_iPad_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153CE168C147E00DB646F /* Segment_control_button_all_pressed_iPad_potrait.png */; };
+		A6E1541A168C147E00DB646F /* Segment_control_button_all_pressed_iPhone_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153CF168C147E00DB646F /* Segment_control_button_all_pressed_iPhone_landscape.png */; };
+		A6E1541B168C147E00DB646F /* Segment_control_button_all_pressed_iPhone_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153D0168C147E00DB646F /* Segment_control_button_all_pressed_iPhone_potrait.png */; };
+		A6E1541C168C147E00DB646F /* Segment_control_button_all_unpressed_iPad_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153D1168C147E00DB646F /* Segment_control_button_all_unpressed_iPad_landscape.png */; };
+		A6E1541D168C147E00DB646F /* Segment_control_button_all_unpressed_iPad_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153D2168C147E00DB646F /* Segment_control_button_all_unpressed_iPad_potrait.png */; };
+		A6E1541E168C147E00DB646F /* Segment_control_button_all_unpressed_iPhone_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153D3168C147E00DB646F /* Segment_control_button_all_unpressed_iPhone_landscape.png */; };
+		A6E1541F168C147E00DB646F /* Segment_control_button_all_unpressed_iPhone_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153D4168C147E00DB646F /* Segment_control_button_all_unpressed_iPhone_potrait.png */; };
+		A6E15420168C147E00DB646F /* Segment_control_button_keyword_pressed_iPad_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153D5168C147E00DB646F /* Segment_control_button_keyword_pressed_iPad_landscape.png */; };
+		A6E15421168C147E00DB646F /* Segment_control_button_keyword_pressed_iPad_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153D6168C147E00DB646F /* Segment_control_button_keyword_pressed_iPad_potrait.png */; };
+		A6E15422168C147E00DB646F /* Segment_control_button_keyword_pressed_iPhone_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153D7168C147E00DB646F /* Segment_control_button_keyword_pressed_iPhone_landscape.png */; };
+		A6E15423168C147E00DB646F /* Segment_control_button_keyword_pressed_iPhone_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153D8168C147E00DB646F /* Segment_control_button_keyword_pressed_iPhone_potrait.png */; };
+		A6E15424168C147E00DB646F /* Segment_control_button_keyword_unpressed_iPad_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153D9168C147E00DB646F /* Segment_control_button_keyword_unpressed_iPad_landscape.png */; };
+		A6E15425168C147E00DB646F /* Segment_control_button_keyword_unpressed_iPad_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153DA168C147E00DB646F /* Segment_control_button_keyword_unpressed_iPad_potrait.png */; };
+		A6E15426168C147E00DB646F /* Segment_control_button_keyword_unpressed_iPhone_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153DB168C147E00DB646F /* Segment_control_button_keyword_unpressed_iPhone_landscape.png */; };
+		A6E15427168C147E00DB646F /* Segment_control_button_keyword_unpressed_iPhone_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153DC168C147E00DB646F /* Segment_control_button_keyword_unpressed_iPhone_potrait.png */; };
+		A6E15428168C147E00DB646F /* Segment_control_button_notebook_pressed_iPad_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153DD168C147E00DB646F /* Segment_control_button_notebook_pressed_iPad_landscape.png */; };
+		A6E15429168C147E00DB646F /* Segment_control_button_notebook_pressed_iPad_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153DE168C147E00DB646F /* Segment_control_button_notebook_pressed_iPad_potrait.png */; };
+		A6E1542A168C147E00DB646F /* Segment_control_button_notebook_pressed_iPhone_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153DF168C147E00DB646F /* Segment_control_button_notebook_pressed_iPhone_landscape.png */; };
+		A6E1542B168C147E00DB646F /* Segment_control_button_notebook_pressed_iPhone_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153E0168C147E00DB646F /* Segment_control_button_notebook_pressed_iPhone_potrait.png */; };
+		A6E1542C168C147E00DB646F /* Segment_control_button_notebook_unpressed_iPad_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153E1168C147E00DB646F /* Segment_control_button_notebook_unpressed_iPad_landscape.png */; };
+		A6E1542D168C147E00DB646F /* Segment_control_button_notebook_unpressed_iPad_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153E2168C147E00DB646F /* Segment_control_button_notebook_unpressed_iPad_potrait.png */; };
+		A6E1542E168C147E00DB646F /* Segment_control_button_notebook_unpressed_iPhone_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153E3168C147E00DB646F /* Segment_control_button_notebook_unpressed_iPhone_landscape.png */; };
+		A6E1542F168C147E00DB646F /* Segment_control_button_notebook_unpressed_iPhone_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153E4168C147E00DB646F /* Segment_control_button_notebook_unpressed_iPhone_potrait.png */; };
+		A6E15430168C147E00DB646F /* Segment_control_button_tag_pressed_iPad_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153E5168C147E00DB646F /* Segment_control_button_tag_pressed_iPad_landscape.png */; };
+		A6E15431168C147E00DB646F /* Segment_control_button_tag_pressed_iPad_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153E6168C147E00DB646F /* Segment_control_button_tag_pressed_iPad_potrait.png */; };
+		A6E15432168C147E00DB646F /* Segment_control_button_tag_pressed_iPhone_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153E7168C147E00DB646F /* Segment_control_button_tag_pressed_iPhone_landscape.png */; };
+		A6E15433168C147E00DB646F /* Segment_control_button_tag_pressed_iPhone_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153E8168C147E00DB646F /* Segment_control_button_tag_pressed_iPhone_potrait.png */; };
+		A6E15434168C147E00DB646F /* Segment_control_button_tag_unpressed_iPad_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153E9168C147E00DB646F /* Segment_control_button_tag_unpressed_iPad_landscape.png */; };
+		A6E15435168C147E00DB646F /* Segment_control_button_tag_unpressed_iPad_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153EA168C147E00DB646F /* Segment_control_button_tag_unpressed_iPad_potrait.png */; };
+		A6E15436168C147E00DB646F /* Segment_control_button_tag_unpressed_iPhone_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153EB168C147E00DB646F /* Segment_control_button_tag_unpressed_iPhone_landscape.png */; };
+		A6E15437168C147E00DB646F /* Segment_control_button_tag_unpressed_iPhone_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153EC168C147E00DB646F /* Segment_control_button_tag_unpressed_iPhone_potrait.png */; };
+		A6E15438168C147E00DB646F /* Select_note_bcg.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153ED168C147E00DB646F /* Select_note_bcg.png */; };
+		A6E15439168C147E00DB646F /* Toolbar_768x44.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153EE168C147E00DB646F /* Toolbar_768x44.png */; };
+		A6E1543A168C147E00DB646F /* Top_nav_768x44.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153EF168C147E00DB646F /* Top_nav_768x44.png */; };
+		A6E1543B168C147E00DB646F /* White_bordered_background.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153F0168C147E00DB646F /* White_bordered_background.png */; };
+		A6E1543C168C147E00DB646F /* bcg.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153F1168C147E00DB646F /* bcg.png */; };
+		A6E1543D168C147E00DB646F /* bg.PNG in Resources */ = {isa = PBXBuildFile; fileRef = A6E153F2168C147E00DB646F /* bg.PNG */; };
+		A6E1543E168C147E00DB646F /* big_bttn_green.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153F3168C147E00DB646F /* big_bttn_green.png */; };
+		A6E1543F168C147E00DB646F /* blue_bcg_iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153F4168C147E00DB646F /* blue_bcg_iPhone.png */; };
+		A6E15440168C147E00DB646F /* chatter_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153F5168C147E00DB646F /* chatter_icon.png */; };
+		A6E15441168C147E00DB646F /* default_group_image_40x34.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153F6168C147E00DB646F /* default_group_image_40x34.png */; };
+		A6E15442168C147E00DB646F /* default_user_image_40x34.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153F7168C147E00DB646F /* default_user_image_40x34.png */; };
+		A6E15443168C147E00DB646F /* edit_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153F8168C147E00DB646F /* edit_icon.png */; };
+		A6E15444168C147E00DB646F /* evernoteBg-1024x748.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153F9168C147E00DB646F /* evernoteBg-1024x748.png */; };
+		A6E15445168C147E00DB646F /* evernoteBg.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153FA168C147E00DB646F /* evernoteBg.png */; };
+		A6E15446168C147E00DB646F /* evernoteBg320x460.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153FB168C147E00DB646F /* evernoteBg320x460.png */; };
+		A6E15447168C147E00DB646F /* evernoteBg480x300.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153FC168C147E00DB646F /* evernoteBg480x300.png */; };
+		A6E15448168C147E00DB646F /* evernoteBg768x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153FD168C147E00DB646F /* evernoteBg768x1024.png */; };
+		A6E15449168C147E00DB646F /* noteprise_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153FE168C147E00DB646F /* noteprise_logo.png */; };
+		A6E1544A168C147E00DB646F /* settings_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153FF168C147E00DB646F /* settings_icon.png */; };
 		F40B827515CBDFDD009B4A54 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = F40B827415CBDFDD009B4A54 /* NSString+HTML.m */; };
 		F40B828115CBE778009B4A54 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = F40B828015CBE778009B4A54 /* GTMNSString+HTML.m */; };
-		F40E54BB15B000EA003EC3F4 /* evernoteBg-1024x748.png in Resources */ = {isa = PBXBuildFile; fileRef = F40E54BA15B000EA003EC3F4 /* evernoteBg-1024x748.png */; };
-		F40E54F915B0258A003EC3F4 /* Button-evernoteBg320x460.png in Resources */ = {isa = PBXBuildFile; fileRef = F40E54F815B0258A003EC3F4 /* Button-evernoteBg320x460.png */; };
-		F40E54FD15B02AAE003EC3F4 /* evernoteBg480x300.png in Resources */ = {isa = PBXBuildFile; fileRef = F40E54FB15B02AAE003EC3F4 /* evernoteBg480x300.png */; };
-		F40E552A15B0334B003EC3F4 /* evernoteBg768x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = F40E552915B0334B003EC3F4 /* evernoteBg768x1024.png */; };
-		F41D4AF615F1D2970070BDDB /* Search_bar_background_1x44.png in Resources */ = {isa = PBXBuildFile; fileRef = F41D4AF515F1D2970070BDDB /* Search_bar_background_1x44.png */; };
-		F41D4B2515F1DFB90070BDDB /* Logout.png in Resources */ = {isa = PBXBuildFile; fileRef = F41D4B2415F1DFB90070BDDB /* Logout.png */; };
-		F41D4B2715F1DFD70070BDDB /* settings_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F41D4B2615F1DFD70070BDDB /* settings_icon.png */; };
-		F41D4B2915F1E10A0070BDDB /* noteprise_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F41D4B2815F1E10A0070BDDB /* noteprise_logo.png */; };
 		F424255E159E19170038EA52 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = F424255D159E19170038EA52 /* Entitlements.plist */; };
 		F4242562159E1C1A0038EA52 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = F424255F159E1C1A0038EA52 /* Icon-72.png */; };
 		F4242563159E1C1A0038EA52 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F4242560159E1C1A0038EA52 /* Icon.png */; };
 		F4242564159E1C1A0038EA52 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4242561159E1C1A0038EA52 /* Icon@2x.png */; };
-		F42A28C015F33FED007D2448 /* blue_bcg_iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = F42A28BF15F33FED007D2448 /* blue_bcg_iPhone.png */; };
-		F42D1C95159B2E1700ECF3F4 /* big_bttn_green.png in Resources */ = {isa = PBXBuildFile; fileRef = F42D1C88159B2E1700ECF3F4 /* big_bttn_green.png */; };
-		F42D1C99159B2E1700ECF3F4 /* evernoteBg.png in Resources */ = {isa = PBXBuildFile; fileRef = F42D1C8C159B2E1700ECF3F4 /* evernoteBg.png */; };
-		F42D1C9A159B2E1700ECF3F4 /* evernoteBg320x460.png in Resources */ = {isa = PBXBuildFile; fileRef = F42D1C8D159B2E1700ECF3F4 /* evernoteBg320x460.png */; };
 		F42D1CC5159B2F7E00ECF3F4 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = F42D1CC4159B2F7E00ECF3F4 /* Utility.m */; };
 		F438D46815A013DB006ACD25 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F438D44E15A013DB006ACD25 /* libRestKit.a */; };
 		F438D46915A013DB006ACD25 /* libSalesforceOAuth.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F438D45415A013DB006ACD25 /* libSalesforceOAuth.a */; };
 		F438D46A15A013DB006ACD25 /* libSalesforceSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F438D45A15A013DB006ACD25 /* libSalesforceSDK.a */; };
 		F438D46B15A013DB006ACD25 /* libsbjson-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F438D46715A013DB006ACD25 /* libsbjson-ios.a */; };
 		F438D46D15A01563006ACD25 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F438D46C15A01563006ACD25 /* libxml2.dylib */; };
-		F43D3CD615F108C300CD0EA9 /* Top_nav_768x44.png in Resources */ = {isa = PBXBuildFile; fileRef = F43D3CD515F108C300CD0EA9 /* Top_nav_768x44.png */; };
-		F43D3CD815F1142300CD0EA9 /* Logout_down.png in Resources */ = {isa = PBXBuildFile; fileRef = F43D3CD715F1142300CD0EA9 /* Logout_down.png */; };
-		F43D3CDC15F117BC00CD0EA9 /* Add.png in Resources */ = {isa = PBXBuildFile; fileRef = F43D3CDB15F117BC00CD0EA9 /* Add.png */; };
-		F43D3CDE15F118D000CD0EA9 /* Toolbar_768x44.png in Resources */ = {isa = PBXBuildFile; fileRef = F43D3CDD15F118D000CD0EA9 /* Toolbar_768x44.png */; };
 		F43D3CE115F11D4000CD0EA9 /* CustomBlueToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = F43D3CE015F11D4000CD0EA9 /* CustomBlueToolbar.m */; };
-		F43D3CF815F132A900CD0EA9 /* White_bordered_background.png in Resources */ = {isa = PBXBuildFile; fileRef = F43D3CF715F132A900CD0EA9 /* White_bordered_background.png */; };
-		F43D3CFC15F133AC00CD0EA9 /* Blue_arrow_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = F43D3CFB15F133AC00CD0EA9 /* Blue_arrow_30x30.png */; };
-		F446B88A15E7B2180083FE99 /* edit_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F446B88615E7B2180083FE99 /* edit_icon.png */; };
 		F460DC0715E243F000E52380 /* ChatterUsersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F460DC0615E243F000E52380 /* ChatterUsersViewController.m */; };
 		F460DC0A15E2461B00E52380 /* ChatterUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F460DC0915E2461B00E52380 /* ChatterUsersViewController.xib */; };
 		F4612B8D159C2B9E001A8412 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4612B8C159C2B9E001A8412 /* RootViewController.xib */; };
-		F4612B94159C40B4001A8412 /* bg.PNG in Resources */ = {isa = PBXBuildFile; fileRef = F4612B92159C40B4001A8412 /* bg.PNG */; };
 		F46C1A5015A005B4008B8D50 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = F46C1A0415A005B4008B8D50 /* NSString+URLEncoding.m */; };
 		F46C1A5215A005B4008B8D50 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = F46C1A0815A005B4008B8D50 /* SSKeychain.m */; };
 		F46C1A5415A005B4008B8D50 /* TBinaryProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = F46C1A0D15A005B4008B8D50 /* TBinaryProtocol.m */; };
@@ -74,44 +127,8 @@
 		F46C1A6B15A005B4008B8D50 /* ENCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = F46C1A4715A005B4008B8D50 /* ENCredentials.m */; };
 		F46C1A6C15A005B4008B8D50 /* ENCredentialStore.m in Sources */ = {isa = PBXBuildFile; fileRef = F46C1A4915A005B4008B8D50 /* ENCredentialStore.m */; };
 		F46C1A6D15A005B4008B8D50 /* ENOAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F46C1A4B15A005B4008B8D50 /* ENOAuthViewController.m */; };
-		F4807BAE15F282A000A0B878 /* Segment_control_button_tag_unpressed_iPhone_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BA615F282A000A0B878 /* Segment_control_button_tag_unpressed_iPhone_potrait.png */; };
-		F4807BAF15F282A000A0B878 /* Segment_control_button_tag_unpressed_iPhone_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BA715F282A000A0B878 /* Segment_control_button_tag_unpressed_iPhone_landscape.png */; };
-		F4807BB015F282A000A0B878 /* Segment_control_button_tag_unpressed_iPad_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BA815F282A000A0B878 /* Segment_control_button_tag_unpressed_iPad_potrait.png */; };
-		F4807BB115F282A000A0B878 /* Segment_control_button_tag_unpressed_iPad_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BA915F282A000A0B878 /* Segment_control_button_tag_unpressed_iPad_landscape.png */; };
-		F4807BB215F282A000A0B878 /* Segment_control_button_tag_pressed_iPhone_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BAA15F282A000A0B878 /* Segment_control_button_tag_pressed_iPhone_potrait.png */; };
-		F4807BB315F282A000A0B878 /* Segment_control_button_tag_pressed_iPhone_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BAB15F282A000A0B878 /* Segment_control_button_tag_pressed_iPhone_landscape.png */; };
-		F4807BB415F282A000A0B878 /* Segment_control_button_tag_pressed_iPad_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BAC15F282A000A0B878 /* Segment_control_button_tag_pressed_iPad_potrait.png */; };
-		F4807BB515F282A000A0B878 /* Segment_control_button_tag_pressed_iPad_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BAD15F282A000A0B878 /* Segment_control_button_tag_pressed_iPad_landscape.png */; };
-		F4807BCF15F282B600A0B878 /* Segment_control_button_notebook_unpressed_iPhone_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BB715F282B600A0B878 /* Segment_control_button_notebook_unpressed_iPhone_potrait.png */; };
-		F4807BD015F282B600A0B878 /* Segment_control_button_notebook_unpressed_iPhone_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BB815F282B600A0B878 /* Segment_control_button_notebook_unpressed_iPhone_landscape.png */; };
-		F4807BD115F282B600A0B878 /* Segment_control_button_notebook_unpressed_iPad_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BB915F282B600A0B878 /* Segment_control_button_notebook_unpressed_iPad_potrait.png */; };
-		F4807BD215F282B600A0B878 /* Segment_control_button_notebook_unpressed_iPad_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BBA15F282B600A0B878 /* Segment_control_button_notebook_unpressed_iPad_landscape.png */; };
-		F4807BD315F282B600A0B878 /* Segment_control_button_notebook_pressed_iPhone_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BBB15F282B600A0B878 /* Segment_control_button_notebook_pressed_iPhone_potrait.png */; };
-		F4807BD415F282B600A0B878 /* Segment_control_button_notebook_pressed_iPhone_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BBC15F282B600A0B878 /* Segment_control_button_notebook_pressed_iPhone_landscape.png */; };
-		F4807BD515F282B600A0B878 /* Segment_control_button_notebook_pressed_iPad_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BBD15F282B600A0B878 /* Segment_control_button_notebook_pressed_iPad_potrait.png */; };
-		F4807BD615F282B600A0B878 /* Segment_control_button_notebook_pressed_iPad_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BBE15F282B600A0B878 /* Segment_control_button_notebook_pressed_iPad_landscape.png */; };
-		F4807BD715F282B600A0B878 /* Segment_control_button_keyword_unpressed_iPhone_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BBF15F282B600A0B878 /* Segment_control_button_keyword_unpressed_iPhone_potrait.png */; };
-		F4807BD815F282B600A0B878 /* Segment_control_button_keyword_unpressed_iPhone_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BC015F282B600A0B878 /* Segment_control_button_keyword_unpressed_iPhone_landscape.png */; };
-		F4807BD915F282B600A0B878 /* Segment_control_button_keyword_unpressed_iPad_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BC115F282B600A0B878 /* Segment_control_button_keyword_unpressed_iPad_potrait.png */; };
-		F4807BDA15F282B600A0B878 /* Segment_control_button_keyword_unpressed_iPad_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BC215F282B600A0B878 /* Segment_control_button_keyword_unpressed_iPad_landscape.png */; };
-		F4807BDB15F282B600A0B878 /* Segment_control_button_keyword_pressed_iPhone_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BC315F282B600A0B878 /* Segment_control_button_keyword_pressed_iPhone_potrait.png */; };
-		F4807BDC15F282B600A0B878 /* Segment_control_button_keyword_pressed_iPhone_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BC415F282B600A0B878 /* Segment_control_button_keyword_pressed_iPhone_landscape.png */; };
-		F4807BDD15F282B600A0B878 /* Segment_control_button_keyword_pressed_iPad_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BC515F282B600A0B878 /* Segment_control_button_keyword_pressed_iPad_potrait.png */; };
-		F4807BDE15F282B600A0B878 /* Segment_control_button_keyword_pressed_iPad_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BC615F282B600A0B878 /* Segment_control_button_keyword_pressed_iPad_landscape.png */; };
-		F4807BDF15F282B600A0B878 /* Segment_control_button_all_unpressed_iPhone_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BC715F282B600A0B878 /* Segment_control_button_all_unpressed_iPhone_potrait.png */; };
-		F4807BE015F282B600A0B878 /* Segment_control_button_all_unpressed_iPhone_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BC815F282B600A0B878 /* Segment_control_button_all_unpressed_iPhone_landscape.png */; };
-		F4807BE115F282B600A0B878 /* Segment_control_button_all_unpressed_iPad_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BC915F282B600A0B878 /* Segment_control_button_all_unpressed_iPad_potrait.png */; };
-		F4807BE315F282B600A0B878 /* Segment_control_button_all_pressed_iPhone_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BCB15F282B600A0B878 /* Segment_control_button_all_pressed_iPhone_potrait.png */; };
-		F4807BE415F282B600A0B878 /* Segment_control_button_all_pressed_iPhone_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BCC15F282B600A0B878 /* Segment_control_button_all_pressed_iPhone_landscape.png */; };
-		F4807BE515F282B600A0B878 /* Segment_control_button_all_pressed_iPad_potrait.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BCD15F282B600A0B878 /* Segment_control_button_all_pressed_iPad_potrait.png */; };
-		F4807BEA15F285FA00A0B878 /* Segment_control_button_all_pressed_iPad_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BE915F285FA00A0B878 /* Segment_control_button_all_pressed_iPad_landscape.png */; };
-		F4807BEC15F2871F00A0B878 /* Segment_control_button_all_unpressed_iPad_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = F4807BEB15F2871F00A0B878 /* Segment_control_button_all_unpressed_iPad_landscape.png */; };
-		F486322B15F2656800AF1421 /* Add_note_select.png in Resources */ = {isa = PBXBuildFile; fileRef = F486322A15F2656800AF1421 /* Add_note_select.png */; };
-		F486322E15F2661100AF1421 /* Record.png in Resources */ = {isa = PBXBuildFile; fileRef = F486322D15F2661100AF1421 /* Record.png */; };
-		F486323015F2665100AF1421 /* Loader.png in Resources */ = {isa = PBXBuildFile; fileRef = F486322F15F2665100AF1421 /* Loader.png */; };
 		F486345915E29BE200262355 /* ChatterGroupVCntrlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F486345715E29BE200262355 /* ChatterGroupVCntrlViewController.m */; };
 		F488D91C15E39028001BA368 /* ChatterGroupVCntrlViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F488D91B15E39028001BA368 /* ChatterGroupVCntrlViewController.xib */; };
-		F488D9F915E3B666001BA368 /* chatter_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F488D9F815E3B666001BA368 /* chatter_icon.png */; };
 		F4A8AF5A15C18B5E00D51071 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A8AF5915C18B5E00D51071 /* CoreLocation.framework */; };
 		F4B135C1159EF12F00DF40A1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B135C0159EF12F00DF40A1 /* Reachability.m */; };
 		F4BFE88515E4AEE200F3E261 /* IconDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BFE88415E4AEE200F3E261 /* IconDownloader.m */; };
@@ -149,47 +166,93 @@
 		F4D2133A159B2CBC00610A18 /* SFObjsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D2132D159B2CBC00610A18 /* SFObjsViewController.m */; };
 		F4D2133B159B2CBC00610A18 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D2132F159B2CBC00610A18 /* SignInViewController.m */; };
 		F4D2133C159B2CBC00610A18 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4D21330159B2CBC00610A18 /* SignInViewController.xib */; };
-		F4F115CB15F1F15F0009FC97 /* Background_pattern_tableview.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115CA15F1F15F0009FC97 /* Background_pattern_tableview.png */; };
-		F4F115DB15F1F5A80009FC97 /* SF_Mapping.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115DA15F1F5A80009FC97 /* SF_Mapping.png */; };
-		F4F115DE15F1F8110009FC97 /* Create.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115DC15F1F8110009FC97 /* Create.png */; };
-		F4F115DF15F1F8110009FC97 /* Create_down.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115DD15F1F8110009FC97 /* Create_down.png */; };
-		F4F115E115F1F8680009FC97 /* bcg.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115E015F1F8680009FC97 /* bcg.png */; };
-		F4F115E315F1FA230009FC97 /* Select_note_bcg.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115E215F1FA230009FC97 /* Select_note_bcg.png */; };
-		F4F115E615F204980009FC97 /* Edit_down.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115E415F204980009FC97 /* Edit_down.png */; };
-		F4F115E715F204980009FC97 /* Edit.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115E515F204980009FC97 /* Edit.png */; };
-		F4F115EA15F204C20009FC97 /* Cancel_down.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115E815F204C20009FC97 /* Cancel_down.png */; };
-		F4F115EB15F204C20009FC97 /* Cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115E915F204C20009FC97 /* Cancel.png */; };
-		F4F115EE15F211130009FC97 /* Save.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115EC15F211130009FC97 /* Save.png */; };
-		F4F115EF15F211130009FC97 /* Save_down.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115ED15F211130009FC97 /* Save_down.png */; };
-		F4F115F615F2128F0009FC97 /* Checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115F415F2128F0009FC97 /* Checkbox.png */; };
-		F4F115F715F2128F0009FC97 /* Checkbox_checked.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115F515F2128F0009FC97 /* Checkbox_checked.png */; };
-		F4F115FB15F2160D0009FC97 /* Save_to_SF.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F115FA15F2160D0009FC97 /* Save_to_SF.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		F405F57215F4B6C000678842 /* Noteprise_icon_iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Noteprise_icon_iPhone.png; path = Noteprise/Resources/Images/Noteprise_icon_iPhone.png; sourceTree = SOURCE_ROOT; };
-		F405F57915F4C28400678842 /* default_user_image_40x34.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default_user_image_40x34.png; path = Noteprise/Resources/Images/default_user_image_40x34.png; sourceTree = SOURCE_ROOT; };
-		F405F57A15F4C28400678842 /* default_group_image_40x34.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default_group_image_40x34.png; path = Noteprise/Resources/Images/default_group_image_40x34.png; sourceTree = SOURCE_ROOT; };
+		A634C774168C73CF007955F5 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
+		A6E153B5168C147E00DB646F /* Add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Add.png; sourceTree = "<group>"; };
+		A6E153B6168C147E00DB646F /* Add_note_select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Add_note_select.png; sourceTree = "<group>"; };
+		A6E153B7168C147E00DB646F /* Background_pattern_tableview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_pattern_tableview.png; sourceTree = "<group>"; };
+		A6E153B8168C147E00DB646F /* Blue_arrow_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blue_arrow_30x30.png; sourceTree = "<group>"; };
+		A6E153B9168C147E00DB646F /* Button-evernoteBg320x460.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Button-evernoteBg320x460.png"; sourceTree = "<group>"; };
+		A6E153BA168C147E00DB646F /* Cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cancel.png; sourceTree = "<group>"; };
+		A6E153BB168C147E00DB646F /* Cancel_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cancel_down.png; sourceTree = "<group>"; };
+		A6E153BC168C147E00DB646F /* Checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Checkbox.png; sourceTree = "<group>"; };
+		A6E153BD168C147E00DB646F /* Checkbox_checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Checkbox_checked.png; sourceTree = "<group>"; };
+		A6E153BE168C147E00DB646F /* Create.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Create.png; sourceTree = "<group>"; };
+		A6E153BF168C147E00DB646F /* Create_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Create_down.png; sourceTree = "<group>"; };
+		A6E153C0168C147E00DB646F /* Edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Edit.png; sourceTree = "<group>"; };
+		A6E153C1168C147E00DB646F /* Edit_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Edit_down.png; sourceTree = "<group>"; };
+		A6E153C2168C147E00DB646F /* Loader.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Loader.png; sourceTree = "<group>"; };
+		A6E153C3168C147E00DB646F /* Logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logout.png; sourceTree = "<group>"; };
+		A6E153C4168C147E00DB646F /* Logout_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logout_down.png; sourceTree = "<group>"; };
+		A6E153C5168C147E00DB646F /* Noteprise_icon_iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Noteprise_icon_iPhone.png; sourceTree = "<group>"; };
+		A6E153C6168C147E00DB646F /* Record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Record.png; sourceTree = "<group>"; };
+		A6E153C7168C147E00DB646F /* SF_Mapping.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SF_Mapping.png; sourceTree = "<group>"; };
+		A6E153C8168C147E00DB646F /* Save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Save.png; sourceTree = "<group>"; };
+		A6E153C9168C147E00DB646F /* Save_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Save_down.png; sourceTree = "<group>"; };
+		A6E153CA168C147E00DB646F /* Save_to_SF.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Save_to_SF.png; sourceTree = "<group>"; };
+		A6E153CB168C147E00DB646F /* Save_to_SF_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Save_to_SF_down.png; sourceTree = "<group>"; };
+		A6E153CC168C147E00DB646F /* Search_bar_background_1x44.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Search_bar_background_1x44.png; sourceTree = "<group>"; };
+		A6E153CD168C147E00DB646F /* Segment_control_button_all_pressed_iPad_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_all_pressed_iPad_landscape.png; sourceTree = "<group>"; };
+		A6E153CE168C147E00DB646F /* Segment_control_button_all_pressed_iPad_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_all_pressed_iPad_potrait.png; sourceTree = "<group>"; };
+		A6E153CF168C147E00DB646F /* Segment_control_button_all_pressed_iPhone_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_all_pressed_iPhone_landscape.png; sourceTree = "<group>"; };
+		A6E153D0168C147E00DB646F /* Segment_control_button_all_pressed_iPhone_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_all_pressed_iPhone_potrait.png; sourceTree = "<group>"; };
+		A6E153D1168C147E00DB646F /* Segment_control_button_all_unpressed_iPad_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_all_unpressed_iPad_landscape.png; sourceTree = "<group>"; };
+		A6E153D2168C147E00DB646F /* Segment_control_button_all_unpressed_iPad_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_all_unpressed_iPad_potrait.png; sourceTree = "<group>"; };
+		A6E153D3168C147E00DB646F /* Segment_control_button_all_unpressed_iPhone_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_all_unpressed_iPhone_landscape.png; sourceTree = "<group>"; };
+		A6E153D4168C147E00DB646F /* Segment_control_button_all_unpressed_iPhone_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_all_unpressed_iPhone_potrait.png; sourceTree = "<group>"; };
+		A6E153D5168C147E00DB646F /* Segment_control_button_keyword_pressed_iPad_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_keyword_pressed_iPad_landscape.png; sourceTree = "<group>"; };
+		A6E153D6168C147E00DB646F /* Segment_control_button_keyword_pressed_iPad_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_keyword_pressed_iPad_potrait.png; sourceTree = "<group>"; };
+		A6E153D7168C147E00DB646F /* Segment_control_button_keyword_pressed_iPhone_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_keyword_pressed_iPhone_landscape.png; sourceTree = "<group>"; };
+		A6E153D8168C147E00DB646F /* Segment_control_button_keyword_pressed_iPhone_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_keyword_pressed_iPhone_potrait.png; sourceTree = "<group>"; };
+		A6E153D9168C147E00DB646F /* Segment_control_button_keyword_unpressed_iPad_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_keyword_unpressed_iPad_landscape.png; sourceTree = "<group>"; };
+		A6E153DA168C147E00DB646F /* Segment_control_button_keyword_unpressed_iPad_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_keyword_unpressed_iPad_potrait.png; sourceTree = "<group>"; };
+		A6E153DB168C147E00DB646F /* Segment_control_button_keyword_unpressed_iPhone_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_keyword_unpressed_iPhone_landscape.png; sourceTree = "<group>"; };
+		A6E153DC168C147E00DB646F /* Segment_control_button_keyword_unpressed_iPhone_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_keyword_unpressed_iPhone_potrait.png; sourceTree = "<group>"; };
+		A6E153DD168C147E00DB646F /* Segment_control_button_notebook_pressed_iPad_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_notebook_pressed_iPad_landscape.png; sourceTree = "<group>"; };
+		A6E153DE168C147E00DB646F /* Segment_control_button_notebook_pressed_iPad_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_notebook_pressed_iPad_potrait.png; sourceTree = "<group>"; };
+		A6E153DF168C147E00DB646F /* Segment_control_button_notebook_pressed_iPhone_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_notebook_pressed_iPhone_landscape.png; sourceTree = "<group>"; };
+		A6E153E0168C147E00DB646F /* Segment_control_button_notebook_pressed_iPhone_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_notebook_pressed_iPhone_potrait.png; sourceTree = "<group>"; };
+		A6E153E1168C147E00DB646F /* Segment_control_button_notebook_unpressed_iPad_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_notebook_unpressed_iPad_landscape.png; sourceTree = "<group>"; };
+		A6E153E2168C147E00DB646F /* Segment_control_button_notebook_unpressed_iPad_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_notebook_unpressed_iPad_potrait.png; sourceTree = "<group>"; };
+		A6E153E3168C147E00DB646F /* Segment_control_button_notebook_unpressed_iPhone_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_notebook_unpressed_iPhone_landscape.png; sourceTree = "<group>"; };
+		A6E153E4168C147E00DB646F /* Segment_control_button_notebook_unpressed_iPhone_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_notebook_unpressed_iPhone_potrait.png; sourceTree = "<group>"; };
+		A6E153E5168C147E00DB646F /* Segment_control_button_tag_pressed_iPad_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_tag_pressed_iPad_landscape.png; sourceTree = "<group>"; };
+		A6E153E6168C147E00DB646F /* Segment_control_button_tag_pressed_iPad_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_tag_pressed_iPad_potrait.png; sourceTree = "<group>"; };
+		A6E153E7168C147E00DB646F /* Segment_control_button_tag_pressed_iPhone_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_tag_pressed_iPhone_landscape.png; sourceTree = "<group>"; };
+		A6E153E8168C147E00DB646F /* Segment_control_button_tag_pressed_iPhone_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_tag_pressed_iPhone_potrait.png; sourceTree = "<group>"; };
+		A6E153E9168C147E00DB646F /* Segment_control_button_tag_unpressed_iPad_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_tag_unpressed_iPad_landscape.png; sourceTree = "<group>"; };
+		A6E153EA168C147E00DB646F /* Segment_control_button_tag_unpressed_iPad_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_tag_unpressed_iPad_potrait.png; sourceTree = "<group>"; };
+		A6E153EB168C147E00DB646F /* Segment_control_button_tag_unpressed_iPhone_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_tag_unpressed_iPhone_landscape.png; sourceTree = "<group>"; };
+		A6E153EC168C147E00DB646F /* Segment_control_button_tag_unpressed_iPhone_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Segment_control_button_tag_unpressed_iPhone_potrait.png; sourceTree = "<group>"; };
+		A6E153ED168C147E00DB646F /* Select_note_bcg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Select_note_bcg.png; sourceTree = "<group>"; };
+		A6E153EE168C147E00DB646F /* Toolbar_768x44.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Toolbar_768x44.png; sourceTree = "<group>"; };
+		A6E153EF168C147E00DB646F /* Top_nav_768x44.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Top_nav_768x44.png; sourceTree = "<group>"; };
+		A6E153F0168C147E00DB646F /* White_bordered_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = White_bordered_background.png; sourceTree = "<group>"; };
+		A6E153F1168C147E00DB646F /* bcg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bcg.png; sourceTree = "<group>"; };
+		A6E153F2168C147E00DB646F /* bg.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.PNG; sourceTree = "<group>"; };
+		A6E153F3168C147E00DB646F /* big_bttn_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = big_bttn_green.png; sourceTree = "<group>"; };
+		A6E153F4168C147E00DB646F /* blue_bcg_iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_bcg_iPhone.png; sourceTree = "<group>"; };
+		A6E153F5168C147E00DB646F /* chatter_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatter_icon.png; sourceTree = "<group>"; };
+		A6E153F6168C147E00DB646F /* default_group_image_40x34.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_group_image_40x34.png; sourceTree = "<group>"; };
+		A6E153F7168C147E00DB646F /* default_user_image_40x34.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_user_image_40x34.png; sourceTree = "<group>"; };
+		A6E153F8168C147E00DB646F /* edit_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit_icon.png; sourceTree = "<group>"; };
+		A6E153F9168C147E00DB646F /* evernoteBg-1024x748.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "evernoteBg-1024x748.png"; sourceTree = "<group>"; };
+		A6E153FA168C147E00DB646F /* evernoteBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = evernoteBg.png; sourceTree = "<group>"; };
+		A6E153FB168C147E00DB646F /* evernoteBg320x460.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = evernoteBg320x460.png; sourceTree = "<group>"; };
+		A6E153FC168C147E00DB646F /* evernoteBg480x300.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = evernoteBg480x300.png; sourceTree = "<group>"; };
+		A6E153FD168C147E00DB646F /* evernoteBg768x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = evernoteBg768x1024.png; sourceTree = "<group>"; };
+		A6E153FE168C147E00DB646F /* noteprise_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noteprise_logo.png; sourceTree = "<group>"; };
+		A6E153FF168C147E00DB646F /* settings_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings_icon.png; sourceTree = "<group>"; };
 		F40B827315CBDFDD009B4A54 /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+HTML.h"; path = "Classes/NSString+HTML.h"; sourceTree = "<group>"; };
 		F40B827415CBDFDD009B4A54 /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HTML.m"; path = "Classes/NSString+HTML.m"; sourceTree = "<group>"; };
 		F40B827F15CBE778009B4A54 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTMNSString+HTML.h"; path = "Classes/GTMNSString+HTML.h"; sourceTree = "<group>"; };
 		F40B828015CBE778009B4A54 /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "GTMNSString+HTML.m"; path = "Classes/GTMNSString+HTML.m"; sourceTree = "<group>"; };
-		F40E54BA15B000EA003EC3F4 /* evernoteBg-1024x748.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "evernoteBg-1024x748.png"; path = "Noteprise/Resources/Images/evernoteBg-1024x748.png"; sourceTree = SOURCE_ROOT; };
-		F40E54F815B0258A003EC3F4 /* Button-evernoteBg320x460.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Button-evernoteBg320x460.png"; path = "Noteprise/Resources/Images/Button-evernoteBg320x460.png"; sourceTree = SOURCE_ROOT; };
-		F40E54FB15B02AAE003EC3F4 /* evernoteBg480x300.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = evernoteBg480x300.png; path = Noteprise/Resources/Images/evernoteBg480x300.png; sourceTree = SOURCE_ROOT; };
-		F40E552915B0334B003EC3F4 /* evernoteBg768x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = evernoteBg768x1024.png; path = Noteprise/Resources/Images/evernoteBg768x1024.png; sourceTree = SOURCE_ROOT; };
-		F41D4AF515F1D2970070BDDB /* Search_bar_background_1x44.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Search_bar_background_1x44.png; path = Noteprise/Resources/Images/Search_bar_background_1x44.png; sourceTree = SOURCE_ROOT; };
-		F41D4B2415F1DFB90070BDDB /* Logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Logout.png; path = Noteprise/Resources/Images/Logout.png; sourceTree = SOURCE_ROOT; };
-		F41D4B2615F1DFD70070BDDB /* settings_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settings_icon.png; path = Noteprise/Resources/Images/settings_icon.png; sourceTree = SOURCE_ROOT; };
-		F41D4B2815F1E10A0070BDDB /* noteprise_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = noteprise_logo.png; path = Noteprise/Resources/Images/noteprise_logo.png; sourceTree = SOURCE_ROOT; };
 		F424255D159E19170038EA52 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		F424255F159E1C1A0038EA52 /* Icon-72.png */ = {isa = PBXFileReference; explicitFileType = image.icns; name = "Icon-72.png"; path = "Resources/icons/Icon-72.png"; sourceTree = "<group>"; };
 		F4242560159E1C1A0038EA52 /* Icon.png */ = {isa = PBXFileReference; explicitFileType = image.icns; name = Icon.png; path = Resources/icons/Icon.png; sourceTree = "<group>"; };
 		F4242561159E1C1A0038EA52 /* Icon@2x.png */ = {isa = PBXFileReference; explicitFileType = image.icns; name = "Icon@2x.png"; path = "Resources/icons/Icon@2x.png"; sourceTree = "<group>"; };
-		F42A28BF15F33FED007D2448 /* blue_bcg_iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blue_bcg_iPhone.png; path = Noteprise/Resources/Images/blue_bcg_iPhone.png; sourceTree = SOURCE_ROOT; };
-		F42D1C88159B2E1700ECF3F4 /* big_bttn_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = big_bttn_green.png; path = Noteprise/Resources/Images/big_bttn_green.png; sourceTree = SOURCE_ROOT; };
-		F42D1C8C159B2E1700ECF3F4 /* evernoteBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = evernoteBg.png; path = Noteprise/Resources/Images/evernoteBg.png; sourceTree = SOURCE_ROOT; };
-		F42D1C8D159B2E1700ECF3F4 /* evernoteBg320x460.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = evernoteBg320x460.png; path = Noteprise/Resources/Images/evernoteBg320x460.png; sourceTree = SOURCE_ROOT; };
 		F42D1CB0159B2ECC00ECF3F4 /* Keys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Keys.h; path = Classes/Keys.h; sourceTree = "<group>"; };
 		F42D1CC3159B2F7E00ECF3F4 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utility.h; path = Classes/Utility.h; sourceTree = "<group>"; };
 		F42D1CC4159B2F7E00ECF3F4 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utility.m; path = Classes/Utility.m; sourceTree = "<group>"; };
@@ -291,20 +354,12 @@
 		F438D46615A013DB006ACD25 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		F438D46715A013DB006ACD25 /* libsbjson-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libsbjson-ios.a"; sourceTree = "<group>"; };
 		F438D46C15A01563006ACD25 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
-		F43D3CD515F108C300CD0EA9 /* Top_nav_768x44.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Top_nav_768x44.png; path = Noteprise/Resources/Images/Top_nav_768x44.png; sourceTree = SOURCE_ROOT; };
-		F43D3CD715F1142300CD0EA9 /* Logout_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Logout_down.png; path = Noteprise/Resources/Images/Logout_down.png; sourceTree = SOURCE_ROOT; };
-		F43D3CDB15F117BC00CD0EA9 /* Add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Add.png; path = Noteprise/Resources/Images/Add.png; sourceTree = SOURCE_ROOT; };
-		F43D3CDD15F118D000CD0EA9 /* Toolbar_768x44.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Toolbar_768x44.png; path = Noteprise/Resources/Images/Toolbar_768x44.png; sourceTree = SOURCE_ROOT; };
 		F43D3CDF15F11D4000CD0EA9 /* CustomBlueToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomBlueToolbar.h; path = Classes/CustomBlueToolbar.h; sourceTree = "<group>"; };
 		F43D3CE015F11D4000CD0EA9 /* CustomBlueToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomBlueToolbar.m; path = Classes/CustomBlueToolbar.m; sourceTree = "<group>"; };
-		F43D3CF715F132A900CD0EA9 /* White_bordered_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = White_bordered_background.png; path = Noteprise/Resources/Images/White_bordered_background.png; sourceTree = SOURCE_ROOT; };
-		F43D3CFB15F133AC00CD0EA9 /* Blue_arrow_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Blue_arrow_30x30.png; path = Noteprise/Resources/Images/Blue_arrow_30x30.png; sourceTree = SOURCE_ROOT; };
-		F446B88615E7B2180083FE99 /* edit_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = edit_icon.png; path = Noteprise/Resources/Images/edit_icon.png; sourceTree = SOURCE_ROOT; };
 		F460DC0515E243F000E52380 /* ChatterUsersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatterUsersViewController.h; path = Classes/ChatterUsersViewController.h; sourceTree = "<group>"; };
 		F460DC0615E243F000E52380 /* ChatterUsersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatterUsersViewController.m; path = Classes/ChatterUsersViewController.m; sourceTree = "<group>"; };
 		F460DC0915E2461B00E52380 /* ChatterUsersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChatterUsersViewController.xib; path = Classes/ChatterUsersViewController.xib; sourceTree = "<group>"; };
 		F4612B8C159C2B9E001A8412 /* RootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RootViewController.xib; path = Classes/RootViewController.xib; sourceTree = "<group>"; };
-		F4612B92159C40B4001A8412 /* bg.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg.PNG; path = Noteprise/Resources/Images/bg.PNG; sourceTree = SOURCE_ROOT; };
 		F46C19FC15A005B4008B8D50 /* GCOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCOAuth.h; sourceTree = "<group>"; };
 		F46C19FD15A005B4008B8D50 /* GCOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCOAuth.m; sourceTree = "<group>"; };
 		F46C19FE15A005B4008B8D50 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -377,45 +432,9 @@
 		F46C1A4915A005B4008B8D50 /* ENCredentialStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ENCredentialStore.m; sourceTree = "<group>"; };
 		F46C1A4A15A005B4008B8D50 /* ENOAuthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENOAuthViewController.h; sourceTree = "<group>"; };
 		F46C1A4B15A005B4008B8D50 /* ENOAuthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ENOAuthViewController.m; sourceTree = "<group>"; };
-		F4807BA615F282A000A0B878 /* Segment_control_button_tag_unpressed_iPhone_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_tag_unpressed_iPhone_potrait.png; path = Noteprise/Resources/Images/Segment_control_button_tag_unpressed_iPhone_potrait.png; sourceTree = SOURCE_ROOT; };
-		F4807BA715F282A000A0B878 /* Segment_control_button_tag_unpressed_iPhone_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_tag_unpressed_iPhone_landscape.png; path = Noteprise/Resources/Images/Segment_control_button_tag_unpressed_iPhone_landscape.png; sourceTree = SOURCE_ROOT; };
-		F4807BA815F282A000A0B878 /* Segment_control_button_tag_unpressed_iPad_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_tag_unpressed_iPad_potrait.png; path = Noteprise/Resources/Images/Segment_control_button_tag_unpressed_iPad_potrait.png; sourceTree = SOURCE_ROOT; };
-		F4807BA915F282A000A0B878 /* Segment_control_button_tag_unpressed_iPad_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_tag_unpressed_iPad_landscape.png; path = Noteprise/Resources/Images/Segment_control_button_tag_unpressed_iPad_landscape.png; sourceTree = SOURCE_ROOT; };
-		F4807BAA15F282A000A0B878 /* Segment_control_button_tag_pressed_iPhone_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_tag_pressed_iPhone_potrait.png; path = Noteprise/Resources/Images/Segment_control_button_tag_pressed_iPhone_potrait.png; sourceTree = SOURCE_ROOT; };
-		F4807BAB15F282A000A0B878 /* Segment_control_button_tag_pressed_iPhone_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_tag_pressed_iPhone_landscape.png; path = Noteprise/Resources/Images/Segment_control_button_tag_pressed_iPhone_landscape.png; sourceTree = SOURCE_ROOT; };
-		F4807BAC15F282A000A0B878 /* Segment_control_button_tag_pressed_iPad_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_tag_pressed_iPad_potrait.png; path = Noteprise/Resources/Images/Segment_control_button_tag_pressed_iPad_potrait.png; sourceTree = SOURCE_ROOT; };
-		F4807BAD15F282A000A0B878 /* Segment_control_button_tag_pressed_iPad_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_tag_pressed_iPad_landscape.png; path = Noteprise/Resources/Images/Segment_control_button_tag_pressed_iPad_landscape.png; sourceTree = SOURCE_ROOT; };
-		F4807BB715F282B600A0B878 /* Segment_control_button_notebook_unpressed_iPhone_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_notebook_unpressed_iPhone_potrait.png; path = Noteprise/Resources/Images/Segment_control_button_notebook_unpressed_iPhone_potrait.png; sourceTree = SOURCE_ROOT; };
-		F4807BB815F282B600A0B878 /* Segment_control_button_notebook_unpressed_iPhone_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_notebook_unpressed_iPhone_landscape.png; path = Noteprise/Resources/Images/Segment_control_button_notebook_unpressed_iPhone_landscape.png; sourceTree = SOURCE_ROOT; };
-		F4807BB915F282B600A0B878 /* Segment_control_button_notebook_unpressed_iPad_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_notebook_unpressed_iPad_potrait.png; path = Noteprise/Resources/Images/Segment_control_button_notebook_unpressed_iPad_potrait.png; sourceTree = SOURCE_ROOT; };
-		F4807BBA15F282B600A0B878 /* Segment_control_button_notebook_unpressed_iPad_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_notebook_unpressed_iPad_landscape.png; path = Noteprise/Resources/Images/Segment_control_button_notebook_unpressed_iPad_landscape.png; sourceTree = SOURCE_ROOT; };
-		F4807BBB15F282B600A0B878 /* Segment_control_button_notebook_pressed_iPhone_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_notebook_pressed_iPhone_potrait.png; path = Noteprise/Resources/Images/Segment_control_button_notebook_pressed_iPhone_potrait.png; sourceTree = SOURCE_ROOT; };
-		F4807BBC15F282B600A0B878 /* Segment_control_button_notebook_pressed_iPhone_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_notebook_pressed_iPhone_landscape.png; path = Noteprise/Resources/Images/Segment_control_button_notebook_pressed_iPhone_landscape.png; sourceTree = SOURCE_ROOT; };
-		F4807BBD15F282B600A0B878 /* Segment_control_button_notebook_pressed_iPad_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_notebook_pressed_iPad_potrait.png; path = Noteprise/Resources/Images/Segment_control_button_notebook_pressed_iPad_potrait.png; sourceTree = SOURCE_ROOT; };
-		F4807BBE15F282B600A0B878 /* Segment_control_button_notebook_pressed_iPad_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_notebook_pressed_iPad_landscape.png; path = Noteprise/Resources/Images/Segment_control_button_notebook_pressed_iPad_landscape.png; sourceTree = SOURCE_ROOT; };
-		F4807BBF15F282B600A0B878 /* Segment_control_button_keyword_unpressed_iPhone_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_keyword_unpressed_iPhone_potrait.png; path = Noteprise/Resources/Images/Segment_control_button_keyword_unpressed_iPhone_potrait.png; sourceTree = SOURCE_ROOT; };
-		F4807BC015F282B600A0B878 /* Segment_control_button_keyword_unpressed_iPhone_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_keyword_unpressed_iPhone_landscape.png; path = Noteprise/Resources/Images/Segment_control_button_keyword_unpressed_iPhone_landscape.png; sourceTree = SOURCE_ROOT; };
-		F4807BC115F282B600A0B878 /* Segment_control_button_keyword_unpressed_iPad_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_keyword_unpressed_iPad_potrait.png; path = Noteprise/Resources/Images/Segment_control_button_keyword_unpressed_iPad_potrait.png; sourceTree = SOURCE_ROOT; };
-		F4807BC215F282B600A0B878 /* Segment_control_button_keyword_unpressed_iPad_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_keyword_unpressed_iPad_landscape.png; path = Noteprise/Resources/Images/Segment_control_button_keyword_unpressed_iPad_landscape.png; sourceTree = SOURCE_ROOT; };
-		F4807BC315F282B600A0B878 /* Segment_control_button_keyword_pressed_iPhone_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_keyword_pressed_iPhone_potrait.png; path = Noteprise/Resources/Images/Segment_control_button_keyword_pressed_iPhone_potrait.png; sourceTree = SOURCE_ROOT; };
-		F4807BC415F282B600A0B878 /* Segment_control_button_keyword_pressed_iPhone_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_keyword_pressed_iPhone_landscape.png; path = Noteprise/Resources/Images/Segment_control_button_keyword_pressed_iPhone_landscape.png; sourceTree = SOURCE_ROOT; };
-		F4807BC515F282B600A0B878 /* Segment_control_button_keyword_pressed_iPad_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_keyword_pressed_iPad_potrait.png; path = Noteprise/Resources/Images/Segment_control_button_keyword_pressed_iPad_potrait.png; sourceTree = SOURCE_ROOT; };
-		F4807BC615F282B600A0B878 /* Segment_control_button_keyword_pressed_iPad_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_keyword_pressed_iPad_landscape.png; path = Noteprise/Resources/Images/Segment_control_button_keyword_pressed_iPad_landscape.png; sourceTree = SOURCE_ROOT; };
-		F4807BC715F282B600A0B878 /* Segment_control_button_all_unpressed_iPhone_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_all_unpressed_iPhone_potrait.png; path = Noteprise/Resources/Images/Segment_control_button_all_unpressed_iPhone_potrait.png; sourceTree = SOURCE_ROOT; };
-		F4807BC815F282B600A0B878 /* Segment_control_button_all_unpressed_iPhone_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_all_unpressed_iPhone_landscape.png; path = Noteprise/Resources/Images/Segment_control_button_all_unpressed_iPhone_landscape.png; sourceTree = SOURCE_ROOT; };
-		F4807BC915F282B600A0B878 /* Segment_control_button_all_unpressed_iPad_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_all_unpressed_iPad_potrait.png; path = Noteprise/Resources/Images/Segment_control_button_all_unpressed_iPad_potrait.png; sourceTree = SOURCE_ROOT; };
-		F4807BCB15F282B600A0B878 /* Segment_control_button_all_pressed_iPhone_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_all_pressed_iPhone_potrait.png; path = Noteprise/Resources/Images/Segment_control_button_all_pressed_iPhone_potrait.png; sourceTree = SOURCE_ROOT; };
-		F4807BCC15F282B600A0B878 /* Segment_control_button_all_pressed_iPhone_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_all_pressed_iPhone_landscape.png; path = Noteprise/Resources/Images/Segment_control_button_all_pressed_iPhone_landscape.png; sourceTree = SOURCE_ROOT; };
-		F4807BCD15F282B600A0B878 /* Segment_control_button_all_pressed_iPad_potrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_all_pressed_iPad_potrait.png; path = Noteprise/Resources/Images/Segment_control_button_all_pressed_iPad_potrait.png; sourceTree = SOURCE_ROOT; };
-		F4807BE915F285FA00A0B878 /* Segment_control_button_all_pressed_iPad_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_all_pressed_iPad_landscape.png; path = Noteprise/Resources/Images/Segment_control_button_all_pressed_iPad_landscape.png; sourceTree = SOURCE_ROOT; };
-		F4807BEB15F2871F00A0B878 /* Segment_control_button_all_unpressed_iPad_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Segment_control_button_all_unpressed_iPad_landscape.png; path = Noteprise/Resources/Images/Segment_control_button_all_unpressed_iPad_landscape.png; sourceTree = SOURCE_ROOT; };
-		F486322A15F2656800AF1421 /* Add_note_select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Add_note_select.png; path = Noteprise/Resources/Images/Add_note_select.png; sourceTree = SOURCE_ROOT; };
-		F486322D15F2661100AF1421 /* Record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Record.png; path = Noteprise/Resources/Images/Record.png; sourceTree = SOURCE_ROOT; };
-		F486322F15F2665100AF1421 /* Loader.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Loader.png; path = Noteprise/Resources/Images/Loader.png; sourceTree = SOURCE_ROOT; };
 		F486345615E29BE200262355 /* ChatterGroupVCntrlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatterGroupVCntrlViewController.h; path = Classes/ChatterGroupVCntrlViewController.h; sourceTree = "<group>"; };
 		F486345715E29BE200262355 /* ChatterGroupVCntrlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatterGroupVCntrlViewController.m; path = Classes/ChatterGroupVCntrlViewController.m; sourceTree = "<group>"; };
 		F488D91B15E39028001BA368 /* ChatterGroupVCntrlViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChatterGroupVCntrlViewController.xib; path = Classes/ChatterGroupVCntrlViewController.xib; sourceTree = "<group>"; };
-		F488D9F815E3B666001BA368 /* chatter_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = chatter_icon.png; path = Noteprise/Resources/Images/chatter_icon.png; sourceTree = SOURCE_ROOT; };
 		F4A8AF5915C18B5E00D51071 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		F4B135BF159EF12F00DF40A1 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		F4B135C0159EF12F00DF40A1 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
@@ -469,21 +488,6 @@
 		F4D2132E159B2CBC00610A18 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignInViewController.h; path = Classes/SignInViewController.h; sourceTree = "<group>"; };
 		F4D2132F159B2CBC00610A18 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignInViewController.m; path = Classes/SignInViewController.m; sourceTree = "<group>"; };
 		F4D21330159B2CBC00610A18 /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SignInViewController.xib; path = Classes/SignInViewController.xib; sourceTree = "<group>"; };
-		F4F115CA15F1F15F0009FC97 /* Background_pattern_tableview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Background_pattern_tableview.png; path = Noteprise/Resources/Images/Background_pattern_tableview.png; sourceTree = SOURCE_ROOT; };
-		F4F115DA15F1F5A80009FC97 /* SF_Mapping.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SF_Mapping.png; path = Noteprise/Resources/Images/SF_Mapping.png; sourceTree = SOURCE_ROOT; };
-		F4F115DC15F1F8110009FC97 /* Create.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Create.png; path = Noteprise/Resources/Images/Create.png; sourceTree = SOURCE_ROOT; };
-		F4F115DD15F1F8110009FC97 /* Create_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Create_down.png; path = Noteprise/Resources/Images/Create_down.png; sourceTree = SOURCE_ROOT; };
-		F4F115E015F1F8680009FC97 /* bcg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bcg.png; path = Noteprise/Resources/Images/bcg.png; sourceTree = SOURCE_ROOT; };
-		F4F115E215F1FA230009FC97 /* Select_note_bcg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Select_note_bcg.png; path = Noteprise/Resources/Images/Select_note_bcg.png; sourceTree = SOURCE_ROOT; };
-		F4F115E415F204980009FC97 /* Edit_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Edit_down.png; path = Noteprise/Resources/Images/Edit_down.png; sourceTree = SOURCE_ROOT; };
-		F4F115E515F204980009FC97 /* Edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Edit.png; path = Noteprise/Resources/Images/Edit.png; sourceTree = SOURCE_ROOT; };
-		F4F115E815F204C20009FC97 /* Cancel_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Cancel_down.png; path = Noteprise/Resources/Images/Cancel_down.png; sourceTree = SOURCE_ROOT; };
-		F4F115E915F204C20009FC97 /* Cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Cancel.png; path = Noteprise/Resources/Images/Cancel.png; sourceTree = SOURCE_ROOT; };
-		F4F115EC15F211130009FC97 /* Save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Save.png; path = Noteprise/Resources/Images/Save.png; sourceTree = SOURCE_ROOT; };
-		F4F115ED15F211130009FC97 /* Save_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Save_down.png; path = Noteprise/Resources/Images/Save_down.png; sourceTree = SOURCE_ROOT; };
-		F4F115F415F2128F0009FC97 /* Checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Checkbox.png; path = Noteprise/Resources/Images/Checkbox.png; sourceTree = SOURCE_ROOT; };
-		F4F115F515F2128F0009FC97 /* Checkbox_checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Checkbox_checked.png; path = Noteprise/Resources/Images/Checkbox_checked.png; sourceTree = SOURCE_ROOT; };
-		F4F115FA15F2160D0009FC97 /* Save_to_SF.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Save_to_SF.png; path = Noteprise/Resources/Images/Save_to_SF.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -511,6 +515,90 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A6E153B4168C147E00DB646F /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				A634C774168C73CF007955F5 /* 2.png */,
+				A6E153B5168C147E00DB646F /* Add.png */,
+				A6E153B6168C147E00DB646F /* Add_note_select.png */,
+				A6E153B7168C147E00DB646F /* Background_pattern_tableview.png */,
+				A6E153B8168C147E00DB646F /* Blue_arrow_30x30.png */,
+				A6E153B9168C147E00DB646F /* Button-evernoteBg320x460.png */,
+				A6E153BA168C147E00DB646F /* Cancel.png */,
+				A6E153BB168C147E00DB646F /* Cancel_down.png */,
+				A6E153BC168C147E00DB646F /* Checkbox.png */,
+				A6E153BD168C147E00DB646F /* Checkbox_checked.png */,
+				A6E153BE168C147E00DB646F /* Create.png */,
+				A6E153BF168C147E00DB646F /* Create_down.png */,
+				A6E153C0168C147E00DB646F /* Edit.png */,
+				A6E153C1168C147E00DB646F /* Edit_down.png */,
+				A6E153C2168C147E00DB646F /* Loader.png */,
+				A6E153C3168C147E00DB646F /* Logout.png */,
+				A6E153C4168C147E00DB646F /* Logout_down.png */,
+				A6E153C5168C147E00DB646F /* Noteprise_icon_iPhone.png */,
+				A6E153C6168C147E00DB646F /* Record.png */,
+				A6E153C7168C147E00DB646F /* SF_Mapping.png */,
+				A6E153C8168C147E00DB646F /* Save.png */,
+				A6E153C9168C147E00DB646F /* Save_down.png */,
+				A6E153CA168C147E00DB646F /* Save_to_SF.png */,
+				A6E153CB168C147E00DB646F /* Save_to_SF_down.png */,
+				A6E153CC168C147E00DB646F /* Search_bar_background_1x44.png */,
+				A6E153CD168C147E00DB646F /* Segment_control_button_all_pressed_iPad_landscape.png */,
+				A6E153CE168C147E00DB646F /* Segment_control_button_all_pressed_iPad_potrait.png */,
+				A6E153CF168C147E00DB646F /* Segment_control_button_all_pressed_iPhone_landscape.png */,
+				A6E153D0168C147E00DB646F /* Segment_control_button_all_pressed_iPhone_potrait.png */,
+				A6E153D1168C147E00DB646F /* Segment_control_button_all_unpressed_iPad_landscape.png */,
+				A6E153D2168C147E00DB646F /* Segment_control_button_all_unpressed_iPad_potrait.png */,
+				A6E153D3168C147E00DB646F /* Segment_control_button_all_unpressed_iPhone_landscape.png */,
+				A6E153D4168C147E00DB646F /* Segment_control_button_all_unpressed_iPhone_potrait.png */,
+				A6E153D5168C147E00DB646F /* Segment_control_button_keyword_pressed_iPad_landscape.png */,
+				A6E153D6168C147E00DB646F /* Segment_control_button_keyword_pressed_iPad_potrait.png */,
+				A6E153D7168C147E00DB646F /* Segment_control_button_keyword_pressed_iPhone_landscape.png */,
+				A6E153D8168C147E00DB646F /* Segment_control_button_keyword_pressed_iPhone_potrait.png */,
+				A6E153D9168C147E00DB646F /* Segment_control_button_keyword_unpressed_iPad_landscape.png */,
+				A6E153DA168C147E00DB646F /* Segment_control_button_keyword_unpressed_iPad_potrait.png */,
+				A6E153DB168C147E00DB646F /* Segment_control_button_keyword_unpressed_iPhone_landscape.png */,
+				A6E153DC168C147E00DB646F /* Segment_control_button_keyword_unpressed_iPhone_potrait.png */,
+				A6E153DD168C147E00DB646F /* Segment_control_button_notebook_pressed_iPad_landscape.png */,
+				A6E153DE168C147E00DB646F /* Segment_control_button_notebook_pressed_iPad_potrait.png */,
+				A6E153DF168C147E00DB646F /* Segment_control_button_notebook_pressed_iPhone_landscape.png */,
+				A6E153E0168C147E00DB646F /* Segment_control_button_notebook_pressed_iPhone_potrait.png */,
+				A6E153E1168C147E00DB646F /* Segment_control_button_notebook_unpressed_iPad_landscape.png */,
+				A6E153E2168C147E00DB646F /* Segment_control_button_notebook_unpressed_iPad_potrait.png */,
+				A6E153E3168C147E00DB646F /* Segment_control_button_notebook_unpressed_iPhone_landscape.png */,
+				A6E153E4168C147E00DB646F /* Segment_control_button_notebook_unpressed_iPhone_potrait.png */,
+				A6E153E5168C147E00DB646F /* Segment_control_button_tag_pressed_iPad_landscape.png */,
+				A6E153E6168C147E00DB646F /* Segment_control_button_tag_pressed_iPad_potrait.png */,
+				A6E153E7168C147E00DB646F /* Segment_control_button_tag_pressed_iPhone_landscape.png */,
+				A6E153E8168C147E00DB646F /* Segment_control_button_tag_pressed_iPhone_potrait.png */,
+				A6E153E9168C147E00DB646F /* Segment_control_button_tag_unpressed_iPad_landscape.png */,
+				A6E153EA168C147E00DB646F /* Segment_control_button_tag_unpressed_iPad_potrait.png */,
+				A6E153EB168C147E00DB646F /* Segment_control_button_tag_unpressed_iPhone_landscape.png */,
+				A6E153EC168C147E00DB646F /* Segment_control_button_tag_unpressed_iPhone_potrait.png */,
+				A6E153ED168C147E00DB646F /* Select_note_bcg.png */,
+				A6E153EE168C147E00DB646F /* Toolbar_768x44.png */,
+				A6E153EF168C147E00DB646F /* Top_nav_768x44.png */,
+				A6E153F0168C147E00DB646F /* White_bordered_background.png */,
+				A6E153F1168C147E00DB646F /* bcg.png */,
+				A6E153F2168C147E00DB646F /* bg.PNG */,
+				A6E153F3168C147E00DB646F /* big_bttn_green.png */,
+				A6E153F4168C147E00DB646F /* blue_bcg_iPhone.png */,
+				A6E153F5168C147E00DB646F /* chatter_icon.png */,
+				A6E153F6168C147E00DB646F /* default_group_image_40x34.png */,
+				A6E153F7168C147E00DB646F /* default_user_image_40x34.png */,
+				A6E153F8168C147E00DB646F /* edit_icon.png */,
+				A6E153F9168C147E00DB646F /* evernoteBg-1024x748.png */,
+				A6E153FA168C147E00DB646F /* evernoteBg.png */,
+				A6E153FB168C147E00DB646F /* evernoteBg320x460.png */,
+				A6E153FC168C147E00DB646F /* evernoteBg480x300.png */,
+				A6E153FD168C147E00DB646F /* evernoteBg768x1024.png */,
+				A6E153FE168C147E00DB646F /* noteprise_logo.png */,
+				A6E153FF168C147E00DB646F /* settings_icon.png */,
+			);
+			name = Images;
+			path = Resources/Images;
+			sourceTree = "<group>";
+		};
 		F438D3FA15A013DB006ACD25 /* dependencies */ = {
 			isa = PBXGroup;
 			children = (
@@ -932,7 +1020,7 @@
 		F4D2126F159B297400610A18 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				F4D21301159B2BAB00610A18 /* Images */,
+				A6E153B4168C147E00DB646F /* Images */,
 				F4D21270159B297400610A18 /* icons */,
 				F4D21277159B297400610A18 /* splash */,
 			);
@@ -1033,87 +1121,6 @@
 			path = EverNoteSpecific;
 			sourceTree = "<group>";
 		};
-		F4D21301159B2BAB00610A18 /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				F405F57915F4C28400678842 /* default_user_image_40x34.png */,
-				F405F57A15F4C28400678842 /* default_group_image_40x34.png */,
-				F405F57215F4B6C000678842 /* Noteprise_icon_iPhone.png */,
-				F42A28BF15F33FED007D2448 /* blue_bcg_iPhone.png */,
-				F4807BA615F282A000A0B878 /* Segment_control_button_tag_unpressed_iPhone_potrait.png */,
-				F4807BA715F282A000A0B878 /* Segment_control_button_tag_unpressed_iPhone_landscape.png */,
-				F4807BA815F282A000A0B878 /* Segment_control_button_tag_unpressed_iPad_potrait.png */,
-				F4807BA915F282A000A0B878 /* Segment_control_button_tag_unpressed_iPad_landscape.png */,
-				F4807BAA15F282A000A0B878 /* Segment_control_button_tag_pressed_iPhone_potrait.png */,
-				F4807BAB15F282A000A0B878 /* Segment_control_button_tag_pressed_iPhone_landscape.png */,
-				F4807BAC15F282A000A0B878 /* Segment_control_button_tag_pressed_iPad_potrait.png */,
-				F4807BAD15F282A000A0B878 /* Segment_control_button_tag_pressed_iPad_landscape.png */,
-				F4807BB715F282B600A0B878 /* Segment_control_button_notebook_unpressed_iPhone_potrait.png */,
-				F4807BB815F282B600A0B878 /* Segment_control_button_notebook_unpressed_iPhone_landscape.png */,
-				F4807BB915F282B600A0B878 /* Segment_control_button_notebook_unpressed_iPad_potrait.png */,
-				F4807BBA15F282B600A0B878 /* Segment_control_button_notebook_unpressed_iPad_landscape.png */,
-				F4807BBB15F282B600A0B878 /* Segment_control_button_notebook_pressed_iPhone_potrait.png */,
-				F4807BBC15F282B600A0B878 /* Segment_control_button_notebook_pressed_iPhone_landscape.png */,
-				F4807BBD15F282B600A0B878 /* Segment_control_button_notebook_pressed_iPad_potrait.png */,
-				F4807BBE15F282B600A0B878 /* Segment_control_button_notebook_pressed_iPad_landscape.png */,
-				F4807BBF15F282B600A0B878 /* Segment_control_button_keyword_unpressed_iPhone_potrait.png */,
-				F4807BC015F282B600A0B878 /* Segment_control_button_keyword_unpressed_iPhone_landscape.png */,
-				F4807BC115F282B600A0B878 /* Segment_control_button_keyword_unpressed_iPad_potrait.png */,
-				F4807BC215F282B600A0B878 /* Segment_control_button_keyword_unpressed_iPad_landscape.png */,
-				F4807BC315F282B600A0B878 /* Segment_control_button_keyword_pressed_iPhone_potrait.png */,
-				F4807BC415F282B600A0B878 /* Segment_control_button_keyword_pressed_iPhone_landscape.png */,
-				F4807BC515F282B600A0B878 /* Segment_control_button_keyword_pressed_iPad_potrait.png */,
-				F4807BC615F282B600A0B878 /* Segment_control_button_keyword_pressed_iPad_landscape.png */,
-				F4807BC715F282B600A0B878 /* Segment_control_button_all_unpressed_iPhone_potrait.png */,
-				F4807BC815F282B600A0B878 /* Segment_control_button_all_unpressed_iPhone_landscape.png */,
-				F4807BC915F282B600A0B878 /* Segment_control_button_all_unpressed_iPad_potrait.png */,
-				F4807BEB15F2871F00A0B878 /* Segment_control_button_all_unpressed_iPad_landscape.png */,
-				F4807BCB15F282B600A0B878 /* Segment_control_button_all_pressed_iPhone_potrait.png */,
-				F4807BCC15F282B600A0B878 /* Segment_control_button_all_pressed_iPhone_landscape.png */,
-				F4807BCD15F282B600A0B878 /* Segment_control_button_all_pressed_iPad_potrait.png */,
-				F4807BE915F285FA00A0B878 /* Segment_control_button_all_pressed_iPad_landscape.png */,
-				F486322F15F2665100AF1421 /* Loader.png */,
-				F486322D15F2661100AF1421 /* Record.png */,
-				F486322A15F2656800AF1421 /* Add_note_select.png */,
-				F4F115FA15F2160D0009FC97 /* Save_to_SF.png */,
-				F4F115F415F2128F0009FC97 /* Checkbox.png */,
-				F4F115F515F2128F0009FC97 /* Checkbox_checked.png */,
-				F4F115EC15F211130009FC97 /* Save.png */,
-				F4F115ED15F211130009FC97 /* Save_down.png */,
-				F4F115E815F204C20009FC97 /* Cancel_down.png */,
-				F4F115E915F204C20009FC97 /* Cancel.png */,
-				F4F115E415F204980009FC97 /* Edit_down.png */,
-				F4F115E515F204980009FC97 /* Edit.png */,
-				F4F115E215F1FA230009FC97 /* Select_note_bcg.png */,
-				F4F115E015F1F8680009FC97 /* bcg.png */,
-				F4F115DC15F1F8110009FC97 /* Create.png */,
-				F4F115DD15F1F8110009FC97 /* Create_down.png */,
-				F4F115DA15F1F5A80009FC97 /* SF_Mapping.png */,
-				F4F115CA15F1F15F0009FC97 /* Background_pattern_tableview.png */,
-				F41D4B2815F1E10A0070BDDB /* noteprise_logo.png */,
-				F41D4B2415F1DFB90070BDDB /* Logout.png */,
-				F41D4AF515F1D2970070BDDB /* Search_bar_background_1x44.png */,
-				F41D4B2615F1DFD70070BDDB /* settings_icon.png */,
-				F43D3CDD15F118D000CD0EA9 /* Toolbar_768x44.png */,
-				F43D3CFB15F133AC00CD0EA9 /* Blue_arrow_30x30.png */,
-				F43D3CF715F132A900CD0EA9 /* White_bordered_background.png */,
-				F43D3CDB15F117BC00CD0EA9 /* Add.png */,
-				F446B88615E7B2180083FE99 /* edit_icon.png */,
-				F43D3CD715F1142300CD0EA9 /* Logout_down.png */,
-				F43D3CD515F108C300CD0EA9 /* Top_nav_768x44.png */,
-				F488D9F815E3B666001BA368 /* chatter_icon.png */,
-				F4612B92159C40B4001A8412 /* bg.PNG */,
-				F42D1C88159B2E1700ECF3F4 /* big_bttn_green.png */,
-				F42D1C8C159B2E1700ECF3F4 /* evernoteBg.png */,
-				F40E552915B0334B003EC3F4 /* evernoteBg768x1024.png */,
-				F40E54BA15B000EA003EC3F4 /* evernoteBg-1024x748.png */,
-				F42D1C8D159B2E1700ECF3F4 /* evernoteBg320x460.png */,
-				F40E54FB15B02AAE003EC3F4 /* evernoteBg480x300.png */,
-				F40E54F815B0258A003EC3F4 /* Button-evernoteBg320x460.png */,
-			);
-			path = Images;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1178,87 +1185,89 @@
 				F4D21336159B2CBC00610A18 /* NotesListViewController.xib in Resources */,
 				F4D21338159B2CBC00610A18 /* NoteViewController.xib in Resources */,
 				F4D2133C159B2CBC00610A18 /* SignInViewController.xib in Resources */,
-				F42D1C95159B2E1700ECF3F4 /* big_bttn_green.png in Resources */,
-				F42D1C99159B2E1700ECF3F4 /* evernoteBg.png in Resources */,
-				F42D1C9A159B2E1700ECF3F4 /* evernoteBg320x460.png in Resources */,
 				F4612B8D159C2B9E001A8412 /* RootViewController.xib in Resources */,
-				F4612B94159C40B4001A8412 /* bg.PNG in Resources */,
 				F424255E159E19170038EA52 /* Entitlements.plist in Resources */,
 				F4242562159E1C1A0038EA52 /* Icon-72.png in Resources */,
 				F4242563159E1C1A0038EA52 /* Icon.png in Resources */,
 				F4242564159E1C1A0038EA52 /* Icon@2x.png in Resources */,
-				F40E54BB15B000EA003EC3F4 /* evernoteBg-1024x748.png in Resources */,
-				F40E54F915B0258A003EC3F4 /* Button-evernoteBg320x460.png in Resources */,
-				F40E54FD15B02AAE003EC3F4 /* evernoteBg480x300.png in Resources */,
-				F40E552A15B0334B003EC3F4 /* evernoteBg768x1024.png in Resources */,
 				F460DC0A15E2461B00E52380 /* ChatterUsersViewController.xib in Resources */,
 				F488D91C15E39028001BA368 /* ChatterGroupVCntrlViewController.xib in Resources */,
-				F488D9F915E3B666001BA368 /* chatter_icon.png in Resources */,
-				F446B88A15E7B2180083FE99 /* edit_icon.png in Resources */,
-				F43D3CD615F108C300CD0EA9 /* Top_nav_768x44.png in Resources */,
-				F43D3CD815F1142300CD0EA9 /* Logout_down.png in Resources */,
-				F43D3CDC15F117BC00CD0EA9 /* Add.png in Resources */,
-				F43D3CDE15F118D000CD0EA9 /* Toolbar_768x44.png in Resources */,
-				F43D3CF815F132A900CD0EA9 /* White_bordered_background.png in Resources */,
-				F43D3CFC15F133AC00CD0EA9 /* Blue_arrow_30x30.png in Resources */,
-				F41D4AF615F1D2970070BDDB /* Search_bar_background_1x44.png in Resources */,
-				F41D4B2515F1DFB90070BDDB /* Logout.png in Resources */,
-				F41D4B2715F1DFD70070BDDB /* settings_icon.png in Resources */,
-				F41D4B2915F1E10A0070BDDB /* noteprise_logo.png in Resources */,
-				F4F115CB15F1F15F0009FC97 /* Background_pattern_tableview.png in Resources */,
-				F4F115DB15F1F5A80009FC97 /* SF_Mapping.png in Resources */,
-				F4F115DE15F1F8110009FC97 /* Create.png in Resources */,
-				F4F115DF15F1F8110009FC97 /* Create_down.png in Resources */,
-				F4F115E115F1F8680009FC97 /* bcg.png in Resources */,
-				F4F115E315F1FA230009FC97 /* Select_note_bcg.png in Resources */,
-				F4F115E615F204980009FC97 /* Edit_down.png in Resources */,
-				F4F115E715F204980009FC97 /* Edit.png in Resources */,
-				F4F115EA15F204C20009FC97 /* Cancel_down.png in Resources */,
-				F4F115EB15F204C20009FC97 /* Cancel.png in Resources */,
-				F4F115EE15F211130009FC97 /* Save.png in Resources */,
-				F4F115EF15F211130009FC97 /* Save_down.png in Resources */,
-				F4F115F615F2128F0009FC97 /* Checkbox.png in Resources */,
-				F4F115F715F2128F0009FC97 /* Checkbox_checked.png in Resources */,
-				F4F115FB15F2160D0009FC97 /* Save_to_SF.png in Resources */,
-				F486322B15F2656800AF1421 /* Add_note_select.png in Resources */,
-				F486322E15F2661100AF1421 /* Record.png in Resources */,
-				F486323015F2665100AF1421 /* Loader.png in Resources */,
-				F4807BAE15F282A000A0B878 /* Segment_control_button_tag_unpressed_iPhone_potrait.png in Resources */,
-				F4807BAF15F282A000A0B878 /* Segment_control_button_tag_unpressed_iPhone_landscape.png in Resources */,
-				F4807BB015F282A000A0B878 /* Segment_control_button_tag_unpressed_iPad_potrait.png in Resources */,
-				F4807BB115F282A000A0B878 /* Segment_control_button_tag_unpressed_iPad_landscape.png in Resources */,
-				F4807BB215F282A000A0B878 /* Segment_control_button_tag_pressed_iPhone_potrait.png in Resources */,
-				F4807BB315F282A000A0B878 /* Segment_control_button_tag_pressed_iPhone_landscape.png in Resources */,
-				F4807BB415F282A000A0B878 /* Segment_control_button_tag_pressed_iPad_potrait.png in Resources */,
-				F4807BB515F282A000A0B878 /* Segment_control_button_tag_pressed_iPad_landscape.png in Resources */,
-				F4807BCF15F282B600A0B878 /* Segment_control_button_notebook_unpressed_iPhone_potrait.png in Resources */,
-				F4807BD015F282B600A0B878 /* Segment_control_button_notebook_unpressed_iPhone_landscape.png in Resources */,
-				F4807BD115F282B600A0B878 /* Segment_control_button_notebook_unpressed_iPad_potrait.png in Resources */,
-				F4807BD215F282B600A0B878 /* Segment_control_button_notebook_unpressed_iPad_landscape.png in Resources */,
-				F4807BD315F282B600A0B878 /* Segment_control_button_notebook_pressed_iPhone_potrait.png in Resources */,
-				F4807BD415F282B600A0B878 /* Segment_control_button_notebook_pressed_iPhone_landscape.png in Resources */,
-				F4807BD515F282B600A0B878 /* Segment_control_button_notebook_pressed_iPad_potrait.png in Resources */,
-				F4807BD615F282B600A0B878 /* Segment_control_button_notebook_pressed_iPad_landscape.png in Resources */,
-				F4807BD715F282B600A0B878 /* Segment_control_button_keyword_unpressed_iPhone_potrait.png in Resources */,
-				F4807BD815F282B600A0B878 /* Segment_control_button_keyword_unpressed_iPhone_landscape.png in Resources */,
-				F4807BD915F282B600A0B878 /* Segment_control_button_keyword_unpressed_iPad_potrait.png in Resources */,
-				F4807BDA15F282B600A0B878 /* Segment_control_button_keyword_unpressed_iPad_landscape.png in Resources */,
-				F4807BDB15F282B600A0B878 /* Segment_control_button_keyword_pressed_iPhone_potrait.png in Resources */,
-				F4807BDC15F282B600A0B878 /* Segment_control_button_keyword_pressed_iPhone_landscape.png in Resources */,
-				F4807BDD15F282B600A0B878 /* Segment_control_button_keyword_pressed_iPad_potrait.png in Resources */,
-				F4807BDE15F282B600A0B878 /* Segment_control_button_keyword_pressed_iPad_landscape.png in Resources */,
-				F4807BDF15F282B600A0B878 /* Segment_control_button_all_unpressed_iPhone_potrait.png in Resources */,
-				F4807BE015F282B600A0B878 /* Segment_control_button_all_unpressed_iPhone_landscape.png in Resources */,
-				F4807BE115F282B600A0B878 /* Segment_control_button_all_unpressed_iPad_potrait.png in Resources */,
-				F4807BE315F282B600A0B878 /* Segment_control_button_all_pressed_iPhone_potrait.png in Resources */,
-				F4807BE415F282B600A0B878 /* Segment_control_button_all_pressed_iPhone_landscape.png in Resources */,
-				F4807BE515F282B600A0B878 /* Segment_control_button_all_pressed_iPad_potrait.png in Resources */,
-				F4807BEA15F285FA00A0B878 /* Segment_control_button_all_pressed_iPad_landscape.png in Resources */,
-				F4807BEC15F2871F00A0B878 /* Segment_control_button_all_unpressed_iPad_landscape.png in Resources */,
-				F42A28C015F33FED007D2448 /* blue_bcg_iPhone.png in Resources */,
-				F405F57315F4B6C000678842 /* Noteprise_icon_iPhone.png in Resources */,
-				F405F57B15F4C28400678842 /* default_user_image_40x34.png in Resources */,
-				F405F57C15F4C28400678842 /* default_group_image_40x34.png in Resources */,
+				A6E15400168C147E00DB646F /* Add.png in Resources */,
+				A6E15401168C147E00DB646F /* Add_note_select.png in Resources */,
+				A6E15402168C147E00DB646F /* Background_pattern_tableview.png in Resources */,
+				A6E15403168C147E00DB646F /* Blue_arrow_30x30.png in Resources */,
+				A6E15404168C147E00DB646F /* Button-evernoteBg320x460.png in Resources */,
+				A6E15405168C147E00DB646F /* Cancel.png in Resources */,
+				A6E15406168C147E00DB646F /* Cancel_down.png in Resources */,
+				A6E15407168C147E00DB646F /* Checkbox.png in Resources */,
+				A6E15408168C147E00DB646F /* Checkbox_checked.png in Resources */,
+				A6E15409168C147E00DB646F /* Create.png in Resources */,
+				A6E1540A168C147E00DB646F /* Create_down.png in Resources */,
+				A6E1540B168C147E00DB646F /* Edit.png in Resources */,
+				A6E1540C168C147E00DB646F /* Edit_down.png in Resources */,
+				A6E1540D168C147E00DB646F /* Loader.png in Resources */,
+				A6E1540E168C147E00DB646F /* Logout.png in Resources */,
+				A6E1540F168C147E00DB646F /* Logout_down.png in Resources */,
+				A6E15410168C147E00DB646F /* Noteprise_icon_iPhone.png in Resources */,
+				A6E15411168C147E00DB646F /* Record.png in Resources */,
+				A6E15412168C147E00DB646F /* SF_Mapping.png in Resources */,
+				A6E15413168C147E00DB646F /* Save.png in Resources */,
+				A6E15414168C147E00DB646F /* Save_down.png in Resources */,
+				A6E15415168C147E00DB646F /* Save_to_SF.png in Resources */,
+				A6E15416168C147E00DB646F /* Save_to_SF_down.png in Resources */,
+				A6E15417168C147E00DB646F /* Search_bar_background_1x44.png in Resources */,
+				A6E15418168C147E00DB646F /* Segment_control_button_all_pressed_iPad_landscape.png in Resources */,
+				A6E15419168C147E00DB646F /* Segment_control_button_all_pressed_iPad_potrait.png in Resources */,
+				A6E1541A168C147E00DB646F /* Segment_control_button_all_pressed_iPhone_landscape.png in Resources */,
+				A6E1541B168C147E00DB646F /* Segment_control_button_all_pressed_iPhone_potrait.png in Resources */,
+				A6E1541C168C147E00DB646F /* Segment_control_button_all_unpressed_iPad_landscape.png in Resources */,
+				A6E1541D168C147E00DB646F /* Segment_control_button_all_unpressed_iPad_potrait.png in Resources */,
+				A6E1541E168C147E00DB646F /* Segment_control_button_all_unpressed_iPhone_landscape.png in Resources */,
+				A6E1541F168C147E00DB646F /* Segment_control_button_all_unpressed_iPhone_potrait.png in Resources */,
+				A6E15420168C147E00DB646F /* Segment_control_button_keyword_pressed_iPad_landscape.png in Resources */,
+				A6E15421168C147E00DB646F /* Segment_control_button_keyword_pressed_iPad_potrait.png in Resources */,
+				A6E15422168C147E00DB646F /* Segment_control_button_keyword_pressed_iPhone_landscape.png in Resources */,
+				A6E15423168C147E00DB646F /* Segment_control_button_keyword_pressed_iPhone_potrait.png in Resources */,
+				A6E15424168C147E00DB646F /* Segment_control_button_keyword_unpressed_iPad_landscape.png in Resources */,
+				A6E15425168C147E00DB646F /* Segment_control_button_keyword_unpressed_iPad_potrait.png in Resources */,
+				A6E15426168C147E00DB646F /* Segment_control_button_keyword_unpressed_iPhone_landscape.png in Resources */,
+				A6E15427168C147E00DB646F /* Segment_control_button_keyword_unpressed_iPhone_potrait.png in Resources */,
+				A6E15428168C147E00DB646F /* Segment_control_button_notebook_pressed_iPad_landscape.png in Resources */,
+				A6E15429168C147E00DB646F /* Segment_control_button_notebook_pressed_iPad_potrait.png in Resources */,
+				A6E1542A168C147E00DB646F /* Segment_control_button_notebook_pressed_iPhone_landscape.png in Resources */,
+				A6E1542B168C147E00DB646F /* Segment_control_button_notebook_pressed_iPhone_potrait.png in Resources */,
+				A6E1542C168C147E00DB646F /* Segment_control_button_notebook_unpressed_iPad_landscape.png in Resources */,
+				A6E1542D168C147E00DB646F /* Segment_control_button_notebook_unpressed_iPad_potrait.png in Resources */,
+				A6E1542E168C147E00DB646F /* Segment_control_button_notebook_unpressed_iPhone_landscape.png in Resources */,
+				A6E1542F168C147E00DB646F /* Segment_control_button_notebook_unpressed_iPhone_potrait.png in Resources */,
+				A6E15430168C147E00DB646F /* Segment_control_button_tag_pressed_iPad_landscape.png in Resources */,
+				A6E15431168C147E00DB646F /* Segment_control_button_tag_pressed_iPad_potrait.png in Resources */,
+				A6E15432168C147E00DB646F /* Segment_control_button_tag_pressed_iPhone_landscape.png in Resources */,
+				A6E15433168C147E00DB646F /* Segment_control_button_tag_pressed_iPhone_potrait.png in Resources */,
+				A6E15434168C147E00DB646F /* Segment_control_button_tag_unpressed_iPad_landscape.png in Resources */,
+				A6E15435168C147E00DB646F /* Segment_control_button_tag_unpressed_iPad_potrait.png in Resources */,
+				A6E15436168C147E00DB646F /* Segment_control_button_tag_unpressed_iPhone_landscape.png in Resources */,
+				A6E15437168C147E00DB646F /* Segment_control_button_tag_unpressed_iPhone_potrait.png in Resources */,
+				A6E15438168C147E00DB646F /* Select_note_bcg.png in Resources */,
+				A6E15439168C147E00DB646F /* Toolbar_768x44.png in Resources */,
+				A6E1543A168C147E00DB646F /* Top_nav_768x44.png in Resources */,
+				A6E1543B168C147E00DB646F /* White_bordered_background.png in Resources */,
+				A6E1543C168C147E00DB646F /* bcg.png in Resources */,
+				A6E1543D168C147E00DB646F /* bg.PNG in Resources */,
+				A6E1543E168C147E00DB646F /* big_bttn_green.png in Resources */,
+				A6E1543F168C147E00DB646F /* blue_bcg_iPhone.png in Resources */,
+				A6E15440168C147E00DB646F /* chatter_icon.png in Resources */,
+				A6E15441168C147E00DB646F /* default_group_image_40x34.png in Resources */,
+				A6E15442168C147E00DB646F /* default_user_image_40x34.png in Resources */,
+				A6E15443168C147E00DB646F /* edit_icon.png in Resources */,
+				A6E15444168C147E00DB646F /* evernoteBg-1024x748.png in Resources */,
+				A6E15445168C147E00DB646F /* evernoteBg.png in Resources */,
+				A6E15446168C147E00DB646F /* evernoteBg320x460.png in Resources */,
+				A6E15447168C147E00DB646F /* evernoteBg480x300.png in Resources */,
+				A6E15448168C147E00DB646F /* evernoteBg768x1024.png in Resources */,
+				A6E15449168C147E00DB646F /* noteprise_logo.png in Resources */,
+				A6E1544A168C147E00DB646F /* settings_icon.png in Resources */,
+				A634C775168C73CF007955F5 /* 2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
