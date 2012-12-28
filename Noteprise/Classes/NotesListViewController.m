@@ -33,7 +33,7 @@
     
     backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
-    [self fetchNoteBasedOnSelectedSegement];
+    //[self fetchNoteBasedOnSelectedSegement];
     //toolbar.backgroundColor = [UIColor clearColor];
     UIImage *buttonImage = [UIImage imageNamed:@"Logout.png"];
     UIImage *buttonSelectedImage = [UIImage imageNamed:@"Logout_down.png"];
@@ -119,10 +119,14 @@
     else
         [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_tag_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:2];
 }
+
 -(void)viewDidAppear:(BOOL)animated{
+    
+    [self fetchNoteBasedOnSelectedSegement];
     [super viewDidAppear:animated];
     
 }
+
 /*-(void)changeBkgrndImgWithOrientation {
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
         if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
@@ -194,6 +198,8 @@
         [searchBar becomeFirstResponder];
     }
 }
+
+
 -(void)logout
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logout" message:@"Are you want to logout ?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
@@ -238,13 +244,30 @@
                             [self listAllNotes];
                             break;
                         case 1:
-                            [self searchByNotebook:searchBar.text];
+                            [searchBar resignFirstResponder];
+                            [self listAllNotebooks];
+                            if (![searchBar.text isEqualToString:@""]) {
+                                [self searchByNotebook:searchBar.text];
+                            }
+                            else
+                                [self reloadNotesTable];
+                            
                             break;
                         case 2:
+                            
+                             if (![searchBar.text isEqualToString:@""]) {
+                                 NSLog(@"Search =%@",searchBar.text);
                             [self searchByTag:searchBar.text];
+                             }
+                            else
+                                [self reloadNotesTable];
                             break;
                         case 3:
+                             if (![searchBar.text isEqualToString:@""]){
                             [self searchByKeyword:searchBar.text];
+                             }
+                             else
+                                 [self reloadNotesTable];
                             break;
                         default:
                             break;
@@ -349,6 +372,47 @@
     }
    
 }
+
+-(void)listAllNotebooks {
+    
+    searchBar.userInteractionEnabled = YES;
+    [listOfItems removeAllObjects];
+    searchBar.alpha = 0.75;
+    @try {
+        for (int i = 0; i < [noteBooks count]; i++)
+        {
+            
+            // listing all the notes for every notebook
+            
+            // Accessing notebook
+            EDAMNotebook* notebook = (EDAMNotebook*)[noteBooks objectAtIndex:i];
+            // Creating & configuring filter to load specific notebook
+            EDAMNoteFilter * filter = [[EDAMNoteFilter alloc] init];
+            [filter setNotebookGuid:[notebook guid]];
+            [filter setOrder:NoteSortOrder_TITLE];
+            [filter setAscending:YES];
+            [listOfItems addObject:notebook];
+            NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+            listOfItems = [[listOfItems sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
+            DebugLog(@"SORTED list Of all Notes: new%@",listOfItems);
+            
+
+            [self reloadNotesTable];
+            }
+    }
+    @catch (EDAMSystemException *exception) {
+        [Utility showExceptionAlert:exception.description];
+    }
+    @catch (EDAMNotFoundException *exception) {
+        [Utility showExceptionAlert:SOME_ERROR_OCCURED_MESSAGE];
+    }
+    @catch (id exception) {
+        DebugLog(@"Recvd Exception");
+        [Utility showExceptionAlert:ERROR_LISTING_NOTE_MSG];
+    }
+    
+
+}
 -(void)reloadNotesTable {
     [Utility hideCoverScreen];
     [searchBar resignFirstResponder];
@@ -357,6 +421,13 @@
     [self hideDoneToastMsg:nil];
     loadingLbl.hidden = YES;
     [notesTbl reloadData];
+}
+
+-(void)stopActivity {
+    [Utility hideCoverScreen];
+     [searchBar resignFirstResponder];
+    [self hideDoneToastMsg:nil];
+    loadingLbl.hidden = YES;
 }
 -(void)searchByTag:(NSString*)searchTag {
             if(![Utility isBlank:searchTag]){

@@ -47,8 +47,6 @@
     [self changeBkgrndImgWithOrientation];*/
     self.navigationItem.backBarButtonItem.tintColor = [UIColor whiteColor];
     
-    
-    
     if (SYSTEM_VERSION_LESS_THAN(@"5.0")) {
         self.navigationItem.rightBarButtonItem = nil;
     }
@@ -257,6 +255,7 @@
     }
 }
 
+
 -(IBAction)linkEvernoteToSF:(id)sender {
     [self dismissPreviousPopover];
     DebugLog(@"old obj:%@ \n old field:%@ \nfield value:%@ sf obje:%@",[Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY],[Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY],[Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY],[Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY]);
@@ -350,7 +349,6 @@
         [self setWebViewTapDetectionEnabled:NO];  
         [self resignFirstResponder];
         [noteContent resignFirstResponder];
-        //[self increaseZoomFactorRange];
         // NSString *htmlString = [noteContent stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
         // DebugLog(@"htmlString : %@",htmlString);
         [self updateNoteEvernote];

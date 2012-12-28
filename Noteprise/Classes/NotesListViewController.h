@@ -37,5 +37,4 @@
     IBOutlet UIToolbar *bottom_bar;
     IBOutlet UIToolbar *toolbar;
 }
-
 @end

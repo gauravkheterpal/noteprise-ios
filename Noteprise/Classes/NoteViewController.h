@@ -5,7 +5,6 @@
 
 #import <UIKit/UIKit.h>
 #import "SFRestAPI.h"
-
 static int editBtnTag = 1;
 static int saveBtnTag = 2;
 
@@ -40,7 +39,6 @@ static int saveBtnTag = 2;
 //@property (nonatomic, retain) IBOutlet UITextView * noteContent;
 @property (nonatomic, retain) IBOutlet UIWebView * noteContent;
 @property (nonatomic, retain) NSMutableString * textContent;
-
 
 -(void)goBack:(id)sender;
 -(void)moveToSF;

@@ -251,10 +251,16 @@ NSString* selectedObj,*selectedObjID;
     if([Utility checkNetwork]) {
         NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
         NSDictionary *sfobjField =  [stdDefaults valueForKey:SFOBJ_FIELD_TO_MAP_KEY];
-        if([self.noteContent length] <= [[sfobjField objectForKey:FIELD_LIMIT]intValue])
+        int noteLength = [self.noteContent length];
+        int sfFieldLength = [[sfobjField objectForKey:FIELD_LIMIT]intValue];
+        
+        if(noteLength <= sfFieldLength)
             [self createSFRequestToSaveSelectedNoteWithContent:self.noteContent];
         else {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Noteprise" message:SF_FIELDS_LIMIT_CROSSED_ALERT_MSG delegate:self cancelButtonTitle:ALERT_NEGATIVE_BUTTON_TEXT otherButtonTitles:ALERT_POSITIVE_BUTTON_TEXT, nil];
+            
+            int difference = noteLength - sfFieldLength;
+            NSString *alertMsg = [NSString stringWithFormat:@"Content length is %d char more than allowed limit. Content will be truncated. Do you want to continue?",difference];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Truncate Note?" message:alertMsg delegate:self cancelButtonTitle:ALERT_NEGATIVE_BUTTON_TEXT otherButtonTitles:ALERT_POSITIVE_BUTTON_TEXT, nil];
             alert.tag = SAVE_TO_SFOBJ_LIMIT_ALERT_TAG;
             [alert show];
             [alert release];
