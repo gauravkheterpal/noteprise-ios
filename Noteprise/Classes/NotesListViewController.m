@@ -179,6 +179,7 @@
 -(IBAction)showNotes:(id)sender{
     [self changeSegmentControlBtnsWithOrientationAndDevice];
     if(searchOptionsChoiceCntrl.selectedSegmentIndex == 0){
+        NSLog(@"Selected segment is 0");
         searchBar.userInteractionEnabled = NO;
         searchBar.alpha = 0.75;
         searchBar.text = @"";
@@ -192,11 +193,47 @@
             [self fetchDataFromEverNote];
         });
     }
-    else {
-        searchBar.alpha = 1.0;
-        searchBar.userInteractionEnabled = YES;
-        [searchBar becomeFirstResponder];
+    else if(searchOptionsChoiceCntrl.selectedSegmentIndex == 1){
+
+        //searchBar.alpha = 1.0;
+        //searchBar.userInteractionEnabled = YES;
+       // [searchBar becomeFirstResponder];
+        NSLog(@"Selected segment is 1");
+        searchBar.userInteractionEnabled = NO;
+        searchBar.alpha = 0.75;
+        searchBar.text = @"";
+        [Utility showCoverScreen];
+        [self showLoadingLblWithText:LOADING_MSG];
+        [listOfItems removeAllObjects];
+        //[indexArray removeAllObjects];
+        [searchBar resignFirstResponder];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^(void) {
+            // Loading all the notebooks linked to the account using the evernote API
+            [self fetchDataFromEverNote];
+        });
+
     }
+    else if(searchOptionsChoiceCntrl.selectedSegmentIndex == 2){
+        
+        //searchBar.alpha = 1.0;
+        //searchBar.userInteractionEnabled = YES;
+        // [searchBar becomeFirstResponder];
+        NSLog(@"Selected segment is 2");
+        searchBar.userInteractionEnabled = NO;
+        searchBar.alpha = 0.75;
+        searchBar.text = @"";
+        [Utility showCoverScreen];
+        [self showLoadingLblWithText:LOADING_MSG];
+        [listOfItems removeAllObjects];
+        //[indexArray removeAllObjects];
+        [searchBar resignFirstResponder];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^(void) {
+            // Loading all the notebooks linked to the account using the evernote API
+            [self fetchDataFromEverNote];
+        });
+        
+    }
+
 }
 
 
@@ -246,6 +283,7 @@
                         case 1:
                             [searchBar resignFirstResponder];
                             [self listAllNotebooks];
+                            //[self listAllNotes];
                             if (![searchBar.text isEqualToString:@""]) {
                                 [self searchByNotebook:searchBar.text];
                             }
@@ -254,6 +292,8 @@
                             
                             break;
                         case 2:
+                            [searchBar resignFirstResponder];
+                            [self listAllTags];
                             
                              if (![searchBar.text isEqualToString:@""]) {
                                  NSLog(@"Search =%@",searchBar.text);
@@ -262,7 +302,7 @@
                             else
                                 [self reloadNotesTable];
                             break;
-                        case 3:
+                      /*  case 3:
                              if (![searchBar.text isEqualToString:@""]){
                             [self searchByKeyword:searchBar.text];
                              }
@@ -270,7 +310,7 @@
                                  [self reloadNotesTable];
                             break;
                         default:
-                            break;
+                            break;*/
                     }  
                 });
             }
@@ -312,8 +352,11 @@
 	dialog_imgView.hidden = YES;
     loadingLbl.hidden = YES;
 }
+
+int flag;
 -(void)listAllNotes
 {
+    flag=0;
     searchBar.userInteractionEnabled = NO;
     [listOfItems removeAllObjects];
     searchBar.alpha = 0.75;
@@ -342,10 +385,6 @@
                     [noteListDict setValue:[noteRead guid] forKey:NOTE_GUID_KEY];
                     NSString *readProp = noteRead.attributes.contentClass?@"Yes":@"No";
                     [noteListDict setValue:readProp forKey:@"READABLE"];
-                    NSLog(@"!!!!!!!!!!!");
-                    NSLog(@"note Type %@",noteRead.attributes.contentClass);
-                    NSLog(@"!!!!!!!!!!!");
-                    
                     [listOfItems addObject:noteListDict];
             
                     [noteListDict release];
@@ -358,7 +397,9 @@
                 DebugLog(@" findNotesWithFilter error %@", error);    
                 [Utility showExceptionAlert:error.description];
             }];
+
         }
+
     }
     @catch (EDAMSystemException *exception) {
         [Utility showExceptionAlert:exception.description];
@@ -374,10 +415,11 @@
 }
 
 -(void)listAllNotebooks {
-    
+    flag=1;
     searchBar.userInteractionEnabled = YES;
     [listOfItems removeAllObjects];
     searchBar.alpha = 0.75;
+    [searchBar resignFirstResponder];
     @try {
         for (int i = 0; i < [noteBooks count]; i++)
         {
@@ -391,14 +433,18 @@
             [filter setNotebookGuid:[notebook guid]];
             [filter setOrder:NoteSortOrder_TITLE];
             [filter setAscending:YES];
-            [listOfItems addObject:notebook];
-            NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-            listOfItems = [[listOfItems sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
-            DebugLog(@"SORTED list Of all Notes: new%@",listOfItems);
-            
+            NSMutableDictionary *noteListDict = [[NSMutableDictionary alloc]init];
 
-            [self reloadNotesTable];
-            }
+                    [noteListDict setValue:[notebook name] forKey:NOTE_KEY];
+                    
+                    [listOfItems addObject:noteListDict];
+                    
+                    [noteListDict release];
+                
+                    [self reloadNotesTable];
+
+        }
+        
     }
     @catch (EDAMSystemException *exception) {
         [Utility showExceptionAlert:exception.description];
@@ -410,7 +456,45 @@
         DebugLog(@"Recvd Exception");
         [Utility showExceptionAlert:ERROR_LISTING_NOTE_MSG];
     }
-    
+
+}
+-(void)listAllTags{
+    flag=1;
+    searchBar.userInteractionEnabled = YES;
+    [listOfItems removeAllObjects];
+    searchBar.alpha = 0.75;
+    [searchBar resignFirstResponder];
+    @try {
+        for (int i = 0; i < [tags count]; i++)
+        {
+            
+            // Accessing notebook
+            EDAMTag * tag = (EDAMTag*)[tags objectAtIndex:i];
+            // Creating & configuring filter to load specific notebook
+            EDAMNoteFilter * filter = [[EDAMNoteFilter alloc] init];
+            [filter setNotebookGuid:[tag guid]];
+            [filter setOrder:NoteSortOrder_TITLE];
+            [filter setAscending:YES];
+            // Populating the arrays
+            NSMutableDictionary *noteListDict = [[NSMutableDictionary alloc]init];
+            
+            [noteListDict setValue:[tag name] forKey:NOTE_KEY];
+            [listOfItems addObject:noteListDict];
+            
+            [noteListDict release];
+        }
+        
+    }
+    @catch (EDAMSystemException *exception) {
+        [Utility showExceptionAlert:exception.description];
+    }
+    @catch (EDAMNotFoundException *exception) {
+        [Utility showExceptionAlert:SOME_ERROR_OCCURED_MESSAGE];
+    }
+    @catch (id exception) {
+        DebugLog(@"Recvd Exception");
+        [Utility showExceptionAlert:ERROR_LISTING_NOTE_MSG];
+    }
 
 }
 -(void)reloadNotesTable {
@@ -588,7 +672,7 @@
 
     
 }
--(void)searchByKeyword:(NSString*)searchKeyword {
+/*-(void)searchByKeyword:(NSString*)searchKeyword {
     if((![Utility isBlank:searchKeyword])){
         @try {
             [Utility showCoverScreen];
@@ -649,7 +733,7 @@
         [Utility showAlert:note_please_enter_text_for_search_message];
         [self reloadNotesTable];
     }
-}
+}*/
 #pragma mark -
 #pragma mark UISearchBar Delegate
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
@@ -800,9 +884,10 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier]autorelease];
     }
-    
-    NSString *cellValue = [[listOfItems objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
-    cell.textLabel.text = cellValue;
+    NSString *cellValue;
+    cellValue = [[listOfItems objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
+
+    cell.textLabel.text = (NSString*)cellValue;
     cell.textLabel.font = [UIFont fontWithName:@"Verdana" size:13];
     cell.textLabel.textColor = [UIColor blackColor];
     //cell.backgroundColor = [UIColor clearColor];
