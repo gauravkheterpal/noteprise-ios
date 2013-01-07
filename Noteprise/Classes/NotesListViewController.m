@@ -15,7 +15,7 @@
 #import "EvernoteSDK.h"
 @implementation NotesListViewController
 
- 
+@synthesize  listOfItems,noteBooks;
 
 //viewDidLoad method declared in RootViewController.m
 - (void)viewDidLoad {
@@ -33,9 +33,7 @@
     
     backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
-    //[self fetchNoteBasedOnSelectedSegement];
-    //toolbar.backgroundColor = [UIColor clearColor];
-    UIImage *buttonImage = [UIImage imageNamed:@"Logout.png"];
+   UIImage *buttonImage = [UIImage imageNamed:@"Logout.png"];
     UIImage *buttonSelectedImage = [UIImage imageNamed:@"Logout_down.png"];
     
     //create the button and assign the image
@@ -121,7 +119,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    
+     [self changeSegmentControlBtnsWithOrientationAndDevice];
     [self fetchNoteBasedOnSelectedSegement];
     [super viewDidAppear:animated];
     
@@ -302,16 +300,7 @@
                             else
                                 [self reloadNotesTable];
                             break;
-                      /*  case 3:
-                             if (![searchBar.text isEqualToString:@""]){
-                            [self searchByKeyword:searchBar.text];
-                             }
-                             else
-                                 [self reloadNotesTable];
-                            break;
-                        default:
-                            break;*/
-                    }  
+                    }
                 });
             }
         failure:^(NSError *error) {
@@ -353,10 +342,9 @@
     loadingLbl.hidden = YES;
 }
 
-int flag;
+
 -(void)listAllNotes
 {
-    flag=0;
     searchBar.userInteractionEnabled = NO;
     [listOfItems removeAllObjects];
     searchBar.alpha = 0.75;
@@ -415,7 +403,6 @@ int flag;
 }
 
 -(void)listAllNotebooks {
-    flag=1;
     searchBar.userInteractionEnabled = YES;
     [listOfItems removeAllObjects];
     searchBar.alpha = 0.75;
@@ -459,7 +446,6 @@ int flag;
 
 }
 -(void)listAllTags{
-    flag=1;
     searchBar.userInteractionEnabled = YES;
     [listOfItems removeAllObjects];
     searchBar.alpha = 0.75;
@@ -672,68 +658,6 @@ int flag;
 
     
 }
-/*-(void)searchByKeyword:(NSString*)searchKeyword {
-    if((![Utility isBlank:searchKeyword])){
-        @try {
-            [Utility showCoverScreen];
-            [self showLoadingLblWithText:progress_dialog_keyword_search_message];
-            for (int i = 0; i < [noteBooks count]; i++) {
-                
-                // Accessing notebook
-                EDAMNotebook* notebook = (EDAMNotebook*)[noteBooks objectAtIndex:i];
-                EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
-                // Creating & configuring filter to load specific notebook 
-                EDAMNoteFilter * filter = [[EDAMNoteFilter alloc] init];
-                [filter setNotebookGuid:[notebook guid]];
-                
-                //Search Function.
-                [filter setWords:searchKeyword]; 
-                
-                // Searching on the Evernote API
-                [noteStore findNotesWithFilter:filter offset:0 maxNotes:100 success:^(EDAMNoteList *noteList){
-                    for (EDAMNote *noteRead in noteList.notes) {
-                        // Populating the arrays
-                        NSMutableDictionary *noteListDict = [[NSMutableDictionary alloc]init];
-                        [noteListDict setValue:[noteRead title] forKey:NOTE_KEY];
-                        [noteListDict setValue:[noteRead guid] forKey:NOTE_GUID_KEY];
-                        [listOfItems addObject:noteListDict];
-                        [noteListDict release];
-                    }
-                    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-                    listOfItems = [[listOfItems sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
-                    DebugLog(@"sorted listOf notes search by keyword %@",listOfItems);
-                    [self reloadNotesTable];
-                } failure:^(NSError *error) {
-                    [Utility hideCoverScreen];
-                    loadingLbl.hidden = YES;
-                    DebugLog(@" findNotesWithFilter error %@", error);   
-                    [Utility showExceptionAlert:error.description];
-                }];
-            }
-        }
-        @catch (EDAMSystemException *exception) {
-            [self hideDoneToastMsg:nil];
-            [Utility hideCoverScreen];
-            [Utility showExceptionAlert:exception.description];
-        }   
-        @catch (EDAMNotFoundException *exception) {
-            [self hideDoneToastMsg:nil];
-            [Utility hideCoverScreen];
-            [Utility showExceptionAlert:SOME_ERROR_OCCURED_MESSAGE];
-        }
-        @catch (id exception) {
-            [self hideDoneToastMsg:nil];
-            [Utility hideCoverScreen];
-            DebugLog(@"Recvd Exception");
-            [Utility showExceptionAlert:ERROR_LISTING_NOTE_MSG];
-        }
-    } else {
-        [self hideDoneToastMsg:nil];
-        [Utility hideCoverScreen];
-        [Utility showAlert:note_please_enter_text_for_search_message];
-        [self reloadNotesTable];
-    }
-}*/
 #pragma mark -
 #pragma mark UISearchBar Delegate
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
@@ -819,15 +743,111 @@ int flag;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     selectedRowIndex = indexPath.row;
-    NSString * guid = (NSString *)[ [listOfItems objectAtIndex:indexPath.row]valueForKey:NOTE_GUID_KEY];
-    NSString *readProp = (NSString *)[ [listOfItems objectAtIndex:indexPath.row]valueForKey:@"READABLE"];
-    NoteViewController* noteViewController = [[NoteViewController alloc] init];
-    noteViewController.title = (NSString *)[ [listOfItems objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
-    [noteViewController setReadProp:readProp];
-    [noteViewController setGuid:guid];
+       
+    if(searchOptionsChoiceCntrl.selectedSegmentIndex==1){
+        NSLog(@"Set cell values for next page");
+        NotebooksNotesViewController *notebookNotesViewController = [[NotebooksNotesViewController alloc]init];
+        notebookNotesViewController.title = (NSString *)[ [listOfItems objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
+
+        [listOfItems removeAllObjects];
+        
+        EDAMNotebook* notebook = (EDAMNotebook*)[noteBooks objectAtIndex:indexPath.row];
+        // Creating & configuring filter to load specific notebook
+        EDAMNoteFilter * filter = [[EDAMNoteFilter alloc] init];
+        [filter setNotebookGuid:[notebook guid]];
+        NSLog(@"Notebook selected=%@",[notebook name]);
+        
+        [filter setOrder:NoteSortOrder_TITLE];
+        [filter setAscending:YES];
+        
+        // Searching on the Evernote API
+        EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
+        [noteStore findNotesWithFilter:filter offset:0 maxNotes:100 success:^(EDAMNoteList *noteList){
+                   for (EDAMNote *noteRead in noteList.notes) {
+                // Populating the arrays
+                NSMutableDictionary *noteListDict = [[NSMutableDictionary alloc]init];
+                
+                [noteListDict setValue:[noteRead title] forKey:NOTE_KEY];
+                [noteListDict setValue:[noteRead guid] forKey:NOTE_GUID_KEY];
+                NSString *readProp = noteRead.attributes.contentClass?@"Yes":@"No";
+                [noteListDict setValue:readProp forKey:@"READABLE"];
+                [listOfItems addObject:noteListDict];
+                [noteListDict release];
+            }
+            NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+            listOfItems = [[listOfItems sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
+           
+            notebookNotesViewController.notes=[listOfItems retain];
+                        [self.navigationController pushViewController:notebookNotesViewController animated:YES];
+
+            }
+            failure:^(NSError *error) {
+                NSLog(@"Failure");
+            DebugLog(@" findNotesWithFilter error %@", error);
+            [Utility showExceptionAlert:error.description];
+            }];
+        
+          }
     
-    
+    else if(searchOptionsChoiceCntrl.selectedSegmentIndex==2){
+          NSLog(@"Set cell values for next page");
+          NotebooksNotesViewController *notebookNotesViewController = [[NotebooksNotesViewController alloc]init];
+          notebookNotesViewController.title = (NSString *)[ [listOfItems objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
+          
+              // [listOfItems removeAllObjects];
+          
+               // EDAMNotebook* notebook = (EDAMNotebook*)[noteBooks objectAtIndex:indexPath.row];
+               // Creating & configuring filter to load specific notebook
+          EDAMNoteFilter * filter = [[EDAMNoteFilter alloc] init];
+          EDAMTag *tag=(EDAMTag*)[tags objectAtIndex:indexPath.row];
+          [filter setTagGuids:(NSArray*)[tag guid]];
+          NSLog(@"Tag selected=%@",[tag name]);
+         NSLog(@"......filter guid........%@",[filter tagGuids]);
+
+          [filter setOrder:NoteSortOrder_TITLE];
+          [filter setAscending:YES];
+          
+               // Searching on the Evernote API
+          EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
+          [noteStore findNotesWithFilter:filter offset:0 maxNotes:100 success:^(EDAMNoteList *noteList){
+               for (EDAMNote *noteRead in noteList.notes) {
+                         // Populating the arrays
+                    NSMutableDictionary *noteListDict = [[NSMutableDictionary alloc]init];
+                    
+                    [noteListDict setValue:[noteRead title] forKey:NOTE_KEY];
+                    [noteListDict setValue:[noteRead guid] forKey:NOTE_GUID_KEY];
+                    NSString *readProp = noteRead.attributes.contentClass?@"Yes":@"No";
+                    [noteListDict setValue:readProp forKey:@"READABLE"];
+                    [listOfItems addObject:noteListDict];
+                    [noteListDict release];
+               }
+               NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+               listOfItems = [[listOfItems sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
+               
+               notebookNotesViewController.notes=[listOfItems retain];
+               [self.navigationController pushViewController:notebookNotesViewController animated:YES];
+               
+          }
+                                 failure:^(NSError *error) {
+                                      NSLog(@"Failure");
+                                      DebugLog(@" findNotesWithFilter error %@", error);
+                                      [Utility showExceptionAlert:error.description];
+                                 }];
+          
+     }
+
+     
+    else
+    {
+        NSString * guid = (NSString *)[ [listOfItems objectAtIndex:indexPath.row]valueForKey:NOTE_GUID_KEY];
+        NSString *readProp = (NSString *)[ [listOfItems objectAtIndex:indexPath.row]valueForKey:@"READABLE"];
+
+        NoteViewController* noteViewController = [[NoteViewController alloc] init];
+        noteViewController.title = (NSString *)[ [listOfItems objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
+        [noteViewController setReadProp:readProp];
+        [noteViewController setGuid:guid];
     [self.navigationController pushViewController:noteViewController animated:YES];
+    }
 }
 
 /************************************************************

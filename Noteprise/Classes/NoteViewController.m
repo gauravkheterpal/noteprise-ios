@@ -37,7 +37,7 @@
 {
     
     [super viewDidLoad];
-    
+
     self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background_pattern_tableview.png"]];
    // editTitleField = [[[UITextField alloc] init] autorelease];
     orgNoteTitle = self.title;
@@ -396,8 +396,9 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return YES;
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+     return YES;
+     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+     
 }
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration{
     [self changeBkgrndImgWithOrientation];
@@ -487,11 +488,36 @@
             self.title = @"Edit Note";
             NSLog(@"..edit %d",isEditable);
             noteContent.frame = CGRectMake(15, 100, 290, 250);
-            editTitleField = [[[UITextField alloc]initWithFrame:CGRectMake(15,31,290,30)] autorelease];
+         
+         if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+              if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
+               {
+                    editTitleField = [[[UITextField alloc]initWithFrame:CGRectMake(15,31,1000,30)] autorelease];
+               }
+              else if(self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown || self.interfaceOrientation == UIInterfaceOrientationPortrait)
+               {
+                    editTitleField = [[[UITextField alloc]initWithFrame:CGRectMake(15,31,730,30)] autorelease];
+               }
+         }
+         else{
+              if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
+                  {
+                   editTitleField = [[[UITextField alloc]initWithFrame:CGRectMake(15,31,445,30)] autorelease];
+                  }
+              else if(self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown || self.interfaceOrientation == UIInterfaceOrientationPortrait)
+                  {
+                   editTitleField = [[[UITextField alloc]initWithFrame:CGRectMake(15,31,295,30)] autorelease];
+                  }
+
+
+         }
+         editTitleField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+         
             editTitleField.text = orgNoteTitle;
             editTitleField.borderStyle = UITextBorderStyleRoundedRect;
             editTitleField.delegate=self;
             [self.view addSubview:editTitleField];
+         
        
         }
         else
@@ -509,15 +535,8 @@
         [NSString stringWithFormat:@"document.documentElement.contentEditable=%@;", isEditable ? @"true" : @"false"];
         NSString *result = [noteContent stringByEvaluatingJavaScriptFromString:jsEnableEditing];
        
-    
    
-    /*
-    [NSString stringWithFormat:@"document.body.contentEditable=%@;", isEditable ? @"true" : @"false"];
-    NSString *result = [noteContent stringByEvaluatingJavaScriptFromString:jsEnableEditing];
-     */
-   
-   // NSLog(@"subview:%@",[self.view subviews]);
-     DebugLog(@"editable %@",result);
+       DebugLog(@"editable %@",result);
     
 }
 

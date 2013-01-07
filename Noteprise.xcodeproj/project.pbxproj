@@ -83,6 +83,7 @@
 		A6E15448168C147E00DB646F /* evernoteBg768x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153FD168C147E00DB646F /* evernoteBg768x1024.png */; };
 		A6E15449168C147E00DB646F /* noteprise_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153FE168C147E00DB646F /* noteprise_logo.png */; };
 		A6E1544A168C147E00DB646F /* settings_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153FF168C147E00DB646F /* settings_icon.png */; };
+		E717586116984ED700E2559C /* NotebooksNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E717586016984ED700E2559C /* NotebooksNotesViewController.m */; };
 		F40B827515CBDFDD009B4A54 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = F40B827415CBDFDD009B4A54 /* NSString+HTML.m */; };
 		F40B828115CBE778009B4A54 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = F40B828015CBE778009B4A54 /* GTMNSString+HTML.m */; };
 		F424255E159E19170038EA52 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = F424255D159E19170038EA52 /* Entitlements.plist */; };
@@ -245,6 +246,8 @@
 		A6E153FD168C147E00DB646F /* evernoteBg768x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = evernoteBg768x1024.png; sourceTree = "<group>"; };
 		A6E153FE168C147E00DB646F /* noteprise_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noteprise_logo.png; sourceTree = "<group>"; };
 		A6E153FF168C147E00DB646F /* settings_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings_icon.png; sourceTree = "<group>"; };
+		E717585F16984ED700E2559C /* NotebooksNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotebooksNotesViewController.h; path = ../NotebooksNotesViewController.h; sourceTree = "<group>"; };
+		E717586016984ED700E2559C /* NotebooksNotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotebooksNotesViewController.m; path = ../NotebooksNotesViewController.m; sourceTree = "<group>"; };
 		F40B827315CBDFDD009B4A54 /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+HTML.h"; path = "Classes/NSString+HTML.h"; sourceTree = "<group>"; };
 		F40B827415CBDFDD009B4A54 /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HTML.m"; path = "Classes/NSString+HTML.m"; sourceTree = "<group>"; };
 		F40B827F15CBE778009B4A54 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTMNSString+HTML.h"; path = "Classes/GTMNSString+HTML.h"; sourceTree = "<group>"; };
@@ -1067,6 +1070,8 @@
 				F4D21324159B2CBC00610A18 /* NotesListViewController.h */,
 				F4D21325159B2CBC00610A18 /* NotesListViewController.m */,
 				F4D21326159B2CBC00610A18 /* NotesListViewController.xib */,
+				E717585F16984ED700E2559C /* NotebooksNotesViewController.h */,
+				E717586016984ED700E2559C /* NotebooksNotesViewController.m */,
 				F4D21327159B2CBC00610A18 /* NoteViewController.h */,
 				F4D21328159B2CBC00610A18 /* NoteViewController.m */,
 				F4D21329159B2CBC00610A18 /* NoteViewController.xib */,
@@ -1327,6 +1332,7 @@
 				F4BFE88515E4AEE200F3E261 /* IconDownloader.m in Sources */,
 				F4BFE88815E4B5B700F3E261 /* ChatterRecord.m in Sources */,
 				F43D3CE115F11D4000CD0EA9 /* CustomBlueToolbar.m in Sources */,
+				E717586116984ED700E2559C /* NotebooksNotesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

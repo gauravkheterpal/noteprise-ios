@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AddNoteViewController.h"
 #import "SettingsViewController.h"
+#import "NotebooksNotesViewController.h"
 #define IDX_SEARCH_BASED_ON_NOTEBOOK 0
 #define IDX_SEARCH_VIA_TAG 1
 #define IDX_SEARCH_ACROSS_ACCOUNT 2
@@ -37,4 +38,7 @@
     IBOutlet UIToolbar *bottom_bar;
     IBOutlet UIToolbar *toolbar;
 }
+@property(nonatomic,retain) NSMutableArray *listOfItems;
+@property(nonatomic,retain) NSArray *noteBooks;
+
 @end
