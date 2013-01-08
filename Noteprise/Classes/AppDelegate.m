@@ -88,11 +88,12 @@ static NSString *const OAuthRedirectURI = @"https://login.salesforce.com/service
     
     }
     else{
-        NotesListViewController *noteListVC = [[NotesListViewController alloc]init];
+         
+         NotesListViewController *noteListVC = [[NotesListViewController alloc]init];
          UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:noteListVC];
-        [noteListVC release];
-        navVC.navigationBar.barStyle = UIBarStyleBlack;
-        return navVC;
+         [noteListVC release];
+         navVC.navigationBar.barStyle = UIBarStyleBlack;
+         return navVC;
         
     }
 }
