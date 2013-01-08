@@ -7,7 +7,7 @@
 
 #import "NotesListViewController.h"
 #import "RootViewController.h"
-//#import "Evernote.h"
+     //#import "Evernote.h"
 #import "SettingsViewController.h"
 #import "SignInViewController.h"
 #import "NoteDetailViewController.h"
@@ -611,14 +611,76 @@
 }
 #pragma mark -
 #pragma mark UISearchBar Delegate
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar1{
      DebugLog(@"searchBarShouldBeginEditing");
+     [[NSNotificationCenter defaultCenter] addObserver:self
+                                              selector:@selector (keyboardDidShow:)
+                                                  name: UIKeyboardDidShowNotification object:nil];
+     
+     [[NSNotificationCenter defaultCenter] addObserver:self
+                                              selector:@selector (keyboardDidHide:)
+                                                  name: UIKeyboardDidHideNotification object:nil];
+     
+     toolbar.hidden=YES;
      return YES;
 }
 
+
+-(void) keyboardDidShow: (NSNotification *)notif
+{
+          // If keyboard is visible, return
+     if (keyboardVisible)
+         {
+          NSLog(@"Keyboard is already visible. Ignoring notification.");
+          return;
+         }
+          // Get the size of the keyboard.
+     NSDictionary* info = [notif userInfo];
+     NSValue* aValue = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
+     CGSize keyboardSize = [aValue CGRectValue].size;
+     
+          // Save the current location so we can restore
+          // when keyboard is dismissed
+     searchBar.frame = toolbar.frame;
+     frame2 = bottom_bar.frame;
+     
+     notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, notesTbl.frame.size.width, notesTbl.frame.size.height);
+     frame1 = notesTbl.frame;
+     if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight) {
+          
+          notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, notesTbl.frame.size.width, notesTbl.frame.size.height-keyboardSize.width+searchBar.frame.size.height);
+     }
+     else {
+          
+          notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, notesTbl.frame.size.width, notesTbl.frame.size.height-keyboardSize.height+searchBar.frame.size.height);
+     }
+     bottom_bar.frame=CGRectMake(0,notesTbl.frame.origin.y+notesTbl.frame.size.height, bottom_bar.frame.size.width, bottom_bar.frame.size.height);
+          // Keyboard is now visible
+     keyboardVisible = YES;
+     notesTbl.dataSource=nil;
+}
+
+-(void) keyboardDidHide: (NSNotification *)notif
+{
+          // Is the keyboard already shown
+     if (!keyboardVisible)
+         {
+          NSLog(@"Keyboard is already hidden. Ignoring notification.");
+          return;
+         }
+     
+     notesTbl.frame = frame1;
+     bottom_bar.frame = frame2;
+          // Keyboard is no longer visible
+     keyboardVisible = NO;
+}
+
+
 - (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar:(UISearchBar *)theSearchBar {
 }
-- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
+- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar1{
+     NSLog(@"Hello........");
+     [self viewWillAppear:YES];
      
 }
 
@@ -772,7 +834,7 @@
                
                NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
                tempArray = [[tempArray sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
-          
+               
                notebookNotesViewController.notes=[tempArray retain];
                if( notebookNotesViewController.notes.count != 0 ){
                     

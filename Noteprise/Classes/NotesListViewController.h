@@ -43,6 +43,9 @@
      IBOutlet UIImageView *dialog_imgView;
      IBOutlet UIToolbar *bottom_bar;
      IBOutlet UIToolbar *toolbar;
+     BOOL keyboardVisible;
+     CGRect frame1;
+     CGRect frame2;
 }
 
 @property(nonatomic,retain) NSArray *noteBooks;
