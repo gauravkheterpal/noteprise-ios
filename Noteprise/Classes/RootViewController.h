@@ -32,6 +32,8 @@
     NSMutableArray *fieldsRows;
     NSMutableArray *selectedRow;
     int selectedCount;
+    NSMutableArray *cellIndexData;
+    NSMutableArray *sections;
     IBOutlet UIActivityIndicatorView *loadingSpinner;
     IBOutlet UIImageView *dialog_imgView;
     IBOutlet UILabel *loadingLbl;
@@ -43,6 +45,7 @@
 
 @property (nonatomic, retain) NSMutableArray *fieldsRows;
 @property (nonatomic, retain) NSArray *dataRows;
+@property (nonatomic, retain)NSMutableArray *sections;
 @property (nonatomic,retain)NSData * attachmentData;
 @property (nonatomic,retain)NSString * fileName;
 @property (nonatomic,retain)NSString * noteContent;

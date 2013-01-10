@@ -35,17 +35,21 @@ NSString * parrentTaskID ;
 NSString * accountID ;
 int selectedAccIdx;
 NSString* selectedObj,*selectedObjID;
+NSMutableArray *keyArray;
+NSMutableDictionary *dict;
 @implementation RootViewController
 @synthesize attachmentData;
 @synthesize dataRows,fieldsRows;
 @synthesize fileName;
-@synthesize noteContent,inEditMode,selectedImage,unselectedImage;
+@synthesize noteContent,inEditMode,selectedImage,unselectedImage,sections;
 #pragma mark Misc
 
 
 - (void)dealloc
 {
     [attachmentData release];
+    [cellIndexData release];
+    [dict release];
     self.dataRows = nil;
     [super dealloc];
 }
@@ -62,10 +66,13 @@ NSString* selectedObj,*selectedObjID;
 - (void)viewDidLoad
 {
     tableView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background_pattern_tableview.png"]];
+    self.sections = [[[NSMutableArray alloc ]initWithObjects: @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J",@"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", @"#", nil] autorelease];
     //backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     //backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
     //[self changeBkgrndImgWithOrientation];
     self.fieldsRows = [[NSMutableArray alloc]init];
+    cellIndexData = [[NSMutableArray alloc]init];
+    dict = [[NSMutableDictionary alloc]init];
     [self fetchSelectedObjList];
     //selectedRow = [[NSMutableArray alloc]init];
     self.inEditMode = NO;
@@ -83,9 +90,9 @@ NSString* selectedObj,*selectedObjID;
 }
 -(void)initToolbarButtons {
     CustomBlueToolbar* toolbar = [[CustomBlueToolbar alloc]
-                          initWithFrame:CGRectMake(0, 0, 125, 44)];
+                                  initWithFrame:CGRectMake(0, 0, 125, 44)];
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && (self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight))
-            toolbar.frame = CGRectMake(0, 0, 125, 32);
+        toolbar.frame = CGRectMake(0, 0, 125, 32);
     //[toolbar setBarStyle: UIBarStyleBlackOpaque];
     
     // create an array for the buttons
@@ -135,7 +142,7 @@ NSString* selectedObj,*selectedObjID;
     
     [buttons addObject:saveBarButton];
     [saveButton release];
-        
+    
     [toolbar setItems:buttons];
     // place the toolbar into the navigation bar
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
@@ -237,7 +244,7 @@ NSString* selectedObj,*selectedObjID;
             
             
             [self showLoadingLblWithText:progress_dialog_salesforce_getting_record_list_message];
-            SFRestRequest *request = [[SFRestAPI sharedInstance] requestForQuery:queryString];    
+            SFRestRequest *request = [[SFRestAPI sharedInstance] requestForQuery:queryString];
             [[SFRestAPI sharedInstance] send:request delegate:self];
             self.title = [NSString stringWithFormat:@"%@",selectedSFObj];
         }
@@ -266,7 +273,7 @@ NSString* selectedObj,*selectedObjID;
             [alert release];
         }
     } else {
-            [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
+        [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
     }
     
 }
@@ -299,7 +306,7 @@ NSString* selectedObj,*selectedObjID;
             
             //----------------------------------------------------------------------------------------------------
             selectedCount = 0;
-            if(selectedAccIdx == -999) {   
+            if(selectedAccIdx == -999) {
                 [Utility hideCoverScreen];
                 [Utility showAlert:[NSString stringWithFormat:@"Please select %@ to map with",[sfobj valueForKey:OBJ_NAME]]];
             } else {
@@ -314,7 +321,7 @@ NSString* selectedObj,*selectedObjID;
         [Utility hideCoverScreen];
         [Utility showAlert:SF_OBJECT_FIELD_MISSING_MSG];
     }
-
+    
 }
 #pragma mark - UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -357,7 +364,7 @@ NSString* selectedObj,*selectedObjID;
 #import "Utility.h"
 - (void)request:(SFRestRequest *)request didLoadResponse:(id)jsonResponse {
     DebugLog(@"request:%@",[request description]);
-        DebugLog(@"jsonResponse:%@",jsonResponse);
+    DebugLog(@"jsonResponse:%@",jsonResponse);
     
     if([[request description] rangeOfString:@"SELECT"].location != NSNotFound){
         
@@ -369,21 +376,23 @@ NSString* selectedObj,*selectedObjID;
             [loadingSpinner stopAnimating];
             NSArray *records = [jsonResponse objectForKey:@"records"];
             DebugLog(@"request:didLoadResponse: #records: %d records %@ req %@ rsp %@", records.count,records,request,jsonResponse);
-            
+            NSLog(@"records count...%d",records.count);
             NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"Name"  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
             self.dataRows = [records sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
+            NSLog(@"data row count count...%d",self.dataRows.count);
             [self initializeSelectedRow];
             if([self.dataRows count] == 0) {
                 [Utility showAlert:[NSString stringWithFormat:@"%@%@",NO_RECORD_IN_SF_OBJ_MSG,self.title]];
             }
-            [tableView reloadData];
+            [self reloadTable];
+            dict = [self fillingDictionary:cellIndexData];
         }
         else{
             [Utility showAlert:ERROR_LISTING_SF_OBJECT_MSG];
             [Utility hideCoverScreen];
         }
         
-
+        
     }
     else{
         selectedCount --;
@@ -403,6 +412,9 @@ NSString* selectedObj,*selectedObjID;
         }
         [Utility hideCoverScreen];
     }
+    tableView.dataSource = self;
+    tableView.delegate = self;
+    [tableView reloadData];
 }
 
 
@@ -431,7 +443,6 @@ NSString* selectedObj,*selectedObjID;
 }
 
 - (void)requestDidTimeout:(SFRestRequest *)request {
-    DebugLog(@"requestDidTimeout: %@", request);
     //add your failed error handling here
     [Utility hideCoverScreen];
     [self hideToastMsg:nil];
@@ -441,166 +452,200 @@ NSString* selectedObj,*selectedObjID;
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return [keyArray count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  //  DebugLog(@"class %@ dataRows %@",[self.dataRows class],self.dataRows);
-    return [self.dataRows count];
-    
+    NSMutableArray *dataArray = [[[NSMutableArray alloc]init] autorelease];
+    dataArray = (NSMutableArray*)[dict valueForKey:(NSString*)[keyArray objectAtIndex:section]];
+    return [dataArray count];
 }
 
+- (void)reloadTable {
+    // Configure the cell to show the data.
+    for (int cnt =0; cnt < self.dataRows.count; cnt++) {
+        
+        NSDictionary *obj = [self.dataRows objectAtIndex:cnt];
+        NSString *selectedSFObj;
+        NSUserDefaults* stdDefaults = [NSUserDefaults standardUserDefaults];
+        
+        
+        NSDictionary *sfObj = [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];
+        if(sfObj) {
+            selectedSFObj = [sfObj valueForKey:OBJ_NAME];
+            
+            if ([selectedSFObj isEqualToString:@"Task"]) {
+                
+                //queryString = [NSMutableString stringWithFormat:@"SELECT Id,Subject from %@",selectedSFObj];
+                if([obj objectForKey:@"Subject"])
+                {
+                    [cellIndexData addObject:[obj objectForKey:@"Subject"]];
+                }
+                else {
+                    
+                    [cellIndexData addObject:[obj objectForKey:@"Id"]];
+                }
+            }
+            else if ([selectedSFObj isEqualToString:@"Case"]) {
+                //queryString = [NSMutableString stringWithFormat:@"SELECT Id,CaseNumber from %@",selectedSFObj];
+                if([obj objectForKey:@"CaseNumber"])
+                {
+                    [cellIndexData addObject:[obj objectForKey:@"CaseNumber"]];
+                }
+                else {
+                    [cellIndexData addObject:[obj objectForKey:@"Id"]];
+                }
+            }
+            else if ([selectedSFObj isEqualToString:@"CaseComment"]) {
+                //queryString = [NSMutableString stringWithFormat:@"SELECT Id,ParentId from %@",selectedSFObj];
+                if([obj objectForKey:@"ParentId"])
+                {
+                    [cellIndexData addObject:[obj objectForKey:@"ParentId"]];
+                }
+                else {
+                    
+                    [cellIndexData addObject:[obj objectForKey:@"Id"]];
+                }
+            }
+            else if ([selectedSFObj isEqualToString:@"ContentVersion"]) {
+                //queryString = [NSMutableString stringWithFormat:@"SELECT Id,ContentDocumentId from %@",selectedSFObj];
+                if([obj objectForKey:@"ContentDocumentId"])
+                {
+                    [cellIndexData addObject:[obj objectForKey:@"ContentDocumentId"]];
+                }
+                else {
+                    
+                    [cellIndexData addObject:[obj objectForKey:@"Id"]];
+                }
+            }
+            else if ([selectedSFObj isEqualToString:@"Contract"]) {
+                //queryString = [NSMutableString stringWithFormat:@"SELECT Id,ContractNumber from %@",selectedSFObj];
+                if([obj objectForKey:@"ContractNumber"])
+                {
+                    [cellIndexData addObject:[obj objectForKey:@"ContractNumber"]];
+                }
+                else {
+                    
+                    [cellIndexData addObject:[obj objectForKey:@"Id"]];
+                }
+            }
+            else if ([selectedSFObj isEqualToString:@"Event"]) {
+                //queryString = [NSMutableString stringWithFormat:@"SELECT Id,Subject from %@",selectedSFObj];
+                if([obj objectForKey:@"Subject"])
+                {
+                    [cellIndexData addObject:[obj objectForKey:@"Subject"]];
+                }
+                else {
+                    
+                    [cellIndexData addObject:[obj objectForKey:@"Id"]];
+                }
+                
+            }
+            else if ([selectedSFObj isEqualToString:@"Idea"]) {
+                //queryString = [NSMutableString stringWithFormat:@"SELECT Id,Title from %@",selectedSFObj];
+                if([obj objectForKey:@"Title"])
+                {
+                    [cellIndexData addObject:[obj objectForKey:@"Title"]];
+                }
+                else {
+                    
+                    [cellIndexData addObject:[obj objectForKey:@"Id"]];
+                }
+            }
+            else if ([selectedSFObj isEqualToString:@"Note"]) {
+                //queryString = [NSMutableString stringWithFormat:@"SELECT Id,Title from %@",selectedSFObj];
+                if([obj objectForKey:@"Title"])
+                {
+                    [cellIndexData addObject:[obj objectForKey:@"Title"]];
+                }
+                else {
+                    
+                    [cellIndexData addObject:[obj objectForKey:@"Id"]];
+                }
+            }
+            else if ([selectedSFObj isEqualToString:@"Solution"]) {
+                //queryString = [NSMutableString stringWithFormat:@"SELECT Id,SolutionName from %@",selectedSFObj];
+                if([obj objectForKey:@"SolutionName"])
+                {
+                    [cellIndexData addObject:[obj objectForKey:@"SolutionName"]];
+                }
+                else {
+                    
+                    [cellIndexData addObject:[obj objectForKey:@"Id"]];
+                }
+            }
+            else
+            {
+                
+                if([obj objectForKey:@"label"])
+                {
+                    [cellIndexData addObject:[obj objectForKey:@"label"]];
+                }
+                else {
+                    if([obj valueForKey:@"Name"] != nil) {
+                        [cellIndexData addObject:[obj objectForKey:@"Name"]];
+                    }
+                    else {
+                        [cellIndexData addObject:[obj objectForKey:@"Id"]];
+                    }
+                }
+            }
+        }
+        
+    }
+}
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView_ cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-   static NSString *CellIdentifier = @"CellIdentifier";
-
-   // Dequeue or create a cell of the appropriate type.
+    static NSString *CellIdentifier = @"CellIdentifier";
+    
+    // Dequeue or create a cell of the appropriate type.
     UITableViewCell *cell = [tableView_ dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
-
+        
     }
 	//if you want to add an image to your cell, here's how
 	UIImage *image = [UIImage imageNamed:@"Record.png"];
     if(self.inEditMode) {
         NSNumber *selectedForDelete = [selectedRow objectAtIndex:indexPath.row];
-        if([selectedForDelete boolValue]) 
+        if([selectedForDelete boolValue])
             cell.imageView.image = self.selectedImage;
         else {
             cell.imageView.image = self.unselectedImage;
         }
         //cell.imageView.image = ([selectedForDelete boolValue]) ? self.selectedImage : self.unselectedImage;
     }
-    else 
+    else
         cell.imageView.image = image;
-
-	// Configure the cell to show the data.
-	NSDictionary *obj = [dataRows objectAtIndex:indexPath.row];
     
-    
-    
-    
-    
-    NSString *selectedSFObj;
-    NSUserDefaults* stdDefaults = [NSUserDefaults standardUserDefaults];
-    
-    
-    NSDictionary *sfObj = [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];
-    if(sfObj) {
-            selectedSFObj = [sfObj valueForKey:OBJ_NAME];
-        /*else {
-            selectedSFObj = @"Account";
-            [Utility setSFDefaultMappingValues];
-        }*/
-        //NSMutableString *queryString;
-        
-        if ([selectedSFObj isEqualToString:@"Task"]) {
-            
-             //queryString = [NSMutableString stringWithFormat:@"SELECT Id,Subject from %@",selectedSFObj];
-            if([obj objectForKey:@"Subject"])
-                cell.textLabel.text =  [obj objectForKey:@"Subject"];
-            else {
-                
-                    cell.textLabel.text =  [obj objectForKey:@"Id"];
-                }
-        }
-        else if ([selectedSFObj isEqualToString:@"Case"]) {
-            //queryString = [NSMutableString stringWithFormat:@"SELECT Id,CaseNumber from %@",selectedSFObj];
-            if([obj objectForKey:@"CaseNumber"])
-                cell.textLabel.text =  [obj objectForKey:@"CaseNumber"];
-            else {
-                
-                cell.textLabel.text =  [obj objectForKey:@"Id"];
-            }
-        }
-        else if ([selectedSFObj isEqualToString:@"CaseComment"]) {
-            //queryString = [NSMutableString stringWithFormat:@"SELECT Id,ParentId from %@",selectedSFObj];
-            if([obj objectForKey:@"ParentId"])
-                cell.textLabel.text =  [obj objectForKey:@"ParentId"];
-            else {
-                
-                cell.textLabel.text =  [obj objectForKey:@"Id"];
-            }
-        }
-        else if ([selectedSFObj isEqualToString:@"ContentVersion"]) {
-            //queryString = [NSMutableString stringWithFormat:@"SELECT Id,ContentDocumentId from %@",selectedSFObj];
-            if([obj objectForKey:@"ContentDocumentId"])
-                cell.textLabel.text =  [obj objectForKey:@"ContentDocumentId"];
-            else {
-                
-                cell.textLabel.text =  [obj objectForKey:@"Id"];
-            }
-        }
-        else if ([selectedSFObj isEqualToString:@"Contract"]) {
-            //queryString = [NSMutableString stringWithFormat:@"SELECT Id,ContractNumber from %@",selectedSFObj];
-            if([obj objectForKey:@"ContractNumber"])
-                cell.textLabel.text =  [obj objectForKey:@"ContractNumber"];
-            else {
-                
-                cell.textLabel.text =  [obj objectForKey:@"Id"];
-            }
-        }
-        else if ([selectedSFObj isEqualToString:@"Event"]) {
-            //queryString = [NSMutableString stringWithFormat:@"SELECT Id,Subject from %@",selectedSFObj];
-            if([obj objectForKey:@"Subject"])
-                cell.textLabel.text =  [obj objectForKey:@"Subject"];
-            else {
-                
-                cell.textLabel.text =  [obj objectForKey:@"Id"];
-            }
-        
-        }
-        else if ([selectedSFObj isEqualToString:@"Idea"]) {
-            //queryString = [NSMutableString stringWithFormat:@"SELECT Id,Title from %@",selectedSFObj];
-            if([obj objectForKey:@"Title"])
-                cell.textLabel.text =  [obj objectForKey:@"Title"];
-            else {
-                
-                cell.textLabel.text =  [obj objectForKey:@"Id"];
-            }
-        }
-        else if ([selectedSFObj isEqualToString:@"Note"]) {
-            //queryString = [NSMutableString stringWithFormat:@"SELECT Id,Title from %@",selectedSFObj];
-            if([obj objectForKey:@"Title"])
-                cell.textLabel.text =  [obj objectForKey:@"Title"];
-            else {
-                
-                cell.textLabel.text =  [obj objectForKey:@"Id"];
-            }
-        }
-        else if ([selectedSFObj isEqualToString:@"Solution"]) {
-            //queryString = [NSMutableString stringWithFormat:@"SELECT Id,SolutionName from %@",selectedSFObj];
-            if([obj objectForKey:@"SolutionName"])
-                cell.textLabel.text =  [obj objectForKey:@"SolutionName"];
-            else {
-                
-                cell.textLabel.text =  [obj objectForKey:@"Id"];
-            }
-        }
-        else
-        {
-
-             if([obj objectForKey:@"label"])
-             cell.textLabel.text =  [obj objectForKey:@"label"];
-             else {
-                    if([obj valueForKey:@"Name"] != nil) {
-                        cell.textLabel.text =  [obj objectForKey:@"Name"];
-                    } 
-                    else {
-                            cell.textLabel.text =  [obj objectForKey:@"Id"];
-                    }
-             }
-        }
-    }
-    
+    NSArray *cellData = [dict objectForKey:[keyArray objectAtIndex:indexPath.section]];
+	cell.textLabel.text = [cellData objectAtIndex:indexPath.row];
 	//this adds the arrow to the right hand side.
     cell.textLabel.font = [UIFont fontWithName:@"Verdana" size:13];
     //cell.textLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:16];
 	cell.accessoryType = UITableViewCellAccessoryNone;
     cell.textLabel.textColor = [UIColor blackColor];
+    
 	return cell;
 }
 
+- (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section {
+    
+    return [keyArray objectAtIndex:section];
+    
+}
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    //return [fetchedResultsController sectionIndexTitles];
+    
+    return self.sections;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
+{
+    return [keyArray indexOfObject:[self.sections objectAtIndex:index]];
+}
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)_tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if(self.inEditMode) {
@@ -615,4 +660,47 @@ NSString* selectedObj,*selectedObjID;
     DebugLog(@"sel obj:%@",[self.dataRows objectAtIndex:indexPath.row]);
 }
 
+-(NSMutableDictionary *)fillingDictionary:(NSMutableArray *)ary
+{
+    
+    // This method has the real magic of this sample
+    // ary is the unsorted array
+    // keyArray should be global as you need to access it outside of this function
+    
+    keyArray=[[NSMutableArray alloc]init];
+    [keyArray removeAllObjects];
+    
+    NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
+    
+    // First sort the array
+    
+    [ary sortUsingSelector:@selector(compare:)];
+    
+    
+    // Get the first character of your string which will be your key
+    
+    for(NSString *str in ary)
+    {
+        char charval=[str characterAtIndex:0];
+        NSString *charStr=[NSString stringWithUTF8String:&charval];
+        NSString *capitalCharStr = [charStr capitalizedString];
+        if(![keyArray containsObject:capitalCharStr])
+        {
+            NSMutableArray *charArray=[[NSMutableArray alloc]init];
+            [charArray addObject:str];
+            [keyArray addObject:capitalCharStr];
+            [dic setValue:charArray forKey:capitalCharStr];
+        }
+        else
+        {
+            NSMutableArray *prevArray=(NSMutableArray *)[dic valueForKey:capitalCharStr];
+            [prevArray addObject:str];
+            [dic setValue:prevArray forKey:capitalCharStr];
+            
+        }
+        
+    }
+    return dic;
+    
+}
 @end
