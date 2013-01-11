@@ -41,7 +41,7 @@
      self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background_pattern_tableview.png"]];
           // editTitleField = [[[UITextField alloc] init] autorelease];
      orgNoteTitle = self.title;
-     
+     tempTitle=orgNoteTitle;
      /*backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
       backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
       [self changeBkgrndImgWithOrientation];*/
@@ -351,7 +351,16 @@
                [noteContent resignFirstResponder];
                     // NSString *htmlString = [noteContent stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
                     // DebugLog(@"htmlString : %@",htmlString);
-               [self updateNoteEvernote];
+               if(flag == 1)
+                   {
+                    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Text Error" message:@"Please enter valid text" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] autorelease];
+                    [alert show];
+                    self.navigationItem.rightBarButtonItem.tag = saveBtnTag;
+                    
+                   }
+               else{
+                    [self updateNoteEvernote];
+               }
           }
           
          }
@@ -369,6 +378,7 @@
      
      
 }
+
 
 -(void)moveToSF{
      RootViewController * rootVC = [[RootViewController alloc] init];
@@ -512,7 +522,7 @@
           }
           editTitleField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
           
-          editTitleField.text = orgNoteTitle;
+          editTitleField.text = tempTitle;
           editTitleField.borderStyle = UITextBorderStyleRoundedRect;
           editTitleField.delegate=self;
           [self.view addSubview:editTitleField];
@@ -523,7 +533,20 @@
          {
           editTitleField.hidden = TRUE;
           noteContent.frame = CGRectMake(15,0,320,370);
-          self.title = editTitleField.text;
+          NSString *rawString = [editTitleField text];
+          NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+          NSString *trimmed = [rawString stringByTrimmingCharactersInSet:whitespace];
+          if ([trimmed length] == 0) {
+               flag = 1;
+               self.title = orgNoteTitle;
+               
+          }
+          else
+              {
+               flag= 0;
+               self.title = trimmed;
+               tempTitle = self.title;
+              }
           
          }
      

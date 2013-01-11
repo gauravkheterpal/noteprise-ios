@@ -21,6 +21,8 @@
 - (void)viewDidLoad {
      
      [super viewDidLoad];
+     flag1 = 0;
+     flag2 = 0;
      if (SYSTEM_VERSION_LESS_THAN(@"5.0")) {
           addNoteBtn.enabled = NO;
      }
@@ -32,7 +34,7 @@
      listOfNotes = [[NSMutableArray alloc] init];
      listOfNotebooks = [[NSMutableArray alloc] init];
      listOfTags = [[NSMutableArray alloc] init];
-     
+     searchResults = [[NSMutableArray alloc] init];
      backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
      backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
      UIImage *buttonImage = [UIImage imageNamed:@"Logout.png"];
@@ -120,10 +122,23 @@
           [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_tag_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:2];
 }
 
+
+
 -(void)viewDidAppear:(BOOL)animated{
+     
      [self changeSegmentControlBtnsWithOrientationAndDevice];
      [self fetchNoteBasedOnSelectedSegement];
      [super viewDidAppear:animated];
+     if(flag1 == 0)
+         {
+          searchbarFrame = searchBar.frame;
+          notestableFrame = notesTbl.frame;
+         }
+     NSLog(@".................Before.......original......searchBar........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",searchBar.frame.origin.x,searchBar.frame.origin.y,searchBar.frame.size.width,searchBar.frame.size.height);
+     NSLog(@".................Before.........searchBarFrame........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",searchbarFrame.origin.x,searchbarFrame.origin.y,searchbarFrame.size.width,searchbarFrame.size.height);
+     
+     NSLog(@".................Before.......original......notesTable........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",notesTbl.frame.origin.x,notesTbl.frame.origin.y,notesTbl.frame.size.width,notesTbl.frame.size.height);
+     NSLog(@".................Before......original........notesTableFrame........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",notestableFrame.origin.x,notestableFrame.origin.y,notestableFrame.size.width,notestableFrame.size.height);
      
 }
 
@@ -181,8 +196,10 @@
      searchBar.userInteractionEnabled = NO;
      searchBar.alpha = 0.75;
      searchBar.text = @"";
+     searchKeyword = @"";
      [Utility showCoverScreen];
      [self showLoadingLblWithText:LOADING_MSG];
+     
      [searchBar resignFirstResponder];
      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^(void) {
                // Loading all the notebooks linked to the account using the evernote API
@@ -225,6 +242,7 @@
                                            failure:^(NSError *error) {
                                                 DebugLog(@"error %@", error);
                                            }];
+               
                [noteStore listTagsWithSuccess: ^(NSArray *tagsArr) {
                     DebugLog(@"tagsArr fetched: %@", tagsArr);
                     tags = [tagsArr retain];
@@ -237,23 +255,32 @@
                                    break;
                               case 1:
                                    [searchBar resignFirstResponder];
-                                   [self listAllNotebooks];
+                                   
                                    if (![searchBar.text isEqualToString:@""]) {
-                                        [self searchByNotebook:searchBar.text];
+                                        [self searchNotes:searchBar.text];
                                    }
                                    else
+                                       {
+                                        [self listAllNotebooks];
+                                        NSLog(@"..........List of notebooks...........=%@",listOfNotebooks);
+                                             //[self reloadNotesTable];
                                         [self reloadNotesTable];
+                                       }
                                    
                                    break;
                               case 2:
                                    [searchBar resignFirstResponder];
-                                   [self listAllTags];
+                                   
                                    
                                    if (![searchBar.text isEqualToString:@""]) {
-                                        [self searchByTag:searchBar.text];
+                                             // [self listAllNotebooks];
+                                        [self searchNotes:searchBar.text];
                                    }
-                                   else
+                                   else{
+                                        
+                                        [self listAllTags];
                                         [self reloadNotesTable];
+                                   }
                                    break;
                          }
                     });
@@ -273,6 +300,7 @@
           @catch (EDAMNotFoundException *exception) {
                [Utility showExceptionAlert:SOME_ERROR_OCCURED_MESSAGE];
           }
+          
      });
 }
 
@@ -379,7 +407,6 @@
                [listOfNotebooks addObject:noteListDict];
                
                [noteListDict release];
-               
                [self reloadNotesTable];
                
               }
@@ -418,7 +445,7 @@
                
                [noteListDict setValue:[tag name] forKey:TAG_KEY];
                [listOfTags addObject:noteListDict];
-               
+               [self reloadNotesTable];
                [noteListDict release];
               }
           
@@ -451,100 +478,101 @@
      [self hideDoneToastMsg:nil];
      loadingLbl.hidden = YES;
 }
--(void)searchByTag:(NSString*)searchTag {
-     if(![Utility isBlank:searchTag]){
-          [listOfNotes removeAllObjects];
-          EDAMNoteFilter * filter  = nil;
-          EDAMTag * tag = nil;
-          
-          for(EDAMTag * aTag in tags)
-              {
-               if([[aTag name] rangeOfString:searchTag options:NSCaseInsensitiveSearch].location!=NSNotFound){
-                    tag = aTag;
-                    
-               }
-              }
-          if(tag){
-               @try {
-                    [Utility showCoverScreen];
-                    [self showLoadingLblWithText:progress_dialog_tag_search_message];
-                    for (int i = 0; i < [noteBooks count]; i++) {
-                         
-                              // Accessing notebook
-                         EDAMNotebook* notebook = (EDAMNotebook*)[noteBooks objectAtIndex:i];
-                         EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
-                              // Creating & configuring filter to load specific notebook
-                         filter = [[EDAMNoteFilter alloc] init];
-                         [filter setNotebookGuid:[notebook guid]];
-                         
-                         
-                         
-                         
-                              //Search By Tag
-                         if([tag guid])
-                              [filter setTagGuids:[NSArray arrayWithObject:[tag guid]]];
-                         
-                              // Searching on the Evernote API
-                         [noteStore findNotesWithFilter:filter offset:0 maxNotes:100 success:^(EDAMNoteList *noteList){
-                              for (EDAMNote *noteRead in noteList.notes) {
-                                        // Populating the arrays
-                                   NSMutableDictionary *noteListDict = [[NSMutableDictionary alloc]init];
-                                   [noteListDict setValue:[noteRead title] forKey:NOTE_KEY];
-                                   [noteListDict setValue:[noteRead guid] forKey:NOTE_GUID_KEY];
-                                   [listOfNotes addObject:noteListDict];
-                                   [noteListDict release];
-                              }
-                              NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-                              listOfNotes = [[listOfNotes sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
-                              DebugLog(@"listOfItems: tag%@",listOfNotes);
-                              [self reloadNotesTable];
-                         } failure:^(NSError *error) {
-                              [Utility hideCoverScreen];
-                              loadingLbl.hidden = YES;
-                              DebugLog(@" findNotesWithFilter error %@", error);
-                              [Utility showExceptionAlert:error.description];
-                         }];
-                    }
-               }
-               @catch (EDAMSystemException *exception) {
-                    [Utility hideCoverScreen];
-                    [self hideDoneToastMsg:nil];
-                    [Utility showExceptionAlert:exception.description];
-               }
-               @catch (EDAMNotFoundException *exception) {
-                    [Utility hideCoverScreen];
-                    [self hideDoneToastMsg:nil];
-                    [Utility showExceptionAlert:SOME_ERROR_OCCURED_MESSAGE];
-               }
-               @catch (id exception) {
-                    [Utility hideCoverScreen];
-                    [self hideDoneToastMsg:nil];
-                    DebugLog(@"Recvd Exception");
-                    [Utility showExceptionAlert:ERROR_LISTING_NOTE_MSG];
-               }
-          }
-          else{
-               [Utility hideCoverScreen];
-               [self hideDoneToastMsg:nil];
-               [Utility showAlert:no_note_found_with_tag_search_message];
-               [self reloadNotesTable];
-          }
-     }
-     else{
-          [Utility hideCoverScreen];
-          [self hideDoneToastMsg:nil];
-          [Utility showAlert:note_please_enter_text_for_search_message];
-          [self reloadNotesTable];
-     }
-}
--(void)searchByNotebook:(NSString*)searchNotebook {
-     
-     if((![Utility isBlank:searchNotebook])){
+     //-(void)searchByTag:(NSString*)searchTag {
+     //     if(![Utility isBlank:searchTag]){
+     //          [listOfNotes removeAllObjects];
+     //          EDAMNoteFilter * filter  = nil;
+     //          EDAMTag * tag = nil;
+     //
+     //          for(EDAMTag * aTag in tags)
+     //              {
+     //               if([[aTag name] rangeOfString:searchTag options:NSCaseInsensitiveSearch].location!=NSNotFound){
+     //                    tag = aTag;
+     //
+     //               }
+     //              }
+     //          if(tag){
+     //               @try {
+     //                    [Utility showCoverScreen];
+     //                    [self showLoadingLblWithText:progress_dialog_tag_search_message];
+     //                    for (int i = 0; i < [noteBooks count]; i++) {
+     //
+     //                              // Accessing notebook
+     //                         EDAMNotebook* notebook = (EDAMNotebook*)[noteBooks objectAtIndex:i];
+     //                         EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
+     //                              // Creating & configuring filter to load specific notebook
+     //                         filter = [[EDAMNoteFilter alloc] init];
+     //                         [filter setNotebookGuid:[notebook guid]];
+     //
+     //
+     //
+     //
+     //                              //Search By Tag
+     //                         if([tag guid])
+     //                              [filter setTagGuids:[NSArray arrayWithObject:[tag guid]]];
+     //
+     //                              // Searching on the Evernote API
+     //                         [noteStore findNotesWithFilter:filter offset:0 maxNotes:100 success:^(EDAMNoteList *noteList){
+     //                              for (EDAMNote *noteRead in noteList.notes) {
+     //                                        // Populating the arrays
+     //                                   NSMutableDictionary *noteListDict = [[NSMutableDictionary alloc]init];
+     //                                   [noteListDict setValue:[noteRead title] forKey:NOTE_KEY];
+     //                                   [noteListDict setValue:[noteRead guid] forKey:NOTE_GUID_KEY];
+     //                                   [listOfNotes addObject:noteListDict];
+     //                                   [noteListDict release];
+     //                              }
+     //                              NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+     //                              listOfNotes = [[listOfNotes sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
+     //                              DebugLog(@"listOfItems: tag%@",listOfNotes);
+     //                              [self reloadNotesTable];
+     //                         } failure:^(NSError *error) {
+     //                              [Utility hideCoverScreen];
+     //                              loadingLbl.hidden = YES;
+     //                              DebugLog(@" findNotesWithFilter error %@", error);
+     //                              [Utility showExceptionAlert:error.description];
+     //                         }];
+     //                    }
+     //               }
+     //               @catch (EDAMSystemException *exception) {
+     //                    [Utility hideCoverScreen];
+     //                    [self hideDoneToastMsg:nil];
+     //                    [Utility showExceptionAlert:exception.description];
+     //               }
+     //               @catch (EDAMNotFoundException *exception) {
+     //                    [Utility hideCoverScreen];
+     //                    [self hideDoneToastMsg:nil];
+     //                    [Utility showExceptionAlert:SOME_ERROR_OCCURED_MESSAGE];
+     //               }
+     //               @catch (id exception) {
+     //                    [Utility hideCoverScreen];
+     //                    [self hideDoneToastMsg:nil];
+     //                    DebugLog(@"Recvd Exception");
+     //                    [Utility showExceptionAlert:ERROR_LISTING_NOTE_MSG];
+     //               }
+     //          }
+     //          else{
+     //               [Utility hideCoverScreen];
+     //               [self hideDoneToastMsg:nil];
+     //               [Utility showAlert:no_note_found_with_tag_search_message];
+     //               [self reloadNotesTable];
+     //          }
+     //     }
+     //     else{
+     //          [Utility hideCoverScreen];
+     //          [self hideDoneToastMsg:nil];
+     //          [Utility showAlert:note_please_enter_text_for_search_message];
+     //          [self reloadNotesTable];
+     //     }
+     //}
+
+-(void)searchNotes:(NSString*)searchingKeyword {
+     searchKeyword = searchingKeyword;
+     [searchResults removeAllObjects];
+     if((![Utility isBlank:searchingKeyword])){
           @try {
-               
+               NSLog(@"Notebooks to search:%@",noteBooks);
                for (int i = 0; i < [noteBooks count]; i++)
                    {
-                    
                          // Accessing notebook
                     EDAMNotebook* notebook = (EDAMNotebook*)[noteBooks objectAtIndex:i];
                     EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
@@ -552,33 +580,45 @@
                     EDAMNoteFilter * filter = [[EDAMNoteFilter alloc] init];
                     [filter setNotebookGuid:[notebook guid]];
                     
-                         //By NoteBookName
-                    DebugLog(@"noteBook Name %@",[notebook name]);
-                    
-                    
-                    if([[notebook name] rangeOfString:searchNotebook options:NSCaseInsensitiveSearch].location==NSNotFound)
-                        {
-                         if(i == [noteBooks count]- 1) {
-                              [Utility showAlert:no_note_found_with_noteBook_search_message];
-                              [self reloadNotesTable];
-                         }
-                         continue;
-                         
-                        }
-                    
-                         // Searching on the Evernote API
                     [noteStore findNotesWithFilter:filter offset:0 maxNotes:100 success:^(EDAMNoteList *noteList){
                          for (EDAMNote *noteRead in noteList.notes) {
                                    // Populating the arrays
                               NSMutableDictionary *noteListDict = [[NSMutableDictionary alloc]init];
                               [noteListDict setValue:[noteRead title] forKey:NOTE_KEY];
                               [noteListDict setValue:[noteRead guid] forKey:NOTE_GUID_KEY];
-                              [listOfNotes addObject:noteListDict];
+                              NSString *readProp = noteRead.attributes.contentClass?@"Yes":@"No";
+                              [noteListDict setValue:readProp forKey:READABLE];
+                              
+                              if([[noteRead title] rangeOfString:searchingKeyword options:NSCaseInsensitiveSearch].location==NSNotFound)
+                                  {
+                                        //                                  if(i == [noteBooks count]- 1) {
+                                        //                                       [Utility showAlert:no_note_found_with_keyword_search_message];
+                                        //                                              [self reloadNotesTable];
+                                        //                                        break;
+                                        //                                         }
+                                  }
+                              else if([[noteRead title] rangeOfString:searchingKeyword options:NSCaseInsensitiveSearch].location!=NSNotFound){
+                                   
+                                   [searchResults addObject:noteListDict];
+                                   
+                                        //                                   UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Found" message:[NSString stringWithFormat:@"Note found with this keyword %@ ",[noteRead title]] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+                                        //                                   [alert show];
+                                        //  [Utility showAlert:note_found_with_keyword_search_message];
+                                   
+                                   for(int p=0;p<[searchResults count];p++){
+                                        NSLog(@"Note with this keyword=%@",[[searchResults objectAtIndex:p]valueForKey:NOTE_KEY]);
+                                   }
+                                   
+                                        //[self reloadNotesTable];
+                              }
+                              
                               [noteListDict release];
                          }
+                         
+                         
                          NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-                         listOfNotes = [[listOfNotes sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
-                         DebugLog(@"sorted list Of noted search by notebook%@",listOfNotes);
+                         searchResults = [[searchResults sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
+                         DebugLog(@"sorted list Of notes found:%@",searchResults);
                          [self reloadNotesTable];
                     } failure:^(NSError *error) {
                          [Utility hideCoverScreen];
@@ -622,10 +662,14 @@
                                                   name: UIKeyboardDidHideNotification object:nil];
      
      toolbar.hidden=YES;
+     NSLog(@"........................temp......searchBar........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",searchBar.frame.origin.x,searchBar.frame.origin.y,searchBar.frame.size.width,searchBar.frame.size.height);
+     
+     searchBar.frame = toolbar.frame;
+     bottomFrame= bottom_bar.frame;
+     notesTbl.dataSource=nil;
+
      return YES;
 }
-
-
 -(void) keyboardDidShow: (NSNotification *)notif
 {
           // If keyboard is visible, return
@@ -635,17 +679,18 @@
           return;
          }
           // Get the size of the keyboard.
+     notesTbl.dataSource=nil;
      NSDictionary* info = [notif userInfo];
      NSValue* aValue = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
      CGSize keyboardSize = [aValue CGRectValue].size;
      
           // Save the current location so we can restore
           // when keyboard is dismissed
-     searchBar.frame = toolbar.frame;
-     frame2 = bottom_bar.frame;
-     
+          
      notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, notesTbl.frame.size.width, notesTbl.frame.size.height);
-     frame1 = notesTbl.frame;
+     NSLog(@"................Before.....temp......notesTable........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",notesTbl.frame.origin.x,notesTbl.frame.origin.y,notesTbl.frame.size.width,notesTbl.frame.size.height);
+     tempFrame = notesTbl.frame;
+     NSLog(@".................Before.........tempFrame........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",tempFrame.origin.x,tempFrame.origin.y,tempFrame.size.width,tempFrame.size.height);
      if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight) {
           
           notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, notesTbl.frame.size.width, notesTbl.frame.size.height-keyboardSize.width+searchBar.frame.size.height);
@@ -655,9 +700,9 @@
           notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, notesTbl.frame.size.width, notesTbl.frame.size.height-keyboardSize.height+searchBar.frame.size.height);
      }
      bottom_bar.frame=CGRectMake(0,notesTbl.frame.origin.y+notesTbl.frame.size.height, bottom_bar.frame.size.width, bottom_bar.frame.size.height);
-          // Keyboard is now visible
+     
      keyboardVisible = YES;
-     notesTbl.dataSource=nil;
+     
 }
 
 -(void) keyboardDidHide: (NSNotification *)notif
@@ -665,23 +710,50 @@
           // Is the keyboard already shown
      if (!keyboardVisible)
          {
+          NSLog(@"...........keyboard is invisible........");
+               // notesTbl.frame = notestableFrame;
           NSLog(@"Keyboard is already hidden. Ignoring notification.");
+          
           return;
          }
+     NSLog(@"...........keyboard is visible........");
+     if(flag2!=1)
+         {
+          notesTbl.frame = tempFrame;
+          
+         }
+     else{
+          flag2 = 0;
+     }
+            NSLog(@"................After.....temp......notesTable........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",notesTbl.frame.origin.x,notesTbl.frame.origin.y,notesTbl.frame.size.width,notesTbl.frame.size.height);
+     NSLog(@".................After........tempFrame........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",tempFrame.origin.x,tempFrame.origin.y,tempFrame.size.width,tempFrame.size.height);
      
-     notesTbl.frame = frame1;
-     bottom_bar.frame = frame2;
           // Keyboard is no longer visible
+     bottom_bar.frame = bottomFrame;
      keyboardVisible = NO;
 }
 
-
-- (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar:(UISearchBar *)theSearchBar {
-}
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar1{
      NSLog(@"Hello........");
-     [self viewWillAppear:YES];
-     
+          // [self viewDidAppear:YES];
+     [searchBar resignFirstResponder];
+     searchBar.text=@"";
+     [searchResults removeAllObjects];
+     [self fetchDataFromEverNote];
+     searchBar.frame = searchbarFrame;
+     notesTbl.frame = notestableFrame;
+     bottom_bar.frame = bottomFrame;
+     flag2=1;
+     NSLog(@".................after......searchBarFrame........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",searchbarFrame.origin.x,searchbarFrame.origin.y,searchbarFrame.size.width,searchbarFrame.size.height);
+     NSLog(@".................After .......searchBar........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",searchBar.frame.origin.x,searchBar.frame.origin.y,searchBar.frame.size.width,searchBar.frame.size.height);
+     NSLog(@".................after.......original......notesTable........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",notesTbl.frame.origin.x,notesTbl.frame.origin.y,notesTbl.frame.size.width,notesTbl.frame.size.height);
+     NSLog(@".................after........ original....notesTableFrame........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",notestableFrame.origin.x,notestableFrame.origin.y,notestableFrame.size.width,notestableFrame.size.height);
+     toolbar.hidden = NO;
+     notesTbl.dataSource = self;
+}
+
+- (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar:(UISearchBar *)theSearchBar {
+          [theSearchBar resignFirstResponder];
 }
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBarContent {
@@ -756,103 +828,48 @@
      [tableView deselectRowAtIndexPath:indexPath animated:YES];
      
      if(searchOptionsChoiceCntrl.selectedSegmentIndex==1){
-          
-          UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
-          NSString *cellText = selectedCell.textLabel.text;
-          NotesViewController *notebookNotesViewController = [[[NotesViewController alloc]init]autorelease];
-          notebookNotesViewController.title = cellText;
-          __block NSMutableArray *tempArray = [listOfNotebooks retain];
-          [tempArray removeAllObjects];
-          
-          EDAMNotebook* notebook = (EDAMNotebook*)[noteBooks objectAtIndex:indexPath.row];
-               // Creating & configuring filter to load specific notebook
-          EDAMNoteFilter * filter = [[EDAMNoteFilter alloc] init];
-          [filter setNotebookGuid:[notebook guid]];
-          [filter setOrder:NoteSortOrder_TITLE];
-          [filter setAscending:YES];
-          
-               // Searching on the Evernote API
-          EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
-          [noteStore findNotesWithFilter:filter offset:0 maxNotes:100 success:^(EDAMNoteList *noteList){
-               for (EDAMNote *noteRead in noteList.notes) {
-                         // Populating the arrays
-                    NSMutableDictionary *noteListDict = [[NSMutableDictionary alloc]init];
-                    
-                    [noteListDict setValue:[noteRead title] forKey:NOTE_KEY];
-                    [noteListDict setValue:[noteRead guid] forKey:NOTE_GUID_KEY];
-                    NSString *readProp = noteRead.attributes.contentClass?@"Yes":@"No";
-                    [noteListDict setValue:readProp forKey:READABLE];
-                    [tempArray addObject:noteListDict];
-                    [noteListDict release];
-               }
-               NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-               tempArray = [[tempArray sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
+          if(searchBar.text.length != 0){
+               NoteDetailViewController* noteDetailController= [[NoteDetailViewController alloc] init];
                
-               notebookNotesViewController.notes=[tempArray retain];
-               [self.navigationController pushViewController:notebookNotesViewController animated:YES];
-               
+               NSString* guid = (NSString *)[ [searchResults objectAtIndex:indexPath.row]valueForKey:NOTE_GUID_KEY];
+               NSString* readProp = (NSString *)[ [searchResults objectAtIndex:indexPath.row]valueForKey:READABLE];
+               noteDetailController.title = (NSString *)[ [searchResults objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
+               [noteDetailController setReadProp:readProp];
+               [noteDetailController setGuid:guid];
+               flag1 =1;
+               [self.navigationController pushViewController:noteDetailController animated:YES];
           }
-                                 failure:^(NSError *error) {
-                                      DebugLog(@" findNotesWithFilter error %@", error);
-                                      [Utility showExceptionAlert:error.description];
-                                 }];
-          
+          else{
+               UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
+               NSString *cellText = selectedCell.textLabel.text;
+               NotesViewController *notesViewController = [[[NotesViewController alloc]init]autorelease];
+               notesViewController.title = cellText;
+               
+               notesViewController.selectedSegment = 1;
+               [self.navigationController pushViewController:notesViewController animated:YES];
+          }
      }
      
      else if(searchOptionsChoiceCntrl.selectedSegmentIndex==2){
-          
-          UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
-          NSString *cellText = selectedCell.textLabel.text;
-          NotesViewController *notebookNotesViewController = [[[NotesViewController alloc]init]autorelease];
-          notebookNotesViewController.title = cellText;
-          __block NSMutableArray *tempArray = [listOfTags retain];
-          [tempArray removeAllObjects];
-          
-               // Creating & configuring filter to load specific tag
-          EDAMNoteFilter * filter = [[EDAMNoteFilter alloc] init];
-          EDAMTag *tag=(EDAMTag*)[tags objectAtIndex:indexPath.row];
-          [filter setTagGuids:[[NSArray alloc]initWithObjects:[tag guid],[tag parentGuid], nil]];
-          [filter setOrder:NoteSortOrder_TITLE];
-          [filter setAscending:YES];
-          
-               // Searching on the Evernote API
-          EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
-          [noteStore findNotesWithFilter:filter offset:0 maxNotes:100 success:^(EDAMNoteList *noteList){
+          if(searchBar.text.length != 0){
+               NoteDetailViewController* noteViewController= [[NoteDetailViewController alloc] init];
                
-               
-               for (EDAMNote *noteRead in noteList.notes) {
-                         // Populating the arrays
-                    NSMutableDictionary *noteListDict = [[NSMutableDictionary alloc]init];
-                    
-                    [noteListDict setValue:[noteRead title] forKey:NOTE_KEY];
-                    [noteListDict setValue:[noteRead guid] forKey:NOTE_GUID_KEY];
-                    NSString *readProp = noteRead.attributes.contentClass?@"Yes":@"No";
-                    [noteListDict setValue:readProp forKey:READABLE];
-                    [tempArray addObject:noteListDict];
-                    [noteListDict release];
-               }
-               
-               NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-               tempArray = [[tempArray sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
-               
-               notebookNotesViewController.notes=[tempArray retain];
-               if( notebookNotesViewController.notes.count != 0 ){
-                    
-                    [self.navigationController pushViewController:notebookNotesViewController animated:YES];
-               }
-               else{
-                    
-                    NSString *alertMsg = [NSString stringWithFormat:@"No notes found with %@ tag",cellText];
-                    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"NOT FOUND" message:alertMsg delegate:nil cancelButtonTitle: @"Ok" otherButtonTitles:nil, nil] autorelease];
-                    [alert show];
-               }
-               
+               NSString* guid = (NSString *)[ [searchResults objectAtIndex:indexPath.row]valueForKey:NOTE_GUID_KEY];
+               NSString* readProp = (NSString *)[ [searchResults objectAtIndex:indexPath.row]valueForKey:READABLE];
+               noteViewController.title = (NSString *)[ [searchResults objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
+               [noteViewController setReadProp:readProp];
+               [noteViewController setGuid:guid];
+               flag1 =1;
+               [self.navigationController pushViewController:noteViewController animated:YES];
           }
-                                 failure:^(NSError *error) {
-                                      DebugLog(@" findNotesWithFilter error %@", error);
-                                      [Utility showExceptionAlert:error.description];
-                                 }];
-          
+          else{
+               UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
+               NSString *cellText = selectedCell.textLabel.text;
+               NotesViewController *notesViewController = [[[NotesViewController alloc]init]autorelease];
+               notesViewController.title = cellText;
+               notesViewController.selectedSegment = 2;
+               [self.navigationController pushViewController:notesViewController animated:YES];
+          }
      }
      
      
@@ -914,22 +931,35 @@
           return [listOfNotes count];
           
      } else if (searchOptionsChoiceCntrl.selectedSegmentIndex == 1) {
-          
-          return [listOfNotebooks count];
+          if(searchBar.text.length != 0){
+               return [searchResults count];
+          }
+          else{
+               return [listOfNotebooks count];
+          }
           
      }
-     else {
-          
-          return [listOfTags count];
-          
+     else if (searchOptionsChoiceCntrl.selectedSegmentIndex == 2) {
+          if(searchBar.text.length != 0){
+               return [searchResults count];
+          }
+          else{
+               
+               return [listOfTags count];
+          }
+     }
+     else{
+          return [listOfNotes count];
      }
 }
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
           //[self initConextAndFetchController];
 	return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+     
      
      static NSString *CellIdentifier = @"Cell";
      
@@ -938,14 +968,38 @@
           cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier]autorelease];
      }
      NSString *cellValue;
+          //
      if(searchOptionsChoiceCntrl.selectedSegmentIndex == 0) {
           cellValue = [[listOfNotes objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
      }
      else if (searchOptionsChoiceCntrl.selectedSegmentIndex == 1) {
-          cellValue = [[listOfNotebooks objectAtIndex:indexPath.row]valueForKey:NOTEBOOK_KEY];
+          
+          
+          if((![searchBar.text isEqualToString:@""] && searchResults.count !=0 )){
+               NSLog(@"List of all notes:%@",searchResults);
+               NSLog(@"indexPath.row=%d",indexPath.row);
+               
+               if(indexPath.row < searchResults.count){
+                    cellValue = [[searchResults objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
+               }
+               
+          }
+          else {
+               cellValue = [[listOfNotebooks objectAtIndex:indexPath.row]valueForKey:NOTEBOOK_KEY];
+               NSLog(@"...........listOfNotebooks.........%@",listOfNotebooks);
+          }
      }
-     else {
-          cellValue = [[listOfTags objectAtIndex:indexPath.row]valueForKey:TAG_KEY];
+     else if(searchOptionsChoiceCntrl.selectedSegmentIndex == 2) {
+          if(![searchBar.text isEqualToString:@""] && searchResults.count !=0 ){
+               NSLog(@"List of all notes:%@",searchResults);
+               NSLog(@"indexPath.row=%d",indexPath.row);
+               if(indexPath.row < searchResults.count){
+                    cellValue = [[searchResults objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
+               }
+          }
+          else{
+               cellValue = [[listOfTags objectAtIndex:indexPath.row]valueForKey:TAG_KEY];
+          }
      }
      
      
@@ -974,6 +1028,7 @@
      [listOfNotes release];
      [listOfNotebooks release];
      [listOfTags release];
+     [searchResults release];
      [super dealloc];
 }
 

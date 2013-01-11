@@ -27,7 +27,8 @@ static int saveBtnTag = 2;
      UIActionSheet *postToChatterOptionActionSheet;
      IBOutlet UIBarButtonItem *saveToSFBarBtn;
      IBOutlet UIBarButtonItem *postToChatterBarBtn;
-     
+     NSString *tempTitle;
+     int flag;
      
 }
 

@@ -25,6 +25,7 @@
      NSMutableArray *listOfNotes;
      NSMutableArray *listOfNotebooks;
      NSMutableArray *listOfTags;
+     NSMutableArray *searchResults;
           //NSMutableArray *indexArray;
           //NSMutableArray *noteBooksArr;
      IBOutlet UITableView *notesTbl;
@@ -39,13 +40,17 @@
      NSArray * tags;
      NSString *noteTitle;
      NSString *noteContent;
+     NSString *searchKeyword;
      IBOutlet UIImageView *backgroundImgView;
      IBOutlet UIImageView *dialog_imgView;
      IBOutlet UIToolbar *bottom_bar;
      IBOutlet UIToolbar *toolbar;
      BOOL keyboardVisible;
-     CGRect frame1;
-     CGRect frame2;
+     CGRect searchbarFrame;
+     CGRect notestableFrame;
+     CGRect tempFrame;
+     CGRect bottomFrame;
+     int flag1,flag2;
 }
 
 @property(nonatomic,retain) NSArray *noteBooks;
