@@ -132,13 +132,9 @@
      if(flag1 == 0)
          {
           searchbarFrame = searchBar.frame;
-          notestableFrame = notesTbl.frame;
+             orgOrigin = notesTbl.frame.origin.y;
+             orgHeight = notesTbl.frame.size.height;
          }
-     NSLog(@".................Before.......original......searchBar........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",searchBar.frame.origin.x,searchBar.frame.origin.y,searchBar.frame.size.width,searchBar.frame.size.height);
-     NSLog(@".................Before.........searchBarFrame........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",searchbarFrame.origin.x,searchbarFrame.origin.y,searchbarFrame.size.width,searchbarFrame.size.height);
-     
-     NSLog(@".................Before.......original......notesTable........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",notesTbl.frame.origin.x,notesTbl.frame.origin.y,notesTbl.frame.size.width,notesTbl.frame.size.height);
-     NSLog(@".................Before......original........notesTableFrame........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",notestableFrame.origin.x,notestableFrame.origin.y,notestableFrame.size.width,notestableFrame.size.height);
      
 }
 
@@ -158,6 +154,7 @@
  }
  }*/
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration{
+    orgHeight = notesTbl.frame.size.height;
      [self changeSegmentControlBtnsWithOrientationAndDevice];
 }
 -(IBAction)showSettings:(id)sender{
@@ -262,8 +259,6 @@
                                    else
                                        {
                                         [self listAllNotebooks];
-                                        NSLog(@"..........List of notebooks...........=%@",listOfNotebooks);
-                                             //[self reloadNotesTable];
                                         [self reloadNotesTable];
                                        }
                                    
@@ -273,7 +268,6 @@
                                    
                                    
                                    if (![searchBar.text isEqualToString:@""]) {
-                                             // [self listAllNotebooks];
                                         [self searchNotes:searchBar.text];
                                    }
                                    else{
@@ -662,12 +656,10 @@
                                                   name: UIKeyboardDidHideNotification object:nil];
      
      toolbar.hidden=YES;
-     NSLog(@"........................temp......searchBar........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",searchBar.frame.origin.x,searchBar.frame.origin.y,searchBar.frame.size.width,searchBar.frame.size.height);
-     
-     searchBar.frame = toolbar.frame;
-     bottomFrame= bottom_bar.frame;
-     notesTbl.dataSource=nil;
-
+    searchBar.frame = CGRectMake(toolbar.frame.origin.x, toolbar.frame.origin.y, self.view.frame.size.width, toolbar.frame.size.height);
+    bottomFrame= CGRectMake(bottom_bar.frame.origin.x, bottom_bar.frame.origin.y, self.view.frame.size.width, bottom_bar.frame.size.height);
+    notesTbl.dataSource=nil;
+    [notesTbl reloadData];
      return YES;
 }
 -(void) keyboardDidShow: (NSNotification *)notif
@@ -680,26 +672,23 @@
          }
           // Get the size of the keyboard.
      notesTbl.dataSource=nil;
+    [notesTbl reloadData];
      NSDictionary* info = [notif userInfo];
      NSValue* aValue = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
      CGSize keyboardSize = [aValue CGRectValue].size;
      
           // Save the current location so we can restore
           // when keyboard is dismissed
-          
-     notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, notesTbl.frame.size.width, notesTbl.frame.size.height);
-     NSLog(@"................Before.....temp......notesTable........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",notesTbl.frame.origin.x,notesTbl.frame.origin.y,notesTbl.frame.size.width,notesTbl.frame.size.height);
-     tempFrame = notesTbl.frame;
-     NSLog(@".................Before.........tempFrame........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",tempFrame.origin.x,tempFrame.origin.y,tempFrame.size.width,tempFrame.size.height);
+    tempHeight = notesTbl.frame.size.height;
      if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight) {
           
-          notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, notesTbl.frame.size.width, notesTbl.frame.size.height-keyboardSize.width+searchBar.frame.size.height);
+          notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, self.view.frame.size.width, notesTbl.frame.size.height-keyboardSize.width+searchBar.frame.size.height);
      }
      else {
           
           notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, notesTbl.frame.size.width, notesTbl.frame.size.height-keyboardSize.height+searchBar.frame.size.height);
      }
-     bottom_bar.frame=CGRectMake(0,notesTbl.frame.origin.y+notesTbl.frame.size.height, bottom_bar.frame.size.width, bottom_bar.frame.size.height);
+     bottom_bar.frame=CGRectMake(0,notesTbl.frame.origin.y+notesTbl.frame.size.height, self.view.frame.size.width, bottom_bar.frame.size.height);
      
      keyboardVisible = YES;
      
@@ -709,46 +698,38 @@
 {
           // Is the keyboard already shown
      if (!keyboardVisible)
-         {
-          NSLog(@"...........keyboard is invisible........");
+     {
                // notesTbl.frame = notestableFrame;
           NSLog(@"Keyboard is already hidden. Ignoring notification.");
           
           return;
          }
-     NSLog(@"...........keyboard is visible........");
+     
      if(flag2!=1)
          {
-          notesTbl.frame = tempFrame;
+          notesTbl.frame = CGRectMake(0, searchBar.frame.size.height, self.view.frame.size.width, tempHeight);
           
          }
      else{
           flag2 = 0;
      }
-            NSLog(@"................After.....temp......notesTable........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",notesTbl.frame.origin.x,notesTbl.frame.origin.y,notesTbl.frame.size.width,notesTbl.frame.size.height);
-     NSLog(@".................After........tempFrame........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",tempFrame.origin.x,tempFrame.origin.y,tempFrame.size.width,tempFrame.size.height);
-     
-          // Keyboard is no longer visible
+            
      bottom_bar.frame = bottomFrame;
      keyboardVisible = NO;
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar1{
-     NSLog(@"Hello........");
-          // [self viewDidAppear:YES];
+   
      [searchBar resignFirstResponder];
      searchBar.text=@"";
      [searchResults removeAllObjects];
      [self fetchDataFromEverNote];
-     searchBar.frame = searchbarFrame;
-     notesTbl.frame = notestableFrame;
+    searchBar.frame = CGRectMake(searchbarFrame.origin.x, searchbarFrame.origin.y, self.view.frame.size.width, searchbarFrame.size.height);
+
+    notesTbl.frame = CGRectMake(0, orgOrigin, self.view.frame.size.width, orgHeight);
      bottom_bar.frame = bottomFrame;
      flag2=1;
-     NSLog(@".................after......searchBarFrame........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",searchbarFrame.origin.x,searchbarFrame.origin.y,searchbarFrame.size.width,searchbarFrame.size.height);
-     NSLog(@".................After .......searchBar........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",searchBar.frame.origin.x,searchBar.frame.origin.y,searchBar.frame.size.width,searchBar.frame.size.height);
-     NSLog(@".................after.......original......notesTable........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",notesTbl.frame.origin.x,notesTbl.frame.origin.y,notesTbl.frame.size.width,notesTbl.frame.size.height);
-     NSLog(@".................after........ original....notesTableFrame........origin-x=%f.....origin-y= %f.......width= %f........height= %f......",notestableFrame.origin.x,notestableFrame.origin.y,notestableFrame.size.width,notestableFrame.size.height);
-     toolbar.hidden = NO;
+    toolbar.hidden = NO;
      notesTbl.dataSource = self;
 }
 
@@ -976,23 +957,18 @@
           
           
           if((![searchBar.text isEqualToString:@""] && searchResults.count !=0 )){
-               NSLog(@"List of all notes:%@",searchResults);
-               NSLog(@"indexPath.row=%d",indexPath.row);
-               
-               if(indexPath.row < searchResults.count){
+                             if(indexPath.row < searchResults.count){
                     cellValue = [[searchResults objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
                }
                
           }
           else {
                cellValue = [[listOfNotebooks objectAtIndex:indexPath.row]valueForKey:NOTEBOOK_KEY];
-               NSLog(@"...........listOfNotebooks.........%@",listOfNotebooks);
-          }
+                         }
      }
      else if(searchOptionsChoiceCntrl.selectedSegmentIndex == 2) {
           if(![searchBar.text isEqualToString:@""] && searchResults.count !=0 ){
-               NSLog(@"List of all notes:%@",searchResults);
-               NSLog(@"indexPath.row=%d",indexPath.row);
+              
                if(indexPath.row < searchResults.count){
                     cellValue = [[searchResults objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
                }
@@ -1009,7 +985,6 @@
           //cell.backgroundColor = [UIColor clearColor];
           //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"White_bordered_background.png"]];
      
-     cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
      UIImageView *accIMGView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
      accIMGView.image =[UIImage imageNamed:@"Blue_arrow_30x30.png"];
      cell.accessoryView = accIMGView;

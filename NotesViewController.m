@@ -300,14 +300,14 @@
      cell.textLabel.text = (NSString*)cellValue;
      cell.textLabel.font = [UIFont fontWithName:@"Verdana" size:13];
      cell.textLabel.textColor = [UIColor blackColor];
-     cell.backgroundColor = [UIColor clearColor];
-     cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"White_bordered_background.png"]];
+     //cell.backgroundColor = [UIColor clearColor];
+     //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"White_bordered_background.png"]];
      
-     cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-     UIImageView *accIMGView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
-     accIMGView.image =[UIImage imageNamed:@"Blue_arrow_30x30.png"];
-     cell.accessoryView = accIMGView;
-     cell.accessoryView.backgroundColor  =[UIColor clearColor];
+    
+    UIImageView *accIMGView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
+    accIMGView.image =[UIImage imageNamed:@"Blue_arrow_30x30.png"];
+    cell.accessoryView = accIMGView;
+    cell.accessoryView.backgroundColor  =[UIColor clearColor];
      cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
      return cell;
      

@@ -47,8 +47,9 @@
      IBOutlet UIToolbar *toolbar;
      BOOL keyboardVisible;
      CGRect searchbarFrame;
-     CGRect notestableFrame;
-     CGRect tempFrame;
+    float orgHeight;
+    float tempHeight;
+    float orgOrigin;
      CGRect bottomFrame;
      int flag1,flag2;
 }
