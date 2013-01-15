@@ -47,11 +47,12 @@
      IBOutlet UIToolbar *toolbar;
      BOOL keyboardVisible;
      CGRect searchbarFrame;
-    float orgHeight;
+    float orgTableHeight;
     float tempHeight;
-    float orgOrigin;
-     CGRect bottomFrame;
+    float orgTableOriginY;
+    float orgBarOriginY;
      int flag1,flag2;
+    int firstSearch;
 }
 
 @property(nonatomic,retain) NSArray *noteBooks;
