@@ -1361,7 +1361,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					armv6,
+					armv7,
+				);
 				CODE_SIGN_IDENTITY = "iPhone Developer: Gaurav Kheterpal (Z4E78HLHU9)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1374,7 +1377,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				PROVISIONING_PROFILE = "D87B94CD-B3F6-44F8-8E79-CBFE5C167AC5";
+				PROVISIONING_PROFILE = "DDADD997-9999-4DB6-82C8-A8BE0CB96940";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1399,7 +1402,7 @@
 					"\"$(SDKROOT)//usr/lib\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D87B94CD-B3F6-44F8-8E79-CBFE5C167AC5";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Ad Hoc";
@@ -1408,7 +1411,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					armv6,
+					armv7,
+				);
 				CODE_SIGN_IDENTITY = "iPhone Developer: Gaurav Kheterpal (Z4E78HLHU9)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1428,7 +1434,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				PROVISIONING_PROFILE = "D87B94CD-B3F6-44F8-8E79-CBFE5C167AC5";
+				PROVISIONING_PROFILE = "DDADD997-9999-4DB6-82C8-A8BE0CB96940";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1438,8 +1444,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Gaurav Kheterpal";
+				ARCHS = (
+					armv6,
+					armv7,
+				);
+				CODE_SIGN_IDENTITY = "iPhone Developer: Gaurav Kheterpal (Z4E78HLHU9)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1451,7 +1460,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				PROVISIONING_PROFILE = "8C28877D-1BEC-4C1E-A77C-91AF569D00B8";
+				PROVISIONING_PROFILE = "DDADD997-9999-4DB6-82C8-A8BE0CB96940";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1475,7 +1484,7 @@
 					"\"$(SDKROOT)//usr/lib\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D87B94CD-B3F6-44F8-8E79-CBFE5C167AC5";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1483,7 +1492,7 @@
 		F4D2129E159B297400610A18 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Gaurav Kheterpal";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Gaurav Kheterpal (Z4E78HLHU9)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Noteprise/Noteprise-Prefix.pch";
 				INFOPLIST_FILE = "Noteprise/Noteprise-Info.plist";
@@ -1497,7 +1506,7 @@
 					"\"$(SDKROOT)//usr/lib\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8C28877D-1BEC-4C1E-A77C-91AF569D00B8";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
