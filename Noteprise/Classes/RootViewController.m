@@ -682,7 +682,7 @@ NSMutableDictionary *dict;
     for(NSString *str in ary)
     {
         char charval=[str characterAtIndex:0];
-        NSString *charStr=[NSString stringWithUTF8String:&charval];
+        NSString *charStr=[NSString stringWithFormat:@"%c",charval];
         NSString *capitalCharStr = [charStr capitalizedString];
         if(![keyArray containsObject:capitalCharStr])
         {
