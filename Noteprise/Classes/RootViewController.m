@@ -293,8 +293,10 @@ NSMutableDictionary *dict;
         selectedCount = 0;
         if(self.inEditMode){
             for(int i = 0;i < [selectedRow count] ; i++) {
+                NSLog(@"...1...");
                 if ([[selectedRow objectAtIndex:i] boolValue] == YES) {
                     [self showLoadingLblWithText:progress_dialog_salesforce_record_updating_message];
+                    NSLog(@"...2...");
                     SFRestRequest * request =  [[SFRestAPI sharedInstance] requestForUpdateWithObjectType:[sfobj valueForKey:OBJ_NAME] objectId:[[self.dataRows objectAtIndex:i] valueForKey:@"Id"] fields:fields];
                     [[SFRestAPI sharedInstance] send:request delegate:self];
                     selectedCount ++;
@@ -311,6 +313,7 @@ NSMutableDictionary *dict;
                 [Utility showAlert:[NSString stringWithFormat:@"Please select %@ to map with",[sfobj valueForKey:OBJ_NAME]]];
             } else {
                 [self showLoadingLblWithText:progress_dialog_salesforce_record_updating_message];
+                NSLog(@"...3...");
                 SFRestRequest * request =    [[SFRestAPI sharedInstance] requestForUpdateWithObjectType:[sfobj valueForKey:OBJ_NAME] objectId:[[self.dataRows objectAtIndex:selectedAccIdx] valueForKey:@"Id"] fields:fields];
                 [[SFRestAPI sharedInstance] send:request delegate:self];
                 selectedCount ++;
@@ -457,6 +460,7 @@ NSMutableDictionary *dict;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSMutableArray *dataArray = [[[NSMutableArray alloc]init] autorelease];
+    NSLog(@"...4...");
     dataArray = (NSMutableArray*)[dict valueForKey:(NSString*)[keyArray objectAtIndex:section]];
     return [dataArray count];
 }
@@ -464,7 +468,7 @@ NSMutableDictionary *dict;
 - (void)reloadTable {
     // Configure the cell to show the data.
     for (int cnt =0; cnt < self.dataRows.count; cnt++) {
-        
+        NSLog(@"Object Index :%@",self.dataRows);
         NSDictionary *obj = [self.dataRows objectAtIndex:cnt];
         NSString *selectedSFObj;
         NSUserDefaults* stdDefaults = [NSUserDefaults standardUserDefaults];
@@ -593,8 +597,12 @@ NSMutableDictionary *dict;
         }
         
     }
+    [cellIndexData sortUsingSelector:@selector(compare:)];
+
+    NSLog(@"Array :%@",cellIndexData);
 }
 // Customize the appearance of table view cells.
+NSMutableArray *temp;
 - (UITableViewCell *)tableView:(UITableView *)tableView_ cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"CellIdentifier";
     
@@ -607,6 +615,7 @@ NSMutableDictionary *dict;
 	//if you want to add an image to your cell, here's how
 	UIImage *image = [UIImage imageNamed:@"Record.png"];
     if(self.inEditMode) {
+        NSLog(@"...6...");
         NSNumber *selectedForDelete = [selectedRow objectAtIndex:indexPath.row];
         if([selectedForDelete boolValue])
             cell.imageView.image = self.selectedImage;
@@ -617,20 +626,23 @@ NSMutableDictionary *dict;
     }
     else
         cell.imageView.image = image;
-    
+    NSLog(@"...7...");
     NSArray *cellData = [dict objectForKey:[keyArray objectAtIndex:indexPath.section]];
+    NSLog(@"...8...");
 	cell.textLabel.text = [cellData objectAtIndex:indexPath.row];
+    [cellData indexOfObject:[cellData objectAtIndex:indexPath.row]];
+    NSLog(@"..............[cellData indexOfObject:[cellData objectAtIndex:indexPath.row]]...%d",[cellData indexOfObject:[cellData objectAtIndex:indexPath.row]]);
+    NSLog(@"..............cell text......%@......%d",cell.textLabel.text,indexPath.row);
 	//this adds the arrow to the right hand side.
     cell.textLabel.font = [UIFont fontWithName:@"Verdana" size:13];
     //cell.textLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:16];
 	cell.accessoryType = UITableViewCellAccessoryNone;
     cell.textLabel.textColor = [UIColor blackColor];
-    
-	return cell;
+    	return cell;
 }
 
 - (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section {
-    
+    NSLog(@"...9...");
     return [keyArray objectAtIndex:section];
     
 }
@@ -643,20 +655,29 @@ NSMutableDictionary *dict;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
-{
+{NSLog(@"...10...");
+    
+    NSLog(@".........section title.....%@",[self.sections objectAtIndex:index]);
+    NSLog(@".........section title.....%d",[keyArray indexOfObject:[self.sections objectAtIndex:index]]);
     return [keyArray indexOfObject:[self.sections objectAtIndex:index]];
 }
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)_tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
     if(self.inEditMode) {
-        BOOL selected = [[selectedRow objectAtIndex:[indexPath row]] boolValue];
+        NSLog(@"...11...");
+        
+       
+        BOOL selected = [[selectedRow objectAtIndex:indexPath.row] boolValue];
+        NSLog(@"...12...");
         [selectedRow replaceObjectAtIndex:[indexPath row] withObject:[NSNumber numberWithBool:!selected]];
         DebugLog(@"%@",selectedRow);
         [_tableView deselectRowAtIndexPath:indexPath animated:YES];
         [_tableView reloadData];
     } else {
         selectedAccIdx=indexPath.row;
-    }
+    }NSLog(@"...13...");
     DebugLog(@"sel obj:%@",[self.dataRows objectAtIndex:indexPath.row]);
 }
 
@@ -682,14 +703,18 @@ NSMutableDictionary *dict;
     for(NSString *str in ary)
     {
         char charval=[str characterAtIndex:0];
-        NSString *charStr=[NSString stringWithUTF8String:&charval];
+        NSString* charStr = [NSString stringWithFormat:@"%c" , charval];
         NSString *capitalCharStr = [charStr capitalizedString];
+
         if(![keyArray containsObject:capitalCharStr])
         {
             NSMutableArray *charArray=[[NSMutableArray alloc]init];
             [charArray addObject:str];
+            NSLog(@"............str.....%@",str);
+            NSLog(@"............capitalCharStr.....%@",capitalCharStr);
             [keyArray addObject:capitalCharStr];
             [dic setValue:charArray forKey:capitalCharStr];
+            NSLog(@"............str.....%@",str);
         }
         else
         {
