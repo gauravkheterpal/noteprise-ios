@@ -301,13 +301,15 @@
                self.navigationItem.rightBarButtonItem = saveBarButton;
                [saveButton release];
                self.navigationItem.rightBarButtonItem.tag = saveBtnTag;
-               dialog_imgView.hidden = NO;
-               [loadingSpinner stopAnimating];
-               loadingLbl.text = @"Edit mode activated...";
-               loadingLbl.hidden = NO;
-               [Utility hideCoverScreen];
-               [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
-               
+			
+			[Utility showCoverScreen];
+			[loadingSpinner startAnimating];
+			doneImgView.hidden = NO;
+			dialog_imgView.hidden = NO;
+			loadingLbl.text = @"Edit mode activating...";
+				//[loadingLbl sizeToFit];
+			loadingLbl.hidden = NO;
+			[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
                [self setContentEditable:YES];
                [self setWebViewKeyPressDetectionEnabled:YES];
                [self setWebViewTapDetectionEnabled:YES];
@@ -332,23 +334,50 @@
                self.navigationItem.rightBarButtonItem = editBarButton;
                [editButton release];
                self.navigationItem.rightBarButtonItem.tag = editBtnTag;
-               [self setContentEditable:NO];
-               [self setWebViewKeyPressDetectionEnabled:NO];
-               [self setWebViewTapDetectionEnabled:NO];
-               [self resignFirstResponder];
-               [noteContent resignFirstResponder];
-                    // NSString *htmlString = [noteContent stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
-                    // DebugLog(@"htmlString : %@",htmlString);
-			/* if(flag == 1)
-			 {
-			 UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Text Error" message:@"Please enter valid text" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] autorelease];
-			 [alert show];
-			 self.navigationItem.rightBarButtonItem.tag = saveBtnTag;
-			 
-			 }
-			 else{
-			 [self updateNoteEvernote];
-			 }*/
+			NSString *rawString = [editTitleField text];
+			NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+			NSString *trimmed = [rawString stringByTrimmingCharactersInSet:whitespace];
+			
+			if(trimmed.length == 0)
+			    {
+				UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Text Error" message:@"Please enter valid text" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] autorelease];
+				[alert show];
+				saveToSFBarBtn.enabled = NO;
+				postToChatterBarBtn.enabled = NO;
+				
+				self.navigationItem.rightBarButtonItem.title = @"Save to Evernote";
+				
+				UIImage* saveImg = [UIImage imageNamed:@"Save.png"];
+				UIImage* saveDoneImg = [UIImage imageNamed:@"Save_down.png"];
+				
+				UIButton *saveButton = [[UIButton alloc] initWithFrame:frameimg];
+				[saveButton setBackgroundImage:saveImg forState:UIControlStateNormal];
+				[saveButton setBackgroundImage:saveDoneImg forState:UIControlStateHighlighted];
+				[saveButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
+				[saveButton setShowsTouchWhenHighlighted:YES];
+				UIBarButtonItem *saveBarButton =[[UIBarButtonItem alloc] initWithCustomView:saveButton];
+				
+				self.navigationItem.rightBarButtonItem = saveBarButton;
+				[saveButton release];
+				self.navigationItem.rightBarButtonItem.tag = saveBtnTag;
+				editTitleField.text = @"";
+				[self setWebViewKeyPressDetectionEnabled:YES];
+				[self setWebViewTapDetectionEnabled:YES];
+				[self increaseZoomFactorRange];
+				
+			    }
+			else
+			    {
+				
+				[self setContentEditable:NO];
+				[self setWebViewKeyPressDetectionEnabled:NO];
+				[self setWebViewTapDetectionEnabled:NO];
+				[self resignFirstResponder];
+				[noteContent resignFirstResponder];
+				[self updateNoteEvernote];
+				
+			    }
+			
           }
           
          }
@@ -528,27 +557,21 @@
           NSString *rawString = [editTitleField text];
           NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
           NSString *trimmed = [rawString stringByTrimmingCharactersInSet:whitespace];
-          if ([trimmed length] == 0) {
-               flag = 1;
-               self.title = orgNoteTitle;
+          if ([trimmed length] != 0) {
 			
-          }
-          else
-              {
-               flag= 0;
                self.title = trimmed;
                tempTitle = self.title;
-              }
-}
-
-
-NSString *jsEnableEditing =
-
-[NSString stringWithFormat:@"document.documentElement.contentEditable=%@;", isEditable ? @"true" : @"false"];
-NSString *result = [noteContent stringByEvaluatingJavaScriptFromString:jsEnableEditing];
-
-DebugLog(@"editable %@",result);
-
+		}
+	    }
+	
+	
+	NSString *jsEnableEditing =
+	
+	[NSString stringWithFormat:@"document.documentElement.contentEditable=%@;", isEditable ? @"true" : @"false"];
+	NSString *result = [noteContent stringByEvaluatingJavaScriptFromString:jsEnableEditing];
+	
+	DebugLog(@"editable %@",result);
+	
 }
 
 - (void)increaseZoomFactorRange {
@@ -655,13 +678,15 @@ DebugLog(@"editable %@",result);
                            textContent = (NSMutableString *)[[[Utility flattenNoteBody:updatedContent]stringByDecodingHTMLEntities] retain];
                            DebugLog(@"update textcontent:%@", textContent);
                                 // Alerting the user that the note was created
-                           dialog_imgView.hidden = NO;
-                           doneImgView.hidden = NO;
-                           [loadingSpinner stopAnimating];
-                           loadingLbl.text = @"Note was saved!";
-                           [Utility hideCoverScreen];
-                           [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
-                      }
+					  [Utility showCoverScreen];
+					  [loadingSpinner startAnimating];
+					  doneImgView.hidden = NO;
+					  dialog_imgView.hidden = NO;
+					  loadingLbl.text = @"Saving Note...";
+						  //[loadingLbl sizeToFit];
+					  loadingLbl.hidden = NO;
+					  [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
+				  }
                       [loadingSpinner stopAnimating];
                  });
                 }
@@ -725,6 +750,8 @@ DebugLog(@"editable %@",result);
      loadingLbl.hidden = YES;
      doneImgView.hidden = YES;
      [loadingSpinner stopAnimating];
+	[Utility hideCoverScreen];
+	
           //[delegate evernoteCreatedSuccessfullyListener];
 }
 #pragma mark - SFRestAPIDelegate

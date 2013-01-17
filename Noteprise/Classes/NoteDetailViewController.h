@@ -28,7 +28,6 @@ static int saveBtnTag = 2;
      IBOutlet UIBarButtonItem *saveToSFBarBtn;
      IBOutlet UIBarButtonItem *postToChatterBarBtn;
      NSString *tempTitle;
-     int flag;
      
 }
 
