@@ -30,7 +30,6 @@
 	[super viewDidLoad];
 	flag1 = 0;
 	flag2 = 0;
-	firstSearch = 1;
 	searchBar.text = @"";
 	orgTableOriginY = notesTbl.frame.origin.y;
 	if (SYSTEM_VERSION_LESS_THAN(@"5.0")) {
@@ -605,9 +604,8 @@
 						[noteListDict release];
 					}
 					if(i == [noteBooks count]- 1 && flag !=1) {
-						[Utility showAlert:@"No note found with this keyword"];
+						[Utility showAlert:NOTE_NOT_FOUND];
 					}
-					NSLog(@"Note found=%@",flag?@"yes":@"No");
 					NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
 					searchResults = [[searchResults sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
 					DebugLog(@"sorted list Of notes found:%@",searchResults);
@@ -634,18 +632,11 @@
 	}
 	else{
 		
-		/* if(firstSearch == 1)
-		 {
-		 firstSearch = 0;
-		 }
-		 else
-		 {*/
 		[Utility hideCoverScreen];
 		[self hideDoneToastMsg:nil];
 		[Utility showAlert:note_please_enter_text_for_search_message];
 		[self reloadNotesTable];
 		
-			// }
 	}
 	
 	
@@ -705,8 +696,6 @@
 		// Is the keyboard already shown
 	if (!keyboardVisible)
 	    {
-			// notesTbl.frame = notestableFrame;
-		NSLog(@"Keyboard is already hidden. Ignoring notification.");
 		
 		return;
 	    }
@@ -728,11 +717,10 @@
 	[searchBar resignFirstResponder];
 	searchBar.text=@"";
 	[searchResults removeAllObjects];
-	[self fetchDataFromEverNote];
+	[self fetchNoteBasedOnSelectedSegement];
 	searchBar.frame = CGRectMake(searchbarFrame.origin.x, searchbarFrame.origin.y, self.view.frame.size.width, searchbarFrame.size.height);
 	
 	notesTbl.frame = CGRectMake(0, orgTableOriginY, self.view.frame.size.width, orgTableHeight);
-	NSLog(@"...notesTbl origin....%f",notesTbl.frame.origin.y);
 	bottom_bar.frame=CGRectMake(0,orgBarOriginY, self.view.frame.size.width,bottom_bar.frame.size.height);
 	flag2=1;
 	toolbar.hidden = NO;
@@ -749,13 +737,13 @@
 	[listOfNotes removeAllObjects];
 	[searchBar resignFirstResponder];
 	if(searchBarContent.text.length == 0){
-		[Utility showAlert:@"Please enter keyword to search"];
+		[Utility showAlert:note_please_enter_text_for_search_message];
 		[Utility hideCoverScreen];
 		[self hideDoneToastMsg:loadingLbl];
 	}
 	else{
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^(void) {
-			[self fetchDataFromEverNote];
+			[self fetchNoteBasedOnSelectedSegement];
 		});
 	}
 	
@@ -884,13 +872,6 @@
 		}
 		else{
 			
-			/*if(viewDidLoadCount != 1)
-			 {
-                NotesListViewController* noteListViewController = [[NotesListViewController alloc] init];
-                noteListViewController.title = (NSString *)[ [listOfNotes objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
-                [self.navigationController pushViewController:noteListViewController animated:YES];
-			 }
-			 else{*/
 			NSString * guid = (NSString *)[ [listOfNotes objectAtIndex:indexPath.row]valueForKey:NOTE_GUID_KEY];
 			NSString *readProp = (NSString *)[ [listOfNotes objectAtIndex:indexPath.row]valueForKey:READABLE];
 			
@@ -1034,9 +1015,6 @@
 	cell.textLabel.text = (NSString*)cellValue;
 	cell.textLabel.font = [UIFont fontWithName:@"Verdana" size:13];
 	cell.textLabel.textColor = [UIColor blackColor];
-		//cell.backgroundColor = [UIColor clearColor];
-		//cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"White_bordered_background.png"]];
-	
 	UIImageView *accIMGView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
 	accIMGView.image =[UIImage imageNamed:@"Blue_arrow_30x30.png"];
 	cell.accessoryView = accIMGView;

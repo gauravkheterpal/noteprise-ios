@@ -67,7 +67,8 @@
 #define NOTE_DELETE_FAILED_MSG @"Note could not be deleted!"
 #define NOTE_CREATING_MSG @"Creating Note..."
 #define GETTING_NOTE_DETAILS_MSG @"Getting note details.."
-
+#define NOTE_NOT_FOUND @"No note found with this keyword"
+#define NO_NOTE_FOUND_WITH_THIS_TAG @"No Notes available with this tag"
 #define SF_FIELDS_LIMIT_CROSSED_ALERT_MSG @"The number of characters in your note exceed the allowed limit on Salesforce Field.Do you want to truncate note content & post?"
 #define CHATTER_LIMIT_CROSSED_ALERT_MSG  @"The number of characters in your note exceed the allowed limit on Salesforce Chatter.Do you want to truncate note content & post?"
 #define CHATTER_LIMIT_CROSSED_ERROR_MSG @"The number of characters in your note exceed the allowed limit on Salesforce Chatter. Please split your content into multiple notes and try again."

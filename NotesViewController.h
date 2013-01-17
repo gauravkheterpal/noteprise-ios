@@ -20,9 +20,6 @@
 @interface NotesViewController : UITableViewController{
      NSArray *noteBooks;
      NSArray * tags;
-      UILabel *loadingLbl;
-      UIImageView *dialog_imgView;
-
 }
 @property(nonatomic,retain) NSMutableArray *notes;
 @property(nonatomic,assign) int selectedSegment;

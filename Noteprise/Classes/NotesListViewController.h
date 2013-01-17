@@ -52,7 +52,6 @@
     float orgTableOriginY;
     float orgBarOriginY;
      int flag1,flag2;
-    int firstSearch;
 }
 
 @property(nonatomic,retain) NSArray *noteBooks;

@@ -143,10 +143,8 @@
 						<object class="IBUITextInputTraits" key="IBTextInputTraits">
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						</object>
-						<object class="NSArray" key="IBScopeButtonTitles">
+						<object class="NSArray" key="IBScopeButtonTitles" id="0">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>Title</string>
-							<string>Title</string>
 						</object>
 					</object>
 					<object class="IBUIToolbar" id="559973876">
@@ -466,9 +464,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="IBObjectRecord">
 						<int key="objectID">0</int>
-						<object class="NSArray" key="object" id="0">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
+						<reference key="object" ref="0"/>
 						<reference key="children" ref="1000"/>
 						<nil key="parent"/>
 					</object>

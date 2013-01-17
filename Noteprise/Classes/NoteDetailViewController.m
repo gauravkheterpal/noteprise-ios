@@ -39,12 +39,9 @@
      [super viewDidLoad];
      
      self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background_pattern_tableview.png"]];
-          // editTitleField = [[[UITextField alloc] init] autorelease];
      orgNoteTitle = self.title;
      tempTitle=orgNoteTitle;
-     /*backgroundImgView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-      backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
-      [self changeBkgrndImgWithOrientation];*/
+     
      self.navigationItem.backBarButtonItem.tintColor = [UIColor whiteColor];
      
      if (SYSTEM_VERSION_LESS_THAN(@"5.0")) {
@@ -75,17 +72,7 @@
      
      self.navigationItem.rightBarButtonItem.tag = editBtnTag;
      DebugLog(@"tag = %d",self.navigationItem.rightBarButtonItem.tag);
-     /*
-      //edit button as right bar button item
-      UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
-      style:UIBarButtonItemStyleBordered
-      target:self
-      action:@selector(editPage:)];
-      self.navigationItem.rightBarButtonItem = editButton;
-      //--------------------------------------------------------------
-      */
-     
-     [Utility showCoverScreen];
+	[Utility showCoverScreen];
      [loadingSpinner startAnimating];
      dialog_imgView.hidden = NO;
      loadingLbl.text = GETTING_NOTE_DETAILS_MSG;
@@ -178,13 +165,14 @@
           else {
                backgroundImgView.image = [UIImage imageNamed:@"bgE-320x480.png"];
           }
-     } else {
+     } else if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
           if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
                backgroundImgView.image = [UIImage imageNamed:@"bgE-1024x704.png"];
           else {
                backgroundImgView.image = [UIImage imageNamed:@"bgE-768x1024.png"];
           }
      }
+	
 }
 #pragma mark - UIAlertViewDelegate
 
@@ -351,16 +339,16 @@
                [noteContent resignFirstResponder];
                     // NSString *htmlString = [noteContent stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
                     // DebugLog(@"htmlString : %@",htmlString);
-               if(flag == 1)
-                   {
-                    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Text Error" message:@"Please enter valid text" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] autorelease];
-                    [alert show];
-                    self.navigationItem.rightBarButtonItem.tag = saveBtnTag;
-                    
-                   }
-               else{
-                    [self updateNoteEvernote];
-               }
+			/* if(flag == 1)
+			 {
+			 UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Text Error" message:@"Please enter valid text" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] autorelease];
+			 [alert show];
+			 self.navigationItem.rightBarButtonItem.tag = saveBtnTag;
+			 
+			 }
+			 else{
+			 [self updateNoteEvernote];
+			 }*/
           }
           
          }
@@ -462,7 +450,7 @@
      
      NSString *result = [noteContent stringByEvaluatingJavaScriptFromString:js];
      
-     DebugLog(@"%@",result);
+     DebugLog(@"result=%@",result);
 }
 
 - (void)setWebViewKeyPressDetectionEnabled:(BOOL)isEnabled {
@@ -494,9 +482,9 @@
      
      if(isEditable)
          {
-          
+		
           self.title = @"Edit Note";
-          noteContent.frame = CGRectMake(15, 100, 290, 250);
+		
           
           if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
                if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
@@ -520,8 +508,12 @@
                
                
           }
-          editTitleField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-          
+		
+		
+		editTitleField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+		noteContent.frame = CGRectMake(noteContent.frame.origin.x,100,self.view.frame.size.width,self.view.frame.size.height);
+		
+		
           editTitleField.text = tempTitle;
           editTitleField.borderStyle = UITextBorderStyleRoundedRect;
           editTitleField.delegate=self;
@@ -532,14 +524,14 @@
      else
          {
           editTitleField.hidden = TRUE;
-          noteContent.frame = CGRectMake(15,0,320,370);
+          noteContent.frame = CGRectMake(noteContent.frame.origin.x,0,self.view.frame.size.width,self.view.frame.size.height);
           NSString *rawString = [editTitleField text];
           NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
           NSString *trimmed = [rawString stringByTrimmingCharactersInSet:whitespace];
           if ([trimmed length] == 0) {
                flag = 1;
                self.title = orgNoteTitle;
-               
+			
           }
           else
               {
@@ -547,17 +539,16 @@
                self.title = trimmed;
                tempTitle = self.title;
               }
-          
-         }
-     
-     
-     NSString *jsEnableEditing =
-     
-     [NSString stringWithFormat:@"document.documentElement.contentEditable=%@;", isEditable ? @"true" : @"false"];
-     NSString *result = [noteContent stringByEvaluatingJavaScriptFromString:jsEnableEditing];
-     
-     DebugLog(@"editable %@",result);
-     
+}
+
+
+NSString *jsEnableEditing =
+
+[NSString stringWithFormat:@"document.documentElement.contentEditable=%@;", isEditable ? @"true" : @"false"];
+NSString *result = [noteContent stringByEvaluatingJavaScriptFromString:jsEnableEditing];
+
+DebugLog(@"editable %@",result);
+
 }
 
 - (void)increaseZoomFactorRange {

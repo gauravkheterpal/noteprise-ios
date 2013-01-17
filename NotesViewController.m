@@ -30,47 +30,18 @@
 - (void)viewDidLoad
 {
      [super viewDidLoad];
-      [Utility showCoverScreen];
-//     loadingLbl = [[UILabel alloc]initWithFrame:CGRectMake(57, 212, 90, 38)];
-//     loadingLbl.text = @"Loading";
-//     dialog_imgView = [[UIImageView alloc]initWithFrame:CGRectMake(50, 163, 220, 91)];
-//     NSLog(@"Loading label text:%@",loadingLbl.text);
-//     dialog_imgView.image=[UIImage imageNamed:@"Loader.png"];
-//     CGRect bounds = CGRectMake(157, 212, 207, 38);
-//     
-//          // Create a view and add it to the window.
-//     UIView* view = [[UIView alloc] initWithFrame: bounds];
-//          // [view setBackgroundColor: [UIColor yellowColor]];
-//          //[view addSubview: loadingLbl];
-//          // [dialog_imgView setBackgroundColor:[UIColor purpleColor]];
-//     [dialog_imgView addSubview:loadingLbl];
-//     [view addSubview:dialog_imgView];
-//     [self.view addSubview: view];
-     
-     notes = [[NSMutableArray alloc]init];
-     NSLog(@"Loading Label Frame: origin-x=%f...origin-y=%f....width=%f....height=%f...",loadingLbl.frame.origin.x,loadingLbl.frame.origin.y,loadingLbl.frame.size.width,loadingLbl.frame.size.height);
-          // Uncomment the following line to preserve selection between presentations.
-          // self.clearsSelectionOnViewWillAppear = NO;
-     
-          // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-          // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	notes = [[NSMutableArray alloc]init];
 }
+
 -(void)viewDidAppear:(BOOL)animated{
-     
-          // loadingLbl.frame =  CGRectMake(57, 212, 207, 38);
-          //dialog_imgView.frame = CGRectMake(50, 163, 220, 91);
-     loadingLbl.hidden=NO;
-     dialog_imgView.hidden=NO;
-     if(!loadingLbl.hidden){
-          NSLog(@"Loading label is on screen with text:%@",loadingLbl.text);
-     }
-     [self fetchDataFromEvernote];
+     [Utility showCoverScreen];
+	[self fetchDataFromEvernote];
 }
+
 
 - (void)didReceiveMemoryWarning
 {
      [super didReceiveMemoryWarning];
-          // Dispose of any resources that can be recreated.
 }
 
 -(void) fetchDataFromEvernote {
@@ -79,27 +50,25 @@
           EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
           
           if(selectedSegment == 1){
-          loadingLbl.hidden=NO;
-               dialog_imgView.hidden=NO;
-          [noteStore listNotebooksWithSuccess:^(NSArray *noteBooksArr) {
-           DebugLog(@"notebooks fetched: %@", noteBooksArr);
-           noteBooks = [noteBooksArr retain];
-           [self reloadNotebookNotes:noteBooks];
-           DebugLog(@"notebooks: %@", noteBooks);
-           }
-           failure:^(NSError *error) {
-           DebugLog(@"error %@", error);
-           }];
-     }
+			[noteStore listNotebooksWithSuccess:^(NSArray *noteBooksArr) {
+				DebugLog(@"notebooks fetched: %@", noteBooksArr);
+				noteBooks = [noteBooksArr retain];
+				[self reloadNotebookNotes:noteBooks];
+				DebugLog(@"notebooks: %@", noteBooks);
+			}
+								   failure:^(NSError *error) {
+									   DebugLog(@"error %@", error);
+								   }];
+		}
           else{
-
-          [noteStore listTagsWithSuccess: ^(NSArray *tagsArr) {
-               DebugLog(@"tagsArr fetched: %@", tagsArr);
-               tags = [tagsArr retain];
-               [self reloadTagNotes:tags];
-               DebugLog(@"tagsArr: %@", tagsArr); }
-                                 failure:^(NSError *error) {DebugLog(@"error %@", error);}
-           ];
+			
+			[noteStore listTagsWithSuccess: ^(NSArray *tagsArr) {
+				DebugLog(@"tagsArr fetched: %@", tagsArr);
+				tags = [tagsArr retain];
+				[self reloadTagNotes:tags];
+				DebugLog(@"tagsArr: %@", tagsArr); }
+							   failure:^(NSError *error) {DebugLog(@"error %@", error);}
+			 ];
           }
           
      }
@@ -125,23 +94,19 @@
      @try {
           if(self.selectedSegment == 1)
               {
-               loadingLbl.hidden=NO;
-               dialog_imgView.hidden=NO;
+               
                     // __block NSMutableArray *tempArray = [noteBooks retain];
                [notes removeAllObjects];
                EDAMNotebook *notebook,*notebook1;
                for (int i = 0; i < [notebooks count]; i++)
                    {
                     notebook = (EDAMNotebook*)[notebooks objectAtIndex:i];
-                    NSLog(@".............current notebook.......%@.......of index .....%d",notebook,i);
                     if ([[notebook name] isEqualToString:[self title]]) {
                          notebook1= notebook;
-                         NSLog(@".............notebook selected.......%@",notebook1);
                          break;
                     }
                    }
                
-               NSLog(@".............original notebook.......%@",notebooks);
                     // Creating & configuring filter to load specific notebook
                EDAMNoteFilter * filter = [[EDAMNoteFilter alloc] init];
                [filter setNotebookGuid:[notebook1 guid]];
@@ -164,7 +129,6 @@
                     }
                     NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
                     notes = [[notes sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
-                    NSLog(@"...........array...........%@",notes);
                          // [self.tableView reloadData];
                     [self reloadNotesTable];
                }
@@ -199,15 +163,12 @@
                for (int i = 0; i < [tagsArray count]; i++)
                    {
                     tag = (EDAMTag*)[tagsArray objectAtIndex:i];
-                         // NSLog(@".............current notebook.......%@.......of index .....%d",notebook,i);
                     if ([[tag name] isEqualToString:[self title]]) {
                          tag1= tag;
-                              //   NSLog(@".............notebook selected.......%@",notebook1);
                          break;
                     }
                    }
                
-                    // NSLog(@".............original notebook.......%@",notebooks);
                     // Creating & configuring filter to load specific notebook
                EDAMNoteFilter * filter = [[EDAMNoteFilter alloc] init];
                [filter setTagGuids:[[NSArray alloc]initWithObjects:[tag1 guid],[tag1 parentGuid], nil]];
@@ -228,11 +189,14 @@
                          [notes addObject:noteListDict];
                          
                     }
-                    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-                    notes = [[notes sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
-                    NSLog(@"...........array...........%@",notes);
-                    [self reloadNotesTable];
-                    
+				if([notes count] == 0){
+					[Utility showAlert:NO_NOTE_FOUND_WITH_THIS_TAG];
+				}
+				else{
+					NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+					notes = [[notes sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
+				}
+				[self reloadNotesTable];
                }
                                       failure:^(NSError *error) {
                                            DebugLog(@" findNotesWithFilter error %@", error);
@@ -259,18 +223,12 @@
 
 -(void)reloadNotesTable {
      [Utility hideCoverScreen];
-          //[searchBar resignFirstResponder];
      self.tableView.delegate =self;
      self.tableView.dataSource =self;
-     [self hideDoneToastMsg:nil];
-     loadingLbl.hidden = YES;
      [self.tableView reloadData];
 }
 
--(void)hideDoneToastMsg:(id)sender{
-	dialog_imgView.hidden = YES;
-     loadingLbl.hidden = YES;
-}
+
 
 #pragma mark - Table view data source
 
@@ -283,7 +241,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
           // Return the number of rows in the section.
-     NSLog(@"Notes..................in NotesViewController...........%@",notes);
      return [notes count];
 }
 
@@ -300,14 +257,10 @@
      cell.textLabel.text = (NSString*)cellValue;
      cell.textLabel.font = [UIFont fontWithName:@"Verdana" size:13];
      cell.textLabel.textColor = [UIColor blackColor];
-     //cell.backgroundColor = [UIColor clearColor];
-     //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"White_bordered_background.png"]];
-     
-    
-    UIImageView *accIMGView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
-    accIMGView.image =[UIImage imageNamed:@"Blue_arrow_30x30.png"];
-    cell.accessoryView = accIMGView;
-    cell.accessoryView.backgroundColor  =[UIColor clearColor];
+	UIImageView *accIMGView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
+	accIMGView.image =[UIImage imageNamed:@"Blue_arrow_30x30.png"];
+	cell.accessoryView = accIMGView;
+	cell.accessoryView.backgroundColor  =[UIColor clearColor];
      cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
      return cell;
      
