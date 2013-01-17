@@ -28,9 +28,10 @@
 @interface RootViewController : UIViewController <SFRestDelegate,UITableViewDataSource,UITableViewDelegate> {
     
     NSMutableArray *dataRows;
-    IBOutlet UITableView *tableView; 
+    IBOutlet UITableView *tableView;
     NSMutableArray *fieldsRows;
     NSMutableArray *selectedRow;
+    // NSIndexPath *selectedIndexPath;
     int selectedCount;
     NSMutableArray *cellIndexData;
     NSMutableArray *sections;
@@ -39,7 +40,7 @@
     IBOutlet UILabel *loadingLbl;
     IBOutlet UIImageView *doneImgView;
     IBOutlet UIImageView *backgroundImgView;
-
+    
 }
 //- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil attachmentData:(NSData*)data fileName:(NSString*)_fileName;
 
