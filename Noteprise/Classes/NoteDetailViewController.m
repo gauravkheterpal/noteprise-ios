@@ -10,9 +10,9 @@
 #import "ChatterUsersViewController.h"
 #import "ChatterGroupVCntrlViewController.h"
 #import "Utility.h"
+#import <QuartzCore/QuartzCore.h>
 @implementation NoteDetailViewController {
 }
-
 
 @synthesize guid, readProp, noteNavigation, noteContent,textContent;
 
@@ -32,12 +32,21 @@
  *  the note we are viewing
  *
  ************************************************************/
-
+int flag=0,flag2 =0;
 - (void)viewDidLoad
 {
-     
+	
      [super viewDidLoad];
-     
+	[[noteContent layer] setCornerRadius:10];
+		//[noteContent setClipsToBounds:YES];
+	
+		// Create colored border using CALayer property
+	[[noteContent layer] setBorderColor:
+	 [[UIColor colorWithRed:0 green:0 blue:0 alpha:1] CGColor]];
+	[[noteContent layer] setBorderWidth:1];
+	
+	noteContent.frame = CGRectMake(noteContent.frame.origin.x,noteContent.frame.origin.y+2,self.view.frame.size.width-35,self.view.frame.size.height-50);
+	
      self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background_pattern_tableview.png"]];
      orgNoteTitle = self.title;
      tempTitle=orgNoteTitle;
@@ -156,6 +165,7 @@
 
 -(void)viewDidAppear:(BOOL)animated{
      [super viewDidAppear:animated];
+	orgBounds=self.view.frame;
      
 }
 -(void)changeBkgrndImgWithOrientation {
@@ -429,6 +439,10 @@
 }
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration{
      [self changeBkgrndImgWithOrientation];
+		//self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+	orgBounds = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
+	flag2=1;
+	flag=0;
 }
 #pragma mark - View lifecycle
 - (void)viewDidUnload
@@ -508,13 +522,17 @@
 
 - (void)setContentEditable:(BOOL)isEditable {
      
-     
-     if(isEditable)
+	
+	if(isEditable)
          {
+		UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(shiftwebview)];
+		tap.numberOfTapsRequired = 1;
+		tap.delegate = self;
 		
-          self.title = @"Edit Note";
+		[noteContent addGestureRecognizer:tap];
+		[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];    // Do any additional setup after loading the view from its nib.
 		
-          
+		[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
           if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
                if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
                    {
@@ -540,7 +558,7 @@
 		
 		
 		editTitleField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		noteContent.frame = CGRectMake(noteContent.frame.origin.x,100,self.view.frame.size.width,self.view.frame.size.height);
+		noteContent.frame = CGRectMake(noteContent.frame.origin.x,100,self.view.frame.size.width-35,self.view.frame.size.height-150);
 		
 		
           editTitleField.text = tempTitle;
@@ -553,7 +571,7 @@
      else
          {
           editTitleField.hidden = TRUE;
-          noteContent.frame = CGRectMake(noteContent.frame.origin.x,0,self.view.frame.size.width,self.view.frame.size.height);
+          noteContent.frame = CGRectMake(noteContent.frame.origin.x,2,self.view.frame.size.width-35,self.view.frame.size.height-50);
           NSString *rawString = [editTitleField text];
           NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
           NSString *trimmed = [rawString stringByTrimmingCharactersInSet:whitespace];
@@ -572,6 +590,42 @@
 	
 	DebugLog(@"editable %@",result);
 	
+}
+CGRect activeField,orgBounds;
+
+-(void)keyboardDidShow:(NSNotification*)aNotification {
+	
+	
+	if(editTitleField.isFirstResponder)
+	    {
+		activeField=editTitleField.frame;
+		self.view.frame=CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y-31, self.view.frame.size.width, self.view.frame.size.height);
+	    }
+	else if (flag2 ==1)
+	    {
+		activeField=noteContent.frame;
+		self.view.frame=CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y-100, self.view.frame.size.width, self.view.frame.size.height);
+	    }
+	flag=1;
+	[UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+	[UIView commitAnimations];
+	
+}
+-(void)shiftwebview{
+	if(flag ==0){
+		self.view.frame=CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y-100, self.view.frame.size.width, self.view.frame.size.height);
+		flag=1;
+	}
+	
+}
+-(void)keyboardDidHide:(NSNotification*)aNotification {
+	self.view.frame=orgBounds;
+	[UIView commitAnimations];
+	if(flag2 !=1){
+		flag = 0;}
+}
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+	return YES;
 }
 
 - (void)increaseZoomFactorRange {

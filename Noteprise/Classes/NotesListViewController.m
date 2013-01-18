@@ -164,7 +164,6 @@
  }*/
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration{
 	orgTableHeight = notesTbl.frame.size.height;
-	NSLog(@"...notesTbl origin....%f",notesTbl.frame.origin.y);
 	orgBarOriginY = bottom_bar.frame.origin.y;
 	[self changeSegmentControlBtnsWithOrientationAndDevice];
 }
@@ -484,99 +483,13 @@
 	[self hideDoneToastMsg:nil];
 	loadingLbl.hidden = YES;
 }
-	//-(void)searchByTag:(NSString*)searchTag {
-	//     if(![Utility isBlank:searchTag]){
-	//          [listOfNotes removeAllObjects];
-	//          EDAMNoteFilter * filter  = nil;
-	//          EDAMTag * tag = nil;
-	//
-	//          for(EDAMTag * aTag in tags)
-	//              {
-	//               if([[aTag name] rangeOfString:searchTag options:NSCaseInsensitiveSearch].location!=NSNotFound){
-	//                    tag = aTag;
-	//
-	//               }
-	//              }
-	//          if(tag){
-	//               @try {
-	//                    [Utility showCoverScreen];
-	//                    [self showLoadingLblWithText:progress_dialog_tag_search_message];
-	//                    for (int i = 0; i < [noteBooks count]; i++) {
-	//
-	//                              // Accessing notebook
-	//                         EDAMNotebook* notebook = (EDAMNotebook*)[noteBooks objectAtIndex:i];
-	//                         EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
-	//                              // Creating & configuring filter to load specific notebook
-	//                         filter = [[EDAMNoteFilter alloc] init];
-	//                         [filter setNotebookGuid:[notebook guid]];
-	//
-	//
-	//
-	//
-	//                              //Search By Tag
-	//                         if([tag guid])
-	//                              [filter setTagGuids:[NSArray arrayWithObject:[tag guid]]];
-	//
-	//                              // Searching on the Evernote API
-	//                         [noteStore findNotesWithFilter:filter offset:0 maxNotes:100 success:^(EDAMNoteList *noteList){
-	//                              for (EDAMNote *noteRead in noteList.notes) {
-	//                                        // Populating the arrays
-	//                                   NSMutableDictionary *noteListDict = [[NSMutableDictionary alloc]init];
-	//                                   [noteListDict setValue:[noteRead title] forKey:NOTE_KEY];
-	//                                   [noteListDict setValue:[noteRead guid] forKey:NOTE_GUID_KEY];
-	//                                   [listOfNotes addObject:noteListDict];
-	//                                   [noteListDict release];
-	//                              }
-	//                              NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-	//                              listOfNotes = [[listOfNotes sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
-	//                              DebugLog(@"listOfItems: tag%@",listOfNotes);
-	//                              [self reloadNotesTable];
-	//                         } failure:^(NSError *error) {
-	//                              [Utility hideCoverScreen];
-	//                              loadingLbl.hidden = YES;
-	//                              DebugLog(@" findNotesWithFilter error %@", error);
-	//                              [Utility showExceptionAlert:error.description];
-	//                         }];
-	//                    }
-	//               }
-	//               @catch (EDAMSystemException *exception) {
-	//                    [Utility hideCoverScreen];
-	//                    [self hideDoneToastMsg:nil];
-	//                    [Utility showExceptionAlert:exception.description];
-	//               }
-	//               @catch (EDAMNotFoundException *exception) {
-	//                    [Utility hideCoverScreen];
-	//                    [self hideDoneToastMsg:nil];
-	//                    [Utility showExceptionAlert:SOME_ERROR_OCCURED_MESSAGE];
-	//               }
-	//               @catch (id exception) {
-	//                    [Utility hideCoverScreen];
-	//                    [self hideDoneToastMsg:nil];
-	//                    DebugLog(@"Recvd Exception");
-	//                    [Utility showExceptionAlert:ERROR_LISTING_NOTE_MSG];
-	//               }
-	//          }
-	//          else{
-	//               [Utility hideCoverScreen];
-	//               [self hideDoneToastMsg:nil];
-	//               [Utility showAlert:no_note_found_with_tag_search_message];
-	//               [self reloadNotesTable];
-	//          }
-	//     }
-	//     else{
-	//          [Utility hideCoverScreen];
-	//          [self hideDoneToastMsg:nil];
-	//          [Utility showAlert:note_please_enter_text_for_search_message];
-	//          [self reloadNotesTable];
-	//     }
-	//}
 
 -(void)searchNotes:(NSString*)searchingKeyword {
+	
 	searchKeyword = searchingKeyword;
 	[searchResults removeAllObjects];__block int flag=0;
 	if((![Utility isBlank:searchingKeyword])){
 		@try {
-			NSLog(@"Notebooks to search:%@",noteBooks);
 			for (int i = 0; i < [noteBooks count]; i++)
 			    {
 					// Accessing notebook
@@ -665,7 +578,6 @@
 		// If keyboard is visible, return
 	if (keyboardVisible)
 	    {
-		NSLog(@"Keyboard is already visible. Ignoring notification.");
 		return;
 	    }
 		// Get the size of the keyboard.
@@ -677,7 +589,7 @@
 	
 		// Save the current location so we can restore
 		// when keyboard is dismissed
-	tempHeight = notesTbl.frame.size.height;
+	tempHeight = notesTbl.frame.size.height+40;
 	if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight) {
 		
 		notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, self.view.frame.size.width, notesTbl.frame.size.height-keyboardSize.width+searchBar.frame.size.height);

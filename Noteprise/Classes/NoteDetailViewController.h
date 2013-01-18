@@ -8,7 +8,7 @@
 static int editBtnTag = 1;
 static int saveBtnTag = 2;
 
-@interface NoteDetailViewController : UIViewController <UIWebViewDelegate,SFRestDelegate,UIActionSheetDelegate,UITextFieldDelegate>{
+@interface NoteDetailViewController : UIViewController <UIWebViewDelegate,SFRestDelegate,UIActionSheetDelegate,UITextFieldDelegate,UIGestureRecognizerDelegate>{
      NSString *orgNoteTitle;
      UINavigationBar * noteNavigation;
           //UITextView * noteContent;
