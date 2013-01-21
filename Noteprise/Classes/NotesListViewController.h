@@ -19,6 +19,7 @@
 #define NOTEBOOK_KEY @"notebook"
 #define TAG_KEY @"tag"
 #define READABLE @"readable"
+static int i;
 @interface NotesListViewController : UIViewController <UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,AddNotesViewDelegate,MyPopoverDelegate>{
      
      
@@ -52,6 +53,7 @@
     float orgTableOriginY;
     float orgBarOriginY;
      int flag1,flag2;
+	
 }
 
 @property(nonatomic,retain) NSArray *noteBooks;

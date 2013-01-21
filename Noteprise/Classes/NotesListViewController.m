@@ -589,14 +589,30 @@
 	
 		// Save the current location so we can restore
 		// when keyboard is dismissed
-	tempHeight = notesTbl.frame.size.height+40;
-	if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight) {
+	if(i==0){
+		tempHeight = notesTbl.frame.size.height;
+	}
+	else{
+		tempHeight = notesTbl.frame.size.height-searchBar.frame.size.height;
 		
-		notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, self.view.frame.size.width, notesTbl.frame.size.height-keyboardSize.width+searchBar.frame.size.height);
+	}
+	if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight) {
+		if(i==0){
+			notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, self.view.frame.size.width, notesTbl.frame.size.height-keyboardSize.width+searchBar.frame.size.height);
+		}
+		else{
+			notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, self.view.frame.size.width, notesTbl.frame.size.height-keyboardSize.width);
+			
+		}
 	}
 	else {
-		
-		notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, notesTbl.frame.size.width, notesTbl.frame.size.height-keyboardSize.height+searchBar.frame.size.height);
+		if(i==0){
+			notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, notesTbl.frame.size.width, notesTbl.frame.size.height-keyboardSize.height+searchBar.frame.size.height);
+		}
+		else{
+			notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, notesTbl.frame.size.width, notesTbl.frame.size.height-keyboardSize.height);
+			
+		}
 	}
 	bottom_bar.frame=CGRectMake(0,notesTbl.frame.origin.y+notesTbl.frame.size.height, self.view.frame.size.width,bottom_bar.frame.size.height);
 	keyboardVisible = YES;
@@ -614,7 +630,8 @@
 	
 	if(flag2!=1)
 	    {
-		notesTbl.frame = CGRectMake(0, searchBar.frame.size.height, self.view.frame.size.width, tempHeight);
+		i=1;
+		notesTbl.frame = CGRectMake(0, searchBar.frame.size.height, self.view.frame.size.width, tempHeight+searchBar.frame.size.height);
 	    }
 	else{
 		flag2 = 0;
