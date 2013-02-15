@@ -106,11 +106,36 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
                dialog_imgView.hidden = YES;
                loadingLbl.hidden = YES;
           }
-                                      failure:^(NSError *error) {
-                                           DebugLog(@"error %@", error);
-                                           [Utility hideCoverScreen];
-                                           dialog_imgView.hidden = YES;
-                                           loadingLbl.hidden = YES;
+                                      failure:^(NSError *error)
+                                      {
+                                          DebugLog(@"error %@", error);
+                                          
+                                          //Hide loading indicator
+                                          [Utility hideCoverScreen];
+                                          dialog_imgView.hidden = YES;
+                                          loadingLbl.hidden = YES;
+                                          
+                                          //Show error message
+                                          UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"Noteprise"
+                                                                                              message:@""
+                                                                                             delegate:self
+                                                                                    cancelButtonTitle:@"OK"
+                                                                                    otherButtonTitles:nil];
+                                          
+                                          alertView.tag = ERROR_LOADING_CONTENT_ALERT_TAG;
+                                          
+                                          if(error.code == -3000)
+                                          {
+                                              alertView.message = NETWORK_UNAVAILABLE_MSG;
+                                          }
+                                          else
+                                          {
+                                              alertView.message = @"An error occured.";
+                                              
+                                          }
+                                          
+                                          [alertView show];
+                                          [alertView release];
                                       }];
                // NSArray *noteBooks = (NSArray *)[[Evernote sharedInstance] listNotebooks];
           
@@ -130,6 +155,20 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
      
      [super viewDidLoad];
 }
+
+
+#pragma mark -
+#pragma mark - UIAlertViewDelegate Methods
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(alertView.tag == ERROR_LOADING_CONTENT_ALERT_TAG)
+    {
+        [delegate evernoteCreationFailedListener];
+    }
+}
+
+
 
 - (void)keyboardWillShow:(NSNotification*)notification {
      DebugLog(@"%d",[titleNote isFirstResponder]);
@@ -195,41 +234,49 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
  *
  ************************************************************/
 
--(IBAction)createNoteEvernote:(id)sender{
-     NSMutableString *bodyTxt =(NSMutableString *) [bodyTxtView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML"];
-     DebugLog(@"outerhtml:%@",bodyTxt);
-     if([titleNote.text isEqualToString:@""] || [bodyTxt isEqualToString:@""] || [bodyTxt isEqualToString:@"<br>"]){
-          UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Missing Field" message:NOTE_CREATION_ALL_FIELDS_REQUIRED_MSG delegate:nil cancelButtonTitle:ALERT_NEUTRAL_BUTTON_TEXT otherButtonTitles:nil, nil];
-          [alert show];
-          [alert release];
-          return;
-     }
-          // Closing controls
-     [titleNote resignFirstResponder];
-     [bodyTxtView resignFirstResponder];
-     
-          //get current user location
-     locationManager = [[CLLocationManager alloc] init];
-     locationManager.delegate = self;
-     locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
-     locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
-     BOOL locationAllowed = [CLLocationManager locationServicesEnabled];
-     if (locationAllowed==NO) {
-          UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Service Disabled"
-                                                          message:LOCATION_TRACKING_DISABLED_MSG
-                                                         delegate:nil
-                                                cancelButtonTitle:@"OK"
-                                                otherButtonTitles:nil];
-          [alert show];
-          [alert release];
-          [self createEvernoteWithUserLocation:0.0 longitude:0.0];
-     } else {
-          [locationManager startUpdatingLocation];
-          dialog_imgView.hidden = NO;
-          loadingLbl.text = ATTACHING_USER_LOCATION_TO_NOTE_MSG;
-               //[loadingLbl sizeToFit];
-          loadingLbl.hidden = NO;
-     }
+-(IBAction)createNoteEvernote:(id)sender
+{
+    if([Utility checkNetwork])
+    {
+         NSMutableString *bodyTxt =(NSMutableString *) [bodyTxtView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML"];
+         DebugLog(@"outerhtml:%@",bodyTxt);
+         if([titleNote.text isEqualToString:@""] || [bodyTxt isEqualToString:@""] || [bodyTxt isEqualToString:@"<br>"]){
+              UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Missing Field" message:NOTE_CREATION_ALL_FIELDS_REQUIRED_MSG delegate:nil cancelButtonTitle:ALERT_NEUTRAL_BUTTON_TEXT otherButtonTitles:nil, nil];
+              [alert show];
+              [alert release];
+              return;
+         }
+              // Closing controls
+         [titleNote resignFirstResponder];
+         [bodyTxtView resignFirstResponder];
+         
+              //get current user location
+         locationManager = [[CLLocationManager alloc] init];
+         locationManager.delegate = self;
+         locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
+         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
+         BOOL locationAllowed = [CLLocationManager locationServicesEnabled];
+         if (locationAllowed==NO) {
+              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Service Disabled"
+                                                              message:LOCATION_TRACKING_DISABLED_MSG
+                                                             delegate:nil
+                                                    cancelButtonTitle:@"OK"
+                                                    otherButtonTitles:nil];
+              [alert show];
+              [alert release];
+              [self createEvernoteWithUserLocation:0.0 longitude:0.0];
+         } else {
+              [locationManager startUpdatingLocation];
+              dialog_imgView.hidden = NO;
+              loadingLbl.text = ATTACHING_USER_LOCATION_TO_NOTE_MSG;
+                   //[loadingLbl sizeToFit];
+              loadingLbl.hidden = NO;
+         }
+    }
+    else
+    {
+        [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
+    }
 }
 -(void)createEvernoteWithUserLocation:(double)latitude longitude:(double)longitude
 {
@@ -295,8 +342,10 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
                       });
                      }
                                   failure:^(NSError *error) {
-                                       dispatch_async(dispatch_get_main_queue(), ^(void) {
+                                       dispatch_async(dispatch_get_main_queue(), ^(void)
+                                      {
                                             DebugLog(@"create note::::::::error %@", error);
+                                          
                                             [Utility showAlert:error.description];
                                             dialog_imgView.hidden = YES;
                                             loadingLbl.hidden = YES;

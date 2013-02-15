@@ -11,7 +11,7 @@
 - (void)evernoteCreatedSuccessfullyListener;
 - (void)evernoteCreationFailedListener;
 @end
-@interface AddNoteViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate,UIPickerViewDataSource,CLLocationManagerDelegate,UIWebViewDelegate> {
+@interface AddNoteViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate,UIPickerViewDataSource,CLLocationManagerDelegate,UIWebViewDelegate, UIAlertViewDelegate> {
           //UIPickerView * notebookPicker;
      CLLocationManager *locationManager;
      NSMutableArray *listOfItems;

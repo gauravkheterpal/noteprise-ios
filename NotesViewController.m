@@ -44,35 +44,60 @@
      [super didReceiveMemoryWarning];
 }
 
--(void) fetchDataFromEvernote {
-     
-     @try {
-          EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
+
+-(void) fetchDataFromEvernote
+{
+    @try
+    {
+         EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
           
-          if(selectedSegment == 1){
-			[noteStore listNotebooksWithSuccess:^(NSArray *noteBooksArr) {
-				DebugLog(@"notebooks fetched: %@", noteBooksArr);
-				noteBooks = [noteBooksArr retain];
-				[self reloadNotebookNotes:noteBooks];
-				DebugLog(@"notebooks: %@", noteBooks);
-			}
-								   failure:^(NSError *error) {
-									   DebugLog(@"error %@", error);
-								   }];
-		}
-          else{
+         if(selectedSegment == 1)
+         {
+		     [noteStore listNotebooksWithSuccess:^(NSArray *noteBooksArr)
+             {
+                 DebugLog(@"notebooks fetched: %@", noteBooksArr);
+                 noteBooks = [noteBooksArr retain];
+                 [self reloadNotebookNotes:noteBooks];
+                 DebugLog(@"notebooks: %@", noteBooks);
+             }
 			
-			[noteStore listTagsWithSuccess: ^(NSArray *tagsArr) {
-				DebugLog(@"tagsArr fetched: %@", tagsArr);
-				tags = [tagsArr retain];
-				[self reloadTagNotes:tags];
-				DebugLog(@"tagsArr: %@", tagsArr); }
-							   failure:^(NSError *error) {DebugLog(@"error %@", error);}
+             failure:^(NSError *error)
+             {
+			     DebugLog(@"error %@", error);
+                 
+                 //Hide loading indicator
+                 [Utility hideCoverScreen];
+                 
+                 
+                 [self showError:error];
+                 
+             }];
+		 }
+         else
+         {
+		     [noteStore listTagsWithSuccess: ^(NSArray *tagsArr)
+             {
+                 DebugLog(@"tagsArr fetched: %@", tagsArr);
+                 tags = [tagsArr retain];
+                 [self reloadTagNotes:tags];
+                 DebugLog(@"tagsArr: %@", tagsArr);
+             }
+			 failure:^(NSError *error)
+             {
+                 DebugLog(@"error %@", error);
+                 
+                 //Hide loading indicator
+                 [Utility hideCoverScreen];
+                 
+                 [self showError:error];
+             }
+              
 			 ];
-          }
-          
+         }
      }
-     @catch (EDAMUserException *exception) {
+    
+     @catch (EDAMUserException *exception)
+    {
           DebugLog(@"Recvd Exception:%d",exception.errorCode );
           [Utility showAlert:EVERNOTE_LOGIN_FAILED_MSG];
      }
@@ -88,9 +113,25 @@
 }
 
 
+-(void)showError:(NSError *)error
+{   
+    if(error.code == -3000)
+    {
+        [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
+    }
+    else
+    {
+        [Utility showAlert:@"An error occured."];
+        
+    }    
+}
+
+
+
+
 
 -(void)reloadNotebookNotes:(NSArray*)notebooks {
-     
+    
      @try {
           if(self.selectedSegment == 1)
               {

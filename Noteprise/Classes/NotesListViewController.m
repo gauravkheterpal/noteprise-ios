@@ -775,35 +775,44 @@
 
 -(IBAction)addNote:(id)sender
 {
-	AddNoteViewController *addNoteVCntrl = [[AddNoteViewController alloc]init];
-	addNoteVCntrl.delegate =self;
-	UINavigationController *addNoteNavCntrl = [[UINavigationController alloc] initWithRootViewController:addNoteVCntrl];
-	addNoteNavCntrl.navigationBar.barStyle = UIBarStyleBlackOpaque;
-		//[addNoteNavCntrl.navigationBar setBackgroundImage:[UIImage imageNamed:@"blue_bcg_iPhone.png"]];
-	if ([addNoteNavCntrl.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
-		[addNoteNavCntrl.navigationBar setBackgroundImage:[UIImage imageNamed:@"blue_bcg_iPhone.png"] forBarMetrics:UIBarMetricsDefault];
-		addNoteNavCntrl.navigationBar.tintColor = [UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1];
-	}
-	if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    if([Utility checkNetwork])
     {
-		[self dissmissPopover];
-		UIPopoverController *popoverSettings = [[UIPopoverController alloc] initWithContentViewController:addNoteNavCntrl];
-		addNoteVCntrl.contentSizeForViewInPopover =CGSizeMake(320, 400);
-		popoverController = popoverSettings;
-		[popoverSettings presentPopoverFromBarButtonItem:addNoteBtn
-						    permittedArrowDirections:UIPopoverArrowDirectionAny
-										animated:YES];
-		
-	}
+        AddNoteViewController *addNoteVCntrl = [[AddNoteViewController alloc]init];
+        addNoteVCntrl.delegate =self;
+        UINavigationController *addNoteNavCntrl = [[UINavigationController alloc] initWithRootViewController:addNoteVCntrl];
+        addNoteNavCntrl.navigationBar.barStyle = UIBarStyleBlackOpaque;
+            //[addNoteNavCntrl.navigationBar setBackgroundImage:[UIImage imageNamed:@"blue_bcg_iPhone.png"]];
+        if ([addNoteNavCntrl.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
+            [addNoteNavCntrl.navigationBar setBackgroundImage:[UIImage imageNamed:@"blue_bcg_iPhone.png"] forBarMetrics:UIBarMetricsDefault];
+            addNoteNavCntrl.navigationBar.tintColor = [UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1];
+        }
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            [self dissmissPopover];
+            UIPopoverController *popoverSettings = [[UIPopoverController alloc] initWithContentViewController:addNoteNavCntrl];
+            addNoteVCntrl.contentSizeForViewInPopover =CGSizeMake(320, 400);
+            popoverController = popoverSettings;
+            [popoverSettings presentPopoverFromBarButtonItem:addNoteBtn
+                                permittedArrowDirections:UIPopoverArrowDirectionAny
+                                            animated:YES];
+            
+        }
+        else
+        {
+            UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered
+                                                                target:self action:@selector(dismissModalView)];
+            addNoteVCntrl.navigationItem.leftBarButtonItem = cancelButton;
+            [self.navigationController presentModalViewController:addNoteNavCntrl animated:YES];
+            [cancelButton release];
+        }
+    }
     else
     {
-		UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered
-														    target:self action:@selector(dismissModalView)];
-		addNoteVCntrl.navigationItem.leftBarButtonItem = cancelButton;
-		[self.navigationController presentModalViewController:addNoteNavCntrl animated:YES];
-		[cancelButton release];
-	}
+        [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
+    }
 }
+
+
 -(void)dismissModalView {
 	[self.navigationController dismissModalViewControllerAnimated:YES];
 }
@@ -822,7 +831,8 @@
 	//[self fetchNoteBasedOnSelectedSegement];
 }
 
-- (void)evernoteCreationFailedListener{
+- (void)evernoteCreationFailedListener
+{
 	if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 		[self dissmissPopover];
 	else {

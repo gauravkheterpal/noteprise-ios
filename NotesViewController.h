@@ -17,7 +17,8 @@
 #define NOTEBOOK_KEY @"notebook"
 #define TAG_KEY @"tag"
 #define READABLE @"readable"
-@interface NotesViewController : UITableViewController{
+@interface NotesViewController : UITableViewController
+{
      NSArray *noteBooks;
      NSArray * tags;
 }
