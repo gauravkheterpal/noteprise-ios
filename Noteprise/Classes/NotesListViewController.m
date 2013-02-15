@@ -25,14 +25,15 @@
 	return self;
 }
 	//viewDidLoad method declared in RootViewController.m
-- (void)viewDidLoad {
-	
+- (void)viewDidLoad
+{	
 	[super viewDidLoad];
 	flag1 = 0;
 	flag2 = 0;
 	searchBar.text = @"";
 	orgTableOriginY = notesTbl.frame.origin.y;
-	if (SYSTEM_VERSION_LESS_THAN(@"5.0")) {
+	if (SYSTEM_VERSION_LESS_THAN(@"5.0"))
+    {
 		addNoteBtn.enabled = NO;
 	}
 	if ([self.navigationController.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
@@ -81,14 +82,16 @@
 		else
 			orientation = @"potrait";
 	}
+    
+    [searchOptionsChoiceCntrl setTintColor:[UIColor colorWithRed:169.0f/255.0f green:216.0f/255.0f blue:238.0f/255.0f alpha:1]];
 		//Customize segement control buttons
-	[searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_all_pressed_%@_%@.png",device,orientation]] forSegmentAtIndex:0];
-	[searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_notebook_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:1];
-	[searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_tag_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:2];
+	//[searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_all_pressed_%@_%@.png",device,orientation]] forSegmentAtIndex:0];
+	//[searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_notebook_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:1];
+	//[searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_tag_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:2];
 	
-	[searchOptionsChoiceCntrl setBackgroundColor:[UIColor whiteColor]];
+	//[searchOptionsChoiceCntrl setBackgroundColor:[UIColor whiteColor]];
 		//Customize segement control search bar
-	for (UIView *subview in searchBar.subviews) {
+	for (UIView * subview in searchBar.subviews) {
 		if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
 			DebugLog(@"width:%f",subview.frame.size.width);
 			UIView *bg = [[UIView alloc] initWithFrame:subview.frame];
@@ -118,17 +121,17 @@
 			orientation = @"potrait";
 	}
 		//Customize segement control buttons
-	if([searchOptionsChoiceCntrl selectedSegmentIndex] == 0)
-		[searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_all_pressed_%@_%@.png",device,orientation]] forSegmentAtIndex:0];
-	else
-		[searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_all_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:0];
-	if([searchOptionsChoiceCntrl selectedSegmentIndex] == 1)
-		[searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_notebook_pressed_%@_%@.png",device,orientation]] forSegmentAtIndex:1];
-	else [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_notebook_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:1];
-	if([searchOptionsChoiceCntrl selectedSegmentIndex] == 2)
-		[searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_tag_pressed_%@_%@.png",device,orientation]] forSegmentAtIndex:2];
-	else
-		[searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_tag_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:2];
+//	if([searchOptionsChoiceCntrl selectedSegmentIndex] == 0)
+//		[searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_all_pressed_%@_%@.png",device,orientation]] forSegmentAtIndex:0];
+//	else
+//		[searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_all_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:0];
+//	if([searchOptionsChoiceCntrl selectedSegmentIndex] == 1)
+//		[searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_notebook_pressed_%@_%@.png",device,orientation]] forSegmentAtIndex:1];
+//	else [searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_notebook_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:1];
+//	if([searchOptionsChoiceCntrl selectedSegmentIndex] == 2)
+//		[searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_tag_pressed_%@_%@.png",device,orientation]] forSegmentAtIndex:2];
+//	else
+//		[searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_tag_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:2];
 }
 
 
@@ -140,9 +143,9 @@
 	[super viewDidAppear:animated];
 	if(flag1 == 0)
 	    {
-		searchbarFrame = searchBar.frame;
-		orgTableHeight = notesTbl.frame.size.height;
-		orgBarOriginY = bottom_bar.frame.origin.y;
+            searchbarFrame = searchBar.frame;
+            orgTableHeight = notesTbl.frame.size.height;
+            orgBarOriginY = bottom_bar.frame.origin.y;
 	    }
 	
 }
@@ -167,6 +170,8 @@
 	orgBarOriginY = bottom_bar.frame.origin.y;
 	[self changeSegmentControlBtnsWithOrientationAndDevice];
 }
+
+
 -(IBAction)showSettings:(id)sender{
 	SettingsViewController *settingsView = [[SettingsViewController alloc]initWithStyle:UITableViewStyleGrouped];
 	settingsView.popover_delegate = self;
@@ -188,36 +193,58 @@
 										animated:YES];
 			//[popoverSettings release];
 		
-	} else {
+	}
+    else
+    {
 		UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered
 														    target:self action:@selector(dismissModalView)];
 		settingsView.navigationItem.leftBarButtonItem = cancelButton;
 		[self.navigationController presentModalViewController:settingsNavCntrl animated:YES];
 		[cancelButton release];
 	}
-	
-	
 }
--(IBAction)showNotes:(id)sender{
-	[self changeSegmentControlBtnsWithOrientationAndDevice];
-	searchBar.userInteractionEnabled = NO;
-	searchBar.alpha = 0.75;
-	searchBar.text = @"";
-	searchKeyword = @"";
-	[Utility showCoverScreen];
-	[self showLoadingLblWithText:LOADING_MSG];
-	[searchBar resignFirstResponder];
-	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^(void) {
-			// Loading all the notebooks linked to the account using the evernote API
-		[self fetchDataFromEverNote];
-	});
-	
+
+
+-(IBAction)showNotes:(id)sender
+{
+    //Clear table data as a new segment is selected
+    if(searchOptionsChoiceCntrl.selectedSegmentIndex == 0)
+    {
+        [listOfNotes removeAllObjects];
+    }
+    else if(searchOptionsChoiceCntrl.selectedSegmentIndex == 1)
+    {
+        [listOfNotebooks removeAllObjects];
+    }
+    else if(searchOptionsChoiceCntrl.selectedSegmentIndex == 1)
+    {
+        [listOfTags removeAllObjects];
+    }
+    
+    [notesTbl reloadData];
+    
+    
+    [self changeSegmentControlBtnsWithOrientationAndDevice];
+    searchBar.userInteractionEnabled = NO;
+    searchBar.alpha = 0.75;
+    searchBar.text = @"";
+    searchKeyword = @"";
+    
+    //Show loading indicator
+    [Utility showCoverScreen];
+    [self showLoadingLblWithText:LOADING_MSG];
+    
+    [searchBar resignFirstResponder];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^(void) {
+            // Loading all the notebooks linked to the account using the evernote API
+        [self fetchDataFromEverNote];
+    });
 }
 
 
 -(void)logout
 {
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logout" message:@"Are you want to logout ?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logout" message:@"Are you sure you want to logout?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
 	[alert show];
 	[alert release];
 	
@@ -235,7 +262,8 @@
 	
 }
 
--(void)fetchDataFromEverNote{
+-(void)fetchDataFromEverNote
+{
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^(void) {
 			// Loading all the notebook & tags linked to the account using the evernote API
 		@try {
@@ -245,8 +273,11 @@
 				noteBooks = [noteBooksArr retain];
 				DebugLog(@"notebooks: %@", noteBooks);
 			}
-								   failure:^(NSError *error) {
+								   failure:^(NSError *error)
+                                   {
 									   DebugLog(@"error %@", error);
+//                                       
+
 								   }];
 			
 			[noteStore listTagsWithSuccess: ^(NSArray *tagsArr) {
@@ -272,9 +303,9 @@
 								[self searchNotes:searchBar.text];
 							}
 							else
-							    {
-								[self listAllNotebooks];
-							    }
+                            {
+                                [self listAllNotebooks];
+                            }
 							
 							break;
 						case 2:
@@ -295,8 +326,27 @@
 					
 				});
 			}
-							   failure:^(NSError *error) {
-								   DebugLog(@"error %@", error);
+							   failure:^(NSError *error)
+                               {
+								   DebugLog(@"error %@", error.localizedFailureReason);
+
+                                   //Hide loading indicator
+                                   [Utility hideCoverScreen];
+                                   [self hideDoneToastMsg:nil];
+                                   
+                                   
+                                   //Show error message
+                                   if(error.code == -3000)
+                                   {
+                                       [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
+                                       
+                                   }
+                                   else
+                                   {
+                                       [Utility showAlert:@"An error occured."];
+                                       
+                                   }
+
 							   }];
 			
 		}
@@ -315,13 +365,17 @@
 }
 
 
--(void)fetchNoteBasedOnSelectedSegement {
-	[Utility showCoverScreen];
-	[self showLoadingLblWithText:LOADING_MSG];
-	[searchBar resignFirstResponder];
-		// Loading all the notebooks linked to the account using the evernote API
-	[self fetchDataFromEverNote];
+-(void)fetchNoteBasedOnSelectedSegement
+{
+    [Utility showCoverScreen];
+    [self showLoadingLblWithText:LOADING_MSG];
+
+    [searchBar resignFirstResponder];
+    // Loading all the notebooks linked to the account using the evernote API
+    [self fetchDataFromEverNote];
 }
+
+
 -(void)showLoadingLblWithText:(NSString*)Loadingtext{
 	dialog_imgView.hidden = NO;
 	loadingLbl.text = Loadingtext;
@@ -335,47 +389,67 @@
 
 -(void)listAllNotes
 {
-	
 	[listOfNotes removeAllObjects];
-	@try {
-		for (int i = 0; i < [noteBooks count]; i++)
+	
+    @try
+    {
+        if([noteBooks count] > 0)
+        {
+            for (int i = 0; i < [noteBooks count]; i++)
 		    {
 			
 				// listing all the notes for every notebook
 			
 				// Accessing notebook
-			EDAMNotebook* notebook = (EDAMNotebook*)[noteBooks objectAtIndex:i];
+                EDAMNotebook * notebook = (EDAMNotebook*)[noteBooks objectAtIndex:i];
 				// Creating & configuring filter to load specific notebook
-			EDAMNoteFilter * filter = [[EDAMNoteFilter alloc] init];
-			[filter setNotebookGuid:[notebook guid]];
-			[filter setOrder:NoteSortOrder_TITLE];
-			[filter setAscending:YES];
+                EDAMNoteFilter * filter = [[EDAMNoteFilter alloc] init];
+                [filter setNotebookGuid:[notebook guid]];
+                [filter setOrder:NoteSortOrder_TITLE];
+                [filter setAscending:YES];
 			
 				// Searching on the Evernote API
-			EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
+                EvernoteNoteStore * noteStore = [EvernoteNoteStore noteStore];
 			
-			[noteStore findNotesWithFilter:filter offset:0 maxNotes:100 success:^(EDAMNoteList *noteList){
-				for (EDAMNote *noteRead in noteList.notes) {
-						// Populating the arrays
-					NSMutableDictionary *noteListDict = [[NSMutableDictionary alloc]init];
+                [noteStore findNotesWithFilter:filter offset:0 maxNotes:100 success:^(EDAMNoteList *noteList){
+                    if([noteList.notes count] > 0)
+                    {
+                        for (EDAMNote *noteRead in noteList.notes)
+                        {
+                            // Populating the arrays
+                            NSMutableDictionary *noteListDict = [[NSMutableDictionary alloc]init];
 					
-					[noteListDict setValue:[noteRead title] forKey:NOTE_KEY];
-					[noteListDict setValue:[noteRead guid] forKey:NOTE_GUID_KEY];
-					NSString *readProp = noteRead.attributes.contentClass?@"Yes":@"No";
-					[noteListDict setValue:readProp forKey:READABLE];
-					[listOfNotes addObject:noteListDict];
-					[self reloadNotesTable];
-					[noteListDict release];
-				}
-				NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-				listOfNotes = [[listOfNotes sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
-				DebugLog(@"SORTED list Of all Notes: new%@",listOfNotes);
-			} failure:^(NSError *error) {
-				DebugLog(@" findNotesWithFilter error %@", error);
-				[Utility showExceptionAlert:error.description];
-			}];
+                            [noteListDict setValue:[noteRead title] forKey:NOTE_KEY];
+                            [noteListDict setValue:[noteRead guid] forKey:NOTE_GUID_KEY];
+                            NSString *readProp = noteRead.attributes.contentClass?@"Yes":@"No";
+                            [noteListDict setValue:readProp forKey:READABLE];
+                            [listOfNotes addObject:noteListDict];
+                            [self reloadNotesTable];
+                            [noteListDict release];
+                        }
+				
+                        NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+                        listOfNotes = [[listOfNotes sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
+                        DebugLog(@"SORTED list Of all Notes: new%@",listOfNotes);
+                    }
+                    else
+                    {
+                        [self reloadNotesTable];
+                    }
+                }
+                failure:^(NSError *error)
+                {
+                    [self reloadNotesTable];
+                    DebugLog(@" findNotesWithFilter error %@", error);
+                    [Utility showExceptionAlert:error.description];
+                }];
 			
 		    }
+        }
+        else
+        {
+            [self reloadNotesTable];           
+        }
 		
 	}
 	@catch (EDAMSystemException *exception) {
@@ -394,30 +468,35 @@
 -(void)listAllNotebooks {
 	[listOfNotebooks removeAllObjects];
 	@try {
-		for (int i = 0; i < [noteBooks count]; i++)
-		    {
-			
+        if([noteBooks count] > 0)
+        {
+            for (int i = 0; i < [noteBooks count]; i++)
+		    {			
 				// listing all the notes for every notebook
 			
 				// Accessing notebook
-			EDAMNotebook* notebook = (EDAMNotebook*)[noteBooks objectAtIndex:i];
+                EDAMNotebook* notebook = (EDAMNotebook*)[noteBooks objectAtIndex:i];
 				// Creating & configuring filter to load specific notebook
-			EDAMNoteFilter * filter = [[EDAMNoteFilter alloc] init];
-			[filter setNotebookGuid:[notebook guid]];
-			[filter setOrder:NoteSortOrder_TITLE];
-			[filter setAscending:YES];
-			NSMutableDictionary *noteListDict = [[NSMutableDictionary alloc]init];
+                EDAMNoteFilter * filter = [[EDAMNoteFilter alloc] init];
+                [filter setNotebookGuid:[notebook guid]];
+                [filter setOrder:NoteSortOrder_TITLE];
+                [filter setAscending:YES];
+                NSMutableDictionary *noteListDict = [[NSMutableDictionary alloc]init];
 			
-			[noteListDict setValue:[notebook name] forKey:NOTEBOOK_KEY];
+                [noteListDict setValue:[notebook name] forKey:NOTEBOOK_KEY];
 			
 			
-			[listOfNotebooks addObject:noteListDict];
-			[self reloadNotesTable];
+                [listOfNotebooks addObject:noteListDict];
+                [self reloadNotesTable];
 			
-			[noteListDict release];
-			
+                [noteListDict release];
 			
 		    }
+        }
+        else
+        {
+            [self reloadNotesTable];
+        }
 		
 	}
 	@catch (EDAMSystemException *exception) {
@@ -432,41 +511,57 @@
 	}
 	
 }
--(void)listAllTags{
+
+
+-(void)listAllTags
+{
 	[listOfTags removeAllObjects];
 	@try {
-		for (int i = 0; i < [tags count]; i++)
+        if([tags count] > 0)
+        {
+            for (int i = 0; i < [tags count]; i++)
 		    {
-			
-				// Accessing notebook
-			EDAMTag * tag = (EDAMTag*)[tags objectAtIndex:i];
+			    // Accessing notebook
+                EDAMTag * tag = (EDAMTag*)[tags objectAtIndex:i];
 				// Creating & configuring filter to load specific notebook
-			EDAMNoteFilter * filter = [[EDAMNoteFilter alloc] init];
-			[filter setNotebookGuid:[tag guid]];
-			[filter setOrder:NoteSortOrder_TITLE];
-			[filter setAscending:YES];
-				// Populating the arrays
-			NSMutableDictionary *noteListDict = [[NSMutableDictionary alloc]init];
-			
-			[noteListDict setValue:[tag name] forKey:TAG_KEY];
-			[listOfTags addObject:noteListDict];
-			[self reloadNotesTable];
-			[noteListDict release];
+                EDAMNoteFilter * filter = [[EDAMNoteFilter alloc] init];
+                [filter setNotebookGuid:[tag guid]];
+                [filter setOrder:NoteSortOrder_TITLE];
+                [filter setAscending:YES];
+				
+                // Populating the arrays
+                NSMutableDictionary *noteListDict = [[NSMutableDictionary alloc]init];
+				[noteListDict setValue:[tag name] forKey:TAG_KEY];
+                [listOfTags addObject:noteListDict];
+                [self reloadNotesTable];
+                [noteListDict release];
 		    }
-		
+		}
+        else
+        {
+            [self reloadNotesTable];
+        }
 	}
-	@catch (EDAMSystemException *exception) {
+    
+	@catch (EDAMSystemException *exception)
+    {
 		[Utility showExceptionAlert:exception.description];
 	}
-	@catch (EDAMNotFoundException *exception) {
+    
+	@catch (EDAMNotFoundException *exception)
+    {
 		[Utility showExceptionAlert:SOME_ERROR_OCCURED_MESSAGE];
 	}
-	@catch (id exception) {
+    
+	@catch (id exception)
+    {
 		DebugLog(@"Recvd Exception");
 		[Utility showExceptionAlert:ERROR_LISTING_NOTE_MSG];
 	}
-	
 }
+
+
+
 -(void)reloadNotesTable {
 	[Utility hideCoverScreen];
 	[searchBar resignFirstResponder];
@@ -678,7 +773,8 @@
 	
 }
 
--(IBAction)addNote:(id)sender {
+-(IBAction)addNote:(id)sender
+{
 	AddNoteViewController *addNoteVCntrl = [[AddNoteViewController alloc]init];
 	addNoteVCntrl.delegate =self;
 	UINavigationController *addNoteNavCntrl = [[UINavigationController alloc] initWithRootViewController:addNoteVCntrl];
@@ -688,7 +784,8 @@
 		[addNoteNavCntrl.navigationBar setBackgroundImage:[UIImage imageNamed:@"blue_bcg_iPhone.png"] forBarMetrics:UIBarMetricsDefault];
 		addNoteNavCntrl.navigationBar.tintColor = [UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1];
 	}
-	if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+	if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
 		[self dissmissPopover];
 		UIPopoverController *popoverSettings = [[UIPopoverController alloc] initWithContentViewController:addNoteNavCntrl];
 		addNoteVCntrl.contentSizeForViewInPopover =CGSizeMake(320, 400);
@@ -697,7 +794,9 @@
 						    permittedArrowDirections:UIPopoverArrowDirectionAny
 										animated:YES];
 		
-	} else {
+	}
+    else
+    {
 		UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered
 														    target:self action:@selector(dismissModalView)];
 		addNoteVCntrl.navigationItem.leftBarButtonItem = cancelButton;
@@ -712,14 +811,17 @@
 	if(popoverController!=nil)
 		[popoverController dismissPopoverAnimated:YES];
 }
-- (void)evernoteCreatedSuccessfullyListener{
+
+- (void)evernoteCreatedSuccessfullyListener
+{
 	if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 		[self dissmissPopover];
 	else {
 		[self.navigationController dismissModalViewControllerAnimated:YES];
 	}
-	[self fetchNoteBasedOnSelectedSegement];
+	//[self fetchNoteBasedOnSelectedSegement];
 }
+
 - (void)evernoteCreationFailedListener{
 	if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 		[self dissmissPopover];

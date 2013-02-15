@@ -345,8 +345,8 @@ NSString * const kDefaultLoginHost = @"login.salesforce.com";
     }
     else {
         // show alert and retry
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Salesforce Error" 
-                                                        message:[NSString stringWithFormat:@"Can't connect to salesforce: %@", error]
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Salesforce Error"
+                                                        message:[NSString stringWithFormat:@"Can't connect to salesforce."]
                                                        delegate:self
                                               cancelButtonTitle:@"Retry"
                                               otherButtonTitles: nil];

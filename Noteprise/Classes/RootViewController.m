@@ -365,6 +365,8 @@ NSMutableDictionary *dict;
     [loadingSpinner stopAnimating];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
+
+
 #pragma mark - SFRestAPIDelegate
 #import "Utility.h"
 - (void)request:(SFRestRequest *)request didLoadResponse:(id)jsonResponse {
@@ -387,10 +389,18 @@ NSMutableDictionary *dict;
             [selectedRow removeAllObjects];
             if([self.dataRows count] == 0) {
                 [Utility showAlert:[NSString stringWithFormat:@"%@%@",NO_RECORD_IN_SF_OBJ_MSG,self.title]];
+                UIView *no_record_view =[[UIView alloc]initWithFrame:CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height)];
+                no_record_view.backgroundColor=[UIColor whiteColor];
+                UILabel *no_record_lbl =  [[UILabel alloc]initWithFrame:CGRectMake(self.view.center.x-100,self.view.center.y,200,50)];
+                no_record_lbl.text=@"No record for this object";
+                [no_record_view addSubview:no_record_lbl];
+                [self.view addSubview:no_record_view];
+                self.navigationItem.rightBarButtonItem = nil;
             }
-            [self reloadTable];
-            dict = [self fillingDictionary:cellIndexData];
-            
+            else{
+                [self reloadTable];
+                dict = [self fillingDictionary:cellIndexData];
+            }
         }
         else{
             [Utility showAlert:ERROR_LISTING_SF_OBJECT_MSG];

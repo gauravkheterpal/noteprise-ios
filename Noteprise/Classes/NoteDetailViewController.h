@@ -5,10 +5,13 @@
 
 #import <UIKit/UIKit.h>
 #import "SFRestAPI.h"
+
+#define kAnimationDuration  0.2f
+
 static int editBtnTag = 1;
 static int saveBtnTag = 2;
 
-@interface NoteDetailViewController : UIViewController <UIWebViewDelegate,SFRestDelegate,UIActionSheetDelegate,UITextFieldDelegate,UIGestureRecognizerDelegate>{
+@interface NoteDetailViewController : UIViewController <UIWebViewDelegate,SFRestDelegate,UIActionSheetDelegate,UITextFieldDelegate, UIAlertViewDelegate, UIGestureRecognizerDelegate>{
      NSString *orgNoteTitle;
      UINavigationBar * noteNavigation;
           //UITextView * noteContent;
@@ -25,10 +28,19 @@ static int saveBtnTag = 2;
      UITextField *editTitleField;
      IBOutlet UIImageView *doneImgView;
      UIActionSheet *postToChatterOptionActionSheet;
-     IBOutlet UIBarButtonItem *saveToSFBarBtn;
-     IBOutlet UIBarButtonItem *postToChatterBarBtn;
-     NSString *tempTitle;
-     
+		//IBOutlet
+	IBOutlet UIToolbar *bottomBar;
+	UIBarButtonItem *flexible;
+
+	UIBarButtonItem *saveToSFBarBtn;
+		// IBOutlet
+	UIBarButtonItem *postToChatterBarBtn;
+    NSString *tempTitle;
+    
+    NSString * oldContent;
+    NSString * oldTitle;
+    
+    UIView * borderView;
 }
 
 @property(nonatomic, assign) NSString * guid;

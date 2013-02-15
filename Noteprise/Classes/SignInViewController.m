@@ -85,8 +85,10 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 205;
 -(IBAction)signin:(id)sender{
     if([Utility checkNetwork]) {
         EvernoteSession *session = [EvernoteSession sharedSession];
-        [session authenticateWithViewController:self completionHandler:^(NSError *error) {
-            if (error || !session.isAuthenticated) {
+        [session authenticateWithViewController:self completionHandler:^(NSError *error)
+        {
+            if (error || !session.isAuthenticated)
+            {
                 // authentication failed :(
                 // show an alert, etc
                 // ...
@@ -100,7 +102,9 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 205;
                 [self loadNotesListAfterAuthentication];
             } 
         }];
-    } else {
+    }
+    else
+    {
         [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
     }
 }

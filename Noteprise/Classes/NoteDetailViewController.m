@@ -33,31 +33,35 @@
  *
  ************************************************************/
 int flag=0,flag2 =0;
+
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
 	
-     [super viewDidLoad];
-	[[noteContent layer] setCornerRadius:10];
-		//[noteContent setClipsToBounds:YES];
+    flexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+	NSArray *items = [NSArray arrayWithObjects:flexible,saveToSFBarBtn,postToChatterBarBtn, nil];
+	[bottomBar setItems:items];
+	saveToSFBarBtn.enabled=YES;
+	postToChatterBarBtn.enabled=YES;
 	
-		// Create colored border using CALayer property
-	[[noteContent layer] setBorderColor:
-	 [[UIColor colorWithRed:0 green:0 blue:0 alpha:1] CGColor]];
-	[[noteContent layer] setBorderWidth:1];
-	
+    //noteContent.userInteractionEnabled = NO;
+    //[[noteContent layer] setCornerRadius:10];
+	//[noteContent setClipsToBounds:YES];
+	//[[noteContent layer] setBorderWidth: 0.0f];
 	noteContent.frame = CGRectMake(noteContent.frame.origin.x,noteContent.frame.origin.y+2,self.view.frame.size.width-35,self.view.frame.size.height-50);
 	
-     self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background_pattern_tableview.png"]];
-     orgNoteTitle = self.title;
-     tempTitle=orgNoteTitle;
+    self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background_pattern_tableview.png"]];
+    orgNoteTitle = self.title;
+    tempTitle=orgNoteTitle;
      
-     self.navigationItem.backBarButtonItem.tintColor = [UIColor whiteColor];
+    self.navigationItem.backBarButtonItem.tintColor = [UIColor whiteColor];
      
-     if (SYSTEM_VERSION_LESS_THAN(@"5.0")) {
+    if (SYSTEM_VERSION_LESS_THAN(@"5.0"))
+    {
           self.navigationItem.rightBarButtonItem = nil;
-     }
+    }
      else
-         {
+     {
           self.navigationItem.rightBarButtonItem.title = @"Edit";
           
           UIImage *editButtonImage = [UIImage imageNamed:@"Edit.png"];
@@ -68,7 +72,7 @@ int flag=0,flag2 =0;
           [editButton setBackgroundImage:editButtonImage forState:UIControlStateNormal];
           [editButton setBackgroundImage:editButtonSelectedImage forState:UIControlStateHighlighted];
           [editButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
-          [editButton setShowsTouchWhenHighlighted:YES];
+		[editButton setShowsTouchWhenHighlighted:YES];
           UIBarButtonItem *editBarbutton =[[UIBarButtonItem alloc] initWithCustomView:editButton];
           
           self.navigationItem.rightBarButtonItem = editBarbutton;
@@ -121,18 +125,44 @@ int flag=0,flag2 =0;
                       
                            //[noteContent loadHTMLString:content baseURL:nil];
                       textContent = (NSMutableString *)[[[Utility flattenNoteBody:content]stringByDecodingHTMLEntities] retain];
-                     }failure:^(NSError *error) {
+                     }failure:^(NSError *error)
+                   {
                           DebugLog(@"note::::::::error %@", error);
-                          [Utility hideCoverScreen];
-                          [loadingSpinner stopAnimating];
-                          dialog_imgView.hidden = YES;
-                          loadingLbl.hidden = YES;
+                       //Hide loading indicator
+                       [Utility hideCoverScreen];
+                       [loadingSpinner stopAnimating];
+                       dialog_imgView.hidden = YES;
+                       loadingLbl.hidden = YES;
+                       
+                       
+                       //Show error message
+                       UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"Noteprise"
+                                                                                       message:@""
+                                                                                      delegate:self
+                                                                             cancelButtonTitle:@"OK"
+                                                                             otherButtonTitles:nil];
+
+                       alertView.tag = ERROR_LOADING_CONTENT_ALERT_TAG;
+                       
+                       if(error.code == -3000)
+                       {
+                           alertView.message = NETWORK_UNAVAILABLE_MSG;
+                       }
+                       else
+                       {
+                           alertView.message = @"An error occured.";
+
+                       }
+                       
+                       [alertView show];
+                       [alertView release];
+                       
                      }];
-                    
+                   
                });
           }
           @catch (EDAMUserException *exception) {
-               
+              
                DebugLog(@"EDAMUserException reason:%@ name:%@",exception.reason,exception.name);
           }
           @catch (EDAMSystemException *exception) {
@@ -146,6 +176,9 @@ int flag=0,flag2 =0;
           [[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1]];
      
 }
+
+
+
 
 - (NSString *)getDataBetweenFromString:(NSString *)data leftString:(NSString *)leftData rightString:(NSString *)rightData leftOffset:(NSInteger)leftPos
 {
@@ -184,11 +217,17 @@ int flag=0,flag2 =0;
      }
 	
 }
-#pragma mark - UIAlertViewDelegate
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-     if (alertView.tag == CHATTER_POST_LIMIT_ALERT_TAG && alertView.cancelButtonIndex == buttonIndex) {
-     } else if (alertView.tag == CHATTER_POST_LIMIT_ALERT_TAG) {
+#pragma mark -
+#pragma mark - UIAlertViewDelegate Methods
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+     if (alertView.tag == CHATTER_POST_LIMIT_ALERT_TAG && alertView.cancelButtonIndex == buttonIndex)
+     {
+     }
+     else if (alertView.tag == CHATTER_POST_LIMIT_ALERT_TAG)
+     {
           [Utility showCoverScreen];
           [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_WALL_MSG];
                //truncationg note text to 1000 character for posting to Chatter
@@ -200,6 +239,11 @@ int flag=0,flag2 =0;
           SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];
           [[SFRestAPI sharedInstance] send:request delegate:self];
      }
+    else if(alertView.tag == ERROR_LOADING_CONTENT_ALERT_TAG)
+    {
+        //Go to previos page
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
      //0 Post to Wall
      //1 Post to chatter users
@@ -254,21 +298,29 @@ int flag=0,flag2 =0;
 }
 
 
--(IBAction)linkEvernoteToSF:(id)sender {
-     [self dismissPreviousPopover];
-     DebugLog(@"old obj:%@ \n old field:%@ \nfield value:%@ sf obje:%@",[Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY],[Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY],[Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY],[Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY]);
-     if(([Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY] == nil )&& ([Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] == nil)) {
-               //set previous selected mapping
-          [Utility showAlert:SF_OBJECT_FIELD_MISSING_MSG];
-          return;
-     }
-     else if(([Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY] == nil ) && [Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] !=nil && [Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] != nil) {
-               //set previous selected mapping
-          [Utility setValueInPref:[Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] forKey:SFOBJ_TO_MAP_KEY];
-          [Utility setValueInPref:[Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] forKey:SFOBJ_FIELD_TO_MAP_KEY];
-     }
-     [Utility showCoverScreen];
-     [self moveToSF];
+-(IBAction)linkEvernoteToSF:(id)sender
+{
+    if([Utility checkNetwork])
+    {
+         [self dismissPreviousPopover];
+         DebugLog(@"old obj:%@ \n old field:%@ \nfield value:%@ sf obje:%@",[Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY],[Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY],[Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY],[Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY]);
+         if(([Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY] == nil )&& ([Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] == nil)) {
+                   //set previous selected mapping
+              [Utility showAlert:SF_OBJECT_FIELD_MISSING_MSG];
+              return;
+         }
+         else if(([Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY] == nil ) && [Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] !=nil && [Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] != nil) {
+                   //set previous selected mapping
+              [Utility setValueInPref:[Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] forKey:SFOBJ_TO_MAP_KEY];
+              [Utility setValueInPref:[Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] forKey:SFOBJ_FIELD_TO_MAP_KEY];
+         }
+         [Utility showCoverScreen];
+         [self moveToSF];
+    }
+    else
+    {
+        [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
+    }
 }
 -(IBAction)postToChatter:(id)sender {
      if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -292,11 +344,15 @@ int flag=0,flag2 =0;
      CGRect frameimg = CGRectMake(0, 0, 27,27);
      if([ readProp isEqualToString:@"No"])
          {
-          if (self.navigationItem.rightBarButtonItem.tag == editBtnTag) {
-               saveToSFBarBtn.enabled = NO;
-               postToChatterBarBtn.enabled = NO;
-               
-               self.navigationItem.rightBarButtonItem.title = @"Save to Evernote";
+          if (self.navigationItem.rightBarButtonItem.tag == editBtnTag)
+          {   
+//            saveToSFBarBtn.enabled = NO;
+//            postToChatterBarBtn.enabled = NO;
+              //[[noteContent layer] setBorderColor:[[UIColor colorWithRed:0 green:0 blue:0 alpha:1] CGColor]];
+		
+              //[[noteContent layer] setBorderWidth:1];
+			  //noteContent.userInteractionEnabled=YES;
+				// self.navigationItem.rightBarButtonItem.title = @"Save to Evernote";
                
                UIImage* saveImg = [UIImage imageNamed:@"Save.png"];
                UIImage* saveDoneImg = [UIImage imageNamed:@"Save_down.png"];
@@ -304,17 +360,33 @@ int flag=0,flag2 =0;
                UIButton *saveButton = [[UIButton alloc] initWithFrame:frameimg];
                [saveButton setBackgroundImage:saveImg forState:UIControlStateNormal];
                [saveButton setBackgroundImage:saveDoneImg forState:UIControlStateHighlighted];
-               [saveButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
+               [saveButton addTarget:self action:@selector(editPage2:) forControlEvents:UIControlEventTouchUpInside];
                [saveButton setShowsTouchWhenHighlighted:YES];
-               UIBarButtonItem *saveBarButton =[[UIBarButtonItem alloc] initWithCustomView:saveButton];
+			UIBarButtonItem *saveBarButton =[[UIBarButtonItem alloc] initWithCustomView:saveButton];
+			
+			UIImage* cancelImg = [UIImage imageNamed:@"Cancel.png"];
+				//UIImage* editDownImg = [UIImage imageNamed:@"Edit_down.png"];
+			CGRect frameimg = CGRectMake(0, 0, 27,27);
+			UIButton *cancelButton = [[UIButton alloc] initWithFrame:frameimg];
+			[cancelButton setBackgroundImage:cancelImg forState:UIControlStateNormal];
+				//[cancelButton setBackgroundImage:editDownImg forState:UIControlStateNormal];
+			[cancelButton addTarget:self action:@selector(cancelUpdate:) forControlEvents:UIControlEventTouchUpInside];
+			[cancelButton setShowsTouchWhenHighlighted:YES];
+			UIBarButtonItem *cancelBarButton =[[UIBarButtonItem alloc] initWithCustomView:cancelButton];
+			
+			NSArray *items = [NSArray arrayWithObjects:flexible,saveBarButton,cancelBarButton, nil];
+			[bottomBar setItems:items];
+				//UIBarButtonItem *saveBarButton =[[UIBarButtonItem alloc] initWithCustomView:saveButton];
                
-               self.navigationItem.rightBarButtonItem = saveBarButton;
+			self.navigationItem.rightBarButtonItem = nil;
                [saveButton release];
-               self.navigationItem.rightBarButtonItem.tag = saveBtnTag;
+				// self.navigationItem.rightBarButtonItem.tag = saveBtnTag;
+				//			UIBarButtonItem *customItem = [[UIBarButtonItem alloc] initWithTitle:unblockContact style:UIBarButtonItemStyleBordered   target:self     action:@selector(onToolbarTapped:)];
+				//			customItem.tintColor = [UIColor blackColor];
 			
 			[Utility showCoverScreen];
 			[loadingSpinner startAnimating];
-			doneImgView.hidden = NO;
+			doneImgView.hidden = YES;
 			dialog_imgView.hidden = NO;
 			loadingLbl.text = @"Edit mode activating...";
 				//[loadingLbl sizeToFit];
@@ -324,71 +396,91 @@ int flag=0,flag2 =0;
                [self setWebViewKeyPressDetectionEnabled:YES];
                [self setWebViewTapDetectionEnabled:YES];
                [self increaseZoomFactorRange];
-          }
-          else if (self.navigationItem.rightBarButtonItem.tag == saveBtnTag) {
-               [self.view endEditing:YES];
-               saveToSFBarBtn.enabled = YES;
-               postToChatterBarBtn.enabled = YES;
-               self.navigationItem.rightBarButtonItem.title = @"Edit";
-               
-               
-               UIImage* editImg = [UIImage imageNamed:@"Edit.png"];
-               UIImage* editDownImg = [UIImage imageNamed:@"Edit_down.png"];
-               UIButton *editButton = [[UIButton alloc] initWithFrame:frameimg];
-               [editButton setBackgroundImage:editImg forState:UIControlStateNormal];
-               [editButton setBackgroundImage:editDownImg forState:UIControlStateHighlighted];
-               [editButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
-               [editButton setShowsTouchWhenHighlighted:YES];
-               UIBarButtonItem *editBarButton =[[UIBarButtonItem alloc] initWithCustomView:editButton];
-               
-               self.navigationItem.rightBarButtonItem = editBarButton;
-               [editButton release];
-               self.navigationItem.rightBarButtonItem.tag = editBtnTag;
-			NSString *rawString = [editTitleField text];
-			NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-			NSString *trimmed = [rawString stringByTrimmingCharactersInSet:whitespace];
+		    
+             
+              //Show border around webView
+              [self showBorderViewAroundWebView];
+              
+              //Keep track of old contents of WebView
+              if(oldContent != nil)
+              {
+                  [oldContent release];
+              }
+             
+              if(oldTitle != nil)
+              {
+                  [oldTitle release];
+              }
+             
+              oldTitle = [[NSString alloc] initWithFormat:@"%@", editTitleField.text];
+             
+              oldContent = [[NSString alloc]initWithFormat:@"%@", [noteContent stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"]];
+         }
+             
+		/* else if (self.navigationItem.rightBarButtonItem.tag == saveBtnTag) {
+		 [self.view endEditing:YES];
+		 saveToSFBarBtn.enabled = YES;
+		 postToChatterBarBtn.enabled = YES;
+		 self.navigationItem.rightBarButtonItem.title = @"Edit";
+		 
+		 
+		 UIImage* editImg = [UIImage imageNamed:@"Edit.png"];
+		 UIImage* editDownImg = [UIImage imageNamed:@"Edit_down.png"];
+		 UIButton *editButton = [[UIButton alloc] initWithFrame:frameimg];
+		 [editButton setBackgroundImage:editImg forState:UIControlStateNormal];
+		 [editButton setBackgroundImage:editDownImg forState:UIControlStateHighlighted];
+		 [editButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
+		 [editButton setShowsTouchWhenHighlighted:YES];
+		 UIBarButtonItem *editBarButton =[[UIBarButtonItem alloc] initWithCustomView:editButton];
+		 
+		 self.navigationItem.rightBarButtonItem = editBarButton;
+		 [editButton release];
+		 self.navigationItem.rightBarButtonItem.tag = editBtnTag;
+		 NSString *rawString = [editTitleField text];
+		 NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+		 NSString *trimmed = [rawString stringByTrimmingCharactersInSet:whitespace];
+		 
+		 if(trimmed.length == 0)
+		 {
+		 UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Text Error" message:@"Please enter valid text" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] autorelease];
+		 [alert show];
+		 saveToSFBarBtn.enabled = NO;
+		 postToChatterBarBtn.enabled = NO;
+		 
+		 self.navigationItem.rightBarButtonItem.title = @"Save to Evernote";
+		 
+		 UIImage* saveImg = [UIImage imageNamed:@"Save.png"];
+		 UIImage* saveDoneImg = [UIImage imageNamed:@"Save_down.png"];
+		 
+		 UIButton *saveButton = [[UIButton alloc] initWithFrame:frameimg];
+		 [saveButton setBackgroundImage:saveImg forState:UIControlStateNormal];
+		 [saveButton setBackgroundImage:saveDoneImg forState:UIControlStateHighlighted];
+		 [saveButton addTarget:self action:@selector(editPage2:) forControlEvents:UIControlEventTouchUpInside];
+		 [saveButton setShowsTouchWhenHighlighted:YES];
+		 UIBarButtonItem *saveBarButton =[[UIBarButtonItem alloc] initWithCustomView:saveButton];
+		 
+		 self.navigationItem.rightBarButtonItem = saveBarButton;
+		 [saveButton release];
+		 self.navigationItem.rightBarButtonItem.tag = saveBtnTag;
+		 editTitleField.text = @"";
+		 [self setWebViewKeyPressDetectionEnabled:YES];
+		 [self setWebViewTapDetectionEnabled:YES];
+		 [self increaseZoomFactorRange];
+		 
+		 }}*/
+		else
+		    {
 			
-			if(trimmed.length == 0)
-			    {
-				UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Text Error" message:@"Please enter valid text" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] autorelease];
-				[alert show];
-				saveToSFBarBtn.enabled = NO;
-				postToChatterBarBtn.enabled = NO;
-				
-				self.navigationItem.rightBarButtonItem.title = @"Save to Evernote";
-				
-				UIImage* saveImg = [UIImage imageNamed:@"Save.png"];
-				UIImage* saveDoneImg = [UIImage imageNamed:@"Save_down.png"];
-				
-				UIButton *saveButton = [[UIButton alloc] initWithFrame:frameimg];
-				[saveButton setBackgroundImage:saveImg forState:UIControlStateNormal];
-				[saveButton setBackgroundImage:saveDoneImg forState:UIControlStateHighlighted];
-				[saveButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
-				[saveButton setShowsTouchWhenHighlighted:YES];
-				UIBarButtonItem *saveBarButton =[[UIBarButtonItem alloc] initWithCustomView:saveButton];
-				
-				self.navigationItem.rightBarButtonItem = saveBarButton;
-				[saveButton release];
-				self.navigationItem.rightBarButtonItem.tag = saveBtnTag;
-				editTitleField.text = @"";
-				[self setWebViewKeyPressDetectionEnabled:YES];
-				[self setWebViewTapDetectionEnabled:YES];
-				[self increaseZoomFactorRange];
-				
-			    }
-			else
-			    {
-				
-				[self setContentEditable:NO];
-				[self setWebViewKeyPressDetectionEnabled:NO];
-				[self setWebViewTapDetectionEnabled:NO];
-				[self resignFirstResponder];
-				[noteContent resignFirstResponder];
-				[self updateNoteEvernote];
-				
-			    }
+			[self setContentEditable:NO];
+			[self setWebViewKeyPressDetectionEnabled:NO];
+			[self setWebViewTapDetectionEnabled:NO];
+			[self resignFirstResponder];
+			[noteContent resignFirstResponder];
+			[self updateNoteEvernote];
 			
-          }
+		    }
+		
+          
           
          }
      else
@@ -406,6 +498,112 @@ int flag=0,flag2 =0;
      
 }
 
+
+-(void)showBorderViewAroundWebView
+{
+    if(borderView == nil)
+    {
+        borderView = [[UIView alloc] init];
+        borderView.frame = CGRectMake(noteContent.frame.origin.x - 5, noteContent.frame.origin.y - 3, noteContent.frame.size.width + 10, noteContent.frame.size.height + 6);
+        [[borderView layer] setCornerRadius:10.0f];
+        [[borderView layer] setBorderWidth:1.0f];
+        [[borderView layer] setBorderColor:[[UIColor colorWithRed:0 green:0 blue:0 alpha:1] CGColor]];
+    }
+    
+    
+    [self.view addSubview:borderView];
+    [self.view sendSubviewToBack:borderView];
+}
+
+
+-(void)hideBorderViewAroundWebView
+{
+    if(borderView != nil)
+    {
+        [borderView removeFromSuperview];
+    }
+}
+
+
+-(void)editPage2:(id)sender
+{
+    if([Utility checkNetwork])
+    {
+        if([oldContent isEqualToString:[noteContent stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"]]
+           && [oldTitle isEqualToString:editTitleField.text])
+        {
+            UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:nil
+                                                                 message:@"No changes were made to note."
+                                                                delegate:self
+                                                       cancelButtonTitle:@"OK"
+                                                       otherButtonTitles:nil];
+            [alertView show];
+            [alertView release];
+        }
+        else
+        {
+            //Remove the tapGestureRecognizers
+            if([noteContent gestureRecognizers] != nil && [[noteContent gestureRecognizers] count] > 0)
+            {
+                [noteContent removeGestureRecognizer:[[noteContent gestureRecognizers] objectAtIndex:0]];
+            }
+            
+            //Hide border around webView
+            [self hideBorderViewAroundWebView];
+            
+            
+            NSString *rawString = [editTitleField text];
+            NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+            NSString *trimmed = [rawString stringByTrimmingCharactersInSet:whitespace];
+        
+            if(trimmed.length == 0)
+            {
+                UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Text Error" message:@"Please enter valid text." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] autorelease];
+                [alert show];
+                editTitleField.text = @"";
+                [self setWebViewKeyPressDetectionEnabled:YES];
+                [self setWebViewTapDetectionEnabled:YES];
+                [self increaseZoomFactorRange];
+            }
+            else
+            {
+                [self setContentEditable:NO];
+                [self setWebViewKeyPressDetectionEnabled:NO];
+                [self setWebViewTapDetectionEnabled:NO];
+                [self resignFirstResponder];
+                [noteContent resignFirstResponder];
+                [self updateNoteEvernote];
+            }
+        }
+    }
+    else
+    {
+        //Show network unavailable message
+        [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
+    }
+}
+
+
+-(void)cancelUpdate:(id)sender
+{
+    //Remove the tapGestureRecognizers
+    if([noteContent gestureRecognizers] != nil && [[noteContent gestureRecognizers] count] > 0)
+    {
+        [noteContent removeGestureRecognizer:[[noteContent gestureRecognizers] objectAtIndex:0]];
+    }
+    
+    //Hide border around webView
+    [self hideBorderViewAroundWebView];
+    
+	[self setContentEditable:NO];
+	[self setWebViewKeyPressDetectionEnabled:NO];
+	[self setWebViewTapDetectionEnabled:NO];
+	[self resignFirstResponder];
+	NSArray *items = [NSArray arrayWithObjects: nil];
+	[bottomBar setItems:items];
+	[self viewDidLoad];
+	//noteContent.userInteractionEnabled = NO;
+}
 
 -(void)moveToSF{
      RootViewController * rootVC = [[RootViewController alloc] init];
@@ -522,7 +720,6 @@ int flag=0,flag2 =0;
 
 - (void)setContentEditable:(BOOL)isEditable {
      
-	
 	if(isEditable)
          {
 		UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(shiftwebview)];
@@ -593,37 +790,58 @@ int flag=0,flag2 =0;
 }
 CGRect activeField,orgBounds;
 
--(void)keyboardDidShow:(NSNotification*)aNotification {
-	
-	
-	if(editTitleField.isFirstResponder)
-	    {
+-(void)keyboardDidShow:(NSNotification*)aNotification
+{
+    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+    [UIView setAnimationDuration:kAnimationDuration];
+    
+    if(editTitleField.isFirstResponder)
+	{
 		activeField=editTitleField.frame;
-		self.view.frame=CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y-31, self.view.frame.size.width, self.view.frame.size.height);
-	    }
+		self.view.frame=CGRectMake(self.view.frame.origin.x, -31, self.view.frame.size.width, self.view.frame.size.height);
+	}
 	else if (flag2 ==1)
-	    {
+	{
 		activeField=noteContent.frame;
-		self.view.frame=CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y-100, self.view.frame.size.width, self.view.frame.size.height);
-	    }
+		self.view.frame=CGRectMake(self.view.frame.origin.x, -100, self.view.frame.size.width, self.view.frame.size.height);
+	}
+    
 	flag=1;
-	[UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-	[UIView commitAnimations];
 	
+	[UIView commitAnimations];
 }
--(void)shiftwebview{
-	if(flag ==0){
-		self.view.frame=CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y-100, self.view.frame.size.width, self.view.frame.size.height);
+
+-(void)shiftwebview
+{
+	if(flag ==0)
+    {
+        [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+        [UIView setAnimationDuration:kAnimationDuration];
+        
+		self.view.frame=CGRectMake(self.view.frame.origin.x, -100, self.view.frame.size.width, self.view.frame.size.height);
+        [UIView commitAnimations];
+        
 		flag=1;
 	}
-	
 }
--(void)keyboardDidHide:(NSNotification*)aNotification {
+
+-(void)keyboardDidHide:(NSNotification*)aNotification
+{
+    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+    [UIView setAnimationDuration:kAnimationDuration];
+    
 	self.view.frame=orgBounds;
-	[UIView commitAnimations];
-	if(flag2 !=1){
-		flag = 0;}
+	
+    [UIView commitAnimations];
+	
+    
+    if(flag2 !=1)
+    {
+		flag = 0;
+    }
 }
+
+
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
 	return YES;
 }
@@ -662,7 +880,8 @@ CGRect activeField,orgBounds;
      return NO;
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
      [Utility showAlert:[error localizedDescription]];
 }
 
@@ -734,7 +953,7 @@ CGRect activeField,orgBounds;
                                 // Alerting the user that the note was created
 					  [Utility showCoverScreen];
 					  [loadingSpinner startAnimating];
-					  doneImgView.hidden = NO;
+					  doneImgView.hidden = YES;
 					  dialog_imgView.hidden = NO;
 					  loadingLbl.text = @"Saving Note...";
 						  //[loadingLbl sizeToFit];
@@ -746,12 +965,27 @@ CGRect activeField,orgBounds;
                 }
                              failure:^(NSError *error) {
                                   dispatch_async(dispatch_get_main_queue(), ^(void) {
-                                       DebugLog(@"update note::::::::error %@", error);
-                                       [Utility showAlert:error.description];
-                                       dialog_imgView.hidden = YES;
-                                       loadingLbl.hidden = YES;
-                                       [loadingSpinner stopAnimating];
-                                       [Utility hideCoverScreen];
+                                      DebugLog(@"update note::::::::error %@", error);
+                                      //[Utility showAlert:error.description];
+                                      
+                                      //Hide loading indicator
+                                      dialog_imgView.hidden = YES;
+                                      loadingLbl.hidden = YES;
+                                      [loadingSpinner stopAnimating];
+                                      [Utility hideCoverScreen];
+                                      
+//                                      //Show error message
+//                                      if(error.code == -3000)
+//                                      {
+//                                          [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
+//                                      }
+//                                      else
+//                                      {
+//                                          [Utility showAlert:error.localizedDescription];
+//                                          
+//                                      }
+                                      
+                                      
                                        isErrorCreatingnote = YES;
                                        self.navigationItem.rightBarButtonItem.title = @"Edit";
                                        
@@ -792,6 +1026,12 @@ CGRect activeField,orgBounds;
           }
           
      });
+	NSArray *items = [NSArray arrayWithObjects: nil];
+	
+		//[items removeObjectAtIndex:0];
+	[bottomBar setItems:items];
+	[self viewDidLoad];
+	//noteContent.userInteractionEnabled = NO;
 }
 -(void)showLoadingLblWithText:(NSString*)Loadingtext{
      [loadingSpinner startAnimating];

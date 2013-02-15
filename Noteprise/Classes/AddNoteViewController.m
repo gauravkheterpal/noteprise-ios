@@ -22,18 +22,17 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 @synthesize titleNote, sendNote,imageView,delegate;
 
 
-
-     // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
      
-     self.title = @"Add Note";
-     selectedNotebookIndex = 0;
-     bodyTxtView.layer.cornerRadius = 8;
+    self.title = @"Add Note";
+    selectedNotebookIndex = 0;
+    bodyTxtView.layer.cornerRadius = 8;
 	bodyTxtView.layer.borderWidth = 2;
 	bodyTxtView.layer.borderColor = [[UIColor blackColor] CGColor];
-     UIImage *buttonImage = [UIImage imageNamed:@"Create.png"];
-     UIImage *buttonSelectedImage = [UIImage imageNamed:@"Create_down.png"];
+    UIImage *buttonImage = [UIImage imageNamed:@"Create.png"];
+    UIImage *buttonSelectedImage = [UIImage imageNamed:@"Create_down.png"];
      
           //create the button and assign the image
      UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -512,7 +511,8 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 }
 
      // The user has selected the image
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
 	[picker dismissModalViewControllerAnimated:YES];
 	imageView.image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
      

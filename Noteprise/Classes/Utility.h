@@ -36,16 +36,18 @@
 #define FIELD_LABEL @"label"
 #define FIELD_LIMIT @"length"
 
+
 #define CHATTER_POST_LIMIT_ALERT_TAG               2000
 #define CHATTER_POST_TO_GROUP_LIMIT_ALERT_TAG      3000
 #define SAVE_TO_SFOBJ_LIMIT_ALERT_TAG              4000
+#define ERROR_LOADING_CONTENT_ALERT_TAG            5000
 
 #pragma mark - Generic Messages
 #define NETWORK_UNAVAILABLE_MSG  @"No network connectivity!"
 #define ALERT_POSITIVE_BUTTON_TEXT @"Yes"
 #define ALERT_NEGATIVE_BUTTON_TEXT @"No"
 #define ALERT_NEUTRAL_BUTTON_TEXT @"OK"
-#define LOADING_MSG @"Loading.."
+#define LOADING_MSG @"Loading..."
 #define DONE_MSG @"Done!"
 #define SOME_ERROR_OCCURED_MESSAGE @"An error occurred. Please try again."
 

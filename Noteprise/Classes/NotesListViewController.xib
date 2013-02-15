@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="7.10">
 	<data>
-		<int key="IBDocument.SystemTarget">1536</int>
-		<string key="IBDocument.SystemVersion">12C60</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
+		<int key="IBDocument.SystemTarget">1552</int>
+		<string key="IBDocument.SystemVersion">12C3103</string>
+		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1930</string>
+			<string key="NS.object.0">2083</string>
 		</object>
 		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -82,7 +82,7 @@
 					<object class="IBUIImageView" id="749673749">
 						<reference key="NSNextResponder" ref="119234428"/>
 						<int key="NSvFlags">-2147483355</int>
-						<string key="NSFrame">{{50, 163}, {220, 91}}</string>
+						<string key="NSFrame">{{50, 143}, {220, 91}}</string>
 						<reference key="NSSuperview" ref="119234428"/>
 						<reference key="NSNextKeyView" ref="975928190"/>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -95,7 +95,7 @@
 					<object class="IBUILabel" id="975928190">
 						<reference key="NSNextResponder" ref="119234428"/>
 						<int key="NSvFlags">-2147483355</int>
-						<string key="NSFrame">{{57, 212}, {207, 38}}</string>
+						<string key="NSFrame">{{57, 192}, {207, 38}}</string>
 						<reference key="NSSuperview" ref="119234428"/>
 						<reference key="NSNextKeyView" ref="882786972"/>
 						<bool key="IBUIOpaque">NO</bool>
@@ -650,7 +650,7 @@
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
-			<real value="1536" key="NS.object.0"/>
+			<real value="1552" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.InterfaceBuilder3</string>
@@ -675,6 +675,6 @@
 				<string>{30, 30}</string>
 			</object>
 		</object>
-		<string key="IBCocoaTouchPluginVersion">1930</string>
+		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
 </archive>
