@@ -377,7 +377,8 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
      }
      
 }
--(void)hideDoneToastMsg:(id)sender{
+-(void)hideDoneToastMsg:(id)sender
+{
 	dialog_imgView.hidden = YES;
      loadingLbl.hidden = YES;
      doneImgView.hidden = YES;
@@ -385,6 +386,8 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
     
      [delegate evernoteCreatedSuccessfullyListener];
 }
+
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
           //Perform an action
 	[bodyTxtView resignFirstResponder];

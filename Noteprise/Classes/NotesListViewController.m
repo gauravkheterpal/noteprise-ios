@@ -870,8 +870,12 @@
 - (void)evernoteCreatedSuccessfullyListener
 {
 	if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
 		[self dissmissPopover];
-	else {
+        [self fetchNoteBasedOnSelectedSegement];
+    }
+	else
+    {
 		[self.navigationController dismissModalViewControllerAnimated:YES];
 	}
 	//[self fetchNoteBasedOnSelectedSegement];
