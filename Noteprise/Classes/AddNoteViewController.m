@@ -382,6 +382,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
      loadingLbl.hidden = YES;
      doneImgView.hidden = YES;
      [loadingSpinner stopAnimating];
+    
      [delegate evernoteCreatedSuccessfullyListener];
 }
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

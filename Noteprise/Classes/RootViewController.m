@@ -81,11 +81,14 @@ NSMutableDictionary *dict;
 -(void)viewDidAppear:(BOOL)animated{
     
     selectedAccIdx = nil;
+    
     // create a toolbar where we can place some buttons
     [self initToolbarButtons];
     
 }
--(void)initToolbarButtons {
+
+-(void)initToolbarButtons
+{
     CustomBlueToolbar* toolbar = [[CustomBlueToolbar alloc]
                                   initWithFrame:CGRectMake(0, 0, 125, 44)];
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && (self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight))
@@ -147,6 +150,8 @@ NSMutableDictionary *dict;
     [toolbar release];
     
 }
+
+
 
 -(IBAction)toggleEditMode{
 	DebugLog(@"toggleEditMode");
@@ -344,20 +349,38 @@ NSMutableDictionary *dict;
         [self createSFRequestToSaveSelectedNoteWithContent:truncateNoteContent];
     }
 }
+
+
 #pragma mark -
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return YES;
 }
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration{
-    //[self changeBkgrndImgWithOrientation];
-    [self initToolbarButtons];
+
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration
+{
+    if(no_record_view == nil)
+    {
+        //[self changeBkgrndImgWithOrientation];
+        [self initToolbarButtons];
+    }
+    else
+    {
+        //Set no_record_label in the view's center
+        no_record_view.frame = self.view.frame;
+        no_record_lbl.center = self.view.center;
+    }
 }
+
+
 -(void)hideToastMsg:(id)sender{
 	dialog_imgView.hidden = YES;
     loadingLbl.hidden = YES;
     [loadingSpinner stopAnimating];
 }
+
+
 -(void)hideDoneToastMsg:(id)sender{
 	dialog_imgView.hidden = YES;
     loadingLbl.hidden = YES;
@@ -373,9 +396,11 @@ NSMutableDictionary *dict;
     DebugLog(@"request:%@",[request description]);
     DebugLog(@"jsonResponse:%@",jsonResponse);
     
-    if([[request description] rangeOfString:@"SELECT"].location != NSNotFound){
+    if([[request description] rangeOfString:@"SELECT"].location != NSNotFound)
+    {
         
-        if([[jsonResponse objectForKey:@"errors"] count]==0){
+        if([[jsonResponse objectForKey:@"errors"] count]==0)
+        {
             [Utility hideCoverScreen];
             dialog_imgView.hidden = YES;
             loadingLbl.hidden = YES;
@@ -387,22 +412,32 @@ NSMutableDictionary *dict;
             NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"Name"  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
             self.dataRows = [records sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
             [selectedRow removeAllObjects];
-            if([self.dataRows count] == 0) {
+            
+            if([self.dataRows count] == 0)
+            {
                 [Utility showAlert:[NSString stringWithFormat:@"%@%@",NO_RECORD_IN_SF_OBJ_MSG,self.title]];
-                UIView *no_record_view =[[UIView alloc]initWithFrame:CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height)];
+                
+                no_record_view =[[UIView alloc]initWithFrame:CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height)];
                 no_record_view.backgroundColor=[UIColor whiteColor];
-                UILabel *no_record_lbl =  [[UILabel alloc]initWithFrame:CGRectMake(self.view.center.x-100,self.view.center.y,200,50)];
-                no_record_lbl.text=@"No record for this object";
-                [no_record_view addSubview:no_record_lbl];
                 [self.view addSubview:no_record_view];
+                //UILabel *no_record_lbl =  [[UILabel alloc]initWithFrame:CGRectMake(self.view.center.x-100,self.view.center.y,200,50)];
+
+                no_record_lbl =  [[UILabel alloc]initWithFrame:CGRectMake(0, 0, no_record_view.frame.size.width, no_record_view.frame.size.height)];
+                no_record_lbl.text=@"No record for this object.";
+                no_record_lbl.textAlignment = NSTextAlignmentCenter;
+                no_record_lbl.center = no_record_view.center;
+                [no_record_view addSubview:no_record_lbl];
+                                
                 self.navigationItem.rightBarButtonItem = nil;
             }
-            else{
+            else
+            {
                 [self reloadTable];
                 dict = [self fillingDictionary:cellIndexData];
             }
         }
-        else{
+        else
+        {
             [Utility showAlert:ERROR_LISTING_SF_OBJECT_MSG];
             [Utility hideCoverScreen];
         }

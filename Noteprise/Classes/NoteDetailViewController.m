@@ -201,17 +201,32 @@ int flag=0,flag2 =0;
 	orgBounds=self.view.frame;
      
 }
--(void)changeBkgrndImgWithOrientation {
-     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
+
+
+
+-(void)changeBkgrndImgWithOrientation
+{
+     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+     {
           if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
+          {
                backgroundImgView.image = [UIImage imageNamed:@"bgE-480x287.png"];
-          else {
+              
+
+          }
+          else
+          {
                backgroundImgView.image = [UIImage imageNamed:@"bgE-320x480.png"];
           }
-     } else if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+     }
+     else if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+     {
           if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
+          {
                backgroundImgView.image = [UIImage imageNamed:@"bgE-1024x704.png"];
-          else {
+          }
+          else
+          {
                backgroundImgView.image = [UIImage imageNamed:@"bgE-768x1024.png"];
           }
      }
@@ -303,19 +318,24 @@ int flag=0,flag2 =0;
     if([Utility checkNetwork])
     {
          [self dismissPreviousPopover];
+        
          DebugLog(@"old obj:%@ \n old field:%@ \nfield value:%@ sf obje:%@",[Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY],[Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY],[Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY],[Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY]);
-         if(([Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY] == nil )&& ([Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] == nil)) {
+        
+        if(([Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY] == nil )&& ([Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] == nil))
+        {
                    //set previous selected mapping
               [Utility showAlert:SF_OBJECT_FIELD_MISSING_MSG];
               return;
-         }
-         else if(([Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY] == nil ) && [Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] !=nil && [Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] != nil) {
+        }
+        else if(([Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] == nil || [Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY] == nil ) && [Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] !=nil && [Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] != nil)
+        {
                    //set previous selected mapping
               [Utility setValueInPref:[Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] forKey:SFOBJ_TO_MAP_KEY];
               [Utility setValueInPref:[Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] forKey:SFOBJ_FIELD_TO_MAP_KEY];
-         }
-         [Utility showCoverScreen];
-         [self moveToSF];
+        }
+        [Utility showCoverScreen];
+        
+        [self moveToSF];
     }
     else
     {
@@ -499,6 +519,16 @@ int flag=0,flag2 =0;
 }
 
 
+-(void)setBorderViewFrame
+{
+    //Set frame of BorderView
+    if(borderView != nil)
+    {
+        borderView.frame = CGRectMake(noteContent.frame.origin.x - 5, noteContent.frame.origin.y - 3, noteContent.frame.size.width + 10, noteContent.frame.size.height + 6);
+    }
+}
+
+
 -(void)showBorderViewAroundWebView
 {
     if(borderView == nil)
@@ -605,15 +635,16 @@ int flag=0,flag2 =0;
 	//noteContent.userInteractionEnabled = NO;
 }
 
--(void)moveToSF{
-     RootViewController * rootVC = [[RootViewController alloc] init];
-     rootVC.fileName = self.title;
-     rootVC.noteContent = textContent;
+-(void)moveToSF
+{
+    RootViewController * rootVC = [[RootViewController alloc] init];
+    rootVC.fileName = self.title;
+    rootVC.noteContent = textContent;
           //rootVC.noteContent = noteContent.text;
-     [self.navigationController pushViewController:rootVC animated:YES];
-     [rootVC release];
+    [self.navigationController pushViewController:rootVC animated:YES];
+    [rootVC release];
      
-     [Utility hideCoverScreen];
+    [Utility hideCoverScreen];
      
 }
 
@@ -635,13 +666,23 @@ int flag=0,flag2 =0;
      return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
      
 }
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration{
-     [self changeBkgrndImgWithOrientation];
+
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self changeBkgrndImgWithOrientation];
+    
+    //Set border view's frame
+    [self setBorderViewFrame];
+    
+    
 		//self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
 	orgBounds = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
 	flag2=1;
 	flag=0;
 }
+
+
 #pragma mark - View lifecycle
 - (void)viewDidUnload
 {
@@ -718,11 +759,11 @@ int flag=0,flag2 =0;
 }
 
 
-- (void)setContentEditable:(BOOL)isEditable {
-     
+- (void)setContentEditable:(BOOL)isEditable
+{
 	if(isEditable)
-         {
-		UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(shiftwebview)];
+    {
+	    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(shiftwebview)];
 		tap.numberOfTapsRequired = 1;
 		tap.delegate = self;
 		
@@ -730,64 +771,70 @@ int flag=0,flag2 =0;
 		[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];    // Do any additional setup after loading the view from its nib.
 		
 		[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
-          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
-               if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
-                   {
-                    editTitleField = [[[UITextField alloc]initWithFrame:CGRectMake(15,31,1000,30)] autorelease];
-                   }
-               else if(self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown || self.interfaceOrientation == UIInterfaceOrientationPortrait)
-                   {
-                    editTitleField = [[[UITextField alloc]initWithFrame:CGRectMake(15,31,730,30)] autorelease];
-                   }
-          }
-          else{
-               if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
-                   {
-                    editTitleField = [[[UITextField alloc]initWithFrame:CGRectMake(15,31,445,30)] autorelease];
-                   }
-               else if(self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown || self.interfaceOrientation == UIInterfaceOrientationPortrait)
-                   {
-                    editTitleField = [[[UITextField alloc]initWithFrame:CGRectMake(15,31,295,30)] autorelease];
-                   }
-               
-               
-          }
+        
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
+            {
+                editTitleField = [[[UITextField alloc]initWithFrame:CGRectMake(15,31,1000,30)] autorelease];
+            }
+            else if(self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown || self.interfaceOrientation == UIInterfaceOrientationPortrait)
+            {
+                editTitleField = [[[UITextField alloc]initWithFrame:CGRectMake(15,31,730,30)] autorelease];
+            }
+        }
+        else
+        {
+            if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
+            {
+                editTitleField = [[[UITextField alloc]initWithFrame:CGRectMake(15,31,445,30)] autorelease];
+            }
+            else if(self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown || self.interfaceOrientation == UIInterfaceOrientationPortrait)
+            {
+                editTitleField = [[[UITextField alloc]initWithFrame:CGRectMake(15,31,295,30)] autorelease];
+            }
+        }
 		
 		
 		editTitleField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		noteContent.frame = CGRectMake(noteContent.frame.origin.x,100,self.view.frame.size.width-35,self.view.frame.size.height-150);
-		
-		
-          editTitleField.text = tempTitle;
-          editTitleField.borderStyle = UITextBorderStyleRoundedRect;
-          editTitleField.delegate=self;
-          [self.view addSubview:editTitleField];
-          
-          
-         }
-     else
-         {
-          editTitleField.hidden = TRUE;
-          noteContent.frame = CGRectMake(noteContent.frame.origin.x,2,self.view.frame.size.width-35,self.view.frame.size.height-50);
-          NSString *rawString = [editTitleField text];
-          NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-          NSString *trimmed = [rawString stringByTrimmingCharactersInSet:whitespace];
-          if ([trimmed length] != 0) {
-			
-               self.title = trimmed;
-               tempTitle = self.title;
-		}
-	    }
+        
+        //Set border view's frame
+        [self setBorderViewFrame];
+             
+        editTitleField.text = tempTitle;
+        editTitleField.borderStyle = UITextBorderStyleRoundedRect;
+        editTitleField.delegate=self;
+        [self.view addSubview:editTitleField];
+        
+    }
+    else
+    {
+        editTitleField.hidden = TRUE;
+        noteContent.frame = CGRectMake(noteContent.frame.origin.x,2,self.view.frame.size.width-35,self.view.frame.size.height-50);
+
+        //Set border view's frame
+        [self setBorderViewFrame];
+         
+        NSString *rawString = [editTitleField text];
+        NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+        NSString *trimmed = [rawString stringByTrimmingCharactersInSet:whitespace];
+        if ([trimmed length] != 0)
+        {
+           self.title = trimmed;
+           tempTitle = self.title;
+        }
+    }
 	
 	
-	NSString *jsEnableEditing =
-	
-	[NSString stringWithFormat:@"document.documentElement.contentEditable=%@;", isEditable ? @"true" : @"false"];
+	NSString *jsEnableEditing =	[NSString stringWithFormat:@"document.documentElement.contentEditable=%@;", isEditable ? @"true" : @"false"];
 	NSString *result = [noteContent stringByEvaluatingJavaScriptFromString:jsEnableEditing];
 	
 	DebugLog(@"editable %@",result);
 	
 }
+
+
 CGRect activeField,orgBounds;
 
 -(void)keyboardDidShow:(NSNotification*)aNotification

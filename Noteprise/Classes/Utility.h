@@ -118,6 +118,9 @@
 #define POSTING_NOTE_FAILED_TO_CHATTER_USER_MSG @"Failed to publish the selected note to chosen Chatter users"
 #define ERROR_LISTING_CHATTER_GROUPS_MSG @"Failed to publish the selected note to chosen Chatter groups"
 #define BAR_BUTTON_FRAME    CGRectMake(0,0,30,30)
+
+
+
 static NSString *const kWebViewDidPressKeyURL   = @"http://didPressKey/";
 static NSString *const kWebViewDidTapURL        = @"http://didTap/";
 static NSString *const kHTML2DOCConverterURL    = @"http://csboxnotes.appspot.com/html2doc";

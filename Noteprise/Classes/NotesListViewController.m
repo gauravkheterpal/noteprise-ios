@@ -28,6 +28,9 @@
 - (void)viewDidLoad
 {	
 	[super viewDidLoad];
+
+    
+    
 	flag1 = 0;
 	flag2 = 0;
 	searchBar.text = @"";
@@ -165,14 +168,35 @@
  }
  }
  }*/
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration{
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration
+{
 	orgTableHeight = notesTbl.frame.size.height;
 	orgBarOriginY = bottom_bar.frame.origin.y;
 	[self changeSegmentControlBtnsWithOrientationAndDevice];
+    
+    //Set progress indicator's position
+    //[self setProgressIndicatorPosition:interfaceOrientation];
 }
 
 
--(IBAction)showSettings:(id)sender{
+//-(void)setProgressIndicatorPosition:(UIInterfaceOrientation)interfaceOrientation
+//{
+//    if(interfaceOrientation == UIInterfaceOrientationPortrait || interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)
+//    {
+//        dialog_imgView.center = CGPointMake(self.view.center.x, self.view.center.y - 20);
+//        loadingLbl.center = CGPointMake(self.view.center.x, self.view.center.y);
+//    }
+//    else if(interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight)
+//    {
+//        dialog_imgView.center = CGPointMake(self.view.center.x, self.view.center.y - 10);
+//        loadingLbl.center = CGPointMake(self.view.center.x, self.view.center.y + 10);
+//    }
+//}
+
+
+-(IBAction)showSettings:(id)sender
+{
 	SettingsViewController *settingsView = [[SettingsViewController alloc]initWithStyle:UITableViewStyleGrouped];
 	settingsView.popover_delegate = self;
 	UINavigationController *settingsNavCntrl = [[UINavigationController alloc] initWithRootViewController:settingsView];
@@ -651,7 +675,8 @@
 }
 #pragma mark -
 #pragma mark UISearchBar Delegate
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar1{
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar1
+{
 	DebugLog(@"searchBarShouldBeginEditing");
 	notesTbl.dataSource=nil;
 	[notesTbl reloadData];
@@ -666,8 +691,13 @@
 	
 	toolbar.hidden=YES;
 	searchBar.frame = CGRectMake(toolbar.frame.origin.x, toolbar.frame.origin.y, self.view.frame.size.width, toolbar.frame.size.height);
+    
+    //Shift bottom bar upward
+    //bottom_bar.frame=CGRectMake(0,notesTbl.frame.origin.y+notesTbl.frame.size.height, self.view.frame.size.width,bottom_bar.frame.size.height);
+    
 	return YES;
 }
+
 -(void) keyboardDidShow: (NSNotification *)notif
 {
 		// If keyboard is visible, return
@@ -709,8 +739,10 @@
 			
 		}
 	}
-	bottom_bar.frame=CGRectMake(0,notesTbl.frame.origin.y+notesTbl.frame.size.height, self.view.frame.size.width,bottom_bar.frame.size.height);
-	keyboardVisible = YES;
+	
+    //bottom_bar.frame=CGRectMake(0,notesTbl.frame.origin.y+notesTbl.frame.size.height, self.view.frame.size.width,bottom_bar.frame.size.height);
+	
+    keyboardVisible = YES;
 	
 }
 
@@ -732,12 +764,12 @@
 		flag2 = 0;
 	}
 	
-	bottom_bar.frame=CGRectMake(0,orgBarOriginY, self.view.frame.size.width,bottom_bar.frame.size.height);
+	//bottom_bar.frame=CGRectMake(0,orgBarOriginY, self.view.frame.size.width,bottom_bar.frame.size.height);
 	keyboardVisible = NO;
 }
 
-- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar1{
-	
+- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar1
+{	
 	[searchBar resignFirstResponder];
 	searchBar.text=@"";
 	[searchResults removeAllObjects];
@@ -745,33 +777,47 @@
 	searchBar.frame = CGRectMake(searchbarFrame.origin.x, searchbarFrame.origin.y, self.view.frame.size.width, searchbarFrame.size.height);
 	
 	notesTbl.frame = CGRectMake(0, orgTableOriginY, self.view.frame.size.width, orgTableHeight);
-	bottom_bar.frame=CGRectMake(0,orgBarOriginY, self.view.frame.size.width,bottom_bar.frame.size.height);
+	
 	flag2=1;
 	toolbar.hidden = NO;
 	notesTbl.dataSource = self;
+    
+    //Shift bottom bar downward
+    //bottom_bar.frame=CGRectMake(0,orgBarOriginY, self.view.frame.size.width,bottom_bar.frame.size.height);
 }
 
-- (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar:(UISearchBar *)theSearchBar {
+
+- (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar:(UISearchBar *)theSearchBar
+{
 	[theSearchBar resignFirstResponder];
+    
+    //Shift bottom bar downward
+    //bottom_bar.frame=CGRectMake(0,orgBarOriginY, self.view.frame.size.width,bottom_bar.frame.size.height);
 }
 
--(void)searchBarSearchButtonClicked:(UISearchBar *)searchBarContent {
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBarContent
+{
 	[Utility showCoverScreen];
 	[self showLoadingLblWithText:LOADING_MSG];
 	[listOfNotes removeAllObjects];
 	[searchBar resignFirstResponder];
-	if(searchBarContent.text.length == 0){
+	if(searchBarContent.text.length == 0)
+    {
 		[Utility showAlert:note_please_enter_text_for_search_message];
 		[Utility hideCoverScreen];
 		[self hideDoneToastMsg:loadingLbl];
 	}
-	else{
+	else
+    {
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^(void) {
 			[self fetchNoteBasedOnSelectedSegement];
 		});
 	}
-	
+    
+    //Shift bottom bar downward
+    //bottom_bar.frame=CGRectMake(0,orgBarOriginY, self.view.frame.size.width,bottom_bar.frame.size.height);
 }
+
 
 -(IBAction)addNote:(id)sender
 {

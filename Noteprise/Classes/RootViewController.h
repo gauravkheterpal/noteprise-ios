@@ -40,6 +40,9 @@
     IBOutlet UILabel *loadingLbl;
     IBOutlet UIImageView *doneImgView;
     IBOutlet UIImageView *backgroundImgView;
+
+    UIView * no_record_view;
+    UILabel *no_record_lbl;
     
 }
 //- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil attachmentData:(NSData*)data fileName:(NSString*)_fileName;
