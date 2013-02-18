@@ -30,7 +30,7 @@
 	[super viewDidLoad];
 
     
-    
+    isSearchModeEnabled = NO;
 	flag1 = 0;
 	flag2 = 0;
 	searchBar.text = @"";
@@ -94,17 +94,22 @@
 	
 	//[searchOptionsChoiceCntrl setBackgroundColor:[UIColor whiteColor]];
 		//Customize segement control search bar
-	for (UIView * subview in searchBar.subviews) {
-		if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
-			DebugLog(@"width:%f",subview.frame.size.width);
-			UIView *bg = [[UIView alloc] initWithFrame:subview.frame];
-			bg.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-			bg.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Search_bar_background_1x44.png"]];
-			[searchBar insertSubview:bg aboveSubview:subview];
-			[subview removeFromSuperview];
-			break;
-		}
-	}
+
+    
+    //searchBar.tintColor = [UIColor colorWithRed:169.0f/255.0f green:216.0f/255.0f blue:238.0f/255.0f alpha:1];
+    
+//	for (UIView * subview in searchBar.subviews) {
+//		if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")])
+//        {
+//			DebugLog(@"width:%f",subview.frame.size.width);
+//			UIView *bg = [[UIView alloc] initWithFrame:subview.frame];
+//			bg.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//			bg.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Search_bar_background_1x44.png"]];
+//			[searchBar insertSubview:bg aboveSubview:subview];
+//			[subview removeFromSuperview];
+//			break;
+//		}
+//    }
 	
 	
 }
@@ -144,13 +149,20 @@
 	[self changeSegmentControlBtnsWithOrientationAndDevice];
 	[self fetchNoteBasedOnSelectedSegement];
 	[super viewDidAppear:animated];
+    
+//    for (id subview in [searchBar subviews]) {
+//		if ([subview isKindOfClass:[UIButton class]]) {
+//			[subview setEnabled:YES];
+//            //[subview addObserver:self forKeyPath:@"enabled" options:NSKeyValueObservingOptionNew context:nil];
+//		}
+//	}
+    
 	if(flag1 == 0)
-	    {
-            searchbarFrame = searchBar.frame;
-            orgTableHeight = notesTbl.frame.size.height;
-            orgBarOriginY = bottom_bar.frame.origin.y;
-	    }
-	
+    {
+        searchbarFrame = searchBar.frame;
+        orgTableHeight = notesTbl.frame.size.height;
+        orgBarOriginY = bottom_bar.frame.origin.y;
+    }	
 }
 
 /*-(void)changeBkgrndImgWithOrientation {
@@ -247,10 +259,9 @@
     
     [notesTbl reloadData];
     
-    
     [self changeSegmentControlBtnsWithOrientationAndDevice];
     searchBar.userInteractionEnabled = NO;
-    searchBar.alpha = 0.75;
+    //searchBar.alpha = 0.75;
     searchBar.text = @"";
     searchKeyword = @"";
     
@@ -258,7 +269,8 @@
     [Utility showCoverScreen];
     [self showLoadingLblWithText:LOADING_MSG];
     
-    [searchBar resignFirstResponder];
+    [self makeSearchBarResignFirstResponder]; //Instead of [searchBar resignFirstResponder];
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^(void) {
             // Loading all the notebooks linked to the account using the evernote API
         [self fetchDataFromEverNote];
@@ -311,7 +323,7 @@
 				dispatch_async(dispatch_get_main_queue(), ^(void) {
 					switch (searchOptionsChoiceCntrl.selectedSegmentIndex) {
 						case 0:
-							[searchBar resignFirstResponder];
+							[self makeSearchBarResignFirstResponder]; //Instead of [searchBar resignFirstResponder];
 							if (![searchBar.text isEqualToString:@""]) {
 								[self searchNotes:searchBar.text];
 							}
@@ -321,7 +333,7 @@
 							    }
 							break;
 						case 1:
-							[searchBar resignFirstResponder];
+							[self makeSearchBarResignFirstResponder]; //Instead of [searchBar resignFirstResponder];
 							
 							if (![searchBar.text isEqualToString:@""]) {
 								[self searchNotes:searchBar.text];
@@ -333,7 +345,7 @@
 							
 							break;
 						case 2:
-							[searchBar resignFirstResponder];
+							[self makeSearchBarResignFirstResponder]; //Instead of [searchBar resignFirstResponder];
 							
 							
 							if (![searchBar.text isEqualToString:@""]) {
@@ -346,7 +358,7 @@
 							break;
 					}
 					searchBar.userInteractionEnabled = YES;
-					searchBar.alpha = 0.75;
+					//searchBar.alpha = 0.75;
 					
 				});
 			}
@@ -394,7 +406,8 @@
     [Utility showCoverScreen];
     [self showLoadingLblWithText:LOADING_MSG];
 
-    [searchBar resignFirstResponder];
+    [self makeSearchBarResignFirstResponder]; //Instead of [searchBar resignFirstResponder];
+    
     // Loading all the notebooks linked to the account using the evernote API
     [self fetchDataFromEverNote];
 }
@@ -586,20 +599,26 @@
 
 
 
--(void)reloadNotesTable {
+-(void)reloadNotesTable
+{
 	[Utility hideCoverScreen];
-	[searchBar resignFirstResponder];
-	notesTbl.delegate =self;
+    
+	[self makeSearchBarResignFirstResponder]; //Instead of [searchBar resignFirstResponder];
+	
+    notesTbl.delegate =self;
 	notesTbl.dataSource =self;
 	[self hideDoneToastMsg:nil];
 	loadingLbl.hidden = YES;
 	[notesTbl reloadData];
 }
 
--(void)stopActivity {
+-(void)stopActivity
+{
 	[Utility hideCoverScreen];
-	[searchBar resignFirstResponder];
-	[self hideDoneToastMsg:nil];
+    
+	[self makeSearchBarResignFirstResponder]; //Instead of [searchBar resignFirstResponder];
+	
+    [self hideDoneToastMsg:nil];
 	loadingLbl.hidden = YES;
 }
 
@@ -678,7 +697,8 @@
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar1
 {
 	DebugLog(@"searchBarShouldBeginEditing");
-	notesTbl.dataSource=nil;
+	
+    notesTbl.dataSource=nil;
 	[notesTbl reloadData];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
@@ -690,55 +710,79 @@
 										name: UIKeyboardDidHideNotification object:nil];
 	
 	toolbar.hidden=YES;
+    
+    //Animates search bar
+    [UIView beginAnimations:@"SearchBarAnimation" context:nil];
+    [UIView setAnimationDuration:0.2f];
 	searchBar.frame = CGRectMake(toolbar.frame.origin.x, toolbar.frame.origin.y, self.view.frame.size.width, toolbar.frame.size.height);
+
+    if(isSearchModeEnabled == NO)
+    {
+        notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, self.view.frame.size.width, notesTbl.frame.size.height+searchBar.frame.size.height);
+    }
+        
+    [UIView commitAnimations];
+    
+    //Shows cancel button
+    [searchBar setShowsCancelButton:YES animated:YES];
     
     //Shift bottom bar upward
     //bottom_bar.frame=CGRectMake(0,notesTbl.frame.origin.y+notesTbl.frame.size.height, self.view.frame.size.width,bottom_bar.frame.size.height);
     
+    isSearchModeEnabled = YES;
+    
 	return YES;
 }
 
+
 -(void) keyboardDidShow: (NSNotification *)notif
 {
-		// If keyboard is visible, return
+    // If keyboard is visible, return
 	if (keyboardVisible)
-	    {
-		return;
-	    }
-		// Get the size of the keyboard.
+    {
+        return;
+    }
+    
+    // Get the size of the keyboard.
 	notesTbl.dataSource=nil;
 	[notesTbl reloadData];
 	NSDictionary* info = [notif userInfo];
 	NSValue* aValue = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
 	CGSize keyboardSize = [aValue CGRectValue].size;
 	
-		// Save the current location so we can restore
-		// when keyboard is dismissed
-	if(i==0){
-		tempHeight = notesTbl.frame.size.height;
-	}
-	else{
-		tempHeight = notesTbl.frame.size.height-searchBar.frame.size.height;
-		
-	}
-	if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight) {
-		if(i==0){
-			notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, self.view.frame.size.width, notesTbl.frame.size.height-keyboardSize.width+searchBar.frame.size.height);
-		}
-		else{
-			notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, self.view.frame.size.width, notesTbl.frame.size.height-keyboardSize.width);
-			
-		}
-	}
-	else {
-		if(i==0){
-			notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, notesTbl.frame.size.width, notesTbl.frame.size.height-keyboardSize.height+searchBar.frame.size.height);
-		}
-		else{
-			notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, notesTbl.frame.size.width, notesTbl.frame.size.height-keyboardSize.height);
-			
-		}
-	}
+    // Save the current location so we can restore
+    // when keyboard is dismissed
+//    if(i==0)
+//    {
+//		tempHeight = notesTbl.frame.size.height;
+//	}
+//	else
+//    {
+//		tempHeight = notesTbl.frame.size.height-searchBar.frame.size.height;
+//	}
+//    
+//	if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
+//    {
+//		if(i==0)
+//        {
+//			notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, self.view.frame.size.width, notesTbl.frame.size.height+searchBar.frame.size.height);
+//		}
+//		else
+//        {
+//			notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, self.view.frame.size.width, notesTbl.frame.size.height);
+//		}
+//	}
+//	else
+//    {
+//		if(i==0)
+//        {
+//			notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, notesTbl.frame.size.width, notesTbl.frame.size.height+searchBar.frame.size.height);
+//		}
+//		else
+//        {
+//			notesTbl.frame = CGRectMake(0,searchBar.frame.size.height, notesTbl.frame.size.width, notesTbl.frame.size.height);
+//		}
+//	}
 	
     //bottom_bar.frame=CGRectMake(0,notesTbl.frame.origin.y+notesTbl.frame.size.height, self.view.frame.size.width,bottom_bar.frame.size.height);
 	
@@ -748,36 +792,105 @@
 
 -(void) keyboardDidHide: (NSNotification *)notif
 {
-		// Is the keyboard already shown
+//    for (id subview in [searchBar subviews]) {
+//		if ([subview isKindOfClass:[UIButton class]]) {
+//			[subview setEnabled:YES];
+//            //[subview addObserver:self forKeyPath:@"enabled" options:NSKeyValueObservingOptionNew context:nil];
+//		}
+//	}
+
+    
+    // Is the keyboard already shown
 	if (!keyboardVisible)
-	    {
-		
+	{
 		return;
-	    }
+	}
 	
 	if(flag2!=1)
-	    {
+    {
 		i=1;
-		notesTbl.frame = CGRectMake(0, searchBar.frame.size.height, self.view.frame.size.width, tempHeight+searchBar.frame.size.height);
-	    }
-	else{
+        
+        //notesTbl.frame = CGRectMake(0, toolbar.frame.size.height + searchBar.frame.size.height, self.view.frame.size.width, tempHeight - toolbar.frame.size.height + searchBar.frame.size.height);
+        
+	}
+	else
+    {
 		flag2 = 0;
 	}
+    
+    
+//    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
+//    {
+//        if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
+//        {
+//            notesTbl.frame = CGRectMake(0, 85, self.view.frame.size.width, 575);
+//        }
+//        else
+//        {
+//            notesTbl.frame = CGRectMake(0, 85, self.view.frame.size.width, 831);
+//        }
+//	}
+//	else
+//    {
+//		if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
+//        {
+//			notesTbl.frame = CGRectMake(0, 85, self.view.frame.size.width, 139);
+//        }
+//		else
+//        {
+//			notesTbl.frame = CGRectMake(0, 85, self.view.frame.size.width, 287);
+//		}
+//	}
 	
 	//bottom_bar.frame=CGRectMake(0,orgBarOriginY, self.view.frame.size.width,bottom_bar.frame.size.height);
 	keyboardVisible = NO;
 }
 
+
+
+-(void)makeSearchBarResignFirstResponder
+{
+    //Hide keyboard
+    [searchBar resignFirstResponder];
+    
+    //Enable cancel button
+    for (UIView *view in searchBar.subviews)
+    {
+        if ([view isKindOfClass:[UIButton class]])
+        {
+            [(UIButton *)view setEnabled:YES];
+        }
+    }
+}
+
+
+
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar1
 {	
 	[searchBar resignFirstResponder];
+    
+    //Hides cancel button
+    [searchBar setShowsCancelButton:NO animated:YES];
+    
 	searchBar.text=@"";
+    
+    //Make the table empty
+    notesTbl.dataSource=nil;
+	[notesTbl reloadData];
+    
 	[searchResults removeAllObjects];
 	[self fetchNoteBasedOnSelectedSegement];
-	searchBar.frame = CGRectMake(searchbarFrame.origin.x, searchbarFrame.origin.y, self.view.frame.size.width, searchbarFrame.size.height);
+    
+    //Animates search bar
+    [UIView beginAnimations:@"SearchBarAnimation" context:nil];
+    [UIView setAnimationDuration:0.2f];
+	searchBar.frame = CGRectMake(searchbarFrame.origin.x, toolbar.frame.size.height, self.view.frame.size.width, searchbarFrame.size.height);
+    notesTbl.frame = CGRectMake(0, toolbar.frame.size.height + searchbarFrame.size.height, self.view.frame.size.width, notesTbl.frame.size.height - toolbar.frame.size.height);
+	[UIView commitAnimations];
+    
 	
-	notesTbl.frame = CGRectMake(0, orgTableOriginY, self.view.frame.size.width, orgTableHeight);
-	
+	isSearchModeEnabled = NO;
+    
 	flag2=1;
 	toolbar.hidden = NO;
 	notesTbl.dataSource = self;
@@ -787,9 +900,10 @@
 }
 
 
-- (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar:(UISearchBar *)theSearchBar
+- (void) searchBarTextDidEndEditing:(UISearchBar *)theSearchBar
 {
 	[theSearchBar resignFirstResponder];
+    
     
     //Shift bottom bar downward
     //bottom_bar.frame=CGRectMake(0,orgBarOriginY, self.view.frame.size.width,bottom_bar.frame.size.height);
@@ -800,8 +914,11 @@
 	[Utility showCoverScreen];
 	[self showLoadingLblWithText:LOADING_MSG];
 	[listOfNotes removeAllObjects];
-	[searchBar resignFirstResponder];
-	if(searchBarContent.text.length == 0)
+    
+	
+    [self makeSearchBarResignFirstResponder];     //Instead of [searchBar resignFirstResponder];
+	
+    if(searchBarContent.text.length == 0)
     {
 		[Utility showAlert:note_please_enter_text_for_search_message];
 		[Utility hideCoverScreen];
@@ -878,6 +995,7 @@
     {
 		[self.navigationController dismissModalViewControllerAnimated:YES];
 	}
+    
 	//[self fetchNoteBasedOnSelectedSegement];
 }
 
@@ -1062,16 +1180,18 @@
 	if (cell == nil) {
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier]autorelease];
 	}
-	NSString *cellValue;
+	NSString *cellValue = nil;
 		//
 	if(searchOptionsChoiceCntrl.selectedSegmentIndex == 0) {
-		if(![searchBar.text isEqualToString:@""] && searchResults.count !=0 ){
+		if(![searchBar.text isEqualToString:@""] && searchResults.count !=0 )
+        {
 			
 			if(indexPath.row < searchResults.count){
 				cellValue = [[searchResults objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
 			}
 		}
-		else{
+		else
+        {
 			cellValue = [[listOfNotes objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
 		}
 	}

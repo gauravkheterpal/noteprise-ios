@@ -30,8 +30,10 @@
     [super viewDidLoad];
     self.title = @"Salesforce Mapping";
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1];
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"5.0"))
-        [[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1]];
+    
+    //if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"5.0"))
+    //    [[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1]];
+    
     UIImageView *tempImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Select_note_bcg.png"]];
     [tempImageView setFrame:self.tableView.frame]; 
     

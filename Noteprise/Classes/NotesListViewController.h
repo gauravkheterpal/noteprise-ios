@@ -55,6 +55,8 @@ static int i;
     float orgTableOriginY;
     float orgBarOriginY;
      int flag1,flag2;
+    
+    bool isSearchModeEnabled;
 	
 }
 

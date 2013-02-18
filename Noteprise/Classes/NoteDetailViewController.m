@@ -172,8 +172,8 @@ int flag=0,flag2 =0;
                DebugLog(@"EDAMNotFoundException:%@",exception.reason);
           }
      });
-     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"5.0"))
-          [[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1]];
+     //if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"5.0"))
+         //[[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1]];
      
 }
 

@@ -46,6 +46,7 @@
 						<int key="NSvFlags">-2147483374</int>
 						<string key="NSFrameSize">{320, 416}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="875911898"/>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -59,6 +60,7 @@
 						<int key="NSvFlags">274</int>
 						<string key="NSFrame">{{15, 31}, {290, 365}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="814715413"/>
 						<object class="NSColor" key="IBUIBackgroundColor" id="240868156">
 							<int key="NSColorSpace">3</int>
@@ -95,6 +97,7 @@
 						<int key="NSvFlags">274</int>
 						<string key="NSFrame">{{15, 0}, {320, 370}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="128777778"/>
 						<reference key="IBUIBackgroundColor" ref="240868156"/>
 						<int key="IBUIContentMode">2</int>
@@ -106,6 +109,7 @@
 						<int key="NSvFlags">-2147483355</int>
 						<string key="NSFrame">{{50, 140}, {220, 91}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="760258769"/>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -119,6 +123,7 @@
 						<int key="NSvFlags">-2147483355</int>
 						<string key="NSFrame">{{149, 155}, {22, 22}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="828948678"/>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -132,6 +137,7 @@
 						<int key="NSvFlags">-2147483355</int>
 						<string key="NSFrame">{{57, 188}, {207, 38}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="855083457"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -168,6 +174,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{156, 6}, {110, 33}}</string>
 								<reference key="NSSuperview" ref="855083457"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="651924762"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -204,6 +211,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{276, 6}, {32, 33}}</string>
 								<reference key="NSSuperview" ref="855083457"/>
+								<reference key="NSWindow"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
@@ -232,6 +240,7 @@
 						</array>
 						<string key="NSFrame">{{0, 372}, {320, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="82654995"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -259,6 +268,7 @@
 				</array>
 				<string key="NSFrame">{{0, 64}, {320, 416}}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="312084796"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
@@ -508,7 +518,89 @@
 			<nil key="sourceID"/>
 			<int key="maxID">87</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">CustomBlueToolbar</string>
+					<string key="superclassName">UIToolbar</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/CustomBlueToolbar.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NoteDetailViewController</string>
+					<string key="superclassName">UIViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="editPage:">id</string>
+						<string key="linkEvernoteToSF:">id</string>
+						<string key="postToChatter:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="editPage:">
+							<string key="name">editPage:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="linkEvernoteToSF:">
+							<string key="name">linkEvernoteToSF:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="postToChatter:">
+							<string key="name">postToChatter:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="backgroundImgView">UIImageView</string>
+						<string key="bottomBar">UIToolbar</string>
+						<string key="dialog_imgView">UIImageView</string>
+						<string key="doneImgView">UIImageView</string>
+						<string key="loadingLbl">UILabel</string>
+						<string key="loadingSpinner">UIActivityIndicatorView</string>
+						<string key="noteContent">UIWebView</string>
+						<string key="noteNavigation">UINavigationBar</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="backgroundImgView">
+							<string key="name">backgroundImgView</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="bottomBar">
+							<string key="name">bottomBar</string>
+							<string key="candidateClassName">UIToolbar</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="dialog_imgView">
+							<string key="name">dialog_imgView</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="doneImgView">
+							<string key="name">doneImgView</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="loadingLbl">
+							<string key="name">loadingLbl</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="loadingSpinner">
+							<string key="name">loadingSpinner</string>
+							<string key="candidateClassName">UIActivityIndicatorView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="noteContent">
+							<string key="name">noteContent</string>
+							<string key="candidateClassName">UIWebView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="noteNavigation">
+							<string key="name">noteNavigation</string>
+							<string key="candidateClassName">UINavigationBar</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NoteDetailViewController.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
