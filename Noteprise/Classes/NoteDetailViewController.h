@@ -41,6 +41,8 @@ static int saveBtnTag = 2;
     NSString * oldTitle;
     
     UIView * borderView;
+    
+    bool isEditNoteCancelled;
 }
 
 @property(nonatomic, assign) NSString * guid;

@@ -37,6 +37,10 @@ int flag=0,flag2 =0;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //Initialize variables
+    isEditNoteCancelled = NO;
+    
 	
     flexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
 	NSArray *items = [NSArray arrayWithObjects:flexible,saveToSFBarBtn,postToChatterBarBtn, nil];
@@ -616,6 +620,8 @@ int flag=0,flag2 =0;
 
 -(void)cancelUpdate:(id)sender
 {
+    isEditNoteCancelled = YES;
+    
     //Remove the tapGestureRecognizers
     if([noteContent gestureRecognizers] != nil && [[noteContent gestureRecognizers] count] > 0)
     {
@@ -694,7 +700,7 @@ int flag=0,flag2 =0;
 
 - (void)dealloc
 {
-          //[noteImage release];
+     //[noteImage release];
      [noteNavigation release];
      [noteContent release];
      [super dealloc];
@@ -815,15 +821,26 @@ int flag=0,flag2 =0;
 
         //Set border view's frame
         [self setBorderViewFrame];
-         
-        NSString *rawString = [editTitleField text];
-        NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-        NSString *trimmed = [rawString stringByTrimmingCharactersInSet:whitespace];
-        if ([trimmed length] != 0)
+        
+        if(isEditNoteCancelled)
         {
-           self.title = trimmed;
-           tempTitle = self.title;
+            self.title = tempTitle;
+            
+            isEditNoteCancelled = NO;
         }
+        else
+        {
+            NSString *rawString = [editTitleField text];
+            NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+            NSString *trimmed = [rawString stringByTrimmingCharactersInSet:whitespace];
+            if ([trimmed length] != 0)
+            {
+                self.title = trimmed;
+                tempTitle = self.title;
+            }
+        }
+        
+        
     }
 	
 	
