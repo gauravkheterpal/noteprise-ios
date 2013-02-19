@@ -55,8 +55,11 @@ UIImageView *imgView;
     
     UIWindow * window = [[UIApplication sharedApplication] keyWindow];
     
-    //UIImageView * 
-    imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 768, 1024)];
+    //UIImageView *
+    
+    imgView = [[UIImageView alloc] init];
+    imgView.frame = [[UIScreen mainScreen] bounds];
+    imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     imgView.alpha = 0.5f;
     imgView.backgroundColor = [UIColor blackColor];
     imgView.tag = TAG_BACKGROUNDIMG_VIEW;
@@ -85,11 +88,11 @@ UIImageView *imgView;
 +(void)showCoverScreen{
     UIWindow * window = [[UIApplication sharedApplication] keyWindow];
     imgView.userInteractionEnabled = YES;
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        imgView.frame = CGRectMake(0, 0, 768, 1024);
-    else {
-        imgView.frame = CGRectMake(0, 0, 320, 480);
-    }
+//    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+//        imgView.frame = CGRectMake(0, 0, 768, 1024);
+//    else {
+//        imgView.frame = CGRectMake(0, 0, 320, 480);
+//    }
     
     UIActivityIndicatorView *activity=nil;
     
