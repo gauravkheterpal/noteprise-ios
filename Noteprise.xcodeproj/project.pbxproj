@@ -84,6 +84,7 @@
 		A6E15449168C147E00DB646F /* noteprise_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153FE168C147E00DB646F /* noteprise_logo.png */; };
 		A6E1544A168C147E00DB646F /* settings_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153FF168C147E00DB646F /* settings_icon.png */; };
 		E717586116984ED700E2559C /* NotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E717586016984ED700E2559C /* NotesViewController.m */; };
+		F40309E616D3855700BAC592 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F40309E516D3855700BAC592 /* Default-568h@2x.png */; };
 		F40B827515CBDFDD009B4A54 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = F40B827415CBDFDD009B4A54 /* NSString+HTML.m */; };
 		F40B828115CBE778009B4A54 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = F40B828015CBE778009B4A54 /* GTMNSString+HTML.m */; };
 		F424255E159E19170038EA52 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = F424255D159E19170038EA52 /* Entitlements.plist */; };
@@ -248,6 +249,7 @@
 		A6E153FF168C147E00DB646F /* settings_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings_icon.png; sourceTree = "<group>"; };
 		E717585F16984ED700E2559C /* NotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotesViewController.h; path = ../NotesViewController.h; sourceTree = "<group>"; };
 		E717586016984ED700E2559C /* NotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotesViewController.m; path = ../NotesViewController.m; sourceTree = "<group>"; };
+		F40309E516D3855700BAC592 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/splash/Default-568h@2x.png"; sourceTree = "<group>"; };
 		F40B827315CBDFDD009B4A54 /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+HTML.h"; path = "Classes/NSString+HTML.h"; sourceTree = "<group>"; };
 		F40B827415CBDFDD009B4A54 /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HTML.m"; path = "Classes/NSString+HTML.m"; sourceTree = "<group>"; };
 		F40B827F15CBE778009B4A54 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTMNSString+HTML.h"; path = "Classes/GTMNSString+HTML.h"; sourceTree = "<group>"; };
@@ -1048,6 +1050,7 @@
 				F4D2127C159B297400610A18 /* Default.png */,
 				F4D2127E159B297400610A18 /* Default@2x.png */,
 				F4D21280159B297400610A18 /* Default~iPad.png */,
+				F40309E516D3855700BAC592 /* Default-568h@2x.png */,
 			);
 			name = splash;
 			sourceTree = "<group>";
@@ -1273,6 +1276,7 @@
 				A6E15449168C147E00DB646F /* noteprise_logo.png in Resources */,
 				A6E1544A168C147E00DB646F /* settings_icon.png in Resources */,
 				A634C775168C73CF007955F5 /* 2.png in Resources */,
+				F40309E616D3855700BAC592 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1448,7 +1452,7 @@
 					armv6,
 					armv7,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Developer: Gaurav Kheterpal (Z4E78HLHU9)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Gaurav Kheterpal";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1460,7 +1464,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				PROVISIONING_PROFILE = "DDADD997-9999-4DB6-82C8-A8BE0CB96940";
+				PROVISIONING_PROFILE = "8C28877D-1BEC-4C1E-A77C-91AF569D00B8";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1492,7 +1496,7 @@
 		F4D2129E159B297400610A18 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Gaurav Kheterpal (Z4E78HLHU9)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Gaurav Kheterpal";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Noteprise/Noteprise-Prefix.pch";
 				INFOPLIST_FILE = "Noteprise/Noteprise-Info.plist";
@@ -1506,7 +1510,7 @@
 					"\"$(SDKROOT)//usr/lib\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6FEB30E1-3415-4776-BB39-BA4ABFC23C78";
+				PROVISIONING_PROFILE = "8C28877D-1BEC-4C1E-A77C-91AF569D00B8";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
