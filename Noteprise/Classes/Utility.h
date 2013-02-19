@@ -150,6 +150,7 @@ static NSString *const kHTML2DOCConverterURL    = @"http://csboxnotes.appspot.co
 + (BOOL) checkNetwork;
 +(void)showExceptionAlert:(NSString*)message;
 + (NSString *)getDataBetweenFromString:(NSString *)data leftString:(NSString *)leftData rightString:(NSString *)rightData leftOffset:(NSInteger)leftPos;
++(BOOL)isDeviceiPhone5;
 @end
 #pragma mark - UINavigation bar customize
 @interface UINavigationBar (CustomImage)

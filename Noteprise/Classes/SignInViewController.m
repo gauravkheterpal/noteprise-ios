@@ -37,22 +37,32 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 205;
 
 -(void)changeBkgrndImgWithOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
-       if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
-            backgroundImg.image = [UIImage imageNamed:@"evernoteBg480x300.png"];
-        else {
-            backgroundImg.image = [UIImage imageNamed:@"evernoteBg320x460.png"];
+        if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight) {
+            if([Utility isDeviceiPhone5]) {
+                backgroundImg.image = [UIImage imageNamed:@"evernoteBg568x300.png"];
+            } else {
+                backgroundImg.image = [UIImage imageNamed:@"evernoteBg480x300.png"];
             }
-        } else {
-            
-           if(toInterfaceOrientation == UIInterfaceOrientationLandscapeRight || toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft) {
-               backgroundImg.image = [UIImage imageNamed:@"evernoteBg-1024x748.png"];
-                //signInBtn.frame = CGRectMake(400, 520, 235, 57);
-                }
-           else {
-               backgroundImg.image = [UIImage imageNamed:@"evernoteBg768x1024.png"];
-                //signInBtn.frame = CGRectMake(270, 700, 235, 57);
-                }
-           }
+        }
+        else {
+            if([Utility isDeviceiPhone5]) {
+                backgroundImg.image = [UIImage imageNamed:@"evernoteBg320x548.png"];
+            } else {
+                
+                backgroundImg.image = [UIImage imageNamed:@"evernoteBg320x460.png"];
+            }
+        }
+    } else {
+        
+        if(toInterfaceOrientation == UIInterfaceOrientationLandscapeRight || toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft) {
+            backgroundImg.image = [UIImage imageNamed:@"evernoteBg-1024x748.png"];
+            //signInBtn.frame = CGRectMake(400, 520, 235, 57);
+        }
+        else {
+            backgroundImg.image = [UIImage imageNamed:@"evernoteBg768x1024.png"];
+            //signInBtn.frame = CGRectMake(270, 700, 235, 57);
+        }
+    }
 }
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [self changeBkgrndImgWithOrientation:toInterfaceOrientation];
@@ -86,36 +96,36 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 205;
     if([Utility checkNetwork]) {
         EvernoteSession *session = [EvernoteSession sharedSession];
         [session authenticateWithViewController:self completionHandler:^(NSError *error)
-        {
-            if (error || !session.isAuthenticated)
-            {
-                // authentication failed :(
-                // show an alert, etc
-                // ...
-                DebugLog(@"authenticateWithViewController error:%d desc:%@",error.code,error.description);
-                [Utility showAlert:ERROR_AUTHENTICATE_WITH_EVERNOTE_MSG];
-            } else {
-                DebugLog(@"authenticated! noteStoreUrl:%@ webApiUrlPrefix:%@", session.noteStoreUrl, session.webApiUrlPrefix);
-                // authentication succeeded :)
-                // do something now that we're authenticated
-                // ... 
-                [self loadNotesListAfterAuthentication];
-            } 
-        }];
+         {
+             if (error || !session.isAuthenticated)
+             {
+                 // authentication failed :(
+                 // show an alert, etc
+                 // ...
+                 DebugLog(@"authenticateWithViewController error:%d desc:%@",error.code,error.description);
+                 [Utility showAlert:ERROR_AUTHENTICATE_WITH_EVERNOTE_MSG];
+             } else {
+                 DebugLog(@"authenticated! noteStoreUrl:%@ webApiUrlPrefix:%@", session.noteStoreUrl, session.webApiUrlPrefix);
+                 // authentication succeeded :)
+                 // do something now that we're authenticated
+                 // ...
+                 [self loadNotesListAfterAuthentication];
+             }
+         }];
     }
     else
     {
         [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
     }
 }
-- (void)loadNotesListAfterAuthentication 
-{    
+- (void)loadNotesListAfterAuthentication
+{
     EvernoteSession *session = [EvernoteSession sharedSession];
     
     if (session.isAuthenticated) {
         NotesListViewController *noteListVC = [[NotesListViewController alloc]init];
         UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:noteListVC];
-         navVC.navigationBar.barStyle = UIBarStyleBlack;
+        navVC.navigationBar.barStyle = UIBarStyleBlack;
         [[[UIApplication sharedApplication]delegate]window].rootViewController = navVC;
         [noteListVC release];
         //[navVC release];

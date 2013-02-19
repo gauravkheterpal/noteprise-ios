@@ -241,5 +241,10 @@ UIImageView *imgView;
 	return NO;
     
 }
-
++(BOOL)isDeviceiPhone5 {
+    if ([[UIScreen mainScreen] bounds].size.height == 568)
+        return YES;
+    else
+        return NO;
+}
 @end

@@ -85,6 +85,8 @@
 		A6E1544A168C147E00DB646F /* settings_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153FF168C147E00DB646F /* settings_icon.png */; };
 		E717586116984ED700E2559C /* NotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E717586016984ED700E2559C /* NotesViewController.m */; };
 		F40309E616D3855700BAC592 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F40309E516D3855700BAC592 /* Default-568h@2x.png */; };
+		F40309E816D392A900BAC592 /* evernoteBg320x548.png in Resources */ = {isa = PBXBuildFile; fileRef = F40309E716D392A900BAC592 /* evernoteBg320x548.png */; };
+		F40309EA16D394DA00BAC592 /* evernoteBg568x300.png in Resources */ = {isa = PBXBuildFile; fileRef = F40309E916D394DA00BAC592 /* evernoteBg568x300.png */; };
 		F40B827515CBDFDD009B4A54 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = F40B827415CBDFDD009B4A54 /* NSString+HTML.m */; };
 		F40B828115CBE778009B4A54 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = F40B828015CBE778009B4A54 /* GTMNSString+HTML.m */; };
 		F424255E159E19170038EA52 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = F424255D159E19170038EA52 /* Entitlements.plist */; };
@@ -250,6 +252,8 @@
 		E717585F16984ED700E2559C /* NotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotesViewController.h; path = ../NotesViewController.h; sourceTree = "<group>"; };
 		E717586016984ED700E2559C /* NotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotesViewController.m; path = ../NotesViewController.m; sourceTree = "<group>"; };
 		F40309E516D3855700BAC592 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/splash/Default-568h@2x.png"; sourceTree = "<group>"; };
+		F40309E716D392A900BAC592 /* evernoteBg320x548.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = evernoteBg320x548.png; sourceTree = "<group>"; };
+		F40309E916D394DA00BAC592 /* evernoteBg568x300.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = evernoteBg568x300.png; sourceTree = "<group>"; };
 		F40B827315CBDFDD009B4A54 /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+HTML.h"; path = "Classes/NSString+HTML.h"; sourceTree = "<group>"; };
 		F40B827415CBDFDD009B4A54 /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HTML.m"; path = "Classes/NSString+HTML.m"; sourceTree = "<group>"; };
 		F40B827F15CBE778009B4A54 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTMNSString+HTML.h"; path = "Classes/GTMNSString+HTML.h"; sourceTree = "<group>"; };
@@ -596,7 +600,9 @@
 				A6E153FA168C147E00DB646F /* evernoteBg.png */,
 				A6E153FB168C147E00DB646F /* evernoteBg320x460.png */,
 				A6E153FC168C147E00DB646F /* evernoteBg480x300.png */,
+				F40309E716D392A900BAC592 /* evernoteBg320x548.png */,
 				A6E153FD168C147E00DB646F /* evernoteBg768x1024.png */,
+				F40309E916D394DA00BAC592 /* evernoteBg568x300.png */,
 				A6E153FE168C147E00DB646F /* noteprise_logo.png */,
 				A6E153FF168C147E00DB646F /* settings_icon.png */,
 			);
@@ -1277,6 +1283,8 @@
 				A6E1544A168C147E00DB646F /* settings_icon.png in Resources */,
 				A634C775168C73CF007955F5 /* 2.png in Resources */,
 				F40309E616D3855700BAC592 /* Default-568h@2x.png in Resources */,
+				F40309E816D392A900BAC592 /* evernoteBg320x548.png in Resources */,
+				F40309EA16D394DA00BAC592 /* evernoteBg568x300.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
