@@ -122,7 +122,8 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 205;
 {
     EvernoteSession *session = [EvernoteSession sharedSession];
     
-    if (session.isAuthenticated) {
+    if (session.isAuthenticated)
+    {
         NotesListViewController *noteListVC = [[NotesListViewController alloc]init];
         UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:noteListVC];
         navVC.navigationBar.barStyle = UIBarStyleBlack;
@@ -133,7 +134,8 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 205;
         //LOAD NOTHING ON FAILURE
     }
 }
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
 	//Perform an action
 	[userNameTxt resignFirstResponder];
     [pswdTxt resignFirstResponder];

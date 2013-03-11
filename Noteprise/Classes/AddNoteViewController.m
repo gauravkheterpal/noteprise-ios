@@ -182,6 +182,11 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
     
     progressIndicatorView.center = self.navigationController.view.center;
     
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        progressIndicatorView.showsSemiTransparentOverlay = NO;
+    }
+    
     //Add it as a subview to self.view
     [self.navigationController.view addSubview:progressIndicatorView];
     

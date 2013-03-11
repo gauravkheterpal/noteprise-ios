@@ -182,7 +182,7 @@ static NSString *const kHTML2DOCConverterURL    = @"http://csboxnotes.appspot.co
 @end
 @implementation UINavigationBar (CustomImage)
 - (void)drawRect:(CGRect)rect {
-    UIImage *img = [UIImage imageNamed:@"Top_nav_768x44.png"];
+    UIImage *img = [UIImage imageNamed:@"Toolbar_768x44.png"];
     self.tintColor = [UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1];
     [img drawInRect:rect];
 }

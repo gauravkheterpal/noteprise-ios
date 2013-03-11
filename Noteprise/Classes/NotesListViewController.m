@@ -52,7 +52,7 @@
 	
     if ([self.navigationController.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)])
     {
-		[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Top_nav_768x44.png"] forBarMetrics:UIBarMetricsDefault];
+		[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Toolbar_768x44.png"] forBarMetrics:UIBarMetricsDefault];
 		self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1];
 	}
 	
@@ -274,7 +274,8 @@
 		UIPopoverController *popoverSettings = [[UIPopoverController alloc] initWithContentViewController:settingsNavCntrl];
 			//popoverSend.delegate = self;
         
-		settingsNavCntrl.contentSizeForViewInPopover = CGSizeMake(320, 400);
+		//settingsNavCntrl.contentSizeForViewInPopover = CGSizeMake(320, 400);
+
         
 		popoverController = popoverSettings;
 		[popoverSettings presentPopoverFromBarButtonItem:settingsBtn
@@ -287,7 +288,7 @@
     {
 		if ([settingsNavCntrl.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)])
         {
-            [settingsNavCntrl.navigationBar setBackgroundImage:[UIImage imageNamed:@"Top_nav_768x44.png"] forBarMetrics:UIBarMetricsDefault];
+            [settingsNavCntrl.navigationBar setBackgroundImage:[UIImage imageNamed:@"Toolbar_768x44.png"] forBarMetrics:UIBarMetricsDefault];
             settingsNavCntrl.navigationBar.tintColor = [UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1];
         }
         
@@ -1072,7 +1073,7 @@
             //[addNoteNavCntrl.navigationBar setBackgroundImage:[UIImage imageNamed:@"blue_bcg_iPhone.png"]];
         if ([addNoteNavCntrl.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)])
         {
-            [addNoteNavCntrl.navigationBar setBackgroundImage:[UIImage imageNamed:@"Top_nav_768x44.png"] forBarMetrics:UIBarMetricsDefault];
+            [addNoteNavCntrl.navigationBar setBackgroundImage:[UIImage imageNamed:@"Toolbar_768x44.png"] forBarMetrics:UIBarMetricsDefault];
             addNoteNavCntrl.navigationBar.tintColor = [UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1];
         }
         if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)

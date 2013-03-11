@@ -19,9 +19,20 @@
     {        
         //Create view
         [self createView];
+        
+        //Set instance variable value
+        _showsSemiTransparentOverlay = YES;
     }
     return self;
 }
+
+
+-(void)setShowsSemiTransparentOverlay:(BOOL)showsSemiTransparentOverlay
+{
+    _showsSemiTransparentOverlay = showsSemiTransparentOverlay;
+    self.backgroundColor = showsSemiTransparentOverlay ?  [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3] : [UIColor clearColor];
+}
+
 
 -(void)createView
 {

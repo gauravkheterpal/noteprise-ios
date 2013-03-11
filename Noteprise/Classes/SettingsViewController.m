@@ -16,6 +16,8 @@
 
 @implementation SettingsViewController
 @synthesize dataRows,popover_delegate;
+
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -61,6 +63,11 @@
     progressIndicatorView.hidden = YES;
     
     progressIndicatorView.center = self.navigationController.view.center;
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        progressIndicatorView.showsSemiTransparentOverlay = NO;
+    }
     
     //Add it as a subview to self.view
     [self.navigationController.view addSubview:progressIndicatorView];    
@@ -112,9 +119,6 @@
         [layerView removeFromSuperview];
     }
 }
-
-
-
 
 
 -(void)viewWillAppear:(BOOL)animated

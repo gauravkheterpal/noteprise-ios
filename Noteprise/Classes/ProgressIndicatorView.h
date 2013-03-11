@@ -10,6 +10,9 @@
 
 @interface ProgressIndicatorView : UIView
 
+@property (nonatomic) BOOL showsSemiTransparentOverlay;
+
+
 //Instance Methods
 -(void)createView;
 -(void)setText:(NSString *) text andType:(NSInteger)coverScreenType;
