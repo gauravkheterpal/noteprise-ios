@@ -7,26 +7,28 @@
 #import "SFRestAPI.h"
 
 #define kAnimationDuration  0.2f
+#define kEditButtonTag      1
 
-static int editBtnTag = 1;
-static int saveBtnTag = 2;
+//static int editBtnTag = 1;
+//static int saveBtnTag = 2;
 
-@interface NoteDetailViewController : UIViewController <UIWebViewDelegate,SFRestDelegate,UIActionSheetDelegate,UITextFieldDelegate, UIAlertViewDelegate, UIGestureRecognizerDelegate>{
+@interface NoteDetailViewController : UIViewController <UIWebViewDelegate,SFRestDelegate,UIActionSheetDelegate,UITextFieldDelegate, UIAlertViewDelegate, UIGestureRecognizerDelegate>
+{
      NSString *orgNoteTitle;
      UINavigationBar * noteNavigation;
           //UITextView * noteContent;
      UIWebView * noteContent;
           //UIImageView * noteImage;
      IBOutlet UIActivityIndicatorView *loadingSpinner;
-     IBOutlet UIImageView *dialog_imgView;
-     IBOutlet UILabel *loadingLbl;
+//     IBOutlet UIImageView *dialog_imgView;
+//     IBOutlet UILabel *loadingLbl;
      IBOutlet UIImageView *backgroundImgView;
      
           //UIBarButtonItem *saveButton;
           //UIBarButtonItem *editButton;
           //UIToolbar* toolbar;
      UITextField *editTitleField;
-     IBOutlet UIImageView *doneImgView;
+//     IBOutlet UIImageView *doneImgView;
      UIActionSheet *postToChatterOptionActionSheet;
 		//IBOutlet
 	IBOutlet UIToolbar *bottomBar;

@@ -27,12 +27,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.title = @"Choose Object";
     UIImageView *tempImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Select_note_bcg.png"]];
-    [tempImageView setFrame:self.tableView.frame]; 
+    [tempImageView setFrame:self.tableView.frame];
     
     self.tableView.backgroundView = tempImageView;
     [tempImageView release];
+    
     UILabel *bigLabel = [[UILabel alloc] init];
     bigLabel.text = self.title;
     [bigLabel setBackgroundColor:[UIColor clearColor]];
@@ -42,6 +44,7 @@
     [bigLabel sizeToFit];
     self.navigationItem.titleView = bigLabel;
     [bigLabel release];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -145,9 +148,11 @@
     NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *currentsfObj = [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];
     
-    if (currentsfObj != nil) {
+    if (currentsfObj != nil)
+    {
         NSInteger index;
-        for(int i=0 ;i<[sfObjsList count];i++){
+        for(int i=0 ;i<[sfObjsList count];i++)
+        {
             if ([[[sfObjsList objectAtIndex:i] valueForKey:OBJ_NAME] isEqualToString:[currentsfObj valueForKey:OBJ_NAME]]) {
                 index = i;
                 break;
@@ -170,6 +175,8 @@
     [dict release];
     [self listMetadataForObj];
 }
+
+
 -(void)viewDidAppear:(BOOL)animated {
     DebugLog(@"Object view appear");
     DebugLog(@"old obj:%@ \n old field:%@ \nfield value:%@",[Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY],[Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY],[Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY]);
@@ -179,8 +186,9 @@
     }
 }
 -(void)listMetadataForObj{
-    if([Utility checkNetwork]){
-        [Utility showCoverScreen];
+    if([Utility checkNetwork])
+    {
+        //[Utility showCoverScreen];
         NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
         NSString *sfObjtoMap = [[stdDefaults valueForKey:SFOBJ_TO_MAP_KEY]valueForKey:OBJ_NAME];
         /*if (sfObjtoMap == nil) {

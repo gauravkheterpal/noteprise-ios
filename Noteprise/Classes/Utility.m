@@ -2,8 +2,13 @@
 #import "Utility.h"
 #import "Keys.h"
 #import "Reachability.h"
-UIImageView *imgView;
+
+
 #define TAG_BACKGROUNDIMG_VIEW 1999
+
+//UIImageView *imgView;
+ProgressIndicatorView * progressIndicatorView;
+
 @implementation Utility
 
 +(NSString*)archivedDatafilePath{
@@ -42,7 +47,9 @@ UIImageView *imgView;
     return _data;
 
 }
-+(void)deleteAuthResult {
+
++(void)deleteAuthResult
+{
     NSString * docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSString * path = [NSString stringWithFormat:@"%@/data.plist",docPath];
     DebugLog(@"path:%@",path);
@@ -51,59 +58,220 @@ UIImageView *imgView;
         [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
     }
 }
-+(void)addSemiTransparentOverlay{
-    
+
+
+
++(void)addSemiTransparentOverlay
+{
+    //Get window's reference
     UIWindow * window = [[UIApplication sharedApplication] keyWindow];
     
-    //UIImageView *
-    
-    imgView = [[UIImageView alloc] init];
-    imgView.frame = [[UIScreen mainScreen] bounds];
-    imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    imgView.alpha = 0.5f;
-    imgView.backgroundColor = [UIColor blackColor];
-    imgView.tag = TAG_BACKGROUNDIMG_VIEW;
-    
-    UIActivityIndicatorView * activity = [[UIActivityIndicatorView alloc] init];
-    activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    activity.center = imgView.center;
-    [activity startAnimating];
-    activity.hidden = NO;
-    [imgView addSubview:activity];
-    
-    [window addSubview:imgView];
-    
-    [activity release];
-    
-}
-
-+(void)removeSemiTransparentOverlay{
-    [imgView removeFromSuperview];
-}
-
-+(void)hideCoverScreen{
-    [imgView setHidden:YES];
-}
-
-+(void)showCoverScreen{
-    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
-    imgView.userInteractionEnabled = YES;
-//    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-//        imgView.frame = CGRectMake(0, 0, 768, 1024);
-//    else {
-//        imgView.frame = CGRectMake(0, 0, 320, 480);
+    if(window.rootViewController != nil)
+    {   
+//        progressIndicatorView = [[UIView alloc]init];
+//        CGRect frame = [[UIScreen mainScreen] bounds];
+//        
+//        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+//        
+//        if(orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight)
+//        {
+//            progressIndicatorView.frame = CGRectMake(0, 0, frame.size.height, frame.size.width);
+//        }
+//        else
+//        {
+//            progressIndicatorView.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+//        }
+//        
+//        progressIndicatorView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+//        progressIndicatorView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+//        progressIndicatorView.hidden = NO;
+//        progressIndicatorView.tag = kProgressIndicatorViewTag;
+//        
+//        UIView * roundedRectView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 100)];
+//        roundedRectView.center = progressIndicatorView.center;
+//        roundedRectView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
+//        roundedRectView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
+//        roundedRectView.layer.cornerRadius = 10.0f;
+//        roundedRectView.tag = kRoundedRectViewTag;
+//        
+//        UIActivityIndicatorView * activity = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(81, 15, 37, 37)];
+//        activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+//        activity.tag = kActivityIndicatorViewTag;
+//        [activity startAnimating];
+//        [roundedRectView addSubview:activity];
+//        [activity release];
+//        
+//        UIImageView * warningImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"2.png"]];
+//        warningImageView.frame = CGRectMake(87, 21, 24, 24);
+//        warningImageView.tag = kWarningImageTag;
+//        [roundedRectView addSubview:warningImageView];
+//        [warningImageView release];
+//        
+//        UIImageView * checkmarkImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Checkbox_checked.png"]];
+//        checkmarkImageView.frame = CGRectMake(87, 21, 24, 24);
+//        checkmarkImageView.tag = kCheckmarkImageTag;
+//        [roundedRectView addSubview:checkmarkImageView];
+//        [checkmarkImageView release];
+//        
+//        UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(0, 60, roundedRectView.frame.size.width, 30)];
+//        label.font = [UIFont systemFontOfSize:18.0f];
+//        label.backgroundColor = [UIColor clearColor];
+//        label.textColor = [UIColor whiteColor];
+//        label.textAlignment = UITextAlignmentCenter;
+//        label.tag = kProgressIndicatorLabelTag;
+//        [roundedRectView addSubview:label];
+//        [label release];
+//
+//        [progressIndicatorView addSubview:roundedRectView];
+//        [roundedRectView release];
+        
+        //Create progress indicator view
+        progressIndicatorView = [[ProgressIndicatorView alloc] init];
+        
+        //Hide it
+        progressIndicatorView.hidden = YES;
+        
+        //Add it as a subview to window's rootViewController's view
+        [window.rootViewController.view addSubview:progressIndicatorView];
+    }
+        
+//    NSArray * views = [window subviews];
+//    
+//    UIView * view = [views objectAtIndex:0];
+//    
+//    Class className = [view class];
+//    
+//    if(view != nil)
+//    {
+//        [view addSubview:progressIndicatorView];
 //    }
     
-    UIActivityIndicatorView *activity=nil;
-    
-    if(imgView.subviews.count>0)
-        activity = [imgView.subviews objectAtIndex:0];
-    
-    activity.center = imgView.center;
-    
-    [imgView setHidden:NO];
-    [window bringSubviewToFront:imgView];
 }
+
+
+
++(void)hideCoverScreen
+{
+    if([progressIndicatorView superview] != nil)
+    {
+        [progressIndicatorView setHidden:YES];
+    }
+}
+
++(void)showCoverScreen
+{
+    [progressIndicatorView setHidden:NO];
+    
+    [[progressIndicatorView superview] bringSubviewToFront:progressIndicatorView];
+}
+
+
++(void)showCoverScreenWithText:(NSString *) text andType:(NSInteger)coverScreenType
+{
+    //UIWindow * window = [[UIApplication sharedApplication] keyWindow];
+    
+    //UIView * progressIndicatorView = [window viewWithTag:kProgressIndicatorViewTag];
+
+    if([progressIndicatorView superview] != nil)
+    {
+        //Set text and type of progressIndicator
+        [progressIndicatorView setText:text andType:coverScreenType];
+        
+//        UIView * roundedRectView = [progressIndicatorView viewWithTag:kRoundedRectViewTag];
+//        
+//        UILabel * label = (UILabel *)[roundedRectView viewWithTag:kProgressIndicatorLabelTag];
+//        label.text = text;
+//            
+//        UIImageView * warningImageView = (UIImageView *)[roundedRectView viewWithTag:kWarningImageTag];
+//        UIImageView * checkmarkImageView = (UIImageView *)[roundedRectView viewWithTag:kCheckmarkImageTag];
+//        UIActivityIndicatorView * activity = (UIActivityIndicatorView *)[roundedRectView viewWithTag:kActivityIndicatorViewTag];
+//        
+//        [warningImageView setHidden:YES];
+//        [checkmarkImageView setHidden:YES];
+//        [activity setHidden:YES];
+//        
+//        switch (coverScreenType)
+//        {
+//            case kWarningCoverScreen:
+//                [warningImageView setHidden:NO];
+//                break;
+//            
+//            case kInProcessCoverScreen:
+//                [activity setHidden:NO];
+//                break;
+//                
+//            case kProcessDoneCoverScreen:
+//                [checkmarkImageView setHidden:NO];
+//                break;
+//                
+//            default:
+//                break;
+//        }
+        
+        [progressIndicatorView setHidden:NO];
+        
+        [[progressIndicatorView superview] bringSubviewToFront:progressIndicatorView];
+    }
+}
+
+
+//+(void)addSemiTransparentOverlay
+//{
+//    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
+//    
+//    //UIImageView *
+//    
+//    imgView = [[UIImageView alloc] init];
+//    imgView.frame = [[UIScreen mainScreen] bounds];
+//    imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+//    imgView.alpha = 0.5f;
+//    imgView.backgroundColor = [UIColor blackColor];
+//    imgView.tag = TAG_BACKGROUNDIMG_VIEW;
+//    
+//    UIActivityIndicatorView * activity = [[UIActivityIndicatorView alloc] init];
+//    activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+//    activity.center = imgView.center;
+//    [activity startAnimating];
+//    activity.hidden = NO;
+//    [imgView addSubview:activity];
+//    
+//    [window addSubview:imgView];
+//    
+//    [activity release];
+//    
+//}
+//
+//+(void)removeSemiTransparentOverlay
+//{
+//    [imgView removeFromSuperview];
+//}
+
+//+(void)hideCoverScreen
+//{
+//    [imgView setHidden:YES];
+//}
+//
+//+(void)showCoverScreen
+//{
+//    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
+//    imgView.userInteractionEnabled = YES;
+////    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+////        imgView.frame = CGRectMake(0, 0, 768, 1024);
+////    else {
+////        imgView.frame = CGRectMake(0, 0, 320, 480);
+////    }
+//    
+//    UIActivityIndicatorView *activity=nil;
+//    
+//    if(imgView.subviews.count>0)
+//        activity = [imgView.subviews objectAtIndex:0];
+//    
+//    activity.center = imgView.center;
+//    
+//    [imgView setHidden:NO];
+//    [window bringSubviewToFront:imgView];
+//}
+
 
 +(BOOL)isBlank:(NSString*)str
 {
@@ -223,7 +391,9 @@ UIImageView *imgView;
     return [defs objectForKey:EVERNOTE_LOGIN_HOST];
     
 }
-+ (BOOL) checkNetwork {
+
++ (BOOL) checkNetwork
+{
 	DebugLog(@"checkNetwork");
         
 	Reachability *currentReach = [Reachability reachabilityForInternetConnection];

@@ -19,7 +19,7 @@
 #define NOTEBOOK_KEY @"notebook"
 #define TAG_KEY @"tag"
 #define READABLE @"readable"
-static int i;
+//static int i;
 
 
 @interface NotesListViewController : UIViewController <UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,AddNotesViewDelegate,MyPopoverDelegate>{
@@ -32,7 +32,7 @@ static int i;
           //NSMutableArray *indexArray;
           //NSMutableArray *noteBooksArr;
      IBOutlet UITableView *notesTbl;
-     IBOutlet UILabel *loadingLbl;
+//     IBOutlet UILabel *loadingLbl;
      IBOutlet UISearchBar *searchBar;
      IBOutlet UIBarButtonItem *addNoteBtn;
      IBOutlet UIBarButtonItem *settingsBtn;
@@ -45,7 +45,7 @@ static int i;
      NSString *noteContent;
      NSString *searchKeyword;
      IBOutlet UIImageView *backgroundImgView;
-     IBOutlet UIImageView *dialog_imgView;
+//     IBOutlet UIImageView *dialog_imgView;
      IBOutlet UIToolbar *bottom_bar;
      IBOutlet UIToolbar *toolbar;
      BOOL keyboardVisible;
@@ -54,7 +54,10 @@ static int i;
     float tempHeight;
     float orgTableOriginY;
     float orgBarOriginY;
-     int flag1,flag2;
+    int flag1,flag2;
+
+    NSInteger notebookCountForLoadedNotes;
+    BOOL isError;
     
     bool isSearchModeEnabled;
 	

@@ -6,6 +6,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CoreLocation/CoreLocation.h>
+#import "ProgressIndicatorView.h"
 
 @protocol AddNotesViewDelegate <NSObject>
 - (void)evernoteCreatedSuccessfullyListener;
@@ -24,23 +25,28 @@
      UIActionSheet *sortTypeActionSheet;
      int selectedNotebookIndex;
      IBOutlet UIActivityIndicatorView *loadingSpinner;
-     IBOutlet UIImageView *dialog_imgView;
-     IBOutlet UILabel *loadingLbl;
+//     IBOutlet UIImageView *dialog_imgView;
+//     IBOutlet UILabel *loadingLbl;
      IBOutlet UITableView *notebooksTbl;
      UIPopoverController *popController;
      id <AddNotesViewDelegate> delegate;
-     IBOutlet UIImageView *doneImgView;
-    	CGFloat animatedDistance; //textfield correction when keyboard is out
+//     IBOutlet UIImageView *doneImgView;
+     CGFloat animatedDistance; //textfield correction when keyboard is out
+    
+    ProgressIndicatorView * progressIndicatorView;
+    
+    UIView * layerView;
 }
 
 @property (nonatomic, assign) id <NSObject, AddNotesViewDelegate > delegate;
 @property (nonatomic, retain) IBOutlet UITextField * titleNote;
 @property (nonatomic, retain) IBOutlet UIButton * sendNote;
-
-
+@property (nonatomic, retain) UITableViewController * popoverContent;
 @property (nonatomic, retain) IBOutlet UIImageView * imageView;
 
 
 - (IBAction) getPhoto:(id) sender;
 -(IBAction)createNoteEvernote:(id)sender;
+-(void)addProgressIndicatorView;
+
 @end

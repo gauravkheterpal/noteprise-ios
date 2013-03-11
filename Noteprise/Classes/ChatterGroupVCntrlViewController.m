@@ -28,26 +28,53 @@
 }
  
 
--(IBAction)toggleEditMode{
+-(IBAction)toggleEditMode
+{
 	DebugLog(@"toggleEditMode");
 	self.inEditMode = !self.inEditMode;
     self.navigationItem.rightBarButtonItem = nil;
-    [self initToolbarButtons];
+    
+    
+    //Show tool bar button only if records has been shown in table
+    if([self.chatterGroupArray count] > 0)
+    {
+        // create a toolbar where we can place some buttons
+        [self initToolbarButtons];
+    }
+    
+
     if(!self.inEditMode)
+    {
         [self initializeSelectedRow];
+    }
+    else
+    {
+        selectedGroupIndex = -999;
+    }
+
     
 	[chatterGroupTbl reloadData];
 }
 
--(void)initializeSelectedRow {
+
+-(void)initializeSelectedRow
+{
     NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:[chatterGroupArray count]];
+    
     for (int i=0; i < [chatterGroupArray count]; i++)
+    {
         [array addObject:[NSNumber numberWithBool:NO]];
+    }
+    
     selectedGroupsRow = array;
+    
     DebugLog(@"Selected Group Array = %@",selectedGroupsRow);
 }
 
--(void)initToolbarButtons {
+
+
+-(void)initToolbarButtons
+{
     CustomBlueToolbar* toolbar = [[CustomBlueToolbar alloc]
                                   initWithFrame:CGRectMake(0, 0, 125, 44)];
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && (self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight))
@@ -110,10 +137,17 @@
     
 }
 
--(void)viewDidAppear:(BOOL)animated{
+-(void)viewDidAppear:(BOOL)animated
+{
     selectedGroupIndex=-999;
-    // create a toolbar where we can place some buttons
-    [self initToolbarButtons];
+    
+    //Show tool bar button only if records has been shown in table
+    if([self.chatterGroupArray count] > 0)
+    {
+        // create a toolbar where we can place some buttons
+        [self initToolbarButtons];
+    }
+
     
 }
 - (void)viewDidLoad
@@ -128,7 +162,14 @@
 	self.unselectedImage = [UIImage imageNamed:@"Checkbox.png"];
 
     //[loadingSpinner startAnimating];
-    [Utility showCoverScreen];
+//    [Utility showCoverScreen];
+    
+    selectedGroupIndex = -999;
+    
+    //Show progress indicator
+    [Utility showCoverScreenWithText:@"Loading..." andType:kInProcessCoverScreen];
+    
+    
     chatterGroupTbl.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background_pattern_tableview.png"]];
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         UILabel *bigLabel = [[UILabel alloc] init];
@@ -147,37 +188,68 @@
     [self fetchListOfChatterGroup];
 
 }
+
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return YES;
 }
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration{
-    [self initToolbarButtons];
+
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration
+{
+    //Show tool bar button only if records has been shown in table
+    if([self.chatterGroupArray count] > 0)
+    {
+        // create a toolbar where we can place some buttons
+        [self initToolbarButtons];
+    }
 }
--(void)changeBkgrndImgWithOrientation {
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
+
+-(void)changeBkgrndImgWithOrientation
+{
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
         if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
+        {
             backgroundImgView.image = [UIImage imageNamed:@"bgE-480x287.png"];
-        else {
+        }
+        else
+        {
             backgroundImgView.image = [UIImage imageNamed:@"bgE-320x480.png"];
         }
-    } else {
+    }
+    else
+    {
         if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
+        {
             backgroundImgView.image = [UIImage imageNamed:@"bgE-1024x704.png"];
-        else {
+        }
+        else
+        {
             backgroundImgView.image = [UIImage imageNamed:@"bgE-768x1024.png"];
         }
     }
 }
--(void)fetchListOfChatterGroup {
-    [Utility showCoverScreen];
-    [self showLoadingLblWithText:progress_dialog_chatter_getting_group_data_message];
+
+-(void)fetchListOfChatterGroup
+{
+    // Show Progress Indicator
+    [Utility showCoverScreenWithText:progress_dialog_chatter_getting_group_data_message andType:kInProcessCoverScreen];
+
+//    [self showLoadingLblWithText:progress_dialog_chatter_getting_group_data_message];
+    
     NSString * path = LIST_OF_CHATTER_GROUP_URL;
+    
     SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodGET path:path queryParams:nil];
     [[SFRestAPI sharedInstance] send:request delegate:self];
 }
--(void)postToSelectedChatterGroups {
-    if([Utility checkNetwork]) {
+
+
+-(void)postToSelectedChatterGroups
+{
+    if([Utility checkNetwork])
+    {
         /*for(int i = 0;i < [selectedGroupsRow count] ; i++) {
             if ([[selectedGroupsRow objectAtIndex:i] boolValue] == YES) {
                 ChatterRecord *selectedRecord = (ChatterRecord*)[self.chatterGroupArray objectAtIndex:i];
@@ -185,26 +257,32 @@
             }
         }*/
         
-        if([self.noteContent length] > 1000){
+        if([self.noteContent length] > 1000)
+        {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Noteprise" message:CHATTER_LIMIT_CROSSED_ALERT_MSG delegate:self cancelButtonTitle:ALERT_NEGATIVE_BUTTON_TEXT otherButtonTitles:ALERT_POSITIVE_BUTTON_TEXT, nil];
             alert.tag = CHATTER_POST_TO_GROUP_LIMIT_ALERT_TAG;
             [alert show];
             [alert release];
         }
-        else {
+        else
+        {
             [self createSFRequestToPostToSelectedChatterGroup:self.noteContent];
         }
     }
-    
-    else {
+    else
+    {
         [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
     }
 }
+
+
 -(void)createSFRequestToPostToSelectedChatterGroup:(NSString*)evernoteContent
 {
     
     //NSMutableArray *paramArr = [[NSMutableArray alloc]init];
     //NSDictionary *textParam = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",evernoteContent, @"text",nil];
+    
+    NSInteger selectedRowCount = 0;
     
     if(self.inEditMode)
     {
@@ -212,17 +290,31 @@
         {
             if ([[selectedGroupsRow objectAtIndex:i] boolValue] == YES) 
             {
+                //Increase selected row count
+                selectedRowCount++;
+                
                 NSMutableArray *paramArr = [[NSMutableArray alloc]init];
                 NSDictionary *textParam = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",evernoteContent, @"text",nil];
                 ChatterRecord *selectedRecord = (ChatterRecord*)[self.chatterGroupArray objectAtIndex:i];
+                
                 //ChatterRecord *selectedRecord = (ChatterRecord*)[self.chatterGroupArray objectAtIndex:selectedGroupIndex];
-                NSString * path = [NSString stringWithFormat:@"v23.0/chatter/feeds/record/%@/feed-items",selectedRecord.chatterId];
+                
+                NSString * path = [NSString stringWithFormat:@"v25.0/chatter/feeds/record/%@/feed-items",selectedRecord.chatterId];
                 DebugLog(@"test url for group feed: %@",path);
-                [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_GROUP_MSG];
+                
+                // Show Progress Indicator
+                [Utility showCoverScreenWithText:POSTING_NOTE_TO_CHATTER_GROUP_MSG andType:kInProcessCoverScreen];
+
+                
+//                [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_GROUP_MSG];
+
                 [paramArr addObject:textParam];
+                
                 NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:paramArr,@"messageSegments", nil];
                 NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:message,@"body", nil];
+                
                 DebugLog(@"Body = %@",body);
+                
                 SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];
                 [[SFRestAPI sharedInstance] send:request delegate:self];
                 [paramArr release];
@@ -230,48 +322,78 @@
                     
             }
         }
+        
+        if(selectedRowCount == 0)
+        {
+            [Utility hideCoverScreen];
+            [Utility showAlert:CHATTER_POST_GROUP_MISSING_MSG];         
+        }
     }
     else 
     {
-        if(selectedGroupIndex == -999) {   
+        if(selectedGroupIndex == -999)
+        {
             [Utility hideCoverScreen];
-            [Utility showAlert:CHATTER_POST_USER_MISSING_MSG];
+            
+            [Utility showAlert:CHATTER_POST_GROUP_MISSING_MSG];
+            
             return;
-        } else {
-            {
-                NSMutableArray *paramArr = [[NSMutableArray alloc]init];
-                NSDictionary *textParam = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",evernoteContent, @"text",nil];
-                ChatterRecord *selectedRecord = (ChatterRecord*)[self.chatterGroupArray objectAtIndex:selectedGroupIndex];
-                NSString * path = [NSString stringWithFormat:@"v23.0/chatter/feeds/record/%@/feed-items",selectedRecord.chatterId];
-                DebugLog(@"test url for group feed: %@",path);
-                [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_GROUP_MSG];
-                [paramArr addObject:textParam];
-                NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:paramArr,@"messageSegments", nil];
-                NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:message,@"body", nil];
+        }
+        else
+        {   
+            NSMutableArray *paramArr = [[NSMutableArray alloc]init];
+            NSDictionary *textParam = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",evernoteContent, @"text",nil];
+            ChatterRecord *selectedRecord = (ChatterRecord*)[self.chatterGroupArray objectAtIndex:selectedGroupIndex];
+            NSString * path = [NSString stringWithFormat:@"v25.0/chatter/feeds/record/%@/feed-items",selectedRecord.chatterId];
+            DebugLog(@"test url for group feed: %@",path);
+            
+            // Show Progress Indicator
+            [Utility showCoverScreenWithText:POSTING_NOTE_TO_CHATTER_GROUP_MSG andType:kInProcessCoverScreen];
+
+            
+//                [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_GROUP_MSG];
+            
+            [paramArr addObject:textParam];
+            NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:paramArr,@"messageSegments", nil];
+            NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:message,@"body", nil];
             DebugLog(@"Body = %@",body);
-                SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];
-                [[SFRestAPI sharedInstance] send:request delegate:self];
-                [paramArr release];
-                [textParam release];
-            }
+            SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];
+            [[SFRestAPI sharedInstance] send:request delegate:self];
+            [paramArr release];
+            [textParam release];
+            
         }
     }
 
 }
 #pragma mark - UIAlertViewDelegate
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (alertView.tag == CHATTER_POST_TO_GROUP_LIMIT_ALERT_TAG && alertView.cancelButtonIndex == buttonIndex) {
-    } else if (alertView.tag == CHATTER_POST_TO_GROUP_LIMIT_ALERT_TAG) {
-        [Utility showCoverScreen];
-        [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_GROUP_MSG];
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == CHATTER_POST_TO_GROUP_LIMIT_ALERT_TAG && alertView.cancelButtonIndex == buttonIndex)
+    {
+        
+    }
+    else if (alertView.tag == CHATTER_POST_TO_GROUP_LIMIT_ALERT_TAG)
+    {
+        // Show Progress Indicator
+        [Utility showCoverScreenWithText:POSTING_NOTE_TO_CHATTER_GROUP_MSG andType:kInProcessCoverScreen];
+
+//        [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_GROUP_MSG];
+        
         //truncationg note text to 1000 character for posting to Chatter
         DebugLog(@"old length:%d", [self.noteContent length]);
         NSString *truncateNoteContent = [[self.noteContent substringToIndex:999]mutableCopy];
         DebugLog(@"new length:%d", [truncateNoteContent length]);
         [self createSFRequestToPostToSelectedChatterGroup:truncateNoteContent];
     }
+    else if(alertView.tag == ERROR_LOADING_CONTENT_ALERT_TAG)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -463,32 +585,56 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(self.inEditMode) {
+    if(self.inEditMode)
+    {
         BOOL selected = [[selectedGroupsRow objectAtIndex:[indexPath row]] boolValue];
+        
         [selectedGroupsRow replaceObjectAtIndex:[indexPath row] withObject:[NSNumber numberWithBool:!selected]];
+        
         DebugLog(@"%@",selectedGroupsRow);
+        
         [chatterGroupTbl deselectRowAtIndexPath:indexPath animated:YES];
+        
         [chatterGroupTbl reloadData];
-    } else {
+    }
+    else
+    {
         selectedGroupIndex=indexPath.row;
     }
-
 }
 
 
--(void)showLoadingLblWithText:(NSString*)Loadingtext{
-    //[loadingSpinner startAnimating];
-    dialog_imgView.hidden = NO;
-    loadingLbl.text = Loadingtext;
-    loadingLbl.hidden = NO;
-}
--(void)hideDoneToastMsg:(id)sender{
-	dialog_imgView.hidden = YES;
-    loadingLbl.hidden = YES;
-    doneImgView.hidden = YES;
-    [loadingSpinner stopAnimating];
+//-(void)showLoadingLblWithText:(NSString*)Loadingtext
+//{
+//    //[loadingSpinner startAnimating];
+//    dialog_imgView.hidden = NO;
+//    loadingLbl.text = Loadingtext;
+//    loadingLbl.hidden = NO;
+//}
+
+
+-(void)hideDoneToastMsg:(id)sender
+{
+    //Hide progress indicator
+    [Utility hideCoverScreen];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+//	dialog_imgView.hidden = YES;
+//    loadingLbl.hidden = YES;
+//    doneImgView.hidden = YES;
+//    [loadingSpinner stopAnimating];
     //[delegate evernoteCreatedSuccessfullyListener];
 }
+
+
+-(void)hideToastMsg:(id)sender
+{
+    //Hide progress indicator
+    [Utility hideCoverScreen];
+}
+
+
 #pragma mark -
 #pragma mark Table cell image support
 
@@ -560,109 +706,170 @@
     DebugLog(@"request:%@",[request description]);
     DebugLog(@"jsonResponse:%@",jsonResponse);
     
-    if([[request path] rangeOfString:LIST_OF_CHATTER_GROUP_URL].location != NSNotFound){
+    if([[request path] rangeOfString:LIST_OF_CHATTER_GROUP_URL].location != NSNotFound)
+    {
         //List of following
-        if([[jsonResponse objectForKey:@"errors"] count] == 0){
+        if([[jsonResponse objectForKey:@"errors"] count] == 0)
+        {
             [Utility hideCoverScreen];
-            dialog_imgView.hidden = YES;
-            loadingLbl.hidden = YES;
-            doneImgView.hidden = YES;
-            [loadingSpinner stopAnimating];
+            
+//            dialog_imgView.hidden = YES;
+//            loadingLbl.hidden = YES;
+//            doneImgView.hidden = YES;
+//            [loadingSpinner stopAnimating];
+            
             NSArray *records = [jsonResponse objectForKey:@"groups"];
-            for (NSDictionary *chatterGroupDict in records) {
-                ChatterRecord *chatterGroup = [[ChatterRecord alloc]init];
+            
+            if([records count] > 0)
+            {
+                for (NSDictionary *chatterGroupDict in records)
+                {
+                    ChatterRecord *chatterGroup = [[ChatterRecord alloc]init];
+                    
+                    if([chatterGroupDict objectForKey:@"name"] != nil)
+                        chatterGroup.chatterName = [chatterGroupDict valueForKey:@"name"];
+                    if([chatterGroupDict objectForKey:@"id"] != nil)
+                        chatterGroup.chatterId = [chatterGroupDict valueForKey:@"id"];
+                    if([chatterGroupDict objectForKey:@"photo"] != nil)
+                        chatterGroup.imageURLString = [[chatterGroupDict valueForKey:@"photo"] valueForKey:@"smallPhotoUrl"];
+                    
+                    [self.chatterGroupArray addObject:chatterGroup];
+                    
+                }
                 
-                if([chatterGroupDict objectForKey:@"name"] != nil)
-                    chatterGroup.chatterName = [chatterGroupDict valueForKey:@"name"];
-                if([chatterGroupDict objectForKey:@"id"] != nil)
-                    chatterGroup.chatterId = [chatterGroupDict valueForKey:@"id"];
-                if([chatterGroupDict objectForKey:@"photo"] != nil)
-                    chatterGroup.imageURLString = [[chatterGroupDict valueForKey:@"photo"] valueForKey:@"smallPhotoUrl"];
+                // Sort the chatter users by name
+                NSSortDescriptor *firstDescriptor =[[[NSSortDescriptor alloc]
+                                                     initWithKey:@"chatterName"
+                                                     ascending:YES
+                                                     selector:@selector(localizedCaseInsensitiveCompare:)] autorelease];
                 
-                [self.chatterGroupArray addObject:chatterGroup];
+                NSArray * descriptors = [NSArray arrayWithObjects:firstDescriptor, nil];
+                NSMutableArray * sortedArray = (NSMutableArray*)[self.chatterGroupArray sortedArrayUsingDescriptors:descriptors];
+                self.chatterGroupArray = [sortedArray retain];
+                //self.chatterGroupArray = records; //[records sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
                 
+                [self initializeSelectedRow];
+                
+                chatterGroupTbl.delegate = self;
+                chatterGroupTbl.dataSource = self;
+                [chatterGroupTbl reloadData];
+                
+                //Show toolbar buttons
+                [self initToolbarButtons];
+                
+                DebugLog(@"request:didLoadResponse: #records: %d records %@ req %@ rsp %@", records.count,records,request,jsonResponse);
             }
-            // Sort the chatter users by name
-            NSSortDescriptor *firstDescriptor =[[[NSSortDescriptor alloc]
-                                                 initWithKey:@"chatterName"
-                                                 ascending:YES
-                                                 selector:@selector(localizedCaseInsensitiveCompare:)] autorelease];
-            
-            NSArray * descriptors = [NSArray arrayWithObjects:firstDescriptor, nil];
-            NSMutableArray * sortedArray = (NSMutableArray*)[self.chatterGroupArray sortedArrayUsingDescriptors:descriptors];
-            self.chatterGroupArray = [sortedArray retain];
-            //self.chatterGroupArray = records; //[records sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
-            [self initializeSelectedRow];
-            chatterGroupTbl.delegate = self;
-            chatterGroupTbl.dataSource = self;
-            [chatterGroupTbl reloadData];
-            DebugLog(@"request:didLoadResponse: #records: %d records %@ req %@ rsp %@", records.count,records,request,jsonResponse);
-            
+            else
+            {
+                UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Noteprise"
+                                                                message:kNoChatterGroupFoundMsg
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                alert.tag = ERROR_LOADING_CONTENT_ALERT_TAG;
+                [alert show];
+                [alert release];
+            }
+
         }
-        else{
+        else
+        {
             [Utility hideCoverScreen];
-            dialog_imgView.hidden = YES;
-            loadingLbl.hidden = YES;
-            doneImgView.hidden = YES;
-            [loadingSpinner stopAnimating];
-            [Utility showAlert:ERROR_LISTING_CHATTER_GROUPS_MSG];
-            [Utility hideCoverScreen];
+            
+//            dialog_imgView.hidden = YES;
+//            loadingLbl.hidden = YES;
+//            doneImgView.hidden = YES;
+//            [loadingSpinner stopAnimating];
+            
+            [Utility showAlert:ERROR_LISTING_CHATTER_GROUPS_MSG];            
         }
         
     }
-    else  if([[request path] rangeOfString:@"feed-items"].location != NSNotFound){
+    else  if([[request path] rangeOfString:@"feed-items"].location != NSNotFound)
+    {
         if([[jsonResponse objectForKey:@"errors"] count]==0){
             
-            [loadingSpinner stopAnimating];
-            doneImgView.hidden = NO;
-            [self showLoadingLblWithText:salesforce_chatter_post_group_success_message];
+//            [loadingSpinner stopAnimating];
+//            doneImgView.hidden = NO;
+            
+            // Show Progress Indicator
+            [Utility showCoverScreenWithText:salesforce_chatter_post_group_success_message andType:kProcessDoneCoverScreen];
+
+//            [self showLoadingLblWithText:salesforce_chatter_post_group_success_message];
+            
             [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
             
-            [loadingSpinner stopAnimating];
+//            [loadingSpinner stopAnimating];
         }
-        else{
-            [loadingSpinner stopAnimating];
-            [self showLoadingLblWithText:POSTING_NOTE_FAILED_TO_CHATTER_USER_MSG];
+        else
+        {
+//            [loadingSpinner stopAnimating];
+            
+            // Show Progress Indicator
+            [Utility showCoverScreenWithText:ERROR_LISTING_CHATTER_GROUPS_MSG andType:kWarningCoverScreen];
+            
+//          [self showLoadingLblWithText:POSTING_NOTE_FAILED_TO_CHATTER_USER_MSG];
+            
             [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(hideToastMsg:) userInfo:nil repeats:NO];
         }
-        [Utility hideCoverScreen];
+        
+//        [Utility hideCoverScreen];
     }
 }
 
 
-- (void)request:(SFRestRequest*)request didFailLoadWithError:(NSError*)error {
+- (void)request:(SFRestRequest*)request didFailLoadWithError:(NSError*)error
+{
     DebugLog(@"request:didFailLoadWithError: %@", error);
+    
     [Utility hideCoverScreen];
-    [loadingSpinner stopAnimating];
-    [self hideDoneToastMsg:nil];
+    
+//    [loadingSpinner stopAnimating];
+  
+//    [self hideDoneToastMsg:nil];
+    
     //add your failed error handling here
     NSString *alertMessaage ;
+    
     if([[error.userInfo valueForKey:@"errorCode"] isEqualToString:@"STRING_TOO_LONG"])
+    {
         alertMessaage = CHATTER_LIMIT_CROSSED_ERROR_MSG;
-    else if([[error.userInfo valueForKey:@"errorCode"] isEqualToString:@"API_DISABLED_FOR_ORG"]) {
+    }
+    else if([[error.userInfo valueForKey:@"errorCode"] isEqualToString:@"API_DISABLED_FOR_ORG"])
+    {
         alertMessaage = CHATTER_API_DISABLED;
-    } else {
+    }
+    else
+    {
         alertMessaage = [error.userInfo valueForKey:@"message"];
     }
+    
     //add your failed error handling here
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:alertMessaage delegate:nil cancelButtonTitle:ALERT_NEUTRAL_BUTTON_TEXT otherButtonTitles:nil, nil];
     [alert show];
     [alert release];
 }
 
-- (void)requestDidCancelLoad:(SFRestRequest *)request {
+- (void)requestDidCancelLoad:(SFRestRequest *)request
+{
     DebugLog(@"requestDidCancelLoad: %@", request);
     //add your failed error handling here
+
     [Utility hideCoverScreen];
-    [loadingSpinner stopAnimating];
-    [self hideDoneToastMsg:nil];
+    
+//    [loadingSpinner stopAnimating];
+  
+//    [self hideDoneToastMsg:nil];
 }
 
-- (void)requestDidTimeout:(SFRestRequest *)request {
+- (void)requestDidTimeout:(SFRestRequest *)request
+{
     DebugLog(@"requestDidTimeout: %@", request);
     //add your failed error handling here
+  
     [Utility hideCoverScreen];
-    [self hideDoneToastMsg:nil];
+
+    //    [self hideDoneToastMsg:nil];
 }
 
 - (void)didReceiveMemoryWarning

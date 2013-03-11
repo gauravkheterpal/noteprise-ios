@@ -27,6 +27,9 @@
 #import "SFOAuthCredentials.h"
 #import "SFAuthorizingViewController.h"
 #import "SFRestAPI.h"
+#import "Utility.h"
+#import "SBJsonParser.h"
+
 
 
 
@@ -96,6 +99,9 @@ NSString * const kDefaultLoginHost = @"login.salesforce.com";
 @synthesize  coordinator = _coordinator;
 @synthesize  viewController = _viewController;
 @synthesize  window = _window;
+@synthesize responseData;
+@synthesize userName;
+
 
 #pragma mark - init/dealloc
 
@@ -122,6 +128,8 @@ NSString * const kDefaultLoginHost = @"login.salesforce.com";
     [_coordinator release]; _coordinator = nil;
     self.window = nil;
     self.viewController = nil;
+    [self.responseData release];
+    [self.userName release];
     
 	[ super dealloc ];
 }
@@ -182,7 +190,8 @@ NSString * const kDefaultLoginHost = @"login.salesforce.com";
 #pragma mark - Salesforce.com login helpers
 
 
-- (SFOAuthCoordinator*)coordinator {
+- (SFOAuthCoordinator*)coordinator
+{
     //create a new coordinator if we don't already have one
     if (nil == _coordinator) {
         
@@ -203,7 +212,7 @@ NSString * const kDefaultLoginHost = @"login.salesforce.com";
         creds.redirectUri = [self oauthRedirectURI];
         SFOAuthCoordinator *coord = [[SFOAuthCoordinator alloc] initWithCredentials:creds];
         [creds release];
-        coord.scopes = [[self class] oauthScopes]; 
+        coord.scopes = [[self class] oauthScopes];
         
         coord.delegate = self;
         _coordinator = coord;        
@@ -211,7 +220,8 @@ NSString * const kDefaultLoginHost = @"login.salesforce.com";
     return _coordinator;
 }
 
-- (void)login {
+- (void)login
+{
     //kickoff authentication
     [self.coordinator authenticate];
 }
@@ -222,22 +232,29 @@ NSString * const kDefaultLoginHost = @"login.salesforce.com";
     [self.coordinator authenticate];
 }
 
-- (void)loggedIn {
+- (void)loggedIn
+{
     //provide the Rest API with a reference to the coordinator we used for login
     [[SFRestAPI sharedInstance] setCoordinator:self.coordinator];
+
     
     // now show the true app view controller if it's not already shown
-    if (nil != self.authViewController) {
+    if (nil != self.authViewController)
+    {
         self.authViewController = nil;
         DebugLog(@"access token%@", self.coordinator.credentials.accessToken);
     }
     
-    if (nil == self.viewController) {
+    if (nil == self.viewController)
+    {
         UIViewController *rootVC = [self newRootViewController];
         self.viewController = rootVC;
         [rootVC release];
         self.window.rootViewController = self.viewController;
         [self.window makeKeyAndVisible];
+        
+
+
     }
 }
 
@@ -276,8 +293,8 @@ NSString * const kDefaultLoginHost = @"login.salesforce.com";
 }
 
 
-- (void)setupAuthorizingViewController {
-    
+- (void)setupAuthorizingViewController
+{    
     //clear all children of the existing window, if any
     if (nil != self.window) {
         NSLog(@"SFNativeRestAppDelegate clearing self.window");
@@ -309,22 +326,69 @@ NSString * const kDefaultLoginHost = @"login.salesforce.com";
 }
 
 
-- (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator didBeginAuthenticationWithView:(UIWebView *)view {
+- (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator didBeginAuthenticationWithView:(UIWebView *)view
+{
     NSLog(@"oauthCoordinator:didBeginAuthenticationWithView");
     
-    if (nil != self.authViewController) {
+    //Reset application settings
+    NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
+    [stdDefaults removeObjectForKey:SFOBJ_TO_MAP_KEY];
+    [stdDefaults removeObjectForKey:SFOBJ_FIELD_TO_MAP_KEY];
+    //NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    //[[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    
+    if (nil != self.authViewController)
+    {
         // We're in the initialization of the app.  Make sure the auth view is in the foreground.
         [self.window bringSubviewToFront:self.authViewController.view];
         [self.authViewController setOauthView:view];
     }
     else
+    {
         [self.viewController.view addSubview:view];
+    }
 }
 
-- (void)oauthCoordinatorDidAuthenticate:(SFOAuthCoordinator *)coordinator {
+- (void)oauthCoordinatorDidAuthenticate:(SFOAuthCoordinator *)coordinator
+{
     NSLog(@"oauthCoordinatorDidAuthenticate for userId: %@", coordinator.credentials.userId);
     [coordinator.view removeFromSuperview];
     [self loggedIn];
+    
+    //Send identity url request
+    NSString * identityUrl = [NSString stringWithFormat:@"%@?oauth_token=%@", coordinator.credentials.identityUrl, coordinator.credentials.accessToken];
+    NSLog(@"%@", identityUrl);
+    
+    NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:identityUrl]];
+
+    //Asynchronous request for getting user name
+    [[NSURLConnection alloc]initWithRequest:request delegate:self startImmediately:YES];
+    
+////Synchronous request for getting user name
+//    NSURLResponse * respnse;
+//    NSError * error;
+//    
+//    NSData * responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&respnse error:&error];
+//    
+//    if(responseData != nil)
+//    {
+//        SBJsonParser * jsonParser = [[SBJsonParser alloc]init];
+//
+//        NSString * jsonString = [[NSString alloc]initWithData:responseData encoding:NSASCIIStringEncoding];
+//
+//        NSLog(@"%@", jsonString);
+//
+//        //UserInfo dictionary
+//        NSDictionary * dict = [jsonParser objectWithString:jsonString];
+//
+//        //Fetch user's full name
+//        self.userName = [dict objectForKey:@"display_name"];
+//
+//        NSLog(@"%@", self.userName);
+//
+//        [jsonString release];
+//        [jsonParser release];
+//    }
 }
 
 
@@ -354,6 +418,53 @@ NSString * const kDefaultLoginHost = @"login.salesforce.com";
         [alert release];
     }
 }
+
+
+
+#pragma mark - NSURLConnection delegate methods
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+    NSMutableData * data = [[NSMutableData alloc]initWithCapacity:1];
+    self.responseData = data;
+    [data release];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    [self.responseData appendData:data];
+}
+
+-(void) connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    
+}
+
+-(void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    [connection release];
+    
+    SBJsonParser * jsonParser = [[SBJsonParser alloc]init];
+    
+    NSString * jsonString = [[NSString alloc]initWithData:self.responseData encoding:NSASCIIStringEncoding];
+    
+    NSLog(@"%@", jsonString);
+    
+    //UserInfo dictionary
+    NSDictionary * dict = [jsonParser objectWithString:jsonString];
+    
+    //Fetch user's full name
+    self.userName = [dict objectForKey:@"display_name"];
+    
+    NSLog(@"%@", self.userName);
+    
+    [jsonString release];
+    [jsonParser release];
+}
+
+
+
+
 
 #pragma mark - UIAlertViewDelegate
 

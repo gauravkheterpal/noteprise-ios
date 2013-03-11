@@ -28,8 +28,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.title = @"Salesforce Mapping";
-    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1];
+    
+    //Add progress indicator view
+    [self addProgressIndicatorView];
+    
+    //self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1];
     
     //if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"5.0"))
     //    [[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1]];
@@ -45,10 +50,79 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
--(void)viewWillAppear:(BOOL)animated{
+
+
+-(void)addProgressIndicatorView
+{
+    //Create progress indicator view
+    progressIndicatorView = [[ProgressIndicatorView alloc] init];
+    
+    //Hide it
+    progressIndicatorView.hidden = YES;
+    
+    progressIndicatorView.center = self.navigationController.view.center;
+    
+    //Add it as a subview to self.view
+    [self.navigationController.view addSubview:progressIndicatorView];    
+    
+}
+
+
+-(void)hideCoverScreen
+{
+    [progressIndicatorView setHidden:YES];
+    
+    //Remove layerView from window
+    [self removeLayer];
+}
+
+
+-(void)showCoverScreenWithText:(NSString *) text andType:(NSInteger)coverScreenType
+{
+    //Set text and type of progressIndicator
+    [progressIndicatorView setText:text andType:coverScreenType];
+    
+    [progressIndicatorView setHidden:NO];
+    
+    [[progressIndicatorView superview] bringSubviewToFront:progressIndicatorView];
+    
+    //Create and add layer view to window so that user couldn't interact while something is in process
+    [self addLayer];
+}
+
+-(void)addLayer
+{
+    if(layerView == nil)
+    {
+        layerView = [[UIView alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
+        layerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        layerView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.01];
+    }
+    
+    //Add it to window
+    [[[UIApplication sharedApplication] keyWindow] addSubview:layerView];
+}
+
+
+-(void)removeLayer
+{
+    if(layerView != nil)
+    {
+        //Add layerView from window
+        [layerView removeFromSuperview];
+    }
+}
+
+
+
+
+
+-(void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:animated];
     [self.tableView reloadData];
 }
+
 
 - (void)viewDidUnload
 {
@@ -57,10 +131,12 @@
     // e.g. self.myOutlet = nil;
 }
 
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
 
 #pragma mark - Table view data source
 
@@ -70,20 +146,23 @@
     return 2;
 }
 
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
     return 1;
 }
 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
+    if (cell == nil)
+    {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
-        
     }
+    
     // Configure the cell...
     int row = [indexPath section];
     NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
@@ -93,28 +172,38 @@
     }
     sfObj = [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];*/
 
-    if(row == 0) {
+    if(row == 0)
+    {
         cell.textLabel.text = @"Object";
         NSDictionary *sfObj = [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];
         if(sfObj != nil)
+        {
             cell.detailTextLabel.text = [sfObj valueForKey:OBJ_LABEL];
-        else {
+        }
+        else
+        {
             cell.detailTextLabel.text = @"";
         }
             
     }
-    else {
+    else
+    {
         cell.textLabel.text = @"Field";
         NSDictionary *sfObjField = [stdDefaults valueForKey:SFOBJ_FIELD_TO_MAP_KEY];
         if(sfObjField != nil)
+        {
             cell.detailTextLabel.text = [sfObjField valueForKey:FIELD_LABEL];
-        else {
+        }
+        else
+        {
             cell.detailTextLabel.text = @"";
         }
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
+
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -160,66 +249,100 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     int row = [indexPath section];
-    if(row == 0){
+    
+    if(row == 0)
+    {
         [self fetchSFObjects];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    } else {
+    }
+    else
+    {
         [self listMetadataForObj];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }
--(void)fetchSFObjects{
-    if([Utility checkNetwork]) {
+
+
+-(void)fetchSFObjects
+{
+    if([Utility checkNetwork])
+    {
         self.tableView.userInteractionEnabled = NO;
         SFRestRequest *request = [[SFRestAPI sharedInstance] requestForDescribeGlobal]; 
         [[SFRestAPI sharedInstance] send:request delegate:self];
-    } else {
+
+        //Show progress indicator
+        [self showCoverScreenWithText:@"Loading..." andType:kInProcessCoverScreen];
+    }
+    else
+    {
         [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
     }
-    
 }
--(void)listMetadataForObj{
-    if([Utility checkNetwork]) {
+
+
+-(void)listMetadataForObj
+{
+    if([Utility checkNetwork])
+    {
         NSString *sfObjtoMap;
         NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
         sfObjtoMap = [[stdDefaults valueForKey:SFOBJ_TO_MAP_KEY]valueForKey:OBJ_NAME];
-        if (sfObjtoMap == nil) {
+        
+        if (sfObjtoMap == nil)
+        {
             [Utility showAlert:SF_OBJECT_MISSING_MSG];
         }
-        if(sfObjtoMap) {
+        
+        if(sfObjtoMap)
+        {
             self.tableView.userInteractionEnabled = NO;
             SFRestRequest * request =  [[SFRestAPI sharedInstance] requestForDescribeWithObjectType:sfObjtoMap];
             [[SFRestAPI sharedInstance] send:request delegate:self];
+            
+            //Show progress indicator
+            [self showCoverScreenWithText:@"Loading..." andType:kInProcessCoverScreen];
         }
-    } else {
+    }
+    else
+    {
         [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
     }
 }
+
+
 #pragma mark - SFRestAPIDelegate
 
-- (void)request:(SFRestRequest *)request didLoadResponse:(id)jsonResponse {
+- (void)request:(SFRestRequest *)request didLoadResponse:(id)jsonResponse
+{
+    //Hide progress indicator
+    [self hideCoverScreen];
+    
     DebugLog(@"request:%@ path:%@",[request description],request.path);
     DebugLog(@"jsonResponse:%@",jsonResponse);
     self.tableView.userInteractionEnabled = YES;
-    if([[request path] isEqualToString:@"/v23.0/sobjects"]){
+
+    if([[request path] isEqualToString:@"/v25.0/sobjects"])
+    {
         //returned all sobjects
-        if([[jsonResponse objectForKey:@"errors"] count]==0){
+        if([[jsonResponse objectForKey:@"errors"] count]==0)
+        {
             NSArray *records = [jsonResponse objectForKey:@"sobjects"];
             //DebugLog(@"request:didLoadResponse: #records: %d records %@ req %@ rsp %@", records.count,records,request,jsonResponse);
           
             NSMutableArray *updateableObjArray = [[NSMutableArray alloc]init];
-            for (NSDictionary *record in records) {
+            for (NSDictionary *record in records)
+            {
                 if([[record valueForKey:@"triggerable"] boolValue] == true &&
                    [[record valueForKey:@"searchable"] boolValue] == true &&
                    [[record valueForKey:@"queryable"] boolValue] == true 
                    )
-                
-                //if([[record valueForKey:@"layoutable"] boolValue] == true )
-                 {
+                {
                     [updateableObjArray addObject:record];
                 }
             }
-             DebugLog(@"ARRAY count %d",[records count]);
+            
+            DebugLog(@"ARRAY count %d",[records count]);
             //DebugLog(@"UPDATABLE ARRAY count %d",[updateableObjArray count]);
             
             SFObjsViewController *sfObjs = [[SFObjsViewController alloc]init];
@@ -231,22 +354,30 @@
             sfObjs.title = @"Choose Object";
             [self.navigationController pushViewController:sfObjs animated:YES];
         }
-        else{
+        else
+        {
             [Utility showAlert:ERROR_LISTING_SFOBJECTS_MSG];
-            [Utility hideCoverScreen];
+
+//            //Hide progress indicator
+//            [self hideCoverScreen];
         }
         
-        
     }
-    else if ([[request path] rangeOfString:@"describe"].location != NSNotFound) {
+    else if ([[request path] rangeOfString:@"describe"].location != NSNotFound)
+    {
         //retrive all fields
-        if([[jsonResponse objectForKey:@"errors"] count]==0){
+        if([[jsonResponse objectForKey:@"errors"] count]==0)
+        {
             NSArray *fields = [jsonResponse objectForKey:@"fields"];
             DebugLog(@"request:didLoadResponse: #fields: %d records %@ req %@ rsp %@", fields.count,fields,request,jsonResponse);
             NSMutableArray *fieldsRows = [[NSMutableArray alloc]init];
-            for (NSDictionary *field in fields) {
-                if([[field valueForKey:@"type"]isEqualToString:@"string"]||[[field valueForKey:@"type"]isEqualToString:@"textarea"]){
-                    if ([[field valueForKey:@"updateable"] boolValue] == true) {
+            
+            for (NSDictionary *field in fields)
+            {
+                if([[field valueForKey:@"type"]isEqualToString:@"string"]||[[field valueForKey:@"type"]isEqualToString:@"textarea"])
+                {
+                    if ([[field valueForKey:@"updateable"] boolValue] == true)
+                    {
                          [fieldsRows addObject:field];
                     }
                    
@@ -260,16 +391,22 @@
             fieldsVCntrl.delegate = popover_delegate;
             [self.navigationController pushViewController:fieldsVCntrl animated:YES];
         }
-        else{
+        else
+        {
             [Utility showAlert:ERROR_LISTING_SFOBJECT_METADATA_MSG];
-            [Utility hideCoverScreen];
+            
+//            //Hide progress indicator
+//            [self hideCoverScreen];
         }
     }
-
-    else{
-        [Utility hideCoverScreen];
-    }
+//
+//    else
+//    {
+//        //Hide progress indicator
+//        [self hideCoverScreen];
+//    }
 }
+
 
 
 - (void)request:(SFRestRequest*)request didFailLoadWithError:(NSError*)error {
@@ -296,4 +433,16 @@
 -(void)dismissPopover {
     [popover_delegate dissmissPopover];
 }
+
+
+
+- (void)dealloc
+{
+    [progressIndicatorView release];
+    [layerView release];
+    
+    [super dealloc];
+}
+
+
 @end

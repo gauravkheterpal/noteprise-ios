@@ -61,19 +61,29 @@ static NSString *const OAuthRedirectURI = @"https://login.salesforce.com/service
 
 //NOTE be sure to call all super methods you override.
 
-- (UIViewController*)newRootViewController {
-    [Utility addSemiTransparentOverlay];
+- (UIViewController*)newRootViewController
+{
+    //Set SFRestAPI version
+    [[SFRestAPI sharedInstance] setApiVersion:kSFRestAPIVersion];
+    
+    
+//    [Utility addSemiTransparentOverlay];
+    
     // Initial development is done on the sandbox service
     // Change this to @"www.evernote.com" to use the production Evernote service
+    
     NSString *EVERNOTE_HOST = [Utility valueInPrefForEvernoteHost];
+    
     //NSString *EVERNOTE_HOST = @"sandbox.evernote.com";
     
     // Fill in the consumer key and secret with the values that you received from Evernote
     // To get an API key, visit http://dev.evernote.com/documentation/cloud/
     //NSString *CONSUMER_KEY = @"noteprise-6118";
     //NSString *CONSUMER_SECRET = @"86270bc68d76886d";
+    
     NSString *CONSUMER_KEY = @"noteprise-3933";
     NSString *CONSUMER_SECRET = @"ce361e9ac663ad4a";
+    
     //NSString * const CONSUMER_KEY  = @"dubeynikhileshs";
     //NSString * const CONSUMER_SECRET = @"1845964c8335f00c";
     // set up Evernote session singleton
@@ -97,5 +107,9 @@ static NSString *const OAuthRedirectURI = @"https://login.salesforce.com/service
         
     }
 }
+
+
+
+
 
 @end

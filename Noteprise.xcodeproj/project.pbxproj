@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		840D379016E7548B0068F0D8 /* ProgressIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D378F16E7548B0068F0D8 /* ProgressIndicatorView.m */; };
+		840F6EA016E2052000BAF367 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840F6E9F16E2052000BAF367 /* QuartzCore.framework */; };
+		84169C5E16DB8EED00B99256 /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84169C5C16DB8EED00B99256 /* InfoViewController.m */; };
+		84169C5F16DB8EED00B99256 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84169C5D16DB8EED00B99256 /* InfoViewController.xib */; };
 		A634C775168C73CF007955F5 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = A634C774168C73CF007955F5 /* 2.png */; };
 		A6E15400168C147E00DB646F /* Add.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153B5168C147E00DB646F /* Add.png */; };
 		A6E15401168C147E00DB646F /* Add_note_select.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153B6168C147E00DB646F /* Add_note_select.png */; };
@@ -85,8 +89,6 @@
 		A6E1544A168C147E00DB646F /* settings_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153FF168C147E00DB646F /* settings_icon.png */; };
 		E717586116984ED700E2559C /* NotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E717586016984ED700E2559C /* NotesViewController.m */; };
 		F40309E616D3855700BAC592 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F40309E516D3855700BAC592 /* Default-568h@2x.png */; };
-		F40309E816D392A900BAC592 /* evernoteBg320x548.png in Resources */ = {isa = PBXBuildFile; fileRef = F40309E716D392A900BAC592 /* evernoteBg320x548.png */; };
-		F40309EA16D394DA00BAC592 /* evernoteBg568x300.png in Resources */ = {isa = PBXBuildFile; fileRef = F40309E916D394DA00BAC592 /* evernoteBg568x300.png */; };
 		F40B827515CBDFDD009B4A54 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = F40B827415CBDFDD009B4A54 /* NSString+HTML.m */; };
 		F40B828115CBE778009B4A54 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = F40B828015CBE778009B4A54 /* GTMNSString+HTML.m */; };
 		F424255E159E19170038EA52 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = F424255D159E19170038EA52 /* Entitlements.plist */; };
@@ -173,6 +175,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		840D378E16E7548A0068F0D8 /* ProgressIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProgressIndicatorView.h; path = Classes/ProgressIndicatorView.h; sourceTree = "<group>"; };
+		840D378F16E7548B0068F0D8 /* ProgressIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProgressIndicatorView.m; path = Classes/ProgressIndicatorView.m; sourceTree = "<group>"; };
+		840F6E9F16E2052000BAF367 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		84169C5B16DB8EED00B99256 /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
+		84169C5C16DB8EED00B99256 /* InfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
+		84169C5D16DB8EED00B99256 /* InfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoViewController.xib; sourceTree = "<group>"; };
 		A634C774168C73CF007955F5 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
 		A6E153B5168C147E00DB646F /* Add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Add.png; sourceTree = "<group>"; };
 		A6E153B6168C147E00DB646F /* Add_note_select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Add_note_select.png; sourceTree = "<group>"; };
@@ -252,8 +260,6 @@
 		E717585F16984ED700E2559C /* NotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotesViewController.h; path = ../NotesViewController.h; sourceTree = "<group>"; };
 		E717586016984ED700E2559C /* NotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotesViewController.m; path = ../NotesViewController.m; sourceTree = "<group>"; };
 		F40309E516D3855700BAC592 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/splash/Default-568h@2x.png"; sourceTree = "<group>"; };
-		F40309E716D392A900BAC592 /* evernoteBg320x548.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = evernoteBg320x548.png; sourceTree = "<group>"; };
-		F40309E916D394DA00BAC592 /* evernoteBg568x300.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = evernoteBg568x300.png; sourceTree = "<group>"; };
 		F40B827315CBDFDD009B4A54 /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+HTML.h"; path = "Classes/NSString+HTML.h"; sourceTree = "<group>"; };
 		F40B827415CBDFDD009B4A54 /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HTML.m"; path = "Classes/NSString+HTML.m"; sourceTree = "<group>"; };
 		F40B827F15CBE778009B4A54 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTMNSString+HTML.h"; path = "Classes/GTMNSString+HTML.h"; sourceTree = "<group>"; };
@@ -504,6 +510,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				840F6EA016E2052000BAF367 /* QuartzCore.framework in Frameworks */,
 				F4A8AF5A15C18B5E00D51071 /* CoreLocation.framework in Frameworks */,
 				F438D46D15A01563006ACD25 /* libxml2.dylib in Frameworks */,
 				F4D211F0159B297300610A18 /* CoreData.framework in Frameworks */,
@@ -600,9 +607,7 @@
 				A6E153FA168C147E00DB646F /* evernoteBg.png */,
 				A6E153FB168C147E00DB646F /* evernoteBg320x460.png */,
 				A6E153FC168C147E00DB646F /* evernoteBg480x300.png */,
-				F40309E716D392A900BAC592 /* evernoteBg320x548.png */,
 				A6E153FD168C147E00DB646F /* evernoteBg768x1024.png */,
-				F40309E916D394DA00BAC592 /* evernoteBg568x300.png */,
 				A6E153FE168C147E00DB646F /* noteprise_logo.png */,
 				A6E153FF168C147E00DB646F /* settings_icon.png */,
 			);
@@ -991,6 +996,7 @@
 		F4D211EE159B297300610A18 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				840F6E9F16E2052000BAF367 /* QuartzCore.framework */,
 				F4A8AF5915C18B5E00D51071 /* CoreLocation.framework */,
 				F4D211EF159B297300610A18 /* CoreData.framework */,
 				F4D211F1159B297300610A18 /* SystemConfiguration.framework */,
@@ -1111,6 +1117,11 @@
 				F488D91B15E39028001BA368 /* ChatterGroupVCntrlViewController.xib */,
 				F43D3CDF15F11D4000CD0EA9 /* CustomBlueToolbar.h */,
 				F43D3CE015F11D4000CD0EA9 /* CustomBlueToolbar.m */,
+				84169C5B16DB8EED00B99256 /* InfoViewController.h */,
+				84169C5C16DB8EED00B99256 /* InfoViewController.m */,
+				84169C5D16DB8EED00B99256 /* InfoViewController.xib */,
+				840D378E16E7548A0068F0D8 /* ProgressIndicatorView.h */,
+				840D378F16E7548B0068F0D8 /* ProgressIndicatorView.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1283,8 +1294,7 @@
 				A6E1544A168C147E00DB646F /* settings_icon.png in Resources */,
 				A634C775168C73CF007955F5 /* 2.png in Resources */,
 				F40309E616D3855700BAC592 /* Default-568h@2x.png in Resources */,
-				F40309E816D392A900BAC592 /* evernoteBg320x548.png in Resources */,
-				F40309EA16D394DA00BAC592 /* evernoteBg568x300.png in Resources */,
+				84169C5F16DB8EED00B99256 /* InfoViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1345,6 +1355,8 @@
 				F4BFE88815E4B5B700F3E261 /* ChatterRecord.m in Sources */,
 				F43D3CE115F11D4000CD0EA9 /* CustomBlueToolbar.m in Sources */,
 				E717586116984ED700E2559C /* NotesViewController.m in Sources */,
+				84169C5E16DB8EED00B99256 /* InfoViewController.m in Sources */,
+				840D379016E7548B0068F0D8 /* ProgressIndicatorView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

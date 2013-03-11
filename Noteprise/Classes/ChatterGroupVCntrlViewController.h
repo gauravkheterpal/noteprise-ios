@@ -12,10 +12,10 @@
 @interface ChatterGroupVCntrlViewController : UIViewController <SFRestDelegate,UITableViewDataSource,UITableViewDelegate,IconDownloaderDelegate>
 {
     NSMutableArray *selectedGroupsRow;
-    IBOutlet UIActivityIndicatorView *loadingSpinner;
-    IBOutlet UIImageView *dialog_imgView;
-    IBOutlet UILabel *loadingLbl;
-    IBOutlet UIImageView *doneImgView;
+//    IBOutlet UIActivityIndicatorView *loadingSpinner;
+//    IBOutlet UIImageView *dialog_imgView;
+//    IBOutlet UILabel *loadingLbl;
+//    IBOutlet UIImageView *doneImgView;
     IBOutlet UIImageView *backgroundImgView;
     IBOutlet UITableView *chatterGroupTbl;
     int selectedGroupIndex;

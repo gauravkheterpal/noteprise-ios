@@ -26,9 +26,12 @@
 
 #import "SFNativeRestAppDelegate.h"
 
-@interface AppDelegate : SFNativeRestAppDelegate  {
+@interface AppDelegate : SFNativeRestAppDelegate
+{
 
 }
+
+
 
 
 @end

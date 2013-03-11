@@ -33,8 +33,9 @@
 	notes = [[NSMutableArray alloc]init];
 }
 
--(void)viewDidAppear:(BOOL)animated{
-     [Utility showCoverScreen];
+-(void)viewDidAppear:(BOOL)animated
+{
+    [Utility showCoverScreenWithText:@"Loading..." andType:kInProcessCoverScreen];
 	[self fetchDataFromEvernote];
 }
 
@@ -65,7 +66,7 @@
              {
 			     DebugLog(@"error %@", error);
                  
-                 //Hide loading indicator
+                 //Hide progress indicator
                  [Utility hideCoverScreen];
                  
                  
@@ -86,7 +87,7 @@
              {
                  DebugLog(@"error %@", error);
                  
-                 //Hide loading indicator
+                 //Hide progress indicator
                  [Utility hideCoverScreen];
                  
                  [self showError:error];
@@ -230,10 +231,13 @@
                          [notes addObject:noteListDict];
                          
                     }
-				if([notes count] == 0){
+				
+                if([notes count] == 0)
+                {
 					[Utility showAlert:NO_NOTE_FOUND_WITH_THIS_TAG];
 				}
-				else{
+				else
+                {
 					NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
 					notes = [[notes sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
 				}
@@ -262,11 +266,14 @@
 }
 
 
--(void)reloadNotesTable {
-     [Utility hideCoverScreen];
-     self.tableView.delegate =self;
-     self.tableView.dataSource =self;
-     [self.tableView reloadData];
+-(void)reloadNotesTable
+{
+    //Hide progress indicator
+    [Utility hideCoverScreen];
+    
+    self.tableView.delegate =self;
+    self.tableView.dataSource =self;
+    [self.tableView reloadData];
 }
 
 

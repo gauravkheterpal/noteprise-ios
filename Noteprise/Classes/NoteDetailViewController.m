@@ -32,7 +32,7 @@
  *  the note we are viewing
  *
  ************************************************************/
-int flag=0,flag2 =0;
+//int flag=0,flag2 =0;
 
 - (void)viewDidLoad
 {
@@ -80,21 +80,28 @@ int flag=0,flag2 =0;
           UIBarButtonItem *editBarbutton =[[UIBarButtonItem alloc] initWithCustomView:editButton];
           
           self.navigationItem.rightBarButtonItem = editBarbutton;
-          self.navigationItem.rightBarButtonItem.tag = editBtnTag;
+          self.navigationItem.rightBarButtonItem.tag = kEditButtonTag;
           DebugLog(@"tag = %d",self.navigationItem.rightBarButtonItem.tag);
          }
      
      
      self.navigationItem.rightBarButtonItem.title = @"Edit";
      
-     self.navigationItem.rightBarButtonItem.tag = editBtnTag;
+     self.navigationItem.rightBarButtonItem.tag = kEditButtonTag;
      DebugLog(@"tag = %d",self.navigationItem.rightBarButtonItem.tag);
-	[Utility showCoverScreen];
-     [loadingSpinner startAnimating];
-     dialog_imgView.hidden = NO;
-     loadingLbl.text = GETTING_NOTE_DETAILS_MSG;
-     loadingLbl.hidden = NO;
-     DebugLog(@"guid:%@",guid);
+	
+    //Show progress indicator
+    [Utility showCoverScreenWithText:GETTING_NOTE_DETAILS_MSG andType:kInProcessCoverScreen];
+    
+//    [loadingSpinner startAnimating];
+    
+//    dialog_imgView.hidden = NO;
+    
+//    loadingLbl.text = GETTING_NOTE_DETAILS_MSG;
+    
+//    loadingLbl.hidden = NO;
+    
+    DebugLog(@"guid:%@",guid);
      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^(void) {
                // Load the EDAMNote object that has guid we have stored in the object
           @try {
@@ -104,10 +111,14 @@ int flag=0,flag2 =0;
                     [noteStore getNoteContentWithGuid:guid success:^(NSString *content)
                      {
                       DebugLog(@"content%@ :::: ",content);
-                      [Utility hideCoverScreen];
-                      [loadingSpinner stopAnimating];
-                      dialog_imgView.hidden = YES;
-                      loadingLbl.hidden = YES;
+
+                         //Hide progress indicator
+                         [Utility hideCoverScreen];
+                         
+                         
+//                      [loadingSpinner stopAnimating];
+//                      dialog_imgView.hidden = YES;
+//                      loadingLbl.hidden = YES;
                       
                       NSString *stringToReplace = [NSString stringWithFormat:@"<en-note%@>",[self getDataBetweenFromString:content leftString:@"<en-note" rightString:@">" leftOffset:8]];
                       
@@ -132,11 +143,13 @@ int flag=0,flag2 =0;
                      }failure:^(NSError *error)
                    {
                           DebugLog(@"note::::::::error %@", error);
-                       //Hide loading indicator
+  
+                       //Hide progress indicator
                        [Utility hideCoverScreen];
-                       [loadingSpinner stopAnimating];
-                       dialog_imgView.hidden = YES;
-                       loadingLbl.hidden = YES;
+                       
+//                       [loadingSpinner stopAnimating];
+//                       dialog_imgView.hidden = YES;
+//                       loadingLbl.hidden = YES;
                        
                        
                        //Show error message
@@ -247,16 +260,19 @@ int flag=0,flag2 =0;
      }
      else if (alertView.tag == CHATTER_POST_LIMIT_ALERT_TAG)
      {
-          [Utility showCoverScreen];
-          [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_WALL_MSG];
-               //truncationg note text to 1000 character for posting to Chatter
-          NSString *truncatedTextContent = [[textContent substringToIndex:999]mutableCopy];
-          NSString * path = POST_TO_CHATTER_WALL_URL;
-          NSDictionary *param = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",truncatedTextContent, @"text",nil];
-          NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:param],@"messageSegments", nil];
-          NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:message,@"body", nil];
-          SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];
-          [[SFRestAPI sharedInstance] send:request delegate:self];
+         //Show progress indicator
+         [Utility showCoverScreenWithText:POSTING_NOTE_TO_CHATTER_WALL_MSG andType:kInProcessCoverScreen];
+         
+//         [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_WALL_MSG];
+         
+         //truncationg note text to 1000 character for posting to Chatter
+         NSString *truncatedTextContent = [[textContent substringToIndex:999]mutableCopy];
+         NSString * path = POST_TO_CHATTER_WALL_URL;
+         NSDictionary *param = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",truncatedTextContent, @"text",nil];
+         NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:param],@"messageSegments", nil];
+         NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:message,@"body", nil];
+         SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];
+         [[SFRestAPI sharedInstance] send:request delegate:self];
      }
     else if(alertView.tag == ERROR_LOADING_CONTENT_ALERT_TAG)
     {
@@ -270,31 +286,41 @@ int flag=0,flag2 =0;
      //3 Cancel
 #pragma mark -
 #pragma mark UIActionSheet Delegate methods
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-     DebugLog(@"clickedButtonAtIndex:%d",buttonIndex);
-     if(buttonIndex == actionSheet.cancelButtonIndex){
-     } else if(buttonIndex == 0) {
-          [self postToChatterWall];
-     } else if (buttonIndex == 1) {
-               //post to chatter users
-          [Utility showCoverScreen];
-          ChatterUsersViewController * chatterUsersVC = [[ChatterUsersViewController alloc] init];
-          chatterUsersVC.noteTitle = self.title;
-          chatterUsersVC.noteContent = textContent;
-          [self.navigationController pushViewController:chatterUsersVC animated:YES];
-          [chatterUsersVC release];
-          [Utility hideCoverScreen];
-     } else if (buttonIndex == 2) {
-               //post to chatter groups
-          [Utility showCoverScreen];
-          ChatterGroupVCntrlViewController * chatterGroupVC = [[ChatterGroupVCntrlViewController alloc] init];
-          chatterGroupVC.noteTitle = self.title;
-          chatterGroupVC.noteContent = textContent;
-          [self.navigationController pushViewController:chatterGroupVC animated:YES];
-          [chatterGroupVC release];
-          [Utility hideCoverScreen];
-     }
-     
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    DebugLog(@"clickedButtonAtIndex:%d",buttonIndex);
+
+    if(buttonIndex == actionSheet.cancelButtonIndex)
+    {
+    }
+    else if(buttonIndex == 0)
+    {
+        [self postToChatterWall];
+    }
+    else if (buttonIndex == 1)
+    {
+        //post to chatter users
+        [Utility showCoverScreenWithText:@"Loading..." andType:kInProcessCoverScreen];
+        
+        ChatterUsersViewController * chatterUsersVC = [[ChatterUsersViewController alloc] init];
+        chatterUsersVC.noteTitle = self.title;
+        chatterUsersVC.noteContent = textContent;
+        [self.navigationController pushViewController:chatterUsersVC animated:YES];
+        [chatterUsersVC release];
+//        [Utility hideCoverScreen];
+    }
+    else if (buttonIndex == 2)
+    {
+        //post to chatter users
+        [Utility showCoverScreenWithText:@"Loading..." andType:kInProcessCoverScreen];
+        
+        ChatterGroupVCntrlViewController * chatterGroupVC = [[ChatterGroupVCntrlViewController alloc] init];
+        chatterGroupVC.noteTitle = self.title;
+        chatterGroupVC.noteContent = textContent;
+        [self.navigationController pushViewController:chatterGroupVC animated:YES];
+        [chatterGroupVC release];
+//        [Utility hideCoverScreen];
+    }    
 }
 
 -(void)postToChatterWall {
@@ -304,15 +330,19 @@ int flag=0,flag2 =0;
           alert.tag = CHATTER_POST_LIMIT_ALERT_TAG;
           [alert show];
           [alert release];
-     } else {
-          [Utility showCoverScreen];
-          [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_WALL_MSG];
-          NSString * path = POST_TO_CHATTER_WALL_URL;
-          NSDictionary *param = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",textContent, @"text",nil];
-          NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:param],@"messageSegments", nil];
-          NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:message,@"body", nil];
-          SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];
-          [[SFRestAPI sharedInstance] send:request delegate:self];
+     }
+     else
+     {
+         [Utility showCoverScreenWithText:POSTING_NOTE_TO_CHATTER_WALL_MSG andType:kInProcessCoverScreen];
+         
+//         [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_WALL_MSG];
+         
+         NSString * path = POST_TO_CHATTER_WALL_URL;
+         NSDictionary *param = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",textContent, @"text",nil];
+         NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:param],@"messageSegments", nil];
+         NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:message,@"body", nil];
+         SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];
+         [[SFRestAPI sharedInstance] send:request delegate:self];
      }
 }
 
@@ -337,7 +367,8 @@ int flag=0,flag2 =0;
               [Utility setValueInPref:[Utility valueInPrefForKey:OLD_SFOBJ_TO_MAP_KEY] forKey:SFOBJ_TO_MAP_KEY];
               [Utility setValueInPref:[Utility valueInPrefForKey:OLD_SFOBJ_FIELD_TO_MAP_KEY] forKey:SFOBJ_FIELD_TO_MAP_KEY];
         }
-        [Utility showCoverScreen];
+    
+        //[Utility showCoverScreenWithText:@"Loading..." andType:kInProcessCoverScreen];
         
         [self moveToSF];
     }
@@ -346,11 +377,17 @@ int flag=0,flag2 =0;
         [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
     }
 }
--(IBAction)postToChatter:(id)sender {
-     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+
+
+-(IBAction)postToChatter:(id)sender
+{
+     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+     {
           [self dismissPreviousPopover];
           postToChatterOptionActionSheet = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"Post to Wall",@"Post to Chatter Users",@"Post to Chatter Group", nil];
-     } else {
+     }
+     else
+     {
           [self dismissPreviousPopover];
           postToChatterOptionActionSheet = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Post to Wall",@"Post to Chatter Users",@"Post to Chatter Group", nil];
      }
@@ -358,43 +395,52 @@ int flag=0,flag2 =0;
      postToChatterOptionActionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
      [postToChatterOptionActionSheet showFromBarButtonItem:postToChatterBarBtn animated:YES];
 }
+
+
 -(void)dismissPreviousPopover{
      if([postToChatterOptionActionSheet isVisible])
           [postToChatterOptionActionSheet dismissWithClickedButtonIndex:[postToChatterOptionActionSheet cancelButtonIndex] animated:YES];
      
 }
+
+
 -(IBAction)editPage:(id)sender
 {
-     CGRect frameimg = CGRectMake(0, 0, 27,27);
-     if([ readProp isEqualToString:@"No"])
-         {
-          if (self.navigationItem.rightBarButtonItem.tag == editBtnTag)
-          {   
-//            saveToSFBarBtn.enabled = NO;
-//            postToChatterBarBtn.enabled = NO;
-              //[[noteContent layer] setBorderColor:[[UIColor colorWithRed:0 green:0 blue:0 alpha:1] CGColor]];
-		
-              //[[noteContent layer] setBorderWidth:1];
-			  //noteContent.userInteractionEnabled=YES;
-				// self.navigationItem.rightBarButtonItem.title = @"Save to Evernote";
+    CGRect frameimg = CGRectMake(0, 0, 27,27);
+    if([ readProp isEqualToString:@"No"])
+    {
+        if (self.navigationItem.rightBarButtonItem.tag == kEditButtonTag)
+        {
+//          saveToSFBarBtn.enabled = NO;
+    //      postToChatterBarBtn.enabled = NO;
+            //[[noteContent layer] setBorderColor:[[UIColor colorWithRed:0 green:0 blue:0 alpha:1] CGColor]];
+        
+            //[[noteContent layer] setBorderWidth:1];
+            //noteContent.userInteractionEnabled=YES;
+            // self.navigationItem.rightBarButtonItem.title = @"Save to Evernote";
                
-               UIImage* saveImg = [UIImage imageNamed:@"Save.png"];
-               UIImage* saveDoneImg = [UIImage imageNamed:@"Save_down.png"];
+            UIImage* saveImg = [UIImage imageNamed:@"Save.png"];
+            UIImage* saveDoneImg = [UIImage imageNamed:@"Save_down.png"];
                
-               UIButton *saveButton = [[UIButton alloc] initWithFrame:frameimg];
-               [saveButton setBackgroundImage:saveImg forState:UIControlStateNormal];
-               [saveButton setBackgroundImage:saveDoneImg forState:UIControlStateHighlighted];
-               [saveButton addTarget:self action:@selector(editPage2:) forControlEvents:UIControlEventTouchUpInside];
-               [saveButton setShowsTouchWhenHighlighted:YES];
-			UIBarButtonItem *saveBarButton =[[UIBarButtonItem alloc] initWithCustomView:saveButton];
+            UIButton *saveButton = [[UIButton alloc] initWithFrame:frameimg];
+            [saveButton setBackgroundImage:saveImg forState:UIControlStateNormal];
+            [saveButton setBackgroundImage:saveDoneImg forState:UIControlStateHighlighted];
+            [saveButton addTarget:self action:@selector(editPage2:) forControlEvents:UIControlEventTouchUpInside];
+            [saveButton setShowsTouchWhenHighlighted:YES];
+            
+            UIBarButtonItem *saveBarButton =[[UIBarButtonItem alloc] initWithCustomView:saveButton];
 			
 			UIImage* cancelImg = [UIImage imageNamed:@"Cancel.png"];
-				//UIImage* editDownImg = [UIImage imageNamed:@"Edit_down.png"];
-			CGRect frameimg = CGRectMake(0, 0, 27,27);
+			
+            //UIImage* editDownImg = [UIImage imageNamed:@"Edit_down.png"];
+			
+            CGRect frameimg = CGRectMake(0, 0, 27,27);
 			UIButton *cancelButton = [[UIButton alloc] initWithFrame:frameimg];
 			[cancelButton setBackgroundImage:cancelImg forState:UIControlStateNormal];
-				//[cancelButton setBackgroundImage:editDownImg forState:UIControlStateNormal];
-			[cancelButton addTarget:self action:@selector(cancelUpdate:) forControlEvents:UIControlEventTouchUpInside];
+			
+            //[cancelButton setBackgroundImage:editDownImg forState:UIControlStateNormal];
+			
+            [cancelButton addTarget:self action:@selector(cancelUpdate:) forControlEvents:UIControlEventTouchUpInside];
 			[cancelButton setShowsTouchWhenHighlighted:YES];
 			UIBarButtonItem *cancelBarButton =[[UIBarButtonItem alloc] initWithCustomView:cancelButton];
 			
@@ -408,13 +454,15 @@ int flag=0,flag2 =0;
 				//			UIBarButtonItem *customItem = [[UIBarButtonItem alloc] initWithTitle:unblockContact style:UIBarButtonItemStyleBordered   target:self     action:@selector(onToolbarTapped:)];
 				//			customItem.tintColor = [UIColor blackColor];
 			
-			[Utility showCoverScreen];
-			[loadingSpinner startAnimating];
-			doneImgView.hidden = YES;
-			dialog_imgView.hidden = NO;
-			loadingLbl.text = @"Edit mode activating...";
-				//[loadingLbl sizeToFit];
-			loadingLbl.hidden = NO;
+			[Utility showCoverScreenWithText:@"Edit mode activating..." andType:kInProcessCoverScreen];
+			
+//            [loadingSpinner startAnimating];
+//			doneImgView.hidden = YES;
+//			dialog_imgView.hidden = NO;
+//			loadingLbl.text = @"Edit mode activating...";
+//				//[loadingLbl sizeToFit];
+//			loadingLbl.hidden = NO;
+              
 			[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
                [self setContentEditable:YES];
                [self setWebViewKeyPressDetectionEnabled:YES];
@@ -492,34 +540,32 @@ int flag=0,flag2 =0;
 		 [self increaseZoomFactorRange];
 		 
 		 }}*/
-		else
-		    {
-			
-			[self setContentEditable:NO];
-			[self setWebViewKeyPressDetectionEnabled:NO];
-			[self setWebViewTapDetectionEnabled:NO];
-			[self resignFirstResponder];
-			[noteContent resignFirstResponder];
-			[self updateNoteEvernote];
-			
-		    }
-		
-          
-          
+		 else
+		 {
+			 [self setContentEditable:NO];
+			 [self setWebViewKeyPressDetectionEnabled:NO];
+			 [self setWebViewTapDetectionEnabled:NO];
+			 [self resignFirstResponder];
+			 [noteContent resignFirstResponder];
+			 [self updateNoteEvernote];
          }
+     }
      else
-         {
-          dialog_imgView.hidden = NO;
-          doneImgView.image = [UIImage imageNamed:@"2.png"];
-          doneImgView.hidden = NO;
-          [loadingSpinner stopAnimating];
-          loadingLbl.text = @"Note is ReadOnly";
-          loadingLbl.hidden = NO;
-          [Utility hideCoverScreen];
-          [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
-         }
-     
-     
+     {
+         [Utility hideCoverScreen];
+         
+         [Utility showCoverScreenWithText:@"Note is ReadOnly" andType:kWarningCoverScreen];
+             
+//         dialog_imgView.hidden = NO;
+//         doneImgView.image = [UIImage imageNamed:@"2.png"];
+//         doneImgView.hidden = NO;
+//         [loadingSpinner stopAnimating];
+//         loadingLbl.text = @"Note is ReadOnly";
+//         loadingLbl.hidden = NO;
+         
+
+         [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
+     }
 }
 
 
@@ -576,14 +622,11 @@ int flag=0,flag2 =0;
         }
         else
         {
-            //Remove the tapGestureRecognizers
-            if([noteContent gestureRecognizers] != nil && [[noteContent gestureRecognizers] count] > 0)
-            {
-                [noteContent removeGestureRecognizer:[[noteContent gestureRecognizers] objectAtIndex:0]];
-            }
-            
-            //Hide border around webView
-            [self hideBorderViewAroundWebView];
+//            //Remove the tapGestureRecognizers
+//            if([noteContent gestureRecognizers] != nil && [[noteContent gestureRecognizers] count] > 0)
+//            {
+//                [noteContent removeGestureRecognizer:[[noteContent gestureRecognizers] objectAtIndex:0]];
+//            }
             
             
             NSString *rawString = [editTitleField text];
@@ -601,6 +644,9 @@ int flag=0,flag2 =0;
             }
             else
             {
+                //Hide border around webView
+                [self hideBorderViewAroundWebView];
+                
                 [self setContentEditable:NO];
                 [self setWebViewKeyPressDetectionEnabled:NO];
                 [self setWebViewTapDetectionEnabled:NO];
@@ -622,11 +668,11 @@ int flag=0,flag2 =0;
 {
     isEditNoteCancelled = YES;
     
-    //Remove the tapGestureRecognizers
-    if([noteContent gestureRecognizers] != nil && [[noteContent gestureRecognizers] count] > 0)
-    {
-        [noteContent removeGestureRecognizer:[[noteContent gestureRecognizers] objectAtIndex:0]];
-    }
+//    //Remove the tapGestureRecognizers
+//    if([noteContent gestureRecognizers] != nil && [[noteContent gestureRecognizers] count] > 0)
+//    {
+//        [noteContent removeGestureRecognizer:[[noteContent gestureRecognizers] objectAtIndex:0]];
+//    }
     
     //Hide border around webView
     [self hideBorderViewAroundWebView];
@@ -650,7 +696,7 @@ int flag=0,flag2 =0;
     [self.navigationController pushViewController:rootVC animated:YES];
     [rootVC release];
      
-    [Utility hideCoverScreen];
+//    [Utility hideCoverScreen];
      
 }
 
@@ -684,8 +730,8 @@ int flag=0,flag2 =0;
     
 		//self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
 	orgBounds = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
-	flag2=1;
-	flag=0;
+//	flag2=1;
+//	flag=0;
 }
 
 
@@ -769,11 +815,11 @@ int flag=0,flag2 =0;
 {
 	if(isEditable)
     {
-	    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(shiftwebview)];
-		tap.numberOfTapsRequired = 1;
-		tap.delegate = self;
-		
-		[noteContent addGestureRecognizer:tap];
+//	    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(shiftwebview)];
+//		tap.numberOfTapsRequired = 1;
+//		tap.delegate = self;
+//		
+//		[noteContent addGestureRecognizer:tap];
 		[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];    // Do any additional setup after loading the view from its nib.
 		
 		[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
@@ -864,30 +910,31 @@ CGRect activeField,orgBounds;
 		activeField=editTitleField.frame;
 		self.view.frame=CGRectMake(self.view.frame.origin.x, -31, self.view.frame.size.width, self.view.frame.size.height);
 	}
-	else if (flag2 ==1)
+	else //if(flag2 ==1)
 	{
 		activeField=noteContent.frame;
 		self.view.frame=CGRectMake(self.view.frame.origin.x, -100, self.view.frame.size.width, self.view.frame.size.height);
 	}
     
-	flag=1;
+	//flag=1;
 	
 	[UIView commitAnimations];
 }
 
--(void)shiftwebview
-{
-	if(flag ==0)
-    {
-        [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-        [UIView setAnimationDuration:kAnimationDuration];
-        
-		self.view.frame=CGRectMake(self.view.frame.origin.x, -100, self.view.frame.size.width, self.view.frame.size.height);
-        [UIView commitAnimations];
-        
-		flag=1;
-	}
-}
+//-(void)shiftwebview
+//{
+//	if(flag ==0)
+//    {
+//        [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+//        [UIView setAnimationDuration:kAnimationDuration];
+//        
+//		self.view.frame=CGRectMake(self.view.frame.origin.x, -100, self.view.frame.size.width, self.view.frame.size.height);
+//        [UIView commitAnimations];
+//        
+//		flag=1;
+//	}
+//}
+
 
 -(void)keyboardDidHide:(NSNotification*)aNotification
 {
@@ -899,10 +946,10 @@ CGRect activeField,orgBounds;
     [UIView commitAnimations];
 	
     
-    if(flag2 !=1)
-    {
-		flag = 0;
-    }
+//    if(flag2 !=1)
+//    {
+//		flag = 0;
+//    }
 }
 
 
@@ -959,9 +1006,9 @@ CGRect activeField,orgBounds;
 
 
 
--(void)updateNoteEvernote {
-     
-          // Closing controls
+-(void)updateNoteEvernote
+{
+      // Closing controls
      [noteContent resignFirstResponder];
      
           // Creating the Note Object
@@ -976,7 +1023,7 @@ CGRect activeField,orgBounds;
      
      DebugLog(@"stringToRemove = %@", stringToRemove);
      
-     bodyTxt = [bodyTxt stringByReplacingOccurrencesOfString:stringToRemove withString:@">"];
+     bodyTxt = [[bodyTxt stringByReplacingOccurrencesOfString:stringToRemove withString:@">"] mutableCopy] ;
      
      
      NSString * ENML = [NSString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">\n%@",bodyTxt];
@@ -984,15 +1031,17 @@ CGRect activeField,orgBounds;
      
      
           // Adding the content to the note
-     [Utility showCoverScreen];
+     [Utility showCoverScreenWithText:@"Updating Note..." andType:kInProcessCoverScreen];
+    
      [note setContent:ENML];
      note.guid = self.guid;
-     [loadingSpinner startAnimating];
-     dialog_imgView.hidden = NO;
-     loadingLbl.text = @"Updating Note...";
-          //[loadingLbl sizeToFit];
-     loadingLbl.hidden = NO;
-     
+//     [loadingSpinner startAnimating];
+
+//    dialog_imgView.hidden = NO;
+//     loadingLbl.text = @"Updating Note...";
+//          //[loadingLbl sizeToFit];
+//     loadingLbl.hidden = NO;
+    
      __block BOOL isErrorCreatingnote = NO;
      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^(void) {
                // Saving the note on the Evernote servers
@@ -1015,13 +1064,17 @@ CGRect activeField,orgBounds;
                            textContent = (NSMutableString *)[[[Utility flattenNoteBody:updatedContent]stringByDecodingHTMLEntities] retain];
                            DebugLog(@"update textcontent:%@", textContent);
                                 // Alerting the user that the note was created
-					  [Utility showCoverScreen];
-					  [loadingSpinner startAnimating];
-					  doneImgView.hidden = YES;
-					  dialog_imgView.hidden = NO;
-					  loadingLbl.text = @"Saving Note...";
-						  //[loadingLbl sizeToFit];
-					  loadingLbl.hidden = NO;
+                          
+                      //Show progress indicator
+					  [Utility showCoverScreenWithText:@"Saving Note..." andType:kInProcessCoverScreen];
+                          
+//					  [loadingSpinner startAnimating];
+//					  doneImgView.hidden = YES;
+//					  dialog_imgView.hidden = NO;
+//					  loadingLbl.text = @"Saving Note...";
+//						  //[loadingLbl sizeToFit];
+//					  loadingLbl.hidden = NO;
+                          
 					  [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
 				  }
                       [loadingSpinner stopAnimating];
@@ -1032,11 +1085,13 @@ CGRect activeField,orgBounds;
                                       DebugLog(@"update note::::::::error %@", error);
                                       //[Utility showAlert:error.description];
                                       
-                                      //Hide loading indicator
-                                      dialog_imgView.hidden = YES;
-                                      loadingLbl.hidden = YES;
-                                      [loadingSpinner stopAnimating];
+                                      //Hide progress indicator
                                       [Utility hideCoverScreen];
+                                      
+//                                      dialog_imgView.hidden = YES;
+//                                      loadingLbl.hidden = YES;
+//                                      [loadingSpinner stopAnimating];
+                                      
                                       
 //                                      //Show error message
 //                                      if(error.code == -3000)
@@ -1063,7 +1118,7 @@ CGRect activeField,orgBounds;
                                        [editButton setShowsTouchWhenHighlighted:YES];
                                        UIBarButtonItem *editBarButton =[[UIBarButtonItem alloc] initWithCustomView:editButton];
                                        self.navigationItem.rightBarButtonItem = editBarButton;
-                                       self.navigationItem.rightBarButtonItem.tag = editBtnTag;
+                                       self.navigationItem.rightBarButtonItem.tag = kEditButtonTag;
                                        [editButton release];
                                        
                                        [self setContentEditable:NO];
@@ -1079,10 +1134,14 @@ CGRect activeField,orgBounds;
                dispatch_async(dispatch_get_main_queue(), ^(void) {
                     NSString * errorMessage = [NSString stringWithFormat:@"Error saving note: error code %i", [exception errorCode]];
                     [Utility showAlert:errorMessage];
-                    dialog_imgView.hidden = YES;
-                    loadingLbl.hidden = YES;
-                    [loadingSpinner stopAnimating];
+                   
+//                    dialog_imgView.hidden = YES;
+//                    loadingLbl.hidden = YES;
+//                    [loadingSpinner stopAnimating];
+                   
+                    //Hide progress indicator
                     [Utility hideCoverScreen];
+                   
                     isErrorCreatingnote = YES;
                          //[delegate evernoteCreationFailedListener];
                     return;
@@ -1097,35 +1156,58 @@ CGRect activeField,orgBounds;
 	[self viewDidLoad];
 	//noteContent.userInteractionEnabled = NO;
 }
--(void)showLoadingLblWithText:(NSString*)Loadingtext{
-     [loadingSpinner startAnimating];
-     dialog_imgView.hidden = NO;
-     loadingLbl.text = Loadingtext;
-     loadingLbl.hidden = NO;
-}
--(void)hideDoneToastMsg:(id)sender{
-	dialog_imgView.hidden = YES;
-     loadingLbl.hidden = YES;
-     doneImgView.hidden = YES;
-     [loadingSpinner stopAnimating];
-	[Utility hideCoverScreen];
+
+
+//-(void)showLoadingLblWithText:(NSString*)Loadingtext
+//{
+//    //Show progress indicator
+//    [Utility showCoverScreenWithText:Loadingtext andType:kInProcessCoverScreen];
+//    
+////  [loadingSpinner startAnimating];
+////  dialog_imgView.hidden = NO;
+////  loadingLbl.text = Loadingtext;
+////  loadingLbl.hidden = NO;
+//}
+
+-(void)hideDoneToastMsg:(id)sender
+{
+    //Hide progress indicator
+    [Utility hideCoverScreen];
+    
+//	dialog_imgView.hidden = YES;
+//    loadingLbl.hidden = YES;
+//    doneImgView.hidden = YES;
+//    [loadingSpinner stopAnimating];
+
+
 	
-          //[delegate evernoteCreatedSuccessfullyListener];
+//[delegate evernoteCreatedSuccessfullyListener];
 }
 #pragma mark - SFRestAPIDelegate
-- (void)request:(SFRestRequest *)request didLoadResponse:(id)jsonResponse {
+- (void)request:(SFRestRequest *)request didLoadResponse:(id)jsonResponse
+{
      DebugLog(@"request:%@",[request description]);
      DebugLog(@"jsonResponse:%@",jsonResponse);
      
-     if([[request path] rangeOfString:POST_TO_CHATTER_WALL_URL].location != NSNotFound){
-               //post to wall
-          if([[jsonResponse objectForKey:@"errors"] count]==0){
-               [Utility hideCoverScreen];
-               [self showLoadingLblWithText:salesforce_chatter_post_self_success_message];
-               [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
-               [loadingSpinner stopAnimating];
-               NSArray *records = [jsonResponse objectForKey:@"records"];
-               DebugLog(@"request:didLoadResponse: #records: %d records %@ req %@ rsp %@", records.count,records,request,jsonResponse);
+     if([[request path] rangeOfString:POST_TO_CHATTER_WALL_URL].location != NSNotFound)
+     {
+          //post to wall
+          if([[jsonResponse objectForKey:@"errors"] count]==0)
+          {
+              [Utility hideCoverScreen];
+              
+              //Show progress indicator
+              [Utility showCoverScreenWithText:salesforce_chatter_post_self_success_message andType:kProcessDoneCoverScreen];
+              
+//              [self showLoadingLblWithText:salesforce_chatter_post_self_success_message];
+              
+              [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
+              
+              [loadingSpinner stopAnimating];
+              
+              NSArray *records = [jsonResponse objectForKey:@"records"];
+              
+              DebugLog(@"request:didLoadResponse: #records: %d records %@ req %@ rsp %@", records.count,records,request,jsonResponse);
                
           }
           else{

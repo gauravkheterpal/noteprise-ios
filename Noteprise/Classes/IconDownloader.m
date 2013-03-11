@@ -83,11 +83,14 @@
 {
     self.activeDownload = [NSMutableData data];
     AppDelegate * appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    NSString *accessToken;
-    if (nil != appDelegate.coordinator) {
+    NSString *accessToken = nil;
+    
+    if (nil != appDelegate.coordinator)
+    {
         accessToken = appDelegate.coordinator.credentials.accessToken;
         DebugLog(@"access token%@",accessToken );
     }
+    
     NSString *photoURL = self.chatterRecord.imageURLString;
     NSString *completePhotoURL = [NSString stringWithFormat:@"%@?oauth_token=%@",photoURL,accessToken];
     // alloc+init and start an NSURLConnection; release on completion/failure

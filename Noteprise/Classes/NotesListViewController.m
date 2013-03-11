@@ -7,12 +7,17 @@
 
 #import "NotesListViewController.h"
 #import "RootViewController.h"
-	//#import "Evernote.h"
+
 #import "SettingsViewController.h"
 #import "SignInViewController.h"
 #import "NoteDetailViewController.h"
 #import "Keys.h"
 #import "EvernoteSDK.h"
+#import "InfoViewController.h"
+#import "SFNativeRestAppDelegate.h"
+
+
+
 @implementation NotesListViewController
 
 @synthesize  noteBooks;
@@ -29,21 +34,29 @@
 {	
 	[super viewDidLoad];
 
+    //Add cover screen
+    [Utility addSemiTransparentOverlay];
     
+    notebookCountForLoadedNotes = 0;
+    isError = NO;
     isSearchModeEnabled = NO;
 	flag1 = 0;
 	flag2 = 0;
 	searchBar.text = @"";
 	orgTableOriginY = notesTbl.frame.origin.y;
+    
 	if (SYSTEM_VERSION_LESS_THAN(@"5.0"))
     {
 		addNoteBtn.enabled = NO;
 	}
-	if ([self.navigationController.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
+	
+    if ([self.navigationController.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)])
+    {
 		[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Top_nav_768x44.png"] forBarMetrics:UIBarMetricsDefault];
 		self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1];
 	}
-		//Initialize the arrays
+	
+	//Initialize the arrays
 	listOfNotes = [[NSMutableArray alloc] init];
 	listOfNotebooks = [[NSMutableArray alloc] init];
 	listOfTags = [[NSMutableArray alloc] init];
@@ -53,7 +66,7 @@
 	UIImage *buttonImage = [UIImage imageNamed:@"Logout.png"];
 	UIImage *buttonSelectedImage = [UIImage imageNamed:@"Logout_down.png"];
 	
-		//create the button and assign the image
+    //create the button and assign the image
 	UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 	[button setImage:buttonImage forState:UIControlStateNormal];
 	[button setImage:buttonSelectedImage forState:UIControlStateSelected];
@@ -64,7 +77,16 @@
 	UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
 	
 	self.navigationItem.leftBarButtonItem = customBarItem;
-	UIImageView * logo = [[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 187.0f, 31.0f)];
+	
+    //Create InfoBarButton and add it as a navigation bar's right bar button
+    UIButton * infobutton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+    [infobutton addTarget:self action:@selector(infoButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem * infoBarButton = [[UIBarButtonItem alloc]initWithCustomView:infobutton];
+    self.navigationItem.rightBarButtonItem = infoBarButton;
+    [infoBarButton release];
+    
+    
+    UIImageView * logo = [[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 187.0f, 31.0f)];
 	logo.image = [UIImage imageNamed:@"noteprise_logo.png"];
 	if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
 		logo.image = [UIImage imageNamed:@"Noteprise_icon_iPhone.png"];
@@ -86,7 +108,15 @@
 			orientation = @"potrait";
 	}
     
-    [searchOptionsChoiceCntrl setTintColor:[UIColor colorWithRed:169.0f/255.0f green:216.0f/255.0f blue:238.0f/255.0f alpha:1]];
+    //Set tint color of UISegmentedControl
+    //[searchOptionsChoiceCntrl setTintColor:[UIColor colorWithRed:169.0f/255.0f green:216.0f/255.0f blue:238.0f/255.0f alpha:1]];
+    
+    //UIColor * tintColor = [UIColor colorWithRed:169.0f/255.0f green:216.0f/255.0f blue:238.0f/255.0f alpha:1.0f];
+    //searchOptionsChoiceCntrl.tintColor = tintColor;
+    
+    //UIColor *selectedTintColor = [UIColor colorWithRed: 0/255.0 green:255/255.0 blue:0/255.0 alpha:1.0];
+    //[[[searchOptionsChoiceCntrl subviews] objectAtIndex:0] setTintColor:selectedTintColor];
+    
 		//Customize segement control buttons
 	//[searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_all_pressed_%@_%@.png",device,orientation]] forSegmentAtIndex:0];
 	//[searchOptionsChoiceCntrl setImage:[UIImage imageNamed:[NSString stringWithFormat:@"Segment_control_button_notebook_unpressed_%@_%@.png",device,orientation]] forSegmentAtIndex:1];
@@ -113,7 +143,24 @@
 	
 	
 }
--(void)changeSegmentControlBtnsWithOrientationAndDevice {
+
+
+//Shows the InfoViewController
+-(void)infoButtonPressed
+{
+    NSString * userName = [((SFNativeRestAppDelegate *)[[UIApplication sharedApplication]delegate]) userName];
+    
+    if(userName != nil && ![userName isEqualToString:@""])
+    {
+        InfoViewController * infoViewController = [[InfoViewController alloc] initWithNibName:@"InfoViewController" bundle:nil];
+        [self.navigationController pushViewController:infoViewController animated:YES];
+        [infoViewController release];
+    }
+}
+
+
+-(void)changeSegmentControlBtnsWithOrientationAndDevice
+{
 	NSString *device,*orientation;
 	if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
 		device = @"iPhone";
@@ -144,11 +191,22 @@
 
 
 
--(void)viewDidAppear:(BOOL)animated{
-	
-	[self changeSegmentControlBtnsWithOrientationAndDevice];
-	[self fetchNoteBasedOnSelectedSegement];
-	[super viewDidAppear:animated];
+-(void)viewDidAppear:(BOOL)animated
+{
+    if(!isSearchModeEnabled)
+    {
+        [self changeSegmentControlBtnsWithOrientationAndDevice];
+        [self fetchNoteBasedOnSelectedSegement];
+        
+        if(flag1 == 0)
+        {
+            searchbarFrame = searchBar.frame;
+            orgTableHeight = notesTbl.frame.size.height;
+            orgBarOriginY = bottom_bar.frame.origin.y;
+        }
+	}
+    
+    [super viewDidAppear:animated];
     
 //    for (id subview in [searchBar subviews]) {
 //		if ([subview isKindOfClass:[UIButton class]]) {
@@ -157,12 +215,7 @@
 //		}
 //	}
     
-	if(flag1 == 0)
-    {
-        searchbarFrame = searchBar.frame;
-        orgTableHeight = notesTbl.frame.size.height;
-        orgBarOriginY = bottom_bar.frame.origin.y;
-    }	
+		
 }
 
 /*-(void)changeBkgrndImgWithOrientation {
@@ -213,26 +266,32 @@
 	settingsView.popover_delegate = self;
 	UINavigationController *settingsNavCntrl = [[UINavigationController alloc] initWithRootViewController:settingsView];
 	settingsNavCntrl.navigationBar.barStyle = UIBarStyleBlackOpaque;
-	if ([settingsNavCntrl.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
-		[settingsNavCntrl.navigationBar setBackgroundImage:[UIImage imageNamed:@"blue_bcg_iPhone.png"] forBarMetrics:UIBarMetricsDefault];
-		settingsNavCntrl.navigationBar.tintColor = [UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1];
-	}
-	if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
-			//sendSubView.view.frame=CGRectMake(0, 0, 300, 400);
+	
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+		//sendSubView.view.frame=CGRectMake(0, 0, 300, 400);
 		[self dissmissPopover];
 		UIPopoverController *popoverSettings = [[UIPopoverController alloc] initWithContentViewController:settingsNavCntrl];
 			//popoverSend.delegate = self;
-		settingsView.contentSizeForViewInPopover =CGSizeMake(320, 400);
+        
+		settingsNavCntrl.contentSizeForViewInPopover = CGSizeMake(320, 400);
+        
 		popoverController = popoverSettings;
 		[popoverSettings presentPopoverFromBarButtonItem:settingsBtn
 						    permittedArrowDirections:UIPopoverArrowDirectionAny
 										animated:YES];
-			//[popoverSettings release];
-		
+        
+     	//[popoverSettings release];
 	}
     else
     {
-		UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered
+		if ([settingsNavCntrl.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)])
+        {
+            [settingsNavCntrl.navigationBar setBackgroundImage:[UIImage imageNamed:@"Top_nav_768x44.png"] forBarMetrics:UIBarMetricsDefault];
+            settingsNavCntrl.navigationBar.tintColor = [UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1];
+        }
+        
+        UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered
 														    target:self action:@selector(dismissModalView)];
 		settingsView.navigationItem.leftBarButtonItem = cancelButton;
 		[self.navigationController presentModalViewController:settingsNavCntrl animated:YES];
@@ -266,8 +325,9 @@
     searchKeyword = @"";
     
     //Show loading indicator
-    [Utility showCoverScreen];
-    [self showLoadingLblWithText:LOADING_MSG];
+    [Utility showCoverScreenWithText:@"Loading..." andType:kInProcessCoverScreen];
+    
+    //[self showLoadingLblWithText:LOADING_MSG];
     
     [self makeSearchBarResignFirstResponder]; //Instead of [searchBar resignFirstResponder];
     
@@ -287,15 +347,16 @@
 	
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
 	if(buttonIndex == 1)
-	    {
+	{
 		[[EvernoteSession sharedSession] logout];
 		SignInViewController *loginView = [[SignInViewController alloc]init];
+
 		[[[UIApplication sharedApplication]delegate]window].rootViewController = loginView;
 		[loginView release];
-	    }
-	
+    }	
 }
 
 -(void)fetchDataFromEverNote
@@ -368,7 +429,8 @@
 
                                    //Hide loading indicator
                                    [Utility hideCoverScreen];
-                                   [self hideDoneToastMsg:nil];
+                                   
+                                   //[self hideDoneToastMsg:nil];
                                    
                                    
                                    //Show error message
@@ -403,8 +465,10 @@
 
 -(void)fetchNoteBasedOnSelectedSegement
 {
-    [Utility showCoverScreen];
-    [self showLoadingLblWithText:LOADING_MSG];
+    //Show progress indicator
+    [Utility showCoverScreenWithText:@"Loading..." andType:kInProcessCoverScreen];
+    
+    //[self showLoadingLblWithText:LOADING_MSG];
 
     [self makeSearchBarResignFirstResponder]; //Instead of [searchBar resignFirstResponder];
     
@@ -413,15 +477,15 @@
 }
 
 
--(void)showLoadingLblWithText:(NSString*)Loadingtext{
-	dialog_imgView.hidden = NO;
-	loadingLbl.text = Loadingtext;
-	loadingLbl.hidden = NO;
-}
--(void)hideDoneToastMsg:(id)sender{
-	dialog_imgView.hidden = YES;
-	loadingLbl.hidden = YES;
-}
+//-(void)showLoadingLblWithText:(NSString*)Loadingtext{
+////	dialog_imgView.hidden = NO;
+////	loadingLbl.text = Loadingtext;
+////	loadingLbl.hidden = NO;
+//}
+//-(void)hideDoneToastMsg:(id)sender{
+////	dialog_imgView.hidden = YES;
+////	loadingLbl.hidden = YES;
+//}
 
 
 -(void)listAllNotes
@@ -461,24 +525,32 @@
                             NSString *readProp = noteRead.attributes.contentClass?@"Yes":@"No";
                             [noteListDict setValue:readProp forKey:READABLE];
                             [listOfNotes addObject:noteListDict];
-                            [self reloadNotesTable];
+//                            [self reloadNotesTable];
                             [noteListDict release];
                         }
-				
+                        
                         NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
                         listOfNotes = [[listOfNotes sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
                         DebugLog(@"SORTED list Of all Notes: new%@",listOfNotes);
                     }
-                    else
-                    {
-                        [self reloadNotesTable];
-                    }
+                    
+                    //Increament counter
+                    notebookCountForLoadedNotes++;
+                                        
+                    [self reloadTableWhenAllNotesReceived];                    
+                    
                 }
                 failure:^(NSError *error)
                 {
-                    [self reloadNotesTable];
                     DebugLog(@" findNotesWithFilter error %@", error);
-                    [Utility showExceptionAlert:error.description];
+                    
+                    //Increament counter
+                    notebookCountForLoadedNotes++;
+                    
+                    isError = YES;
+                    
+                    [self reloadTableWhenAllNotesReceived];
+                    
                 }];
 			
 		    }
@@ -502,6 +574,29 @@
 	
 }
 
+
+-(void)reloadTableWhenAllNotesReceived
+{
+    if(notebookCountForLoadedNotes == [noteBooks count])
+    {
+        //Reload table to show notes
+        [self reloadNotesTable];
+        
+        //Show error if any
+        if(isError)
+        {
+            [Utility showExceptionAlert:@"An error occured."];
+        }
+        
+        //Reset variables
+        notebookCountForLoadedNotes = 0;
+        isError = NO;
+    }
+    
+}
+
+
+
 -(void)listAllNotebooks {
 	[listOfNotebooks removeAllObjects];
 	@try {
@@ -524,16 +619,16 @@
 			
 			
                 [listOfNotebooks addObject:noteListDict];
-                [self reloadNotesTable];
+//                [self reloadNotesTable];
 			
                 [noteListDict release];
 			
 		    }
         }
-        else
-        {
-            [self reloadNotesTable];
-        }
+        
+        //Reload table
+        [self reloadNotesTable];
+        
 		
 	}
 	@catch (EDAMSystemException *exception) {
@@ -570,14 +665,14 @@
                 NSMutableDictionary *noteListDict = [[NSMutableDictionary alloc]init];
 				[noteListDict setValue:[tag name] forKey:TAG_KEY];
                 [listOfTags addObject:noteListDict];
-                [self reloadNotesTable];
+//                [self reloadNotesTable];
                 [noteListDict release];
 		    }
 		}
-        else
-        {
-            [self reloadNotesTable];
-        }
+        
+        //Reload table
+        [self reloadNotesTable];
+        
 	}
     
 	@catch (EDAMSystemException *exception)
@@ -607,9 +702,11 @@
 	
     notesTbl.delegate =self;
 	notesTbl.dataSource =self;
-	[self hideDoneToastMsg:nil];
-	loadingLbl.hidden = YES;
-	[notesTbl reloadData];
+    
+	//[self hideDoneToastMsg:nil];
+	//loadingLbl.hidden = YES;
+	
+    [notesTbl reloadData];
 }
 
 -(void)stopActivity
@@ -618,8 +715,8 @@
     
 	[self makeSearchBarResignFirstResponder]; //Instead of [searchBar resignFirstResponder];
 	
-    [self hideDoneToastMsg:nil];
-	loadingLbl.hidden = YES;
+    //[self hideDoneToastMsg:nil];
+	//loadingLbl.hidden = YES;
 }
 
 -(void)searchNotes:(NSString*)searchingKeyword {
@@ -627,13 +724,15 @@
 	searchKeyword = searchingKeyword;
 	[searchResults removeAllObjects];__block int flag=0;
 	if((![Utility isBlank:searchingKeyword])){
-		@try {
+		@try
+        {
 			for (int i = 0; i < [noteBooks count]; i++)
-			    {
-					// Accessing notebook
+			{
+				// Accessing notebook
 				EDAMNotebook* notebook = (EDAMNotebook*)[noteBooks objectAtIndex:i];
 				EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
-					// Creating & configuring filter to load specific notebook
+				
+                // Creating & configuring filter to load specific notebook
 				EDAMNoteFilter * filter = [[EDAMNoteFilter alloc] init];
 				[filter setNotebookGuid:[notebook guid]];
 				
@@ -660,13 +759,33 @@
 					NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
 					searchResults = [[searchResults sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
 					DebugLog(@"sorted list Of notes found:%@",searchResults);
-					[self reloadNotesTable];
-				} failure:^(NSError *error) {
-					[Utility hideCoverScreen];
-					loadingLbl.hidden = YES;
+					
+//                    [self reloadNotesTable];
+                    
+                    //Increament counter
+                    notebookCountForLoadedNotes++;
+                    
+                    [self reloadTableWhenAllNotesReceived];
+
+				}
+                 
+                failure:^(NSError *error)
+                {
 					DebugLog(@" findNotesWithFilter error %@", error);
-					[Utility showExceptionAlert:error.description];
+                    
+                    //Increament counter
+                    notebookCountForLoadedNotes++;
+                    
+                    isError = YES;
+                    
+                    [self reloadTableWhenAllNotesReceived];
+                    
+//                    [Utility hideCoverScreen];
+//					loadingLbl.hidden = YES;
+//					DebugLog(@" findNotesWithFilter error %@", error);
+//					[Utility showExceptionAlert:error.description];
 				}];
+                
 			    }
 		}
 		@catch (EDAMSystemException *exception) {
@@ -681,12 +800,16 @@
 		}
 		
 	}
-	else{
+	else
+    {		
+		//Hide progress indicator
+        [Utility hideCoverScreen];
 		
-		[Utility hideCoverScreen];
-		[self hideDoneToastMsg:nil];
-		[Utility showAlert:note_please_enter_text_for_search_message];
-		[self reloadNotesTable];
+        //[self hideDoneToastMsg:nil];
+		
+        [Utility showAlert:note_please_enter_text_for_search_message];
+		
+        [self reloadNotesTable];
 		
 	}
 	
@@ -694,20 +817,20 @@
 }
 #pragma mark -
 #pragma mark UISearchBar Delegate
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar1
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar1
 {
 	DebugLog(@"searchBarShouldBeginEditing");
 	
     notesTbl.dataSource=nil;
 	[notesTbl reloadData];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self
-									 selector:@selector (keyboardDidShow:)
-										name: UIKeyboardDidShowNotification object:nil];
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self
-									 selector:@selector (keyboardDidHide:)
-										name: UIKeyboardDidHideNotification object:nil];
+//	[[NSNotificationCenter defaultCenter] addObserver:self
+//									 selector:@selector (keyboardDidShow:)
+//										name: UIKeyboardDidShowNotification object:nil];
+//	
+//	[[NSNotificationCenter defaultCenter] addObserver:self
+//									 selector:@selector (keyboardDidHide:)
+//										name: UIKeyboardDidHideNotification object:nil];
 	
 	toolbar.hidden=YES;
     
@@ -730,25 +853,24 @@
     //bottom_bar.frame=CGRectMake(0,notesTbl.frame.origin.y+notesTbl.frame.size.height, self.view.frame.size.width,bottom_bar.frame.size.height);
     
     isSearchModeEnabled = YES;
-    
-	return YES;
+
 }
 
 
--(void) keyboardDidShow: (NSNotification *)notif
-{
+//-(void) keyboardDidShow: (NSNotification *)notif
+//{
     // If keyboard is visible, return
-	if (keyboardVisible)
-    {
-        return;
-    }
-    
-    // Get the size of the keyboard.
-	notesTbl.dataSource=nil;
-	[notesTbl reloadData];
-	NSDictionary* info = [notif userInfo];
-	NSValue* aValue = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
-	CGSize keyboardSize = [aValue CGRectValue].size;
+//	if (keyboardVisible)
+//    {
+//        return;
+//    }
+//    
+//    // Get the size of the keyboard.
+//	notesTbl.dataSource=nil;
+//	[notesTbl reloadData];
+	//NSDictionary* info = [notif userInfo];
+	//NSValue* aValue = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
+	//CGSize keyboardSize = [aValue CGRectValue].size;
 	
     // Save the current location so we can restore
     // when keyboard is dismissed
@@ -786,12 +908,12 @@
 	
     //bottom_bar.frame=CGRectMake(0,notesTbl.frame.origin.y+notesTbl.frame.size.height, self.view.frame.size.width,bottom_bar.frame.size.height);
 	
-    keyboardVisible = YES;
+//    keyboardVisible = YES;
 	
-}
+//}
 
--(void) keyboardDidHide: (NSNotification *)notif
-{
+//-(void) keyboardDidHide: (NSNotification *)notif
+//{
 //    for (id subview in [searchBar subviews]) {
 //		if ([subview isKindOfClass:[UIButton class]]) {
 //			[subview setEnabled:YES];
@@ -800,23 +922,23 @@
 //	}
 
     
-    // Is the keyboard already shown
-	if (!keyboardVisible)
-	{
-		return;
-	}
-	
-	if(flag2!=1)
-    {
-		i=1;
-        
-        //notesTbl.frame = CGRectMake(0, toolbar.frame.size.height + searchBar.frame.size.height, self.view.frame.size.width, tempHeight - toolbar.frame.size.height + searchBar.frame.size.height);
-        
-	}
-	else
-    {
-		flag2 = 0;
-	}
+//    // Is the keyboard already shown
+//	if (!keyboardVisible)
+//	{
+//		return;
+//	}
+//	
+//	if(flag2!=1)
+//    {
+//		//i=1;
+//        
+//        //notesTbl.frame = CGRectMake(0, toolbar.frame.size.height + searchBar.frame.size.height, self.view.frame.size.width, tempHeight - toolbar.frame.size.height + searchBar.frame.size.height);
+//        
+//	}
+//	else
+//    {
+//		flag2 = 0;
+//	}
     
     
 //    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
@@ -843,8 +965,8 @@
 //	}
 	
 	//bottom_bar.frame=CGRectMake(0,orgBarOriginY, self.view.frame.size.width,bottom_bar.frame.size.height);
-	keyboardVisible = NO;
-}
+//	keyboardVisible = NO;
+//}
 
 
 
@@ -900,20 +1022,23 @@
 }
 
 
-- (void) searchBarTextDidEndEditing:(UISearchBar *)theSearchBar
-{
-	[theSearchBar resignFirstResponder];
-    
-    
-    //Shift bottom bar downward
-    //bottom_bar.frame=CGRectMake(0,orgBarOriginY, self.view.frame.size.width,bottom_bar.frame.size.height);
-}
+//- (void) searchBarTextDidEndEditing:(UISearchBar *)theSearchBar
+//{
+//	[self makeSearchBarResignFirstResponder];
+//    
+//    
+//    //Shift bottom bar downward
+//    //bottom_bar.frame=CGRectMake(0,orgBarOriginY, self.view.frame.size.width,bottom_bar.frame.size.height);
+//}
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBarContent
 {
-	[Utility showCoverScreen];
-	[self showLoadingLblWithText:LOADING_MSG];
-	[listOfNotes removeAllObjects];
+	//Show progress indicator
+    [Utility showCoverScreenWithText:@"Loading..." andType:kInProcessCoverScreen];
+    
+	//[self showLoadingLblWithText:LOADING_MSG];
+	
+    [listOfNotes removeAllObjects];
     
 	
     [self makeSearchBarResignFirstResponder];     //Instead of [searchBar resignFirstResponder];
@@ -922,7 +1047,7 @@
     {
 		[Utility showAlert:note_please_enter_text_for_search_message];
 		[Utility hideCoverScreen];
-		[self hideDoneToastMsg:loadingLbl];
+//		[self hideDoneToastMsg:loadingLbl];
 	}
 	else
     {
@@ -945,8 +1070,9 @@
         UINavigationController *addNoteNavCntrl = [[UINavigationController alloc] initWithRootViewController:addNoteVCntrl];
         addNoteNavCntrl.navigationBar.barStyle = UIBarStyleBlackOpaque;
             //[addNoteNavCntrl.navigationBar setBackgroundImage:[UIImage imageNamed:@"blue_bcg_iPhone.png"]];
-        if ([addNoteNavCntrl.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
-            [addNoteNavCntrl.navigationBar setBackgroundImage:[UIImage imageNamed:@"blue_bcg_iPhone.png"] forBarMetrics:UIBarMetricsDefault];
+        if ([addNoteNavCntrl.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)])
+        {
+            [addNoteNavCntrl.navigationBar setBackgroundImage:[UIImage imageNamed:@"Top_nav_768x44.png"] forBarMetrics:UIBarMetricsDefault];
             addNoteNavCntrl.navigationBar.tintColor = [UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1];
         }
         if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -1101,27 +1227,57 @@
  *
  ************************************************************/
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-	
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(searchOptionsChoiceCntrl.selectedSegmentIndex != 0 || isSearchModeEnabled)
+    {
+        return NO;
+    }
+    return YES;
+}
+
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
 	NSString * guid = (NSString *)[[listOfNotes objectAtIndex:[indexPath row]]valueForKey:NOTE_GUID_KEY];
 	EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
 		// As an example, we are going to show the first element if it is an image
 	[noteStore deleteNoteWithGuid:guid success:^(int32_t success)
-	 {
-	  [Utility showAlert:NOTE_DELETE_SUCCESS_MSG];
-	  DebugLog(@"deleteNoteWithGuid %d ::::",success);
-	  [Utility hideCoverScreen];
-	  loadingLbl.hidden = YES;
-	 }failure:^(NSError *error) {
-		 DebugLog(@"note::::::::error %@", error);
-		 [Utility showAlert:NOTE_DELETE_FAILED_MSG];
-		 [Utility hideCoverScreen];
-		 loadingLbl.hidden = YES;
-	 }];
+	{
+        //Delete the object from array listOfNotes
+        [listOfNotes removeObjectAtIndex:[indexPath row]];
+        
+        //Delete the row with animation
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        [Utility hideCoverScreen];
+        
+        [Utility showAlert:NOTE_DELETE_SUCCESS_MSG];
+        DebugLog(@"deleteNoteWithGuid %d ::::",success);
+        
+        
+        [self fetchNoteBasedOnSelectedSegement];
+        
+
+        //	loadingLbl.hidden = YES;
+	
+    }failure:^(NSError *error)
+    {
+  	    [Utility hideCoverScreen];
+
+        DebugLog(@"note::::::::error %@", error);
+		[Utility showAlert:NOTE_DELETE_FAILED_MSG];
+
+//		 loadingLbl.hidden = YES;
+	}];
+    
+    
+    //Show progressIndicator
+    [Utility showCoverScreenWithText:NOTE_DELETING_MSG andType:kInProcessCoverScreen];
 	
 		// Removing the note from our cache
-	[listOfNotes removeObjectAtIndex:[indexPath row]];
-	[self fetchNoteBasedOnSelectedSegement];
+	//[listOfNotes removeObjectAtIndex:[indexPath row]];
+	//[self fetchNoteBasedOnSelectedSegement];
 	
 }
 
@@ -1135,7 +1291,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	
-	if(searchOptionsChoiceCntrl.selectedSegmentIndex == 0) {
+	if(searchOptionsChoiceCntrl.selectedSegmentIndex == 0)
+    {
 		if(searchBar.text.length != 0){
 			return [searchResults count];
 		}
@@ -1143,7 +1300,8 @@
 			return [listOfNotes count];
 		}
 		
-	} else if (searchOptionsChoiceCntrl.selectedSegmentIndex == 1) {
+	} else if (searchOptionsChoiceCntrl.selectedSegmentIndex == 1)
+    {
 		if(searchBar.text.length != 0){
 			return [searchResults count];
 		}
@@ -1166,10 +1324,13 @@
 	}
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
 		//[self initConextAndFetchController];
 	return 1;
 }
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
@@ -1233,14 +1394,19 @@
 	cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
 	return cell;
 }
+
+
 #pragma mark -
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
 	return YES;
 }
-	//dealloc method declared in RootViewController.m
-- (void)dealloc {
-	
+
+
+//dealloc method declared in RootViewController.m
+- (void)dealloc
+{	
 	[listOfNotes release];
 	[listOfNotebooks release];
 	[listOfTags release];

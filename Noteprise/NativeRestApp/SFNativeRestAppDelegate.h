@@ -38,10 +38,16 @@
 @interface SFNativeRestAppDelegate : NSObject <UIApplicationDelegate, SFOAuthCoordinatorDelegate, UIAlertViewDelegate> {
     SFOAuthCoordinator *_coordinator;
     SFAuthorizingViewController *_authViewController;
+    
+    NSMutableData * responseData;
+    NSString * userName;
+
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet UIViewController *viewController;
+@property (nonatomic, retain) NSMutableData * responseData;
+@property(nonatomic, retain) NSString * userName;
 
 
 

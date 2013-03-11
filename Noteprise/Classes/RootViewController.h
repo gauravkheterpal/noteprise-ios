@@ -25,6 +25,8 @@
 #import <UIKit/UIKit.h>
 #import "SFRestAPI.h"
 #import "FieldsViewController.h"
+
+
 @interface RootViewController : UIViewController <SFRestDelegate,UITableViewDataSource,UITableViewDelegate> {
     
     NSMutableArray *dataRows;
@@ -35,14 +37,22 @@
     int selectedCount;
     NSMutableArray *cellIndexData;
     NSMutableArray *sections;
-    IBOutlet UIActivityIndicatorView *loadingSpinner;
-    IBOutlet UIImageView *dialog_imgView;
-    IBOutlet UILabel *loadingLbl;
-    IBOutlet UIImageView *doneImgView;
+//    IBOutlet UIActivityIndicatorView *loadingSpinner;
+//    IBOutlet UIImageView *dialog_imgView;
+//    IBOutlet UILabel *loadingLbl;
+//    IBOutlet UIImageView *doneImgView;
     IBOutlet UIImageView *backgroundImgView;
+    
+    NSString * currentQuery;
+    NSInteger currentOffset;
+    NSInteger totalRecords;
+    
+    BOOL isLoadingMoreRecordsInProcess;
 
     UIView * no_record_view;
     UILabel *no_record_lbl;
+    
+    SFRestRequest * getRecordCountRequest;
     
 }
 //- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil attachmentData:(NSData*)data fileName:(NSString*)_fileName;
