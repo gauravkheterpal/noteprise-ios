@@ -11,8 +11,9 @@
 #import "ChatterGroupVCntrlViewController.h"
 #import "Utility.h"
 #import <QuartzCore/QuartzCore.h>
-@implementation NoteDetailViewController {
-}
+
+@implementation NoteDetailViewController
+
 
 @synthesize guid, readProp, noteNavigation, noteContent,textContent;
 
@@ -1183,6 +1184,9 @@ CGRect activeField,orgBounds;
 	
 //[delegate evernoteCreatedSuccessfullyListener];
 }
+
+
+
 #pragma mark - SFRestAPIDelegate
 - (void)request:(SFRestRequest *)request didLoadResponse:(id)jsonResponse
 {

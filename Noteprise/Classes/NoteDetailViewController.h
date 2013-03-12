@@ -1,4 +1,3 @@
-//
 //  NoteDetailViewController.h
 //
 //
@@ -11,6 +10,7 @@
 
 //static int editBtnTag = 1;
 //static int saveBtnTag = 2;
+
 
 @interface NoteDetailViewController : UIViewController <UIWebViewDelegate,SFRestDelegate,UIActionSheetDelegate,UITextFieldDelegate, UIAlertViewDelegate, UIGestureRecognizerDelegate>
 {
@@ -68,7 +68,7 @@
 -(void)hideDoneToastMsg:(id)sender;
 - (NSString *)getDataBetweenFromString:(NSString *)data leftString:(NSString *)leftData rightString:(NSString *)rightData leftOffset:(NSInteger)leftPos;
 -(void)dismissPreviousPopover;
--(void)showLoadingLblWithText:(NSString*)Loadingtext;
+//-(void)showLoadingLblWithText:(NSString*)Loadingtext;
 -(void)postToChatterWall ;
 
 @end

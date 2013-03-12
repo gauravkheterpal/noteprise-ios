@@ -320,7 +320,7 @@
     [notesTbl reloadData];
     
     [self changeSegmentControlBtnsWithOrientationAndDevice];
-    searchBar.userInteractionEnabled = NO;
+//    searchBar.userInteractionEnabled = NO;
     //searchBar.alpha = 0.75;
     searchBar.text = @"";
     searchKeyword = @"";
@@ -419,7 +419,7 @@
 							}
 							break;
 					}
-					searchBar.userInteractionEnabled = YES;
+//					searchBar.userInteractionEnabled = YES;
 					//searchBar.alpha = 0.75;
 					
 				});
@@ -1141,9 +1141,16 @@
  ************************************************************/
 #pragma mark -
 #pragma mark UITableView delegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
+    if(![Utility checkNetwork])
+    {
+        [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
+        return;
+    }
+    
 	if(searchOptionsChoiceCntrl.selectedSegmentIndex==1){
 		if(searchBar.text.length != 0){
 			NoteDetailViewController* noteDetailController= [[NoteDetailViewController alloc] init];
@@ -1253,21 +1260,31 @@
         
         [Utility hideCoverScreen];
         
-        [Utility showAlert:NOTE_DELETE_SUCCESS_MSG];
+        [Utility showCoverScreenWithText:NOTE_DELETE_SUCCESS_MSG andType:kProcessDoneCoverScreen];
+        
+        [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(hideCoverScreen) userInfo:nil repeats:NO];
+        
+        //[Utility showAlert:NOTE_DELETE_SUCCESS_MSG];
+        
         DebugLog(@"deleteNoteWithGuid %d ::::",success);
         
         
-        [self fetchNoteBasedOnSelectedSegement];
+//        [self fetchNoteBasedOnSelectedSegement];
         
 
         //	loadingLbl.hidden = YES;
 	
     }failure:^(NSError *error)
     {
-  	    [Utility hideCoverScreen];
-
         DebugLog(@"note::::::::error %@", error);
-		[Utility showAlert:NOTE_DELETE_FAILED_MSG];
+        
+  	    //[Utility hideCoverScreen];
+
+        [Utility showCoverScreenWithText:NOTE_DELETE_FAILED_MSG andType:kWarningCoverScreen];
+        
+        [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(hideCoverScreen) userInfo:nil repeats:NO];
+        
+		//[Utility showAlert:NOTE_DELETE_FAILED_MSG];
 
 //		 loadingLbl.hidden = YES;
 	}];
@@ -1282,6 +1299,11 @@
 	
 }
 
+
+-(void)hideCoverScreen
+{
+    [Utility hideCoverScreen];
+}
 
 
 /************************************************************

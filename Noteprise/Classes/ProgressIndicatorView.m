@@ -88,7 +88,7 @@
     [roundedRectView addSubview:checkmarkImageView];
     [checkmarkImageView release];
     
-    UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(0, 50, roundedRectView.frame.size.width, 50)];
+    UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(5, 50, roundedRectView.frame.size.width-10, 50)];
     label.font = [UIFont systemFontOfSize:17.0f];
 
     label.numberOfLines = 0;

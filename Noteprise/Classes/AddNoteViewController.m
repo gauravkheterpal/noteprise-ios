@@ -31,6 +31,8 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
     bodyTxtView.layer.cornerRadius = 8;
 	bodyTxtView.layer.borderWidth = 2;
 	bodyTxtView.layer.borderColor = [[UIColor blackColor] CGColor];
+    bodyTxtView.backgroundColor = [UIColor clearColor];
+    bodyTxtView.opaque = NO;
     
     UIImage *buttonImage = [UIImage imageNamed:@"Create.png"];
     UIImage *buttonSelectedImage = [UIImage imageNamed:@"Create_down.png"];
@@ -112,6 +114,10 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
                                             [listOfItems addObject:[notebook name]];
                                             [indexArray addObject:[notebook guid]];
                                         }
+                                        
+                                        //Set selectNotebooksButton's title to selected notebook's name
+                                        [self.selectNotebooksButton setTitle:[listOfItems objectAtIndex:selectedNotebookIndex] forState:UIControlStateNormal];
+                                        
                                         
                                         //Hide progress indicator
                                         [self hideCoverScreen];
@@ -340,8 +346,11 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
          locationManager.delegate = self;
          locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
          locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
-         BOOL locationAllowed = [CLLocationManager locationServicesEnabled];
-         if (locationAllowed==NO) {
+        
+        BOOL locationAllowed = [CLLocationManager locationServicesEnabled];
+        
+        if (locationAllowed==NO)
+        {
               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Service Disabled"
                                                               message:LOCATION_TRACKING_DISABLED_MSG
                                                              delegate:nil
@@ -357,7 +366,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
              [self hideCoverScreen];
              
              //Show progress indicator
-             [self showCoverScreenWithText:LOADING_NOTEBOOKS_MSG andType:kInProcessCoverScreen];
+             [self showCoverScreenWithText:ATTACHING_USER_LOCATION_TO_NOTE_MSG andType:kInProcessCoverScreen];
              
               [locationManager startUpdatingLocation];
 //              dialog_imgView.hidden = NO;
@@ -371,99 +380,114 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
         [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
     }
 }
+
+
 -(void)createEvernoteWithUserLocation:(double)latitude longitude:(double)longitude
 {
-          // Creating the Note Object
-     EDAMNote * note = [[[EDAMNote alloc] init]autorelease];
-     note.title = titleNote.text;
-     EDAMNoteAttributes *att = [[EDAMNoteAttributes alloc]init];
-     if(latitude !=0 && longitude != 0) {
-          att.latitude = latitude;
-          att.longitude = longitude;
-               // Setting initial values sent by the user
+    // Creating the Note Object
+    EDAMNote * note = [[[EDAMNote alloc] init]autorelease];
+    note.title = titleNote.text;
+    EDAMNoteAttributes *att = [[EDAMNoteAttributes alloc]init];
+    
+    if(latitude !=0 && longitude != 0)
+    {
+        att.latitude = latitude;
+        att.longitude = longitude;
+    
+        // Setting initial values sent by the user
           
-          [note setAttributes:att];
-     }
-     if([indexArray count] != 0) {
-          note.notebookGuid = [indexArray objectAtIndex:selectedNotebookIndex];
+        [note setAttributes:att];
+    }
+    
+    if([indexArray count] != 0)
+    {
+        note.notebookGuid = [indexArray objectAtIndex:selectedNotebookIndex];
           
-          NSMutableString *bodyTxt = (NSMutableString *) [bodyTxtView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML"];
-          bodyTxt = (NSMutableString *)[bodyTxt stringByReplacingOccurrencesOfString:@"<br>" withString:@"<br />"];
-          /*NSRange start = [bodyTxt rangeOfString:@"<en-note>"];
-           NSRange end = [bodyTxt rangeOfString:@"</en-note>"];
-           if(start.location !=NSNotFound){
-           bodyTxt = (NSMutableString *)[bodyTxt substringWithRange:NSMakeRange(start.location+start.length, end.location-(start.location+start.length))];
-           }*/
+        NSMutableString *bodyTxt = (NSMutableString *) [bodyTxtView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML"];
+        bodyTxt = (NSMutableString *)[bodyTxt stringByReplacingOccurrencesOfString:@"<br>" withString:@"<br />"];
+    
+        /*NSRange start = [bodyTxt rangeOfString:@"<en-note>"];
+         NSRange end = [bodyTxt rangeOfString:@"</en-note>"];
+         if(start.location !=NSNotFound){
+         bodyTxt = (NSMutableString *)[bodyTxt substringWithRange:NSMakeRange(start.location+start.length, end.location-(start.location+start.length))];
+         }*/
           
           
-          NSString * ENML = [NSString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">\n<en-note>%@",bodyTxt];
+        NSString * ENML = [NSString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">\n<en-note>%@",bodyTxt];
           
-          ENML = [NSString stringWithFormat:@"%@%@", ENML, @"</en-note>"];
-          DebugLog(@"ENML:%@", ENML);
+        ENML = [NSString stringWithFormat:@"%@%@", ENML, @"</en-note>"];
+        DebugLog(@"ENML:%@", ENML);
           
                // Adding the content to the note
 //        [Utility showCoverScreen];
   
-         [note setContent:ENML];
+        [note setContent:ENML];
           
          
-         [loadingSpinner startAnimating];
+//        [loadingSpinner startAnimating];
          
-//       dialog_imgView.hidden = NO;
-//       loadingLbl.text = NOTE_CREATING_MSG;
-//       loadingLbl.hidden = NO;
+//      dialog_imgView.hidden = NO;
+//      loadingLbl.text = NOTE_CREATING_MSG;
+//      loadingLbl.hidden = NO;
          
-         //Hide progress indicator
-         [self hideCoverScreen];
+        //Hide progress indicator
+        [self hideCoverScreen];
          
-         //Show progress indicator
-         [self showCoverScreenWithText:NOTE_CREATING_MSG andType:kInProcessCoverScreen];
+        //Show progress indicator
+        [self showCoverScreenWithText:NOTE_CREATING_MSG andType:kInProcessCoverScreen];
          
          
-          __block BOOL isErrorCreatingnote = NO;
-          dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^(void) {
+         __block BOOL isErrorCreatingnote = NO;
+         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^(void) {
                     // Saving the note on the Evernote servers
                     // Simple error management
-               @try {
+             @try
+             {
                     EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
+                 
                     [noteStore createNote:note success:^(EDAMNote *note)
                      {
-                      dispatch_async(dispatch_get_main_queue(), ^(void) {
-                           DebugLog(@"create note success%@ :::: ",note);
-                           if(isErrorCreatingnote == NO) {
-                                     // Alerting the user that the note was created
-//                                dialog_imgView.hidden = NO;
-//                                doneImgView.hidden = NO;
-                                [loadingSpinner stopAnimating];
-//                                loadingLbl.text = NOTE_CREATION_SUCCESS_MSG;
+                      dispatch_async(dispatch_get_main_queue(), ^(void)
+                         {
+                             DebugLog(@"create note success%@ :::: ",note);
+                             
+                             if(isErrorCreatingnote == NO)
+                             {
+                                 // Alerting the user that the note was created
+//                               dialog_imgView.hidden = NO;
+//                               doneImgView.hidden = NO;
+                                 
+//                                 [loadingSpinner stopAnimating];
+//                               loadingLbl.text = NOTE_CREATION_SUCCESS_MSG;
                                
-                               //Hide progress indicator
-                               [self hideCoverScreen];
+                                 //Hide progress indicator
+                                 [self hideCoverScreen];
                                
-                               //Show progress indicator
-                               [self showCoverScreenWithText:NOTE_CREATION_SUCCESS_MSG andType:kProcessDoneCoverScreen];
+                                 //Show progress indicator
+                                 [self showCoverScreenWithText:NOTE_CREATION_SUCCESS_MSG andType:kProcessDoneCoverScreen];
                                
                                 DebugLog(@"note desc:lat:%f long:%f",[note attributes].latitude,[note attributes].longitude);
                                 DebugLog(@"note desc:%@",[note description]);
                                                               
                                 [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
                            }
-                           [loadingSpinner stopAnimating];
+//                           [loadingSpinner stopAnimating];
                       });
                      }
                                   failure:^(NSError *error) {
                                        dispatch_async(dispatch_get_main_queue(), ^(void)
                                       {
-                                            DebugLog(@"create note::::::::error %@", error);
-                                          
-                                          [Utility showAlert:error.description];
-//                                        dialog_imgView.hidden = YES;
-//                                        loadingLbl.hidden = YES;
-                                          [loadingSpinner stopAnimating];
-
                                           //Hide progress indicator
                                           [self hideCoverScreen];
                                           
+                                          DebugLog(@"create note::::::::error %@", error);
+                                          
+                                          [Utility showAlert:NOTE_CREATION_FAILED_MSG];
+
+                                          // dialog_imgView.hidden = YES;
+                                          // loadingLbl.hidden = YES;
+                                          // [loadingSpinner stopAnimating];
+
                                           isErrorCreatingnote = YES;
                                           [delegate evernoteCreationFailedListener];
                                           return;
@@ -478,7 +502,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 //                         dialog_imgView.hidden = YES;
 //                         loadingLbl.hidden = YES;
 
-                        [loadingSpinner stopAnimating];
+//                        [loadingSpinner stopAnimating];
                         
                         //Hide progress indicator
                         [self hideCoverScreen];
@@ -496,12 +520,13 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
      }
      
 }
+
 -(void)hideDoneToastMsg:(id)sender
 {
 //	dialog_imgView.hidden = YES;
 //  loadingLbl.hidden = YES;
 //  doneImgView.hidden = YES;
-    [loadingSpinner stopAnimating];
+//    [loadingSpinner stopAnimating];
 
     //Hide progress indicator
     [self hideCoverScreen];
@@ -680,6 +705,10 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 {
     //[tableView deselectRowAtIndexPath:indexPath animated:YES];
     selectedNotebookIndex = indexPath.row;
+    
+    //Update selectNotebooksButton's title
+    [self.selectNotebooksButton setTitle:[listOfItems objectAtIndex:selectedNotebookIndex] forState:UIControlStateNormal];
+    
     [popController dismissPopoverAnimated:YES];
     [popController release];
           //[self presentModalViewController:noteViewController animated:true];
@@ -695,7 +724,10 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-     selectedNotebookIndex = row;
+    selectedNotebookIndex = row;
+    
+    //Update selectNotebooksButton's title
+    [self.selectNotebooksButton setTitle:[listOfItems objectAtIndex:selectedNotebookIndex] forState:UIControlStateNormal];
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component;
@@ -741,23 +773,29 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 
 #pragma mark -
 #pragma mark CLLocationManagerDelegate
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-     [manager stopUpdatingLocation];
-     DebugLog(@"error desc:%@",[error description]);
-          //if ([error code] != kCLErrorLocationUnknown) {
-     [manager stopUpdatingLocation];
-     manager.delegate = nil;
-//     loadingLbl.text = FAILED_RETRIEVE_USER_LOCATION_MSG;
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    [manager stopUpdatingLocation];
+    DebugLog(@"error desc:%@",[error description]);
+
+    //if ([error code] != kCLErrorLocationUnknown) {
+    [manager stopUpdatingLocation];
+    manager.delegate = nil;
+
+    //  loadingLbl.text = FAILED_RETRIEVE_USER_LOCATION_MSG;
     
     //Show progress indicator
-    [self showCoverScreenWithText:FAILED_RETRIEVE_USER_LOCATION_MSG andType:kWarningCoverScreen];
+//    [self showCoverScreenWithText:FAILED_RETRIEVE_USER_LOCATION_MSG andType:kWarningCoverScreen];
     
-    [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
-
-//  [self hideCoverScreen];
+//    [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
+    
+    //Hide progress indicator
+    [self hideCoverScreen];
     
     [self createEvernoteWithUserLocation:0.0 longitude:0.0];
 }
+
+
 - (void)locationManager:(CLLocationManager *)manager
     didUpdateToLocation:(CLLocation *)newLocation
            fromLocation:(CLLocation *)oldLocation
@@ -788,6 +826,8 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
     
     [self createEvernoteWithUserLocation:newLocation.coordinate.latitude longitude:newLocation.coordinate.longitude];
 }
+
+
 
 #pragma mark JS webview properties
 - (void)setWebViewTapDetectionEnabled:(BOOL)isEnabled {
@@ -894,11 +934,15 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
       [self increaseZoomFactorRange];*/
      
 }
+
+
 #pragma mark -
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
      return YES;
 }
+
+
 - (void)didReceiveMemoryWarning
 {
           // Releases the view if it doesn't have a superview.
@@ -927,6 +971,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
     [self.popoverContent release];
     [progressIndicatorView release];
     [layerView release];
+    [self.selectNotebooksButton release];
 
     [super dealloc];
 }

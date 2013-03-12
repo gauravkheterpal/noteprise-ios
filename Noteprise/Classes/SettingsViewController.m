@@ -352,8 +352,15 @@
             SFObjsViewController *sfObjs = [[SFObjsViewController alloc]init];
             sfObjs.delegate = popover_delegate;
             NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:OBJ_NAME  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-            updateableObjArray = [updateableObjArray sortedArrayUsingDescriptors:[NSMutableArray arrayWithObjects:descriptor,nil]];
+            
+            NSMutableArray * sortedArray = nil;
+            sortedArray = [[updateableObjArray sortedArrayUsingDescriptors:[NSMutableArray arrayWithObjects:descriptor,nil]] mutableCopy];
+            [updateableObjArray release];
+            updateableObjArray = sortedArray;
+            
             sfObjs.sfObjsList = updateableObjArray ;
+            [updateableObjArray release];
+            
             //DebugLog(@"records:%@", sfObjs.sfObjsList);
             sfObjs.title = @"Choose Object";
             [self.navigationController pushViewController:sfObjs animated:YES];
@@ -362,8 +369,8 @@
         {
             [Utility showAlert:ERROR_LISTING_SFOBJECTS_MSG];
 
-//            //Hide progress indicator
-//            [self hideCoverScreen];
+//          //Hide progress indicator
+//          [self hideCoverScreen];
         }
         
     }

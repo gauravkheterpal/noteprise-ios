@@ -24,7 +24,7 @@
      UIImageView * imageView;
      UIActionSheet *sortTypeActionSheet;
      int selectedNotebookIndex;
-     IBOutlet UIActivityIndicatorView *loadingSpinner;
+//     IBOutlet UIActivityIndicatorView *loadingSpinner;
 //     IBOutlet UIImageView *dialog_imgView;
 //     IBOutlet UILabel *loadingLbl;
      IBOutlet UITableView *notebooksTbl;
@@ -43,6 +43,7 @@
 @property (nonatomic, retain) IBOutlet UIButton * sendNote;
 @property (nonatomic, retain) UITableViewController * popoverContent;
 @property (nonatomic, retain) IBOutlet UIImageView * imageView;
+@property (nonatomic, retain) IBOutlet UIButton * selectNotebooksButton;
 
 
 - (IBAction) getPhoto:(id) sender;

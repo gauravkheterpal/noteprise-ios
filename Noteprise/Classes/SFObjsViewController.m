@@ -93,9 +93,14 @@
     cell.textLabel.text = [[sfObjsList objectAtIndex:indexPath.row]valueForKey:OBJ_NAME];
     NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *sfobjToMapWith = [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];
-    if(sfobjToMapWith != nil) {
+    
+    if(sfobjToMapWith != nil)
+    {
         if([[[sfObjsList objectAtIndex:indexPath.row]valueForKey:OBJ_NAME] isEqualToString:[sfobjToMapWith valueForKey:OBJ_NAME]])
+        {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            selectedRowIndex = indexPath.row;
+        }
     }
     return cell;
 }
@@ -143,25 +148,33 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    selectedRowIndex = indexPath.row;
-    //[tableView reloadData];
-    NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *currentsfObj = [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];
+    NSIndexPath *selectionIndexPath = [NSIndexPath indexPathForRow:selectedRowIndex inSection:0];
+    UITableViewCell *checkedCell = [tableView cellForRowAtIndexPath:selectionIndexPath];
+    checkedCell.accessoryType = UITableViewCellAccessoryNone;
     
-    if (currentsfObj != nil)
-    {
-        NSInteger index;
-        for(int i=0 ;i<[sfObjsList count];i++)
-        {
-            if ([[[sfObjsList objectAtIndex:i] valueForKey:OBJ_NAME] isEqualToString:[currentsfObj valueForKey:OBJ_NAME]]) {
-                index = i;
-                break;
-            }
-        }
-		NSIndexPath *selectionIndexPath = [NSIndexPath indexPathForRow:index inSection:0];
-        UITableViewCell *checkedCell = [tableView cellForRowAtIndexPath:selectionIndexPath];
-        checkedCell.accessoryType = UITableViewCellAccessoryNone;
-    }
+    selectedRowIndex = indexPath.row;
+    
+    //[tableView reloadData];
+    
+    NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
+
+//    NSDictionary *currentsfObj = [stdDefaults valueForKey:SFOBJ_TO_MAP_KEY];
+    
+//    if (currentsfObj != nil)
+//    {
+//        NSInteger index;
+//        for(int i=0 ;i<[sfObjsList count];i++)
+//        {
+//            if ([[[sfObjsList objectAtIndex:i] valueForKey:OBJ_NAME] isEqualToString:[currentsfObj valueForKey:OBJ_NAME]]) {
+//                index = i;
+//                break;
+//            }
+//        }
+//		NSIndexPath *selectionIndexPath = [NSIndexPath indexPathForRow:index inSection:0];
+//        UITableViewCell *checkedCell = [tableView cellForRowAtIndexPath:selectionIndexPath];
+//        checkedCell.accessoryType = UITableViewCellAccessoryNone;
+//    }
+    
     DebugLog(@"old to set as obj:%@ field:%@",[Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY],[Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY]);
     [stdDefaults setObject:[Utility valueInPrefForKey:SFOBJ_TO_MAP_KEY] forKey:OLD_SFOBJ_TO_MAP_KEY];
     [stdDefaults setObject:[Utility valueInPrefForKey:SFOBJ_FIELD_TO_MAP_KEY] forKey:OLD_SFOBJ_FIELD_TO_MAP_KEY];

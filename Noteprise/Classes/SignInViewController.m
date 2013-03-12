@@ -24,10 +24,19 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 205;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-    [self changeBkgrndImgWithOrientation:orientation];
-	// Do any additional setup after loading the view, typically from a nib.
+    
+	
+    // Do any additional setup after loading the view, typically from a nib.
 }
+
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    
+    [self changeBkgrndImgWithOrientation:orientation];    
+}
+
 
 - (void)viewDidUnload
 {
@@ -35,44 +44,63 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 205;
     // Release any retained subviews of the main view.
 }
 
--(void)changeBkgrndImgWithOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
-        if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight) {
-            if([Utility isDeviceiPhone5]) {
+
+-(void)changeBkgrndImgWithOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
+        {
+            if([Utility isDeviceiPhone5])
+            {
                 backgroundImg.image = [UIImage imageNamed:@"evernoteBg568x300.png"];
-            } else {
+            }
+            else
+            {
                 backgroundImg.image = [UIImage imageNamed:@"evernoteBg480x300.png"];
             }
         }
-        else {
-            if([Utility isDeviceiPhone5]) {
+        else
+        {
+            if([Utility isDeviceiPhone5])
+            {
                 backgroundImg.image = [UIImage imageNamed:@"evernoteBg320x548.png"];
-            } else {
-                
+            }
+            else
+            {
                 backgroundImg.image = [UIImage imageNamed:@"evernoteBg320x460.png"];
             }
         }
-    } else {
-        
-        if(toInterfaceOrientation == UIInterfaceOrientationLandscapeRight || toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft) {
+    }
+    else
+    {
+        if(toInterfaceOrientation == UIInterfaceOrientationLandscapeRight || toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft)
+        {
             backgroundImg.image = [UIImage imageNamed:@"evernoteBg-1024x748.png"];
             //signInBtn.frame = CGRectMake(400, 520, 235, 57);
         }
-        else {
+        else
+        {
             backgroundImg.image = [UIImage imageNamed:@"evernoteBg768x1024.png"];
             //signInBtn.frame = CGRectMake(270, 700, 235, 57);
         }
     }
 }
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
     [self changeBkgrndImgWithOrientation:toInterfaceOrientation];
 }
+
+
 -(BOOL)validate{
     if([Utility isBlank:userNameTxt.text] || [Utility isBlank:pswdTxt.text]){
         return NO;
     }
     return YES;
 }
+
 
 -(void)navigateToSearchOptionVC{
     [Utility hideCoverScreen];
