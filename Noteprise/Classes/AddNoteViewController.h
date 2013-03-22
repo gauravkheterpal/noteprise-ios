@@ -36,6 +36,8 @@
     ProgressIndicatorView * progressIndicatorView;
     
     UIView * layerView;
+    
+    BOOL areNotebooksLoaded;
 }
 
 @property (nonatomic, assign) id <NSObject, AddNotesViewDelegate > delegate;

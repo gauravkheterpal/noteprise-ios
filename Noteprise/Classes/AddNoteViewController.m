@@ -27,6 +27,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 {
     self.title = @"Add Note";
     selectedNotebookIndex = 0;
+    areNotebooksLoaded = NO;
     
     bodyTxtView.layer.cornerRadius = 8;
 	bodyTxtView.layer.borderWidth = 2;
@@ -86,15 +87,34 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
      [self setWebViewKeyPressDetectionEnabled:YES];
      [self setWebViewTapDetectionEnabled:YES];
      [self increaseZoomFactorRange];
+    
      
-     
+    
+     [super viewDidLoad];
+}
+
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    if(!areNotebooksLoaded)
+    {
+        //Load Notebooks
+        [self loadNotebooks];
+        
+        areNotebooksLoaded = YES;
+    }
+}
+
+
+-(void)loadNotebooks
+{
     @try
     {
-//        dialog_imgView.hidden = NO;
-//        loadingLbl.text = LOADING_NOTEBOOKS_MSG;
-    
+        //        dialog_imgView.hidden = NO;
+        //        loadingLbl.text = LOADING_NOTEBOOKS_MSG;
+        
         //[loadingLbl sizeToFit];
-//        loadingLbl.hidden = NO;
+        //        loadingLbl.hidden = NO;
         
         //Show progress indicator
         [Utility showCoverScreenWithText:LOADING_NOTEBOOKS_MSG andType:kInProcessCoverScreen];
@@ -102,79 +122,77 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
         // Loading all the notebooks linked to the account
         EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
         [noteStore listNotebooksWithSuccess:^(NSArray *noteBooksArr)
-                                    {
-                                        DebugLog(@"notebooks fetched: %@", noteBooksArr);
-                                        
-                                        // Populating the array
-                                        NSArray *noteBooks = [noteBooksArr retain];
-                                        DebugLog(@"notebooks: %@", noteBooks);
-                                        for (int i = 0; i < [noteBooks count]; i++)
-                                        {
-                                            EDAMNotebook* notebook = (EDAMNotebook*)[noteBooks objectAtIndex:i];
-                                            [listOfItems addObject:[notebook name]];
-                                            [indexArray addObject:[notebook guid]];
-                                        }
-                                        
-                                        //Set selectNotebooksButton's title to selected notebook's name
-                                        [self.selectNotebooksButton setTitle:[listOfItems objectAtIndex:selectedNotebookIndex] forState:UIControlStateNormal];
-                                        
-                                        
-                                        //Hide progress indicator
-                                        [Utility hideCoverScreen];
-                                        
-//                                        dialog_imgView.hidden = YES;
-//                                        loadingLbl.hidden = YES;
-                                    }
-        
+         {
+             DebugLog(@"notebooks fetched: %@", noteBooksArr);
+             
+             // Populating the array
+             NSArray *noteBooks = [noteBooksArr retain];
+             DebugLog(@"notebooks: %@", noteBooks);
+             for (int i = 0; i < [noteBooks count]; i++)
+             {
+                 EDAMNotebook* notebook = (EDAMNotebook*)[noteBooks objectAtIndex:i];
+                 [listOfItems addObject:[notebook name]];
+                 [indexArray addObject:[notebook guid]];
+             }
+             
+             //Set selectNotebooksButton's title to selected notebook's name
+             [self.selectNotebooksButton setTitle:[listOfItems objectAtIndex:selectedNotebookIndex] forState:UIControlStateNormal];
+             
+             
+             //Hide progress indicator
+             [Utility hideCoverScreen];
+             
+             //                                        dialog_imgView.hidden = YES;
+             //                                        loadingLbl.hidden = YES;
+         }
+         
                                     failure:^(NSError *error)
-                                    {
-                                          DebugLog(@"error %@", error);
-                                          
-                                          //Hide loading indicator
-                                          [Utility hideCoverScreen];
-                                        
-//                                          dialog_imgView.hidden = YES;
-//                                          loadingLbl.hidden = YES;
-                                          
-                                          //Show error message
-                                          UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"Noteprise"
-                                                                                              message:@""
-                                                                                             delegate:self
-                                                                                    cancelButtonTitle:@"OK"
-                                                                                    otherButtonTitles:nil];
-                                          
-                                          alertView.tag = ERROR_LOADING_CONTENT_ALERT_TAG;
-                                          
-                                          if(error.code == -3000)
-                                          {
-                                              alertView.message = NETWORK_UNAVAILABLE_MSG;
-                                          }
-                                          else
-                                          {
-                                              alertView.message = @"An error occured.";
-                                              
-                                          }
-                                          
-                                          [alertView show];
-                                          [alertView release];
-                                    }];
-               // NSArray *noteBooks = (NSArray *)[[Evernote sharedInstance] listNotebooks];
-          
-          
-          
-     }
-     @catch (EDAMUserException *exception) {
-          DebugLog(@"Recvd Exception:%d",exception.errorCode );
-          [Utility showAlert:EVERNOTE_LOGIN_FAILED_MSG];
-     }
-     @catch (EDAMSystemException *exception) {
-          [Utility showExceptionAlert:exception.description];
-     }
-     @catch (EDAMNotFoundException *exception) {
-          [Utility showExceptionAlert:SOME_ERROR_OCCURED_MESSAGE];
-     }
-     
-     [super viewDidLoad];
+         {
+             DebugLog(@"error %@", error);
+             
+             //Hide loading indicator
+             [Utility hideCoverScreen];
+             
+             //                                          dialog_imgView.hidden = YES;
+             //                                          loadingLbl.hidden = YES;
+             
+             //Show error message
+             UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"Noteprise"
+                                                                 message:@""
+                                                                delegate:self
+                                                       cancelButtonTitle:@"OK"
+                                                       otherButtonTitles:nil];
+             
+             alertView.tag = ERROR_LOADING_CONTENT_ALERT_TAG;
+             
+             if(error.code == -3000)
+             {
+                 alertView.message = NETWORK_UNAVAILABLE_MSG;
+             }
+             else
+             {
+                 alertView.message = @"An error occured.";
+                 
+             }
+             
+             [alertView show];
+             [alertView release];
+         }];
+        // NSArray *noteBooks = (NSArray *)[[Evernote sharedInstance] listNotebooks];
+        
+        
+        
+    }
+    @catch (EDAMUserException *exception) {
+        DebugLog(@"Recvd Exception:%d",exception.errorCode );
+        [Utility showAlert:EVERNOTE_LOGIN_FAILED_MSG];
+    }
+    @catch (EDAMSystemException *exception) {
+        [Utility showExceptionAlert:exception.description];
+    }
+    @catch (EDAMNotFoundException *exception) {
+        [Utility showExceptionAlert:SOME_ERROR_OCCURED_MESSAGE];
+    }
 }
 
 
@@ -203,7 +221,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 //-(void)hideCoverScreen
 //{
 //    [progressIndicatorView setHidden:YES];
-//    
+//
 //    //Remove layerView from window
 //    [self removeLayer];
 //}
@@ -213,11 +231,11 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 //{
 //    //Set text and type of progressIndicator
 //    [progressIndicatorView setText:text andType:coverScreenType];
-//        
+//
 //    [progressIndicatorView setHidden:NO];
-//    
+//
 //    [[progressIndicatorView superview] bringSubviewToFront:progressIndicatorView];
-//    
+//
 //    //Create and add layer view to window so that user couldn't interact while something is in process
 //    [self addLayer];
 //}

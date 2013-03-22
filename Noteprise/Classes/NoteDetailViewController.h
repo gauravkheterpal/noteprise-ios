@@ -60,6 +60,7 @@
 @property (strong, nonatomic) NotesViewController * notesViewController;
 @property(nonatomic, assign) NSString * guid;
 @property(nonatomic, assign) NSString *readProp;
+
 //@property (nonatomic, retain) IBOutlet UIImageView * noteImage;
 
 @property (nonatomic, retain) IBOutlet UINavigationBar * noteNavigation;
@@ -67,7 +68,7 @@
 @property (nonatomic, retain) IBOutlet UIWebView * noteContent;
 @property (nonatomic, retain) NSMutableString * textContent;
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
-
+@property (nonatomic, retain) IBOutlet UIImageView * logoImageView;
 
 
 -(void)goBack:(id)sender;

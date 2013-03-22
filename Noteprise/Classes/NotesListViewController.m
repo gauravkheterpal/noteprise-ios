@@ -1184,7 +1184,7 @@
 #pragma mark UITableView delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(!((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) && searchOptionsChoiceCntrl.selectedSegmentIndex == 0))
+    if(!((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) && (searchOptionsChoiceCntrl.selectedSegmentIndex == 0 || isSearchModeEnabled)))
     {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
@@ -1216,6 +1216,8 @@
             }
             else
             {
+                [self.detailViewController.navigationController popToRootViewControllerAnimated:YES];
+                
                 self.detailViewController.title = title;
                 [self.detailViewController setReadProp:readProp];
                 [self.detailViewController setGuid:guid];
@@ -1257,6 +1259,8 @@
             }
             else
             {
+                [self.detailViewController.navigationController popToRootViewControllerAnimated:YES];
+                
                 self.detailViewController.title = title;
                 [self.detailViewController setReadProp:readProp];
                 [self.detailViewController setGuid:guid];
@@ -1298,6 +1302,8 @@
             }
             else
             {
+                [self.detailViewController.navigationController popToRootViewControllerAnimated:YES];
+
                 self.detailViewController.title = title;
                 [self.detailViewController setReadProp:readProp];
                 [self.detailViewController setGuid:guid];
@@ -1323,8 +1329,9 @@
             }
             else
             {
+                [self.detailViewController.navigationController popToRootViewControllerAnimated:YES];
+ 
                 self.detailViewController.title = title;
-                NSLog(@"%@", title);
                 [self.detailViewController setReadProp:readProp];
                 [self.detailViewController setGuid:guid];
                 

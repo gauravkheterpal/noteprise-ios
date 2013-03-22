@@ -102,13 +102,8 @@
         //Disable bar buttons on view did load if device is ipad
         [self enableBarButtons:NO];
         
-//        //Add logoImageView to view
-//        UIImageView * logoImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"NotepriseLogo.png"]];
-//        logoImageView.center = self.view.center;
-//        logoImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
-//        [self.view addSubview:logoImageView];
-//        
-//        [logoImageView release];
+        self.logoImageView.hidden = NO;
+        self.noteContent.hidden = YES;
     }
     
     
@@ -241,9 +236,15 @@
         
         //Disable bar buttons
         [self enableBarButtons:NO];
+        
+        self.logoImageView.hidden = NO;
+        self.noteContent.hidden = YES;
     }
     else
     {
+        self.logoImageView.hidden = YES;
+        self.noteContent.hidden = NO;
+        
         //Keep track of title
         orgNoteTitle = self.title;
         tempTitle=orgNoteTitle;
@@ -950,6 +951,7 @@
     [noteContent release];
     [_masterViewController release];
     [_notesViewController release];
+    [_logoImageView release];
     
     [super dealloc];
 }
@@ -1518,7 +1520,8 @@ CGRect activeField,orgBounds;
 
 - (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
 {
-    barButtonItem.title = NSLocalizedString(@"Notes", @"Notes");
+    barButtonItem.image = [UIImage imageNamed:@"ListIcon.png"];
+//    barButtonItem.title = NSLocalizedString(@"Notes", @"Notes");
     [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
     //self.masterPopoverController = popoverController;
 }

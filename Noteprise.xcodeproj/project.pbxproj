@@ -16,6 +16,7 @@
 		84169C5F16DB8EED00B99256 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84169C5D16DB8EED00B99256 /* InfoViewController.xib */; };
 		842855DE16FAEB87001746F8 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 842855DB16FAEB87001746F8 /* SVProgressHUD.bundle */; };
 		842855DF16FAEB87001746F8 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 842855DD16FAEB87001746F8 /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		8435D66F16FC831F001B7D1D /* ListIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8435D66E16FC831F001B7D1D /* ListIcon@2x.png */; };
 		A634C775168C73CF007955F5 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = A634C774168C73CF007955F5 /* 2.png */; };
 		A6E15400168C147E00DB646F /* Add.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153B5168C147E00DB646F /* Add.png */; };
 		A6E15401168C147E00DB646F /* Add_note_select.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153B6168C147E00DB646F /* Add_note_select.png */; };
@@ -192,6 +193,7 @@
 		842855DB16FAEB87001746F8 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		842855DC16FAEB87001746F8 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		842855DD16FAEB87001746F8 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		8435D66E16FC831F001B7D1D /* ListIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ListIcon@2x.png"; sourceTree = "<group>"; };
 		A634C774168C73CF007955F5 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
 		A6E153B5168C147E00DB646F /* Add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Add.png; sourceTree = "<group>"; };
 		A6E153B6168C147E00DB646F /* Add_note_select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Add_note_select.png; sourceTree = "<group>"; };
@@ -555,6 +557,7 @@
 		A6E153B4168C147E00DB646F /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				8435D66E16FC831F001B7D1D /* ListIcon@2x.png */,
 				8407E36416F9D8120063FBE0 /* NotepriseLogo.png */,
 				840EBE8E16EF1C5F00B7B6E9 /* evernoteBg320x548.png */,
 				840EBE8F16EF1C5F00B7B6E9 /* evernoteBg568x300.png */,
@@ -1324,6 +1327,7 @@
 				840EBE9116EF1C5F00B7B6E9 /* evernoteBg568x300.png in Resources */,
 				8407E36516F9D8120063FBE0 /* NotepriseLogo.png in Resources */,
 				842855DE16FAEB87001746F8 /* SVProgressHUD.bundle in Resources */,
+				8435D66F16FC831F001B7D1D /* ListIcon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

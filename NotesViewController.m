@@ -39,10 +39,10 @@
     
 	notes = [[NSMutableArray alloc]init];
     
-//    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-//    {
-//        [self fetchDataFromEvernote];
-//    }
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        [self fetchDataFromEvernote];
+    }
 }
 
 
@@ -65,12 +65,10 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-//    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-//    {
-//        [self fetchDataFromEvernote];
-//    }
-    
-    [self fetchDataFromEvernote];
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        [self fetchDataFromEvernote];
+    }
 }
 
 
@@ -373,6 +371,8 @@
     }
     else
     {
+        [self.detailViewController.navigationController popToRootViewControllerAnimated:YES];
+        
         self.detailViewController.title = title;
         [self.detailViewController setReadProp:readProp];
         [self.detailViewController setGuid:guid];

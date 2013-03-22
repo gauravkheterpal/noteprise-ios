@@ -60,6 +60,7 @@
 						<string key="NSFrame">{{15, 31}, {290, 365}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="1018950105"/>
 						<object class="NSColor" key="IBUIBackgroundColor" id="240868156">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MCAwAA</bytes>
@@ -202,6 +203,21 @@
 							</object>
 						</array>
 					</object>
+					<object class="IBUIImageView" id="1018950105">
+						<reference key="NSNextResponder" ref="191373211"/>
+						<int key="NSvFlags">301</int>
+						<string key="NSFrame">{{43, 80}, {235, 210}}</string>
+						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="855083457"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<bool key="IBUIUserInteractionEnabled">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<object class="NSCustomResource" key="IBUIImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">NotepriseLogo.png</string>
+						</object>
+					</object>
 				</array>
 				<string key="NSFrame">{{0, 64}, {320, 416}}</string>
 				<reference key="NSSuperview"/>
@@ -274,6 +290,14 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">logoImageView</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="1018950105"/>
+					</object>
+					<int key="connectionID">90</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="875911898"/>
 						<reference key="destination" ref="372490531"/>
@@ -315,6 +339,7 @@
 							<reference ref="128777778"/>
 							<reference ref="855083457"/>
 							<reference ref="875911898"/>
+							<reference ref="1018950105"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -385,6 +410,11 @@
 						<reference key="object" ref="875911898"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">89</int>
+						<reference key="object" ref="1018950105"/>
+						<reference key="parent" ref="191373211"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -403,12 +433,13 @@
 				<string key="63.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="74.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="76.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="89.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">87</int>
+			<int key="maxID">90</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -423,29 +454,11 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">NoteDetailViewController</string>
 					<string key="superclassName">UIViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="editPage:">id</string>
-						<string key="linkEvernoteToSF:">id</string>
-						<string key="postToChatter:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="editPage:">
-							<string key="name">editPage:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="linkEvernoteToSF:">
-							<string key="name">linkEvernoteToSF:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="postToChatter:">
-							<string key="name">postToChatter:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="backgroundImgView">UIImageView</string>
 						<string key="bottomBar">UIToolbar</string>
 						<string key="loadingSpinner">UIActivityIndicatorView</string>
+						<string key="logoImageView">UIImageView</string>
 						<string key="noteContent">UIWebView</string>
 						<string key="noteNavigation">UINavigationBar</string>
 					</dictionary>
@@ -461,6 +474,10 @@
 						<object class="IBToOneOutletInfo" key="loadingSpinner">
 							<string key="name">loadingSpinner</string>
 							<string key="candidateClassName">UIActivityIndicatorView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="logoImageView">
+							<string key="name">logoImageView</string>
+							<string key="candidateClassName">UIImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="noteContent">
 							<string key="name">noteContent</string>
@@ -491,6 +508,7 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="NotepriseLogo.png">{235, 209}</string>
 			<string key="Save_to_SF.png">{110, 30}</string>
 			<string key="bgE-320x480.png">{16, 16}</string>
 			<string key="chatter_icon.png">{32, 32}</string>
