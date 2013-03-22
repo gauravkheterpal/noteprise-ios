@@ -28,7 +28,10 @@
 #import "Utility.h"
 #import "Keys.h"
 #import "NotesListViewController.h"
+#import "NoteDetailViewController.h"
 #import "EvernoteSDK.h"
+
+
 /*
  NOTE if you ever need to update these, you can obtain them from your Salesforce org,
  (When you are logged in as an org administrator, go to Setup -> Develop -> Remote Access -> New )
@@ -92,18 +95,38 @@ static NSString *const OAuthRedirectURI = @"https://login.salesforce.com/service
                            consumerSecret:CONSUMER_SECRET]; 
     EvernoteSession *session = [EvernoteSession sharedSession];
     
-    if (!session.isAuthenticated) {
+    if (!session.isAuthenticated)
+    {
         SignInViewController *signInVC = [[SignInViewController alloc]init];
         return signInVC;
-    
     }
-    else{
-         
-         NotesListViewController *noteListVC = [[NotesListViewController alloc]init];
-         UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:noteListVC];
-         [noteListVC release];
-         navVC.navigationBar.barStyle = UIBarStyleBlack;
-         return navVC;
+    else
+    {
+         if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+         {
+             NotesListViewController *noteListVC = [[NotesListViewController alloc]init];
+             UINavigationController *navVC = [[[UINavigationController alloc] initWithRootViewController:noteListVC] autorelease];
+             [noteListVC release];
+             navVC.navigationBar.barStyle = UIBarStyleBlack;
+             return navVC;
+         }
+         else
+         {
+             NotesListViewController *noteListViewController = [[[NotesListViewController alloc]init] autorelease];
+             UINavigationController *masterNavigationController = [[[UINavigationController alloc] initWithRootViewController:noteListViewController] autorelease];
+             
+             NoteDetailViewController * noteDetailViewController = [[[NoteDetailViewController alloc] init] autorelease];
+             UINavigationController *detailNavigationController = [[[UINavigationController alloc] initWithRootViewController:noteDetailViewController] autorelease];
+             
+             noteListViewController.detailViewController = noteDetailViewController;
+             noteDetailViewController.masterViewController = noteListViewController;
+             
+             UISplitViewController * splitViewController = [[[UISplitViewController alloc] init] autorelease];
+             splitViewController.delegate = noteDetailViewController;
+             splitViewController.viewControllers = @[masterNavigationController, detailNavigationController];
+
+             return splitViewController;
+         }
         
     }
 }

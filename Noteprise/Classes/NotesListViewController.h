@@ -1,17 +1,17 @@
-     //
-     //  NotesListViewController.h
-     //  Noteprise
-     //
-     //  Created by Ritika on 23/04/12.
-     //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-     //
+//
+//  NotesListViewController.h
+//  Noteprise
+//
+//  Created by Ritika on 23/04/12.
+//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//
 
 #import <UIKit/UIKit.h>
 #import "AddNoteViewController.h"
 #import "SettingsViewController.h"
 #import "NotesViewController.h"
-#define IDX_SEARCH_BASED_ON_NOTEBOOK 0
 
+#define IDX_SEARCH_BASED_ON_NOTEBOOK 0
 #define IDX_SEARCH_VIA_TAG 1
 #define IDX_SEARCH_ACROSS_ACCOUNT 2
 #define NOTE_KEY @"note"
@@ -21,10 +21,10 @@
 #define READABLE @"readable"
 //static int i;
 
+@class NoteDetailViewController;
 
-@interface NotesListViewController : UIViewController <UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,AddNotesViewDelegate,MyPopoverDelegate>{
-     
-     
+@interface NotesListViewController : UIViewController <UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,AddNotesViewDelegate,MyPopoverDelegate>
+{
      NSMutableArray *listOfNotes;
      NSMutableArray *listOfNotebooks;
      NSMutableArray *listOfTags;
@@ -60,8 +60,16 @@
     BOOL isError;
     
     bool isSearchModeEnabled;
+    
+    BOOL fetchNotesList;
 	
 }
 
 @property(nonatomic,retain) NSArray *noteBooks;
+@property (strong, nonatomic) NoteDetailViewController * detailViewController;
+
+
+-(void)fetchDataFromEverNote;
+
+
 @end

@@ -1,10 +1,10 @@
-     //
-     //  NotesViewController.h
-     //  Noteprise
-     //
-     //  Created by Meenal Jain on 1/5/13.
-     //
-     //
+//
+//  NotesViewController.h
+//  Noteprise
+//
+//  Created by Meenal Jain on 1/5/13.
+//
+//
 
 #import <UIKit/UIKit.h>
 #import "Utility.h"
@@ -17,13 +17,24 @@
 #define NOTEBOOK_KEY @"notebook"
 #define TAG_KEY @"tag"
 #define READABLE @"readable"
+
+@class NoteDetailViewController;
+
 @interface NotesViewController : UITableViewController
 {
      NSArray *noteBooks;
      NSArray * tags;
 }
+
+//Properties
 @property(nonatomic,retain) NSMutableArray *notes;
 @property(nonatomic,assign) int selectedSegment;
 @property(nonatomic,retain) NSArray *noteBooks;
+@property (strong, nonatomic) NoteDetailViewController * detailViewController;
+
+
+//Methods
+-(void)fetchDataFromEvernote;
+
 
 @end

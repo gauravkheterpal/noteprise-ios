@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NotesListViewController.h"
-@interface SignInViewController : UIViewController {
+
+
+@interface SignInViewController : UIViewController
+{
     IBOutlet UITextField *userNameTxt;
     IBOutlet UITextField *pswdTxt;
     CGFloat animatedDistance; //textfield correction when keyboard is out

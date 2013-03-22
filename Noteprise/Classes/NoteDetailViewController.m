@@ -1,9 +1,5 @@
-     //
-     //  NoteDetailViewController.m
-     //  client
-     //
-
 #import "NoteDetailViewController.h"
+#import "NotesListViewController.h"
 #import "EvernoteSDK.h"
 #import "RootViewController.h"
 #import "NSString+HTML.h"
@@ -12,7 +8,7 @@
 #import "Utility.h"
 #import <QuartzCore/QuartzCore.h>
 
-@implementation NoteDetailViewController
+@implementation NoteDetailViewController 
 
 
 @synthesize guid, readProp, noteNavigation, noteContent,textContent;
@@ -20,9 +16,11 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
      self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-     if (self) {
+     if (self)
+     {
                // Custom initialization
-     }
+         
+      }
      return self;
 }
 
@@ -38,26 +36,49 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    //Show popover controller in portrait mode first time
+    if (self.navigationItem.leftBarButtonItem != nil && UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
+    {
+        [self.navigationItem.leftBarButtonItem.target performSelector:self.navigationItem.leftBarButtonItem.action withObject:self.navigationItem.leftBarButtonItem];
+    }
+    
     
     //Initialize variables
     isEditNoteCancelled = NO;
+    updateNotesListAfterNoteEditing = NO;
     
+    //Set webview's background color to clear
+    noteContent.backgroundColor = [UIColor clearColor];
+    noteContent.opaque = NO;
+    
+    if(!isWebViewInitialized)
+    {
+        [noteContent loadHTMLString:@"<HTML></HTML>" baseURL:nil];
+        isWebViewInitialized = YES;
+    }
+    
+    //Set navigation bar's background image
+    if ([self.navigationController.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)])
+    {
+		[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Toolbar_768x44.png"] forBarMetrics:UIBarMetricsDefault];
+		self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1];
+	}
 	
-    flexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-	NSArray *items = [NSArray arrayWithObjects:flexible,saveToSFBarBtn,postToChatterBarBtn, nil];
-	[bottomBar setItems:items];
-	saveToSFBarBtn.enabled=YES;
-	postToChatterBarBtn.enabled=YES;
+    //Add bottom bar buttons in non edit mode
+    [self addBottomBarButtonsInNonEditMode];
+    
+    
 	
     //noteContent.userInteractionEnabled = NO;
     //[[noteContent layer] setCornerRadius:10];
 	//[noteContent setClipsToBounds:YES];
 	//[[noteContent layer] setBorderWidth: 0.0f];
+    
+    
 	noteContent.frame = CGRectMake(noteContent.frame.origin.x,noteContent.frame.origin.y+2,self.view.frame.size.width-35,self.view.frame.size.height-50);
 	
     self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background_pattern_tableview.png"]];
-    orgNoteTitle = self.title;
-    tempTitle=orgNoteTitle;
      
     self.navigationItem.backBarButtonItem.tintColor = [UIColor whiteColor];
      
@@ -65,34 +86,38 @@
     {
           self.navigationItem.rightBarButtonItem = nil;
     }
-     else
-     {
-          self.navigationItem.rightBarButtonItem.title = @"Edit";
-          
-          UIImage *editButtonImage = [UIImage imageNamed:@"Edit.png"];
-          UIImage *editButtonSelectedImage = [UIImage imageNamed:@"Edit_down.png"];
-          
-          CGRect frameimg = BAR_BUTTON_FRAME;
-          UIButton *editButton = [[UIButton alloc] initWithFrame:frameimg];
-          [editButton setBackgroundImage:editButtonImage forState:UIControlStateNormal];
-          [editButton setBackgroundImage:editButtonSelectedImage forState:UIControlStateHighlighted];
-          [editButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
-		[editButton setShowsTouchWhenHighlighted:YES];
-          UIBarButtonItem *editBarbutton =[[UIBarButtonItem alloc] initWithCustomView:editButton];
-          
-          self.navigationItem.rightBarButtonItem = editBarbutton;
-          self.navigationItem.rightBarButtonItem.tag = kEditButtonTag;
-          DebugLog(@"tag = %d",self.navigationItem.rightBarButtonItem.tag);
-         }
-     
-     
-     self.navigationItem.rightBarButtonItem.title = @"Edit";
-     
-     self.navigationItem.rightBarButtonItem.tag = kEditButtonTag;
-     DebugLog(@"tag = %d",self.navigationItem.rightBarButtonItem.tag);
+    else
+    {
+        [self addEditBarButtonItem];
+    }
+    
+    //If device is iPhone then show the selected note content on viewDidLoad
+    //But if device is iPad, don't show note content on viewDidLoad
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        [self showSelectedNoteContent];
+    }
+    else
+    {
+        //Disable bar buttons on view did load if device is ipad
+        [self enableBarButtons:NO];
+        
+//        //Add logoImageView to view
+//        UIImageView * logoImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"NotepriseLogo.png"]];
+//        logoImageView.center = self.view.center;
+//        logoImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
+//        [self.view addSubview:logoImageView];
+//        
+//        [logoImageView release];
+    }
+    
+    
+//     self.navigationItem.rightBarButtonItem.title = @"Edit";
+//     
+//     self.navigationItem.rightBarButtonItem.tag = kEditButtonTag;
+//     DebugLog(@"tag = %d",self.navigationItem.rightBarButtonItem.tag);
 	
-    //Show progress indicator
-    [Utility showCoverScreenWithText:GETTING_NOTE_DETAILS_MSG andType:kInProcessCoverScreen];
+    
     
 //    [loadingSpinner startAnimating];
     
@@ -102,99 +127,266 @@
     
 //    loadingLbl.hidden = NO;
     
-    DebugLog(@"guid:%@",guid);
-     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^(void) {
-               // Load the EDAMNote object that has guid we have stored in the object
-          @try {
-               dispatch_async(dispatch_get_main_queue(), ^(void) {
-                    EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
-                         // As an example, we are going to show the first element if it is an image
-                    [noteStore getNoteContentWithGuid:guid success:^(NSString *content)
-                     {
-                      DebugLog(@"content%@ :::: ",content);
-
-                         //Hide progress indicator
-                         [Utility hideCoverScreen];
-                         
-                         
-//                      [loadingSpinner stopAnimating];
-//                      dialog_imgView.hidden = YES;
-//                      loadingLbl.hidden = YES;
-                      
-                      NSString *stringToReplace = [NSString stringWithFormat:@"<en-note%@>",[self getDataBetweenFromString:content leftString:@"<en-note" rightString:@">" leftOffset:8]];
-                      
-                      NSString *updatedString = [NSString stringWithFormat:@"<en-note%@ xmlns=\"http://www.w3.org/1999/xhtml\">",[self getDataBetweenFromString:content leftString:@"<en-note" rightString:@">" leftOffset:8]];
-                      
-                           //NSString *updatedString = [NSString stringWithFormat:@"<en-note xmlns=\"http://www.w3.org/1999/xhtml\">",[self getDataBetweenFromString:content leftString:@"<en-note" rightString:@">" leftOffset:8]];
-                      
-                      DebugLog(@"updatedString = %@", updatedString);
-                      
-                      
-                      
-                      content = [content stringByReplacingOccurrencesOfString:stringToReplace withString:updatedString];
-                      content = [content stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@"&#160;"];
-                      content = [content stringByReplacingOccurrencesOfString:@"&mdash;" withString:@"&#151;"];
-                      DebugLog(@"updatedContent = %@", content);
-                      
-                      NSData *d= [content dataUsingEncoding:NSUTF8StringEncoding];
-                      [noteContent loadData:d MIMEType:@"application/xhtml+xml" textEncodingName:@"UTF-8" baseURL:nil];// application/xhtml
-                      
-                           //[noteContent loadHTMLString:content baseURL:nil];
-                      textContent = (NSMutableString *)[[[Utility flattenNoteBody:content]stringByDecodingHTMLEntities] retain];
-                     }failure:^(NSError *error)
-                   {
-                          DebugLog(@"note::::::::error %@", error);
-  
-                       //Hide progress indicator
-                       [Utility hideCoverScreen];
-                       
-//                       [loadingSpinner stopAnimating];
-//                       dialog_imgView.hidden = YES;
-//                       loadingLbl.hidden = YES;
-                       
-                       
-                       //Show error message
-                       UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"Noteprise"
-                                                                                       message:@""
-                                                                                      delegate:self
-                                                                             cancelButtonTitle:@"OK"
-                                                                             otherButtonTitles:nil];
-
-                       alertView.tag = ERROR_LOADING_CONTENT_ALERT_TAG;
-                       
-                       if(error.code == -3000)
-                       {
-                           alertView.message = NETWORK_UNAVAILABLE_MSG;
-                       }
-                       else
-                       {
-                           alertView.message = @"An error occured.";
-
-                       }
-                       
-                       [alertView show];
-                       [alertView release];
-                       
-                     }];
-                   
-               });
-          }
-          @catch (EDAMUserException *exception) {
-              
-               DebugLog(@"EDAMUserException reason:%@ name:%@",exception.reason,exception.name);
-          }
-          @catch (EDAMSystemException *exception) {
-               DebugLog(@"EDAMSystemException:%@",exception.reason);
-          }
-          @catch (EDAMNotFoundException *exception) {
-               DebugLog(@"EDAMNotFoundException:%@",exception.reason);
-          }
-     });
-     //if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"5.0"))
-         //[[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1]];
+    
      
 }
 
+
+-(void)addEditBarButtonItem
+{
+    UIImage *editButtonImage = [UIImage imageNamed:@"Edit.png"];
+    UIImage *editButtonSelectedImage = [UIImage imageNamed:@"Edit_down.png"];
+    
+    CGRect frameimg = BAR_BUTTON_FRAME;
+    
+    UIButton *editButton = [[UIButton alloc] initWithFrame:frameimg];
+    [editButton setBackgroundImage:editButtonImage forState:UIControlStateNormal];
+    [editButton setBackgroundImage:editButtonSelectedImage forState:UIControlStateHighlighted];
+    [editButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
+    [editButton setShowsTouchWhenHighlighted:YES];
+    UIBarButtonItem *editBarbutton =[[UIBarButtonItem alloc] initWithCustomView:editButton];
+    [editButton release];
+    
+    self.navigationItem.rightBarButtonItem = editBarbutton;
+    [editBarbutton release];
+    
+    self.navigationItem.rightBarButtonItem.title = @"Edit";
+    self.navigationItem.rightBarButtonItem.tag = kEditButtonTag;
+    DebugLog(@"tag = %d",self.navigationItem.rightBarButtonItem.tag);
+}
+
+
+-(void)addBottomBarButtonsInNonEditMode
+{
+    //Create a barButtonItem
+    flexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+	
+    //Add three bar buttons to bottom bar
+    NSArray *items = [NSArray arrayWithObjects:flexible,saveToSFBarBtn,postToChatterBarBtn, nil];
+    [flexible release];
+    
+	[bottomBar setItems:items];
+    
+    //Enable saveToSF and postToChatter bar buttons
+	saveToSFBarBtn.enabled=YES;
+	postToChatterBarBtn.enabled=YES;
+}
+
+
+-(void)enableBarButtons:(BOOL)flag
+{
+    self.navigationItem.rightBarButtonItem.enabled = flag;
+    saveToSFBarBtn.enabled = flag;
+    postToChatterBarBtn.enabled = flag;
+}
+
+
+//-(UIViewController *)
+//{
+//    UIViewController * viewController = nil;
+//    if(self.splitViewController != nil && [self.splitViewController.viewControllers count] > 0)
+//    {
+//        viewController = (UIViewController *)[self.splitViewController.viewControllers lastObject];
+//        
+//        if([viewController respondsToSelector:@selector(fetchDataFromEverNote)])
+//        {
+//            [viewController fetchDataFromEverNote];
+//        }
+//        else
+//        {
+//            viewController = (UIViewController *)[self.splitViewController.viewControllers objectAtIndex:0];
+//            
+//            if([viewController respondsToSelector:@selector(fetchDataFromEverNote)])
+//            {
+//                [viewController fetchDataFromEverNote];
+//            }
+//        }
+//    }
+//}
+
+
+
+-(void)showSelectedNoteContent
+{
+    //If previous note was in edit mode, then quit from edit mode
+    if(self.navigationItem.rightBarButtonItem == nil)
+    {
+        //////////////////////////////
+        //Set screen to non edit mode
+        /////////////////////////////
+        
+        //Hide border around webView
+        [self hideBorderViewAroundWebView];
+        
+        editTitleField.hidden = TRUE;
+        noteContent.frame = CGRectMake(noteContent.frame.origin.x,2,self.view.frame.size.width-35,self.view.frame.size.height-50);
+        
+        
+        //Set border view's frame
+        [self setBorderViewFrame];
+        
+        [self setWebViewKeyPressDetectionEnabled:NO];
+        [self setWebViewTapDetectionEnabled:NO];
+        [self addEditBarButtonItem];
+        
+        //Add bottom bar buttons in non edit mode
+        [self addBottomBarButtonsInNonEditMode];
+    }
+    
+    //If there is no selected note in NOtesListViewController
+    if(guid == nil)
+    {
+        //Make noteContent webview empty
+        [noteContent loadHTMLString:@"<HTML></HTML>" baseURL:nil];
+        
+        //Disable bar buttons
+        [self enableBarButtons:NO];
+    }
+    else
+    {
+        //Keep track of title
+        orgNoteTitle = self.title;
+        tempTitle=orgNoteTitle;
+        
+        //Show progress indicator
+        [Utility showCoverScreenWithText:GETTING_NOTE_DETAILS_MSG andType:kInProcessCoverScreen];
+        
+        DebugLog(@"guid:%@",guid);
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^(void) {
+            // Load the EDAMNote object that has guid we have stored in the object
+            @try {
+                dispatch_async(dispatch_get_main_queue(), ^(void) {
+                    EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
+                    // As an example, we are going to show the first element if it is an image
+                    [noteStore getNoteContentWithGuid:guid success:^(NSString *content)
+                     {
+                         DebugLog(@"content%@ :::: ",content);
+                         
+                         //Hide progress indicator
+                         [Utility hideCoverScreen];
+                         
+                         if(updateNotesListAfterNoteEditing)
+                         {
+                             updateNotesListAfterNoteEditing = NO;
+                             
+                             if(self.notesViewController == nil)
+                             {
+                                 [self.masterViewController fetchDataFromEverNote];
+                             }
+                             else
+                             {
+                                 [self.notesViewController fetchDataFromEvernote];
+                             }
+                         }
+                         
+                         
+                         //                      [loadingSpinner stopAnimating];
+                         //                      dialog_imgView.hidden = YES;
+                         //                      loadingLbl.hidden = YES;
+                         
+                         NSString *stringToReplace = [NSString stringWithFormat:@"<en-note%@>",[self getDataBetweenFromString:content leftString:@"<en-note" rightString:@">" leftOffset:8]];
+                         
+                         NSString * updatedString = [NSString stringWithFormat:@"<en-note%@ xmlns=\"http://www.w3.org/1999/xhtml\">",[self getDataBetweenFromString:content leftString:@"<en-note" rightString:@">" leftOffset:8]];
+                         
+                         //NSString *updatedString = [NSString stringWithFormat:@"<en-note xmlns=\"http://www.w3.org/1999/xhtml\">",[self getDataBetweenFromString:content leftString:@"<en-note" rightString:@">" leftOffset:8]];
+                         
+                         DebugLog(@"updatedString = %@", updatedString);
+                         
+                         
+                         content = [content stringByReplacingOccurrencesOfString:stringToReplace withString:updatedString];
+                         content = [content stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@"&#160;"];
+                         content = [content stringByReplacingOccurrencesOfString:@"&mdash;" withString:@"&#151;"];
+                         DebugLog(@"updatedContent = %@", content);
+                         
+                         NSData *d= [content dataUsingEncoding:NSUTF8StringEncoding];
+                         [noteContent loadData:d MIMEType:@"application/xhtml+xml" textEncodingName:@"UTF-8" baseURL:nil];// application/xhtml
+                         
+                         //[noteContent loadHTMLString:content baseURL:nil];
+                         textContent = (NSMutableString *)[[[Utility flattenNoteBody:content]stringByDecodingHTMLEntities] retain];
+                         
+                         if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+                         {
+                             //Enable bar buttons
+                             [self enableBarButtons:YES];
+                         }
+                         
+                     }failure:^(NSError *error)
+                     {
+                         DebugLog(@"note::::::::error %@", error);
+                         
+                         //Hide progress indicator
+                         [Utility hideCoverScreen];
+                         
+                         if(updateNotesListAfterNoteEditing)
+                         {
+                             updateNotesListAfterNoteEditing = NO;
+                             
+                             if(self.notesViewController == nil)
+                             {
+                                 [self.masterViewController fetchDataFromEverNote];
+                             }
+                             else
+                             {
+                                 [self.notesViewController fetchDataFromEvernote];
+                             }
+                         }
+                         
+                         id alertDelegate = self;
+                         
+                         //If iPad
+                         if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+                         {
+                             //Disable bar buttons
+                             [self enableBarButtons:NO];
+                             
+                             //Make noteContent webview empty
+                             [noteContent loadHTMLString:@"<HTML></HTML>" baseURL:nil];
+                             
+                             //set alertDelegate to nil
+                             alertDelegate = nil;
+                         }
+                         
+                         //Show error message
+                         UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"Noteprise"
+                                                                             message:@""
+                                                                            delegate:alertDelegate
+                                                                   cancelButtonTitle:@"OK"
+                                                                   otherButtonTitles:nil];
+                         
+                         alertView.tag = ERROR_LOADING_CONTENT_ALERT_TAG;
+                         
+                         if(error.code == -3000)
+                         {
+                             alertView.message = NETWORK_UNAVAILABLE_MSG;
+                         }
+                         else
+                         {
+                             alertView.message = @"An error occured.";
+                             
+                         }
+                         
+                         [alertView show];
+                         [alertView release];
+                         
+                     }];
+                    
+                });
+            }
+            @catch (EDAMUserException *exception) {
+                
+                DebugLog(@"EDAMUserException reason:%@ name:%@",exception.reason,exception.name);
+            }
+            @catch (EDAMSystemException *exception) {
+                DebugLog(@"EDAMSystemException:%@",exception.reason);
+            }
+            @catch (EDAMNotFoundException *exception) {
+                DebugLog(@"EDAMNotFoundException:%@",exception.reason);
+            }
+        });
+        //if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"5.0"))
+        //[[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:45/255.0 green:127/255.0 blue:173/255.0 alpha:1]];
+    }
+}
 
 
 
@@ -214,10 +406,10 @@
 
 
 
--(void)viewDidAppear:(BOOL)animated{
-     [super viewDidAppear:animated];
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
 	orgBounds=self.view.frame;
-     
 }
 
 
@@ -229,8 +421,6 @@
           if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
           {
                backgroundImgView.image = [UIImage imageNamed:@"bgE-480x287.png"];
-              
-
           }
           else
           {
@@ -281,10 +471,15 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
-     //0 Post to Wall
-     //1 Post to chatter users
-     //2 Post to chatter groups
-     //3 Cancel
+
+
+//0 Post to Wall
+//1 Post to chatter users
+//2 Post to chatter groups
+//3 Cancel
+
+
+
 #pragma mark -
 #pragma mark UIActionSheet Delegate methods
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -408,18 +603,10 @@
 -(IBAction)editPage:(id)sender
 {
     CGRect frameimg = CGRectMake(0, 0, 27,27);
-    if([ readProp isEqualToString:@"No"])
+    if([readProp isEqualToString:@"No"])
     {
         if (self.navigationItem.rightBarButtonItem.tag == kEditButtonTag)
         {
-//          saveToSFBarBtn.enabled = NO;
-    //      postToChatterBarBtn.enabled = NO;
-            //[[noteContent layer] setBorderColor:[[UIColor colorWithRed:0 green:0 blue:0 alpha:1] CGColor]];
-        
-            //[[noteContent layer] setBorderWidth:1];
-            //noteContent.userInteractionEnabled=YES;
-            // self.navigationItem.rightBarButtonItem.title = @"Save to Evernote";
-               
             UIImage* saveImg = [UIImage imageNamed:@"Save.png"];
             UIImage* saveDoneImg = [UIImage imageNamed:@"Save_down.png"];
                
@@ -430,28 +617,39 @@
             [saveButton setShowsTouchWhenHighlighted:YES];
             
             UIBarButtonItem *saveBarButton =[[UIBarButtonItem alloc] initWithCustomView:saveButton];
+            [saveButton release];
 			
-			UIImage* cancelImg = [UIImage imageNamed:@"Cancel.png"];
+			
+            UIImage* cancelImg = [UIImage imageNamed:@"Cancel.png"];
 			
             //UIImage* editDownImg = [UIImage imageNamed:@"Edit_down.png"];
 			
             CGRect frameimg = CGRectMake(0, 0, 27,27);
 			UIButton *cancelButton = [[UIButton alloc] initWithFrame:frameimg];
 			[cancelButton setBackgroundImage:cancelImg forState:UIControlStateNormal];
-			
-            //[cancelButton setBackgroundImage:editDownImg forState:UIControlStateNormal];
-			
-            [cancelButton addTarget:self action:@selector(cancelUpdate:) forControlEvents:UIControlEventTouchUpInside];
+			[cancelButton addTarget:self action:@selector(cancelUpdate:) forControlEvents:UIControlEventTouchUpInside];
 			[cancelButton setShowsTouchWhenHighlighted:YES];
+
 			UIBarButtonItem *cancelBarButton =[[UIBarButtonItem alloc] initWithCustomView:cancelButton];
+            [cancelButton release];
 			
+            flexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+            
 			NSArray *items = [NSArray arrayWithObjects:flexible,saveBarButton,cancelBarButton, nil];
+            [saveBarButton release];
+            [cancelBarButton release];
+            [flexible release];
+            
 			[bottomBar setItems:items];
-				//UIBarButtonItem *saveBarButton =[[UIBarButtonItem alloc] initWithCustomView:saveButton];
+            
+            
+			//UIBarButtonItem *saveBarButton =[[UIBarButtonItem alloc] initWithCustomView:saveButton];
                
 			self.navigationItem.rightBarButtonItem = nil;
-               [saveButton release];
-				// self.navigationItem.rightBarButtonItem.tag = saveBtnTag;
+            
+            
+			
+            // self.navigationItem.rightBarButtonItem.tag = saveBtnTag;
 				//			UIBarButtonItem *customItem = [[UIBarButtonItem alloc] initWithTitle:unblockContact style:UIBarButtonItemStyleBordered   target:self     action:@selector(onToolbarTapped:)];
 				//			customItem.tintColor = [UIColor blackColor];
 			
@@ -644,14 +842,9 @@
                 [self increaseZoomFactorRange];
             }
             else
-            {
-                //Hide border around webView
-                [self hideBorderViewAroundWebView];
-                
-                [self setContentEditable:NO];
-                [self setWebViewKeyPressDetectionEnabled:NO];
-                [self setWebViewTapDetectionEnabled:NO];
+            {                
                 [self resignFirstResponder];
+                [editTitleField resignFirstResponder];
                 [noteContent resignFirstResponder];
                 [self updateNoteEvernote];
             }
@@ -684,8 +877,15 @@
 	[self resignFirstResponder];
 	NSArray *items = [NSArray arrayWithObjects: nil];
 	[bottomBar setItems:items];
-	[self viewDidLoad];
-	//noteContent.userInteractionEnabled = NO;
+    
+    [self viewDidLoad];
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        [self showSelectedNoteContent];
+    }
+	
+    //noteContent.userInteractionEnabled = NO;
 }
 
 -(void)moveToSF
@@ -716,13 +916,11 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
      return YES;
-     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-     
 }
 
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration
-{
+{    
     [self changeBkgrndImgWithOrientation];
     
     //Set border view's frame
@@ -747,10 +945,13 @@
 
 - (void)dealloc
 {
-     //[noteImage release];
-     [noteNavigation release];
-     [noteContent release];
-     [super dealloc];
+    //[noteImage release];
+    [noteNavigation release];
+    [noteContent release];
+    [_masterViewController release];
+    [_notesViewController release];
+    
+    [super dealloc];
 }
 
 - (void)didReceiveMemoryWarning
@@ -829,11 +1030,11 @@
         {
             if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
             {
-                editTitleField = [[[UITextField alloc]initWithFrame:CGRectMake(15,31,1000,30)] autorelease];
+                editTitleField = [[[UITextField alloc]initWithFrame:CGRectMake(15,31,674,30)] autorelease];
             }
             else if(self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown || self.interfaceOrientation == UIInterfaceOrientationPortrait)
             {
-                editTitleField = [[[UITextField alloc]initWithFrame:CGRectMake(15,31,730,30)] autorelease];
+                editTitleField = [[[UITextField alloc]initWithFrame:CGRectMake(15,31,738,30)] autorelease];
             }
         }
         else
@@ -856,6 +1057,7 @@
         [self setBorderViewFrame];
              
         editTitleField.text = tempTitle;
+        NSLog(@"%@", tempTitle);
         editTitleField.borderStyle = UITextBorderStyleRoundedRect;
         editTitleField.delegate=self;
         [self.view addSubview:editTitleField];
@@ -973,31 +1175,38 @@ CGRect activeField,orgBounds;
 
 
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-     
-     
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
      DebugLog(@"Url to load = %@",request.URL.absoluteString);
-     if ([request.URL.absoluteString isEqualToString:kWebViewDidPressKeyURL]) {
-          
-          [self setWebViewKeyPressDetectionEnabled:NO];
-          return NO;
-     } else if ([request.URL.absoluteString isEqualToString:kWebViewDidTapURL]) {
+    
+     if ([request.URL.absoluteString isEqualToString:kWebViewDidPressKeyURL])
+     {
           [self setWebViewKeyPressDetectionEnabled:NO];
           return NO;
      }
-     else if ([request.URL.absoluteString isEqualToString:@"about:blank"]) {
+     else if ([request.URL.absoluteString isEqualToString:kWebViewDidTapURL])
+     {
+          [self setWebViewKeyPressDetectionEnabled:NO];
+          return NO;
+     }
+     else if ([request.URL.absoluteString isEqualToString:@"about:blank"])
+     {
           return YES;
      }
      
      return NO;
 }
 
+
+
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-     [Utility showAlert:[error localizedDescription]];
+//     [Utility showAlert:@"Failed to load note contents."];
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
           //[self setContentEditable:YES];
           //[self setWebViewKeyPressDetectionEnabled:YES];
           //[self setWebViewTapDetectionEnabled:YES];
@@ -1012,9 +1221,9 @@ CGRect activeField,orgBounds;
       // Closing controls
      [noteContent resignFirstResponder];
      
-          // Creating the Note Object
+     // Creating the Note Object
      EDAMNote * note = [[[EDAMNote alloc] init]autorelease];
-     note.title =self.title;
+     note.title = editTitleField.text;
      
      NSMutableString *bodyTxt =(NSMutableString *) [noteContent stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
      DebugLog(@"htmlString : %@",bodyTxt);
@@ -1031,7 +1240,7 @@ CGRect activeField,orgBounds;
      DebugLog(@"ENML:%@", ENML);
      
      
-          // Adding the content to the note
+     // Adding the content to the note
      [Utility showCoverScreenWithText:@"Updating Note..." andType:kInProcessCoverScreen];
     
      [note setContent:ENML];
@@ -1051,9 +1260,23 @@ CGRect activeField,orgBounds;
                EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
                [noteStore updateNote:note success:^(EDAMNote *note)
                 {
-                 dispatch_async(dispatch_get_main_queue(), ^(void) {
+                    dispatch_async(dispatch_get_main_queue(), ^(void) {
                       DebugLog(@"update note success%@ :::: ",note);
-                      if(isErrorCreatingnote == NO) {
+                      if(isErrorCreatingnote == NO)
+                      {
+                          //Hide border around webView
+                          [self hideBorderViewAroundWebView];
+                          
+                          //Set screen to non edit mode
+                          [self setContentEditable:NO];
+                          [self setWebViewKeyPressDetectionEnabled:NO];
+                          [self setWebViewTapDetectionEnabled:NO];
+                          [self addEditBarButtonItem];
+                          
+                          //Add bottom bar buttons in non edit mode
+                          [self addBottomBarButtonsInNonEditMode];
+                          
+                          
                            NSString *stringToReplace = [NSString stringWithFormat:@"<en-note%@>",[self getDataBetweenFromString:ENML leftString:@"<en-note" rightString:@">" leftOffset:8]];
                            
                            NSString *updatedString = [NSString stringWithFormat:@"<en-note%@ xmlns=\"http://www.w3.org/1999/xhtml\">",[self getDataBetweenFromString:ENML leftString:@"<en-note" rightString:@">" leftOffset:8]];
@@ -1066,96 +1289,115 @@ CGRect activeField,orgBounds;
                            DebugLog(@"update textcontent:%@", textContent);
                                 // Alerting the user that the note was created
                           
-                      //Show progress indicator
-					  [Utility showCoverScreenWithText:@"Saving Note..." andType:kInProcessCoverScreen];
+                          //Show progress indicator
+                          //[Utility showCoverScreenWithText:@"Saving Note..." andType:kInProcessCoverScreen];
                           
-//					  [loadingSpinner startAnimating];
-//					  doneImgView.hidden = YES;
-//					  dialog_imgView.hidden = NO;
-//					  loadingLbl.text = @"Saving Note...";
-//						  //[loadingLbl sizeToFit];
-//					  loadingLbl.hidden = NO;
+                          //Hide progress indicator
+                          [Utility hideCoverScreen];
                           
-					  [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
-				  }
-                      [loadingSpinner stopAnimating];
-                 });
-                }
-                             failure:^(NSError *error) {
-                                  dispatch_async(dispatch_get_main_queue(), ^(void) {
-                                      DebugLog(@"update note::::::::error %@", error);
-                                      //[Utility showAlert:error.description];
-                                      
-                                      //Hide progress indicator
-                                      [Utility hideCoverScreen];
-                                      
-//                                      dialog_imgView.hidden = YES;
-//                                      loadingLbl.hidden = YES;
-//                                      [loadingSpinner stopAnimating];
-                                      
-                                      
-//                                      //Show error message
-//                                      if(error.code == -3000)
-//                                      {
-//                                          [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
-//                                      }
-//                                      else
-//                                      {
-//                                          [Utility showAlert:error.localizedDescription];
-//                                          
-//                                      }
-                                      
-                                      
-                                       isErrorCreatingnote = YES;
-                                       self.navigationItem.rightBarButtonItem.title = @"Edit";
-                                       
-                                       UIImage* editImg = [UIImage imageNamed:@"Edit.png"];
-                                       UIImage* editDownImg = [UIImage imageNamed:@"Edit_down.png"];
-                                       CGRect frameimg = CGRectMake(0, 0, 27,27);
-                                       UIButton *editButton = [[UIButton alloc] initWithFrame:frameimg];
-                                       [editButton setBackgroundImage:editImg forState:UIControlStateNormal];
-                                       [editButton setBackgroundImage:editDownImg forState:UIControlStateNormal];
-                                       [editButton addTarget:self action:@selector(editPage:) forControlEvents:UIControlEventTouchUpInside];
-                                       [editButton setShowsTouchWhenHighlighted:YES];
-                                       UIBarButtonItem *editBarButton =[[UIBarButtonItem alloc] initWithCustomView:editButton];
-                                       self.navigationItem.rightBarButtonItem = editBarButton;
-                                       self.navigationItem.rightBarButtonItem.tag = kEditButtonTag;
-                                       [editButton release];
-                                       
-                                       [self setContentEditable:NO];
-                                       [self setWebViewKeyPressDetectionEnabled:NO];
-                                       [self setWebViewTapDetectionEnabled:NO];
-                                            //[delegate evernoteCreationFailedListener];
-                                       return;
-                                  });
-                                  
-                             }];
-          }
-          @catch (id  exception) {
-               dispatch_async(dispatch_get_main_queue(), ^(void) {
-                    NSString * errorMessage = [NSString stringWithFormat:@"Error saving note: error code %i", [exception errorCode]];
-                    [Utility showAlert:errorMessage];
-                   
-//                    dialog_imgView.hidden = YES;
-//                    loadingLbl.hidden = YES;
+                          //If device is iPad then update the notes list as well
+                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+                          {
+                              if(self.notesViewController == nil)
+                              {
+                                 [self.masterViewController fetchDataFromEverNote];
+                              }
+                              else
+                              {
+                                  [self.notesViewController fetchDataFromEvernote];
+                              }
+                          }
+                          
+                          //Reload note details after updating note
+//                          [self reloadNoteDetailsAfterUpdatingNote];
+                              
+                          //[NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
+                      }
 //                    [loadingSpinner stopAnimating];
+                 });
+              }
+                
+              failure:^(NSError *error)
+              {
+                  dispatch_async(dispatch_get_main_queue(), ^(void)
+                  {
+                      DebugLog(@"update note::::::::error %@", error);
+                      
+                      //Hide progress indicator
+                      [Utility hideCoverScreen];
+                      
+                      NSString * errorMessage = [NSString stringWithFormat:@"Error updating note."];
+                      [Utility showAlert:errorMessage];
+                      
+                      isErrorCreatingnote = YES;
+                      
+                      //Add edit bar button item
+//                      [self addEditBarButtonItem];
+//                      
+//                       [self setContentEditable:NO];
+//                       [self setWebViewKeyPressDetectionEnabled:NO];
+//                       [self setWebViewTapDetectionEnabled:NO];
+                            //[delegate evernoteCreationFailedListener];
+                      
+    
+                      //Reload note details 
+                      //[self reloadNoteDetailsAfterUpdatingNote];
+                      
+                      return;
+                  });
+                                  
+              }];
+         }
+         @catch (id  exception)
+         {
+              dispatch_async(dispatch_get_main_queue(), ^(void)
+              {
+                    NSString * errorMessage = [NSString stringWithFormat:@"Error updating note"];
+                    [Utility showAlert:errorMessage];
                    
                     //Hide progress indicator
                     [Utility hideCoverScreen];
                    
                     isErrorCreatingnote = YES;
-                         //[delegate evernoteCreationFailedListener];
+
                     return;
                });
-          }
+         }
           
      });
-	NSArray *items = [NSArray arrayWithObjects: nil];
-	
-		//[items removeObjectAtIndex:0];
-	[bottomBar setItems:items];
-	[self viewDidLoad];
+    
+    
+    
+//	NSArray *items = [NSArray arrayWithObjects: nil];
+//
+//		//[items removeObjectAtIndex:0];
+//	[bottomBar setItems:items];
+//	[self viewDidLoad];
+//
+//    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+//    {
+//        [self showSelectedNoteContent];
+//        [self.masterViewController fetchDataFromEverNote];
+//    }
+    
 	//noteContent.userInteractionEnabled = NO;
+}
+
+
+-(void)reloadNoteDetailsAfterUpdatingNote
+{
+    NSArray *items = [NSArray arrayWithObjects: nil];
+    
+    //[items removeObjectAtIndex:0];
+    [bottomBar setItems:items];
+    [self viewDidLoad];
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        updateNotesListAfterNoteEditing = YES;
+        
+        [self showSelectedNoteContent];
+    }
 }
 
 
@@ -1207,7 +1449,7 @@ CGRect activeField,orgBounds;
               
               [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
               
-              [loadingSpinner stopAnimating];
+//              [loadingSpinner stopAnimating];
               
               NSArray *records = [jsonResponse objectForKey:@"records"];
               
@@ -1215,7 +1457,7 @@ CGRect activeField,orgBounds;
                
           }
           else{
-               [loadingSpinner stopAnimating];
+//               [loadingSpinner stopAnimating];
                [Utility showAlert:POSTING_NOTE_FAILED_TO_CHATTER_WALL_MSG];
                [Utility hideCoverScreen];
           }
@@ -1262,6 +1504,30 @@ CGRect activeField,orgBounds;
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
      
      return [textField resignFirstResponder];
+}
+
+
+
+#pragma mark - Split View Controller Delegate Methods
+
+//-(BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation
+//{
+//    return NO;
+//}
+
+
+- (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
+{
+    barButtonItem.title = NSLocalizedString(@"Notes", @"Notes");
+    [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
+    //self.masterPopoverController = popoverController;
+}
+
+- (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
+{
+    // Called when the view is shown again in the split view, invalidating the button and popover controller.
+    [self.navigationItem setLeftBarButtonItem:nil animated:YES];
+    //self.masterPopoverController = nil;
 }
 
 @end

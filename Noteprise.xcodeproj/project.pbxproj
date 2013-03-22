@@ -7,12 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8407E36516F9D8120063FBE0 /* NotepriseLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8407E36416F9D8120063FBE0 /* NotepriseLogo.png */; };
 		840D379016E7548B0068F0D8 /* ProgressIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D378F16E7548B0068F0D8 /* ProgressIndicatorView.m */; };
 		840EBE9016EF1C5F00B7B6E9 /* evernoteBg320x548.png in Resources */ = {isa = PBXBuildFile; fileRef = 840EBE8E16EF1C5F00B7B6E9 /* evernoteBg320x548.png */; };
 		840EBE9116EF1C5F00B7B6E9 /* evernoteBg568x300.png in Resources */ = {isa = PBXBuildFile; fileRef = 840EBE8F16EF1C5F00B7B6E9 /* evernoteBg568x300.png */; };
 		840F6EA016E2052000BAF367 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840F6E9F16E2052000BAF367 /* QuartzCore.framework */; };
 		84169C5E16DB8EED00B99256 /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84169C5C16DB8EED00B99256 /* InfoViewController.m */; };
 		84169C5F16DB8EED00B99256 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84169C5D16DB8EED00B99256 /* InfoViewController.xib */; };
+		842855DE16FAEB87001746F8 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 842855DB16FAEB87001746F8 /* SVProgressHUD.bundle */; };
+		842855DF16FAEB87001746F8 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 842855DD16FAEB87001746F8 /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		A634C775168C73CF007955F5 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = A634C774168C73CF007955F5 /* 2.png */; };
 		A6E15400168C147E00DB646F /* Add.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153B5168C147E00DB646F /* Add.png */; };
 		A6E15401168C147E00DB646F /* Add_note_select.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E153B6168C147E00DB646F /* Add_note_select.png */; };
@@ -177,6 +180,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8407E36416F9D8120063FBE0 /* NotepriseLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NotepriseLogo.png; sourceTree = "<group>"; };
 		840D378E16E7548A0068F0D8 /* ProgressIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProgressIndicatorView.h; path = Classes/ProgressIndicatorView.h; sourceTree = "<group>"; };
 		840D378F16E7548B0068F0D8 /* ProgressIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProgressIndicatorView.m; path = Classes/ProgressIndicatorView.m; sourceTree = "<group>"; };
 		840EBE8E16EF1C5F00B7B6E9 /* evernoteBg320x548.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = evernoteBg320x548.png; sourceTree = "<group>"; };
@@ -185,6 +189,9 @@
 		84169C5B16DB8EED00B99256 /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
 		84169C5C16DB8EED00B99256 /* InfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
 		84169C5D16DB8EED00B99256 /* InfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoViewController.xib; sourceTree = "<group>"; };
+		842855DB16FAEB87001746F8 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		842855DC16FAEB87001746F8 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		842855DD16FAEB87001746F8 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		A634C774168C73CF007955F5 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
 		A6E153B5168C147E00DB646F /* Add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Add.png; sourceTree = "<group>"; };
 		A6E153B6168C147E00DB646F /* Add_note_select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Add_note_select.png; sourceTree = "<group>"; };
@@ -535,9 +542,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		842855DA16FAEB87001746F8 /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				842855DB16FAEB87001746F8 /* SVProgressHUD.bundle */,
+				842855DC16FAEB87001746F8 /* SVProgressHUD.h */,
+				842855DD16FAEB87001746F8 /* SVProgressHUD.m */,
+			);
+			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
 		A6E153B4168C147E00DB646F /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				8407E36416F9D8120063FBE0 /* NotepriseLogo.png */,
 				840EBE8E16EF1C5F00B7B6E9 /* evernoteBg320x548.png */,
 				840EBE8F16EF1C5F00B7B6E9 /* evernoteBg568x300.png */,
 				A634C774168C73CF007955F5 /* 2.png */,
@@ -1019,6 +1037,7 @@
 		F4D211FF159B297300610A18 /* Noteprise */ = {
 			isa = PBXGroup;
 			children = (
+				842855DA16FAEB87001746F8 /* SVProgressHUD */,
 				F438D3FA15A013DB006ACD25 /* dependencies */,
 				F4D21298159B297400610A18 /* Settings.bundle */,
 				F4D2126F159B297400610A18 /* Resources */,
@@ -1303,6 +1322,8 @@
 				84169C5F16DB8EED00B99256 /* InfoViewController.xib in Resources */,
 				840EBE9016EF1C5F00B7B6E9 /* evernoteBg320x548.png in Resources */,
 				840EBE9116EF1C5F00B7B6E9 /* evernoteBg568x300.png in Resources */,
+				8407E36516F9D8120063FBE0 /* NotepriseLogo.png in Resources */,
+				842855DE16FAEB87001746F8 /* SVProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1365,6 +1386,7 @@
 				E717586116984ED700E2559C /* NotesViewController.m in Sources */,
 				84169C5E16DB8EED00B99256 /* InfoViewController.m in Sources */,
 				840D379016E7548B0068F0D8 /* ProgressIndicatorView.m in Sources */,
+				842855DF16FAEB87001746F8 /* SVProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1424,7 +1446,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Noteprise/Noteprise-Prefix.pch";
 				INFOPLIST_FILE = "Noteprise/Noteprise-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Noteprise/dependencies/RestKit\"",
@@ -1506,7 +1528,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Noteprise/Noteprise-Prefix.pch";
 				INFOPLIST_FILE = "Noteprise/Noteprise-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Noteprise/dependencies/RestKit\"",
@@ -1528,7 +1550,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Noteprise/Noteprise-Prefix.pch";
 				INFOPLIST_FILE = "Noteprise/Noteprise-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Noteprise/dependencies/RestKit\"",

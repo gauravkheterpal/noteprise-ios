@@ -10,6 +10,11 @@
 #import "Utility.h"
 #import "Keys.h"
 #import "EvernoteSDK.h"
+#import "NotesListViewController.h"
+#import "NoteDetailViewController.h"
+
+
+
 @interface SignInViewController ()
 
 @end
@@ -102,29 +107,45 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 205;
 }
 
 
--(void)navigateToSearchOptionVC{
+-(void)navigateToSearchOptionVC
+{
     [Utility hideCoverScreen];
     NotesListViewController *notesListCnrl = [[NotesListViewController alloc]init];
     UINavigationController *noteListNavCntrl = [[UINavigationController alloc]initWithRootViewController:notesListCnrl];
     noteListNavCntrl.navigationBar.barStyle = UIBarStyleBlack;
     [[[UIApplication sharedApplication]delegate]window].rootViewController = noteListNavCntrl;
 }
--(void)removeCoverScreen{
+
+
+-(void)removeCoverScreen
+{
     [Utility hideCoverScreen];
 }
--(BOOL)textFieldShouldReturn:(UITextField *)textField{
+
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
     if(textField == userNameTxt)
+    {
         [pswdTxt becomeFirstResponder];
-    else if (textField == pswdTxt) {
+    }
+    else if (textField == pswdTxt)
+    {
         [self signin:nil];
     }
+    
     return YES;
 }
--(IBAction)signin:(id)sender{
-    if([Utility checkNetwork]) {
+
+
+-(IBAction)signin:(id)sender
+{
+    if([Utility checkNetwork])
+    {
         EvernoteSession *session = [EvernoteSession sharedSession];
+        
         [session authenticateWithViewController:self completionHandler:^(NSError *error)
-         {
+        {
              if (error || !session.isAuthenticated)
              {
                  // authentication failed :(
@@ -146,19 +167,44 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 205;
         [Utility showAlert:NETWORK_UNAVAILABLE_MSG];
     }
 }
+
+
 - (void)loadNotesListAfterAuthentication
 {
     EvernoteSession *session = [EvernoteSession sharedSession];
     
     if (session.isAuthenticated)
-    {
-        NotesListViewController *noteListVC = [[NotesListViewController alloc]init];
-        UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:noteListVC];
-        navVC.navigationBar.barStyle = UIBarStyleBlack;
-        [[[UIApplication sharedApplication]delegate]window].rootViewController = navVC;
-        [noteListVC release];
-        //[navVC release];
-    } else {
+    {   
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+        {
+            NotesListViewController *noteListVC = [[NotesListViewController alloc]init];
+            UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:noteListVC];
+            [noteListVC release];
+            navVC.navigationBar.barStyle = UIBarStyleBlack;
+            [[[UIApplication sharedApplication]delegate]window].rootViewController = navVC;
+            [navVC release];
+        }
+        else
+        {
+            NotesListViewController *noteListViewController = [[[NotesListViewController alloc]init] autorelease];
+            UINavigationController *masterNavigationController = [[[UINavigationController alloc] initWithRootViewController:noteListViewController] autorelease];
+            
+            NoteDetailViewController * noteDetailViewController = [[[NoteDetailViewController alloc] init] autorelease];
+            UINavigationController * detailNavigationController = [[[UINavigationController alloc] initWithRootViewController:noteDetailViewController] autorelease];
+            
+            noteListViewController.detailViewController = noteDetailViewController;
+            noteDetailViewController.masterViewController = noteListViewController;
+            
+            UISplitViewController * splitViewController = [[[UISplitViewController alloc] init] autorelease];
+            splitViewController.delegate = noteDetailViewController;
+            splitViewController.viewControllers = @[masterNavigationController, detailNavigationController];
+            
+            [[[UIApplication sharedApplication]delegate]window].rootViewController = splitViewController;
+        }
+
+        
+    }
+    else {
         //LOAD NOTHING ON FAILURE
     }
 }

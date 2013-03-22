@@ -18,6 +18,7 @@
 
 
 
+
 @implementation NotesListViewController
 
 @synthesize  noteBooks;
@@ -33,14 +34,15 @@
 - (void)viewDidLoad
 {	
 	[super viewDidLoad];
-
+   
     //Add cover screen
-    [Utility addSemiTransparentOverlay];
+    //[Utility addSemiTransparentOverlay];
     
     notebookCountForLoadedNotes = 0;
     isError = NO;
     isSearchModeEnabled = NO;
-	flag1 = 0;
+	fetchNotesList = YES;
+    flag1 = 0;
 	flag2 = 0;
 	searchBar.text = @"";
 	orgTableOriginY = notesTbl.frame.origin.y;
@@ -107,6 +109,14 @@
 		else
 			orientation = @"potrait";
 	}
+    
+    
+//    //If device is ipad then loadNotesList on viewDidLoad
+//    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+//    {
+//        [self loadNotesList];
+//    }
+    
     
     //Set tint color of UISegmentedControl
     //[searchOptionsChoiceCntrl setTintColor:[UIColor colorWithRed:169.0f/255.0f green:216.0f/255.0f blue:238.0f/255.0f alpha:1]];
@@ -191,7 +201,7 @@
 
 
 
--(void)viewDidAppear:(BOOL)animated
+-(void)loadNotesList
 {
     if(!isSearchModeEnabled)
     {
@@ -204,7 +214,21 @@
             orgTableHeight = notesTbl.frame.size.height;
             orgBarOriginY = bottom_bar.frame.origin.y;
         }
-	}
+    }
+}
+
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    if(fetchNotesList)
+    {
+        [self loadNotesList];
+    }
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        fetchNotesList = NO;
+    }
     
     [super viewDidAppear:animated];
     
@@ -362,9 +386,13 @@
 
 -(void)fetchDataFromEverNote
 {
+    //Show progress indicator
+    [Utility showCoverScreenWithText:@"Loading..." andType:kInProcessCoverScreen];
+    
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^(void) {
 			// Loading all the notebook & tags linked to the account using the evernote API
-		@try {
+		@try
+        {
 			EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
 			[noteStore listNotebooksWithSuccess:^(NSArray *noteBooksArr) {
 				DebugLog(@"notebooks fetched: %@", noteBooksArr);
@@ -454,7 +482,7 @@
 			[Utility showAlert:EVERNOTE_LOGIN_FAILED_MSG];
 		}
 		@catch (EDAMSystemException *exception) {
-			[Utility showExceptionAlert:exception.description];
+			[Utility showExceptionAlert:SOME_ERROR_OCCURED_MESSAGE];
 		}
 		@catch (EDAMNotFoundException *exception) {
 			[Utility showExceptionAlert:SOME_ERROR_OCCURED_MESSAGE];
@@ -466,9 +494,6 @@
 
 -(void)fetchNoteBasedOnSelectedSegement
 {
-    //Show progress indicator
-    [Utility showCoverScreenWithText:@"Loading..." andType:kInProcessCoverScreen];
-    
     //[self showLoadingLblWithText:LOADING_MSG];
 
     [self makeSearchBarResignFirstResponder]; //Instead of [searchBar resignFirstResponder];
@@ -498,8 +523,7 @@
         if([noteBooks count] > 0)
         {
             for (int i = 0; i < [noteBooks count]; i++)
-		    {
-			
+		    {			
 				// listing all the notes for every notebook
 			
 				// Accessing notebook
@@ -513,7 +537,8 @@
 				// Searching on the Evernote API
                 EvernoteNoteStore * noteStore = [EvernoteNoteStore noteStore];
 			
-                [noteStore findNotesWithFilter:filter offset:0 maxNotes:100 success:^(EDAMNoteList *noteList){
+                [noteStore findNotesWithFilter:filter offset:0 maxNotes:100 success:^(EDAMNoteList *noteList)
+                {
                     if([noteList.notes count] > 0)
                     {
                         for (EDAMNote *noteRead in noteList.notes)
@@ -1103,10 +1128,26 @@
 }
 
 
--(void)dismissModalView {
+
+-(void)clearDetailView
+{
+    self.detailViewController.title = nil;
+    [self.detailViewController setReadProp:nil];
+    [self.detailViewController setGuid:nil];
+    
+    //Show selected note's content
+    [self.detailViewController showSelectedNoteContent];
+}
+
+
+
+-(void)dismissModalView
+{
 	[self.navigationController dismissModalViewControllerAnimated:YES];
 }
--(void)dissmissPopover {
+
+-(void)dissmissPopover
+{
 	if(popoverController!=nil)
 		[popoverController dismissPopoverAnimated:YES];
 }
@@ -1143,7 +1184,10 @@
 #pragma mark UITableView delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if(!((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) && searchOptionsChoiceCntrl.selectedSegmentIndex == 0))
+    {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
 	
     if(![Utility checkNetwork])
     {
@@ -1151,82 +1195,147 @@
         return;
     }
     
-	if(searchOptionsChoiceCntrl.selectedSegmentIndex==1){
-		if(searchBar.text.length != 0){
-			NoteDetailViewController* noteDetailController= [[NoteDetailViewController alloc] init];
-			
+	if(searchOptionsChoiceCntrl.selectedSegmentIndex==1)
+    {
+		if(searchBar.text.length != 0)
+        {
 			NSString* guid = (NSString *)[ [searchResults objectAtIndex:indexPath.row]valueForKey:NOTE_GUID_KEY];
 			NSString* readProp = (NSString *)[ [searchResults objectAtIndex:indexPath.row]valueForKey:READABLE];
-			noteDetailController.title = (NSString *)[ [searchResults objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
-			[noteDetailController setReadProp:readProp];
-			[noteDetailController setGuid:guid];
-			flag1 =1;
-			[self.navigationController pushViewController:noteDetailController animated:YES];
+            NSString * title = (NSString *)[ [searchResults objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
+            
+            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+            {
+                NoteDetailViewController* noteDetailController= [[NoteDetailViewController alloc] init];
+                
+                noteDetailController.title = title;
+                [noteDetailController setReadProp:readProp];
+                [noteDetailController setGuid:guid];
+                
+                flag1 =1;
+                [self.navigationController pushViewController:noteDetailController animated:YES];
+            }
+            else
+            {
+                self.detailViewController.title = title;
+                [self.detailViewController setReadProp:readProp];
+                [self.detailViewController setGuid:guid];
+                
+                //Show selected note's content
+                [self.detailViewController showSelectedNoteContent];
+            }
 		}
-		else{
+		else
+        {
 			UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
 			NSString *cellText = selectedCell.textLabel.text;
 			NotesViewController *notesViewController = [[[NotesViewController alloc]init]autorelease];
 			notesViewController.title = cellText;
-			
+			notesViewController.detailViewController = self.detailViewController;
 			notesViewController.selectedSegment = 1;
 			[self.navigationController pushViewController:notesViewController animated:YES];
 		}
 	}
 	
-	else if(searchOptionsChoiceCntrl.selectedSegmentIndex==2){
-		if(searchBar.text.length != 0){
-			NoteDetailViewController* noteViewController= [[NoteDetailViewController alloc] init];
-			
+	else if(searchOptionsChoiceCntrl.selectedSegmentIndex==2)
+    {
+		if(searchBar.text.length != 0)
+        {
 			NSString* guid = (NSString *)[ [searchResults objectAtIndex:indexPath.row]valueForKey:NOTE_GUID_KEY];
 			NSString* readProp = (NSString *)[ [searchResults objectAtIndex:indexPath.row]valueForKey:READABLE];
-			noteViewController.title = (NSString *)[ [searchResults objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
-			[noteViewController setReadProp:readProp];
-			[noteViewController setGuid:guid];
-			flag1 =1;
-			[self.navigationController pushViewController:noteViewController animated:YES];
+			NSString * title = (NSString *)[ [searchResults objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
+			   
+            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+            {
+                NoteDetailViewController* noteViewController= [[NoteDetailViewController alloc] init];
+                
+                noteViewController.title = title;
+                [noteViewController setReadProp:readProp];
+                [noteViewController setGuid:guid];
+                
+                flag1 =1;
+                [self.navigationController pushViewController:noteViewController animated:YES];
+            }
+            else
+            {
+                self.detailViewController.title = title;
+                [self.detailViewController setReadProp:readProp];
+                [self.detailViewController setGuid:guid];
+                
+                //Show selected note's content
+                [self.detailViewController showSelectedNoteContent];
+
+            }
 		}
-		else{
+		else
+        {
 			UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
 			NSString *cellText = selectedCell.textLabel.text;
 			NotesViewController *notesViewController = [[[NotesViewController alloc]init]autorelease];
+			notesViewController.detailViewController = self.detailViewController;
 			notesViewController.title = cellText;
 			notesViewController.selectedSegment = 2;
 			[self.navigationController pushViewController:notesViewController animated:YES];
 		}
 	}
-	
-	
 	else
-	    {
-		
+    {	
 		if(searchBar.text.length != 0){
 			
 			NSString * guid = (NSString *)[ [searchResults objectAtIndex:indexPath.row]valueForKey:NOTE_GUID_KEY];
 			NSString *readProp = (NSString *)[ [searchResults objectAtIndex:indexPath.row]valueForKey:READABLE];
+			NSString * title = (NSString *)[ [searchResults objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
 			
-			NoteDetailViewController* noteDetailViewController = [[NoteDetailViewController alloc] init];
-			noteDetailViewController.title = (NSString *)[ [searchResults objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
-			[noteDetailViewController setReadProp:readProp];
-			[noteDetailViewController setGuid:guid];
-			flag1 =1;
-			[self.navigationController pushViewController:noteDetailViewController animated:YES];
-			
+            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+            {
+                NoteDetailViewController* noteDetailViewController = [[NoteDetailViewController alloc] init];
+                
+                noteDetailViewController.title = title;
+                [noteDetailViewController setReadProp:readProp];
+                [noteDetailViewController setGuid:guid];
+                
+                flag1 =1;
+                [self.navigationController pushViewController:noteDetailViewController animated:YES];
+            }
+            else
+            {
+                self.detailViewController.title = title;
+                [self.detailViewController setReadProp:readProp];
+                [self.detailViewController setGuid:guid];
+                
+                //Show selected note's content
+                [self.detailViewController showSelectedNoteContent];
+
+            }
 		}
-		else{
-			
+		else
+        {			
 			NSString * guid = (NSString *)[ [listOfNotes objectAtIndex:indexPath.row]valueForKey:NOTE_GUID_KEY];
 			NSString *readProp = (NSString *)[ [listOfNotes objectAtIndex:indexPath.row]valueForKey:READABLE];
-			
-			NoteDetailViewController* noteDetailViewController = [[NoteDetailViewController alloc] init];
-			noteDetailViewController.title = (NSString *)[ [listOfNotes objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
-			[noteDetailViewController setReadProp:readProp];
-			[noteDetailViewController setGuid:guid];
-			[self.navigationController pushViewController:noteDetailViewController animated:YES];
+			NSString * title = (NSString *)[ [listOfNotes objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
+            
+            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+            {
+                NoteDetailViewController* noteDetailViewController = [[NoteDetailViewController alloc] init];
+                noteDetailViewController.title = title;
+                [noteDetailViewController setReadProp:readProp];
+                [noteDetailViewController setGuid:guid];
+                [self.navigationController pushViewController:noteDetailViewController animated:YES];
+            }
+            else
+            {
+                self.detailViewController.title = title;
+                NSLog(@"%@", title);
+                [self.detailViewController setReadProp:readProp];
+                [self.detailViewController setGuid:guid];
+                
+                //Show selected note's content
+                [self.detailViewController showSelectedNoteContent];
+
+            }
 			
 		}
 		
-	    }
+    }
 }
 
 /************************************************************
@@ -1257,6 +1366,12 @@
         
         //Delete the row with animation
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            //Clear the detail view
+            [self clearDetailView];
+        }
         
         [Utility hideCoverScreen];
         
@@ -1410,11 +1525,21 @@
 	cell.textLabel.text = (NSString*)cellValue;
 	cell.textLabel.font = [UIFont fontWithName:@"Verdana" size:13];
 	cell.textLabel.textColor = [UIColor blackColor];
-	UIImageView *accIMGView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
-	accIMGView.image =[UIImage imageNamed:@"Blue_arrow_30x30.png"];
-	cell.accessoryView = accIMGView;
-	cell.accessoryView.backgroundColor  =[UIColor clearColor];
-	cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+
+    if((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) &&  searchOptionsChoiceCntrl.selectedSegmentIndex == 0)
+    {
+        cell.accessoryView = nil;
+    }
+    else
+    {
+        UIImageView *accIMGView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
+        accIMGView.image =[UIImage imageNamed:@"Blue_arrow_30x30.png"];
+        cell.accessoryView = accIMGView;
+        [accIMGView release];
+    }
+    
+//	cell.accessoryView.backgroundColor  =[UIColor clearColor];
+//	cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
 	return cell;
 }
 
@@ -1434,6 +1559,9 @@
 	[listOfNotebooks release];
 	[listOfTags release];
 	[searchResults release];
+    [_detailViewController release];
+    
+    
 	[super dealloc];
 }
 

@@ -12,12 +12,16 @@
 #import "SettingsViewController.h"
 #import "NotesListViewController.h"
 #import "NoteDetailViewController.h"
+
+
 @interface NotesViewController ()
 
 @end
 
 @implementation NotesViewController
 @synthesize notes,selectedSegment,noteBooks;
+
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
      self = [super initWithStyle:style];
@@ -29,14 +33,44 @@
 
 - (void)viewDidLoad
 {
-     [super viewDidLoad];
+    [super viewDidLoad];
+    
+    [self addbackButton];
+    
 	notes = [[NSMutableArray alloc]init];
+    
+//    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+//    {
+//        [self fetchDataFromEvernote];
+//    }
 }
+
+
+-(void)addbackButton
+{
+    UIBarButtonItem * backBarButton = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonPressed)];
+    self.navigationItem.leftBarButtonItem = backBarButton;
+    [backBarButton release];
+}
+
+
+-(void)backButtonPressed
+{
+    self.detailViewController.notesViewController = nil;
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    [Utility showCoverScreenWithText:@"Loading..." andType:kInProcessCoverScreen];
-	[self fetchDataFromEvernote];
+//    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+//    {
+//        [self fetchDataFromEvernote];
+//    }
+    
+    [self fetchDataFromEvernote];
 }
 
 
@@ -48,6 +82,8 @@
 
 -(void) fetchDataFromEvernote
 {
+    [Utility showCoverScreenWithText:@"Loading..." andType:kInProcessCoverScreen];
+    
     @try
     {
          EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
@@ -305,25 +341,46 @@
      cell.textLabel.text = (NSString*)cellValue;
      cell.textLabel.font = [UIFont fontWithName:@"Verdana" size:13];
      cell.textLabel.textColor = [UIColor blackColor];
-	UIImageView *accIMGView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
-	accIMGView.image =[UIImage imageNamed:@"Blue_arrow_30x30.png"];
-	cell.accessoryView = accIMGView;
-	cell.accessoryView.backgroundColor  =[UIColor clearColor];
-     cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-     return cell;
+	
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        UIImageView *accIMGView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
+        accIMGView.image =[UIImage imageNamed:@"Blue_arrow_30x30.png"];
+        cell.accessoryView = accIMGView;
+    }
+
+//	cell.accessoryView.backgroundColor  =[UIColor clearColor];
+//    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    
+    return cell;
      
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-     NoteDetailViewController* noteViewController= [[NoteDetailViewController alloc] init];
-     
-     NSString* guid = (NSString *)[ [notes objectAtIndex:indexPath.row]valueForKey:NOTE_GUID_KEY];
-     NSString* readProp = (NSString *)[ [notes objectAtIndex:indexPath.row]valueForKey:READABLE];
-     noteViewController.title = (NSString *)[ [notes objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
-     [noteViewController setReadProp:readProp];
-     [noteViewController setGuid:guid];
-     [self.navigationController pushViewController:noteViewController animated:YES];
+    NSString * guid = (NSString *)[ [notes objectAtIndex:indexPath.row]valueForKey:NOTE_GUID_KEY];
+    NSString * readProp = (NSString *)[ [notes objectAtIndex:indexPath.row]valueForKey:READABLE];
+    NSString * title = (NSString *)[[notes objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
+
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        NoteDetailViewController * noteDetailController= [[NoteDetailViewController alloc] init];
+        noteDetailController.title = title;
+        [noteDetailController setReadProp:readProp];
+        [noteDetailController setGuid:guid];
+        [self.navigationController pushViewController:noteDetailController animated:YES];
+    }
+    else
+    {
+        self.detailViewController.title = title;
+        [self.detailViewController setReadProp:readProp];
+        [self.detailViewController setGuid:guid];
+        self.detailViewController.notesViewController = self;
+        
+        //Show selected note's content
+        [self.detailViewController showSelectedNoteContent];
+    }
 }
 
 
@@ -365,10 +422,14 @@
  return YES;
  }
  */
-- (void)dealloc {
-     
-     [notes release];
-     [super dealloc];
+
+
+- (void)dealloc
+{
+    [notes release];
+    [_detailViewController release];
+    
+    [super dealloc];
 }
 
 

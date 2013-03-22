@@ -149,9 +149,9 @@ static NSString *const kHTML2DOCConverterURL    = @"http://csboxnotes.appspot.co
 @interface Utility : NSObject
 
 +(void)hideCoverScreen;
-+(void)showCoverScreen;
 +(void)showCoverScreenWithText:(NSString *) text andType:(NSInteger)coverScreenType;
-+(void)addSemiTransparentOverlay;
+//+(void)showCoverScreen;
+//+(void)addSemiTransparentOverlay;
 
 +(void)showAlert:(NSString*)message;
 +(BOOL)isBlank:(NSString*)str;

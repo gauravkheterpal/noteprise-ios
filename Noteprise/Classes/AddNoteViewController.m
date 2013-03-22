@@ -97,7 +97,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 //        loadingLbl.hidden = NO;
         
         //Show progress indicator
-        [self showCoverScreenWithText:LOADING_NOTEBOOKS_MSG andType:kInProcessCoverScreen];
+        [Utility showCoverScreenWithText:LOADING_NOTEBOOKS_MSG andType:kInProcessCoverScreen];
         
         // Loading all the notebooks linked to the account
         EvernoteNoteStore *noteStore = [EvernoteNoteStore noteStore];
@@ -120,7 +120,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
                                         
                                         
                                         //Hide progress indicator
-                                        [self hideCoverScreen];
+                                        [Utility hideCoverScreen];
                                         
 //                                        dialog_imgView.hidden = YES;
 //                                        loadingLbl.hidden = YES;
@@ -131,7 +131,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
                                           DebugLog(@"error %@", error);
                                           
                                           //Hide loading indicator
-                                          [self hideCoverScreen];
+                                          [Utility hideCoverScreen];
                                         
 //                                          dialog_imgView.hidden = YES;
 //                                          loadingLbl.hidden = YES;
@@ -200,50 +200,50 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 }
 
 
--(void)hideCoverScreen
-{
-    [progressIndicatorView setHidden:YES];
-    
-    //Remove layerView from window
-    [self removeLayer];
-}
+//-(void)hideCoverScreen
+//{
+//    [progressIndicatorView setHidden:YES];
+//    
+//    //Remove layerView from window
+//    [self removeLayer];
+//}
+//
+//
+//-(void)showCoverScreenWithText:(NSString *) text andType:(NSInteger)coverScreenType
+//{
+//    //Set text and type of progressIndicator
+//    [progressIndicatorView setText:text andType:coverScreenType];
+//        
+//    [progressIndicatorView setHidden:NO];
+//    
+//    [[progressIndicatorView superview] bringSubviewToFront:progressIndicatorView];
+//    
+//    //Create and add layer view to window so that user couldn't interact while something is in process
+//    [self addLayer];
+//}
 
-
--(void)showCoverScreenWithText:(NSString *) text andType:(NSInteger)coverScreenType
-{
-    //Set text and type of progressIndicator
-    [progressIndicatorView setText:text andType:coverScreenType];
-        
-    [progressIndicatorView setHidden:NO];
-    
-    [[progressIndicatorView superview] bringSubviewToFront:progressIndicatorView];
-    
-    //Create and add layer view to window so that user couldn't interact while something is in process
-    [self addLayer];
-}
-
--(void)addLayer
-{
-    if(layerView == nil)
-    {
-        layerView = [[UIView alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
-        layerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        layerView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.01];
-    }
-    
-    //Add it to window
-    [[[UIApplication sharedApplication] keyWindow] addSubview:layerView];
-}
-
-
--(void)removeLayer
-{
-    if(layerView != nil)
-    {
-        //Add layerView from window
-        [layerView removeFromSuperview];
-    }
-}
+//-(void)addLayer
+//{
+//    if(layerView == nil)
+//    {
+//        layerView = [[UIView alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
+//        layerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+//        layerView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.01];
+//    }
+//    
+//    //Add it to window
+//    [[[UIApplication sharedApplication] keyWindow] addSubview:layerView];
+//}
+//
+//
+//-(void)removeLayer
+//{
+//    if(layerView != nil)
+//    {
+//        //Add layerView from window
+//        [layerView removeFromSuperview];
+//    }
+//}
 
 
 
@@ -363,10 +363,10 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
          else
          {
              //Hide progress indicator
-             [self hideCoverScreen];
+             [Utility hideCoverScreen];
              
              //Show progress indicator
-             [self showCoverScreenWithText:ATTACHING_USER_LOCATION_TO_NOTE_MSG andType:kInProcessCoverScreen];
+             [Utility showCoverScreenWithText:ATTACHING_USER_LOCATION_TO_NOTE_MSG andType:kInProcessCoverScreen];
              
               [locationManager startUpdatingLocation];
 //              dialog_imgView.hidden = NO;
@@ -431,10 +431,10 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 //      loadingLbl.hidden = NO;
          
         //Hide progress indicator
-        [self hideCoverScreen];
+        [Utility hideCoverScreen];
          
         //Show progress indicator
-        [self showCoverScreenWithText:NOTE_CREATING_MSG andType:kInProcessCoverScreen];
+        [Utility showCoverScreenWithText:NOTE_CREATING_MSG andType:kInProcessCoverScreen];
          
          
          __block BOOL isErrorCreatingnote = NO;
@@ -461,10 +461,10 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 //                               loadingLbl.text = NOTE_CREATION_SUCCESS_MSG;
                                
                                  //Hide progress indicator
-                                 [self hideCoverScreen];
+                                 [Utility hideCoverScreen];
                                
                                  //Show progress indicator
-                                 [self showCoverScreenWithText:NOTE_CREATION_SUCCESS_MSG andType:kProcessDoneCoverScreen];
+                                 [Utility showCoverScreenWithText:NOTE_CREATION_SUCCESS_MSG andType:kProcessDoneCoverScreen];
                                
                                 DebugLog(@"note desc:lat:%f long:%f",[note attributes].latitude,[note attributes].longitude);
                                 DebugLog(@"note desc:%@",[note description]);
@@ -478,7 +478,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
                                        dispatch_async(dispatch_get_main_queue(), ^(void)
                                       {
                                           //Hide progress indicator
-                                          [self hideCoverScreen];
+                                          [Utility hideCoverScreen];
                                           
                                           DebugLog(@"create note::::::::error %@", error);
                                           
@@ -505,7 +505,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 //                        [loadingSpinner stopAnimating];
                         
                         //Hide progress indicator
-                        [self hideCoverScreen];
+                        [Utility hideCoverScreen];
                         
                         isErrorCreatingnote = YES;
                         
@@ -529,7 +529,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 //    [loadingSpinner stopAnimating];
 
     //Hide progress indicator
-    [self hideCoverScreen];
+    [Utility hideCoverScreen];
 
     
     [delegate evernoteCreatedSuccessfullyListener];
@@ -790,7 +790,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 //    [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(hideDoneToastMsg:) userInfo:nil repeats:NO];
     
     //Hide progress indicator
-    [self hideCoverScreen];
+    [Utility hideCoverScreen];
     
     [self createEvernoteWithUserLocation:0.0 longitude:0.0];
 }
@@ -822,7 +822,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 140;
 //     loadingLbl.hidden = YES;
     
     //Hide progress indicator
-    [self hideCoverScreen];
+    [Utility hideCoverScreen];
     
     [self createEvernoteWithUserLocation:newLocation.coordinate.latitude longitude:newLocation.coordinate.longitude];
 }

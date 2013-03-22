@@ -34,7 +34,8 @@
 	CFReadStreamRef readStream = NULL;
 	CFWriteStreamRef writeStream = NULL;
 	CFStreamCreatePairWithSocketToHost(kCFAllocatorDefault, (CFStringRef)hostname, port, &readStream, &writeStream);
-	if (readStream && writeStream) {
+	if (readStream && writeStream)
+    {
 		CFReadStreamSetProperty(readStream, kCFStreamPropertyShouldCloseNativeSocket, kCFBooleanTrue);
 		CFWriteStreamSetProperty(writeStream, kCFStreamPropertyShouldCloseNativeSocket, kCFBooleanTrue);
 		
