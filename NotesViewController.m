@@ -35,7 +35,11 @@
 {
     [super viewDidLoad];
     
-    [self addbackButton];
+    //If device is iPad then add a back button
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        [self addbackButton];
+    }
     
 	notes = [[NSMutableArray alloc]init];
     
@@ -203,10 +207,18 @@
                          [notes addObject:noteListDict];
                          
                     }
-                    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-                    notes = [[notes sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
-                         // [self.tableView reloadData];
-                    [self reloadNotesTable];
+                   
+                   
+                   if([notes count] == 0)
+                   {
+                       [Utility showAlert:NO_NOTE_FOUND_WITH_THIS_NOTEBOOK];
+                   }
+                   else
+                   {
+                       NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:NOTE_KEY  ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+                       notes = [[notes sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]]mutableCopy];
+                   }
+                   [self reloadNotesTable];
                }
                                       failure:^(NSError *error) {
                                            DebugLog(@" findNotesWithFilter error %@", error);

@@ -80,12 +80,12 @@
 	
 	self.navigationItem.leftBarButtonItem = customBarItem;
 	
-    //Create InfoBarButton and add it as a navigation bar's right bar button
-    UIButton * infobutton = [UIButton buttonWithType:UIButtonTypeInfoLight];
-    [infobutton addTarget:self action:@selector(infoButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem * infoBarButton = [[UIBarButtonItem alloc]initWithCustomView:infobutton];
-    self.navigationItem.rightBarButtonItem = infoBarButton;
-    [infoBarButton release];
+//    //Create InfoBarButton and add it as a navigation bar's right bar button
+//    UIButton * infobutton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+//    [infobutton addTarget:self action:@selector(infoButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem * infoBarButton = [[UIBarButtonItem alloc]initWithCustomView:infobutton];
+//    self.navigationItem.rightBarButtonItem = infoBarButton;
+//    [infoBarButton release];
     
     
     UIImageView * logo = [[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 187.0f, 31.0f)];
@@ -1131,6 +1131,8 @@
 
 -(void)clearDetailView
 {
+    [self.detailViewController.navigationController popToRootViewControllerAnimated:YES];
+    
     self.detailViewController.title = nil;
     [self.detailViewController setReadProp:nil];
     [self.detailViewController setGuid:nil];
@@ -1374,7 +1376,7 @@
         //Delete the row with animation
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
-        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        if((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) && [guid isEqualToString:self.detailViewController.guid])
         {
             //Clear the detail view
             [self clearDetailView];
