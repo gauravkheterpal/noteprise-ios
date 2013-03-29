@@ -496,51 +496,90 @@
     }
     else if (buttonIndex == 1)
     {
-        //post to chatter users
-        [Utility showCoverScreenWithText:@"Loading..." andType:kInProcessCoverScreen];
-        
-        ChatterUsersViewController * chatterUsersVC = [[ChatterUsersViewController alloc] init];
-        chatterUsersVC.noteTitle = self.title;
-        chatterUsersVC.noteContent = textContent;
-        [self.navigationController pushViewController:chatterUsersVC animated:YES];
-        [chatterUsersVC release];
-//        [Utility hideCoverScreen];
+        if([textContent length] == 0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Empty note"
+                                                           message:@"There is nothing to post."
+                                                          delegate:nil
+                                                 cancelButtonTitle:@"OK"
+                                                 otherButtonTitles:nil];
+            [alert show];
+            [alert release];
+        }
+        else
+        {
+            //post to chatter users
+            [Utility showCoverScreenWithText:@"Loading..." andType:kInProcessCoverScreen];
+            
+            ChatterUsersViewController * chatterUsersVC = [[ChatterUsersViewController alloc] init];
+            chatterUsersVC.noteTitle = self.title;
+            chatterUsersVC.noteContent = textContent;
+            [self.navigationController pushViewController:chatterUsersVC animated:YES];
+            [chatterUsersVC release];
+    //        [Utility hideCoverScreen];
+        }
     }
     else if (buttonIndex == 2)
     {
-        //post to chatter users
-        [Utility showCoverScreenWithText:@"Loading..." andType:kInProcessCoverScreen];
-        
-        ChatterGroupVCntrlViewController * chatterGroupVC = [[ChatterGroupVCntrlViewController alloc] init];
-        chatterGroupVC.noteTitle = self.title;
-        chatterGroupVC.noteContent = textContent;
-        [self.navigationController pushViewController:chatterGroupVC animated:YES];
-        [chatterGroupVC release];
-//        [Utility hideCoverScreen];
-    }    
+        if([textContent length] == 0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Empty note"
+                                                           message:@"There is nothing to post."
+                                                          delegate:nil
+                                                 cancelButtonTitle:@"OK"
+                                                 otherButtonTitles:nil];
+            [alert show];
+            [alert release];
+        }
+        else
+        {
+            //post to chatter users
+            [Utility showCoverScreenWithText:@"Loading..." andType:kInProcessCoverScreen];
+            
+            ChatterGroupVCntrlViewController * chatterGroupVC = [[ChatterGroupVCntrlViewController alloc] init];
+            chatterGroupVC.noteTitle = self.title;
+            chatterGroupVC.noteContent = textContent;
+            [self.navigationController pushViewController:chatterGroupVC animated:YES];
+            [chatterGroupVC release];
+    //        [Utility hideCoverScreen];
+        }
+    }
 }
 
--(void)postToChatterWall {
-     
-     if([textContent length] >1000) {
-          UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Noteprise" message:CHATTER_LIMIT_CROSSED_ALERT_MSG delegate:self cancelButtonTitle:ALERT_NEGATIVE_BUTTON_TEXT otherButtonTitles:ALERT_POSITIVE_BUTTON_TEXT, nil];
-          alert.tag = CHATTER_POST_LIMIT_ALERT_TAG;
-          [alert show];
-          [alert release];
-     }
-     else
-     {
-         [Utility showCoverScreenWithText:POSTING_NOTE_TO_CHATTER_WALL_MSG andType:kInProcessCoverScreen];
-         
-//         [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_WALL_MSG];
-         
-         NSString * path = POST_TO_CHATTER_WALL_URL;
-         NSDictionary *param = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",textContent, @"text",nil];
-         NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:param],@"messageSegments", nil];
-         NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:message,@"body", nil];
-         SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];
-         [[SFRestAPI sharedInstance] send:request delegate:self];
-     }
+-(void)postToChatterWall
+{
+    if([textContent length] == 0)
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Empty note"
+                                                       message:@"There is nothing to post."
+                                                      delegate:nil
+                                             cancelButtonTitle:@"OK"
+                                             otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+    }
+    else
+    {
+         if([textContent length] >1000) {
+              UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Noteprise" message:CHATTER_LIMIT_CROSSED_ALERT_MSG delegate:self cancelButtonTitle:ALERT_NEGATIVE_BUTTON_TEXT otherButtonTitles:ALERT_POSITIVE_BUTTON_TEXT, nil];
+              alert.tag = CHATTER_POST_LIMIT_ALERT_TAG;
+              [alert show];
+              [alert release];
+         }
+         else
+         {
+             [Utility showCoverScreenWithText:POSTING_NOTE_TO_CHATTER_WALL_MSG andType:kInProcessCoverScreen];
+             
+    //         [self showLoadingLblWithText:POSTING_NOTE_TO_CHATTER_WALL_MSG];
+             
+             NSString * path = POST_TO_CHATTER_WALL_URL;
+             NSDictionary *param = [[NSDictionary alloc]initWithObjectsAndKeys:@"Text",@"type",textContent, @"text",nil];
+             NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:param],@"messageSegments", nil];
+             NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:message,@"body", nil];
+             SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:body];
+             [[SFRestAPI sharedInstance] send:request delegate:self];
+         }
+    }
 }
 
 

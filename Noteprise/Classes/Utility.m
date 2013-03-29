@@ -105,7 +105,7 @@
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
         [SVProgressHUD showSuccessWithStatus:text duration:-1];
     }
-    else if(coverScreenType == kProcessDoneCoverScreen)
+    else if(coverScreenType == kWarningCoverScreen)
     {
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
         [SVProgressHUD showErrorWithStatus:text duration:-1];
