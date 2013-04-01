@@ -217,8 +217,29 @@
     }
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    if(SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(@"5.0"))
+    {
+        [self viewAppear];
+    }
+
+    [super viewWillAppear:animated];
+}
+
 
 -(void)viewDidAppear:(BOOL)animated
+{
+    if(SYSTEM_VERSION_GREATER_THAN(@"5.0"))
+    {
+        [self viewAppear];
+    }
+    
+    [super viewDidAppear:animated];
+}
+
+
+-(void)viewAppear
 {
     if(fetchNotesList)
     {
@@ -229,18 +250,8 @@
     {
         fetchNotesList = NO;
     }
-    
-    [super viewDidAppear:animated];
-    
-//    for (id subview in [searchBar subviews]) {
-//		if ([subview isKindOfClass:[UIButton class]]) {
-//			[subview setEnabled:YES];
-//            //[subview addObserver:self forKeyPath:@"enabled" options:NSKeyValueObservingOptionNew context:nil];
-//		}
-//	}
-    
-		
 }
+
 
 /*-(void)changeBkgrndImgWithOrientation {
  if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
@@ -500,6 +511,7 @@
     
     // Loading all the notebooks linked to the account using the evernote API
     [self fetchDataFromEverNote];
+    
 }
 
 
@@ -618,14 +630,16 @@
         notebookCountForLoadedNotes = 0;
         isError = NO;
     }
-    
 }
 
 
 
--(void)listAllNotebooks {
+-(void)listAllNotebooks
+{
 	[listOfNotebooks removeAllObjects];
-	@try {
+	
+    @try
+    {
         if([noteBooks count] > 0)
         {
             for (int i = 0; i < [noteBooks count]; i++)
@@ -1159,7 +1173,13 @@
 	if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
 		[self dissmissPopover];
-        [self fetchNoteBasedOnSelectedSegement];
+        
+        [self makeSearchBarResignFirstResponder];
+        
+        if(!isSearchModeEnabled)
+        {
+            [self fetchNoteBasedOnSelectedSegement];
+        }
     }
 	else
     {
