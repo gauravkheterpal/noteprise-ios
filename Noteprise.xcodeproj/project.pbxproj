@@ -14,6 +14,12 @@
 		840F6EA016E2052000BAF367 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840F6E9F16E2052000BAF367 /* QuartzCore.framework */; };
 		84169C5E16DB8EED00B99256 /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84169C5C16DB8EED00B99256 /* InfoViewController.m */; };
 		84169C5F16DB8EED00B99256 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84169C5D16DB8EED00B99256 /* InfoViewController.xib */; };
+		841E1F96170ADB23000C5C94 /* image1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 841E1F91170ADB23000C5C94 /* image1.jpg */; };
+		841E1F97170ADB23000C5C94 /* image2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 841E1F92170ADB23000C5C94 /* image2.jpg */; };
+		841E1F98170ADB23000C5C94 /* image3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 841E1F93170ADB23000C5C94 /* image3.jpg */; };
+		841E1F99170ADB23000C5C94 /* image4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 841E1F94170ADB23000C5C94 /* image4.jpg */; };
+		841E1F9A170ADB23000C5C94 /* image5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 841E1F95170ADB23000C5C94 /* image5.jpg */; };
+		841E1F9C170AEB58000C5C94 /* LoginButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 841E1F9B170AEB58000C5C94 /* LoginButton.png */; };
 		842855DE16FAEB87001746F8 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 842855DB16FAEB87001746F8 /* SVProgressHUD.bundle */; };
 		842855DF16FAEB87001746F8 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 842855DD16FAEB87001746F8 /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		8435D66F16FC831F001B7D1D /* ListIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8435D66E16FC831F001B7D1D /* ListIcon@2x.png */; };
@@ -190,6 +196,12 @@
 		84169C5B16DB8EED00B99256 /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
 		84169C5C16DB8EED00B99256 /* InfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
 		84169C5D16DB8EED00B99256 /* InfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoViewController.xib; sourceTree = "<group>"; };
+		841E1F91170ADB23000C5C94 /* image1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image1.jpg; sourceTree = "<group>"; };
+		841E1F92170ADB23000C5C94 /* image2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image2.jpg; sourceTree = "<group>"; };
+		841E1F93170ADB23000C5C94 /* image3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image3.jpg; sourceTree = "<group>"; };
+		841E1F94170ADB23000C5C94 /* image4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image4.jpg; sourceTree = "<group>"; };
+		841E1F95170ADB23000C5C94 /* image5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image5.jpg; sourceTree = "<group>"; };
+		841E1F9B170AEB58000C5C94 /* LoginButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LoginButton.png; sourceTree = "<group>"; };
 		842855DB16FAEB87001746F8 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		842855DC16FAEB87001746F8 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		842855DD16FAEB87001746F8 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
@@ -557,6 +569,12 @@
 		A6E153B4168C147E00DB646F /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				841E1F9B170AEB58000C5C94 /* LoginButton.png */,
+				841E1F91170ADB23000C5C94 /* image1.jpg */,
+				841E1F92170ADB23000C5C94 /* image2.jpg */,
+				841E1F93170ADB23000C5C94 /* image3.jpg */,
+				841E1F94170ADB23000C5C94 /* image4.jpg */,
+				841E1F95170ADB23000C5C94 /* image5.jpg */,
 				8435D66E16FC831F001B7D1D /* ListIcon@2x.png */,
 				8407E36416F9D8120063FBE0 /* NotepriseLogo.png */,
 				840EBE8E16EF1C5F00B7B6E9 /* evernoteBg320x548.png */,
@@ -1328,6 +1346,12 @@
 				8407E36516F9D8120063FBE0 /* NotepriseLogo.png in Resources */,
 				842855DE16FAEB87001746F8 /* SVProgressHUD.bundle in Resources */,
 				8435D66F16FC831F001B7D1D /* ListIcon@2x.png in Resources */,
+				841E1F96170ADB23000C5C94 /* image1.jpg in Resources */,
+				841E1F97170ADB23000C5C94 /* image2.jpg in Resources */,
+				841E1F98170ADB23000C5C94 /* image3.jpg in Resources */,
+				841E1F99170ADB23000C5C94 /* image4.jpg in Resources */,
+				841E1F9A170ADB23000C5C94 /* image5.jpg in Resources */,
+				841E1F9C170AEB58000C5C94 /* LoginButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

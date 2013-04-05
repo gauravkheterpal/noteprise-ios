@@ -29,6 +29,8 @@
 #define kInProcessCoverScreen       1
 #define kProcessDoneCoverScreen     2
 
+#define kPageControlHeight          36
+
 
 
 /*

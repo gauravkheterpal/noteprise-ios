@@ -258,7 +258,8 @@ NSString * const kDefaultLoginHost = @"login.salesforce.com";
     }
 }
 
-- (UIViewController*)newRootViewController {
+- (UIViewController*)newRootViewController
+{
     NSLog(@"You must override this method in your subclass");
     [self doesNotRecognizeSelector:@selector(newRootViewController)];
     return nil;
@@ -296,9 +297,10 @@ NSString * const kDefaultLoginHost = @"login.salesforce.com";
 - (void)setupAuthorizingViewController
 {    
     //clear all children of the existing window, if any
-    if (nil != self.window) {
+    if (nil != self.window)
+    {
         NSLog(@"SFNativeRestAppDelegate clearing self.window");
-        [self.window.subviews  makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        [self.window.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
         self.window = nil;
     }
     

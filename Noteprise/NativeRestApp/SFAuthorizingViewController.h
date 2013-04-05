@@ -22,12 +22,30 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-@interface SFAuthorizingViewController : UIViewController {
+@interface SFAuthorizingViewController : UIViewController <UIScrollViewDelegate>
+{
     UILabel *_authorizingMessageLabel;
-
+    
+    BOOL pageControlIsChangingPage;
+    BOOL rotationIsScrollingPage;
+    
+    UIView * cloneView;
 }
+
+//Properties
 @property (nonatomic, retain) IBOutlet UIImageView *backgroundImgView;
 @property (nonatomic, retain) IBOutlet UILabel *authorizingMessageLabel;
 @property (nonatomic, retain) IBOutlet UIView *oauthView;
+@property (nonatomic, retain) UIScrollView * scrollView;
+@property (nonatomic, retain) UIPageControl * pageControl;
+@property (nonatomic, retain) UIToolbar * toolBar;
+@property (nonatomic, retain) NSMutableArray * subviews;
+
+//Methods
+- (void)setupView;
+-(void)addSubviewsToScrollView;
+- (void)changePage:(id)sender;
+-(void)showLoginPage:(id)sender;
+
 
 @end
