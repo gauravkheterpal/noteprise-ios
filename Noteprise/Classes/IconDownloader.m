@@ -52,7 +52,7 @@
 
 #import "IconDownloader.h"
 #import "ChatterRecord.h"
-#import "AppDelegate.h"
+#import "SFAccountManager.h"
 #define kAppIconHeight 40
 
 
@@ -82,12 +82,12 @@
 - (void)startDownload
 {
     self.activeDownload = [NSMutableData data];
-    AppDelegate * appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
     NSString *accessToken = nil;
     
-    if (nil != appDelegate.coordinator)
+    if (nil != [[SFAccountManager sharedInstance]coordinator])
     {
-        accessToken = appDelegate.coordinator.credentials.accessToken;
+        accessToken = [[[[SFAccountManager sharedInstance]coordinator]credentials]accessToken];
         DebugLog(@"access token%@",accessToken );
     }
     

@@ -24,15 +24,10 @@
 
 //
 
-#import "SFNativeRestAppDelegate.h"
-
-@interface AppDelegate : SFNativeRestAppDelegate
+@interface AppDelegate : NSObject <UIApplicationDelegate>
 {
-
+    
 }
 
 
-
-
 @end
-

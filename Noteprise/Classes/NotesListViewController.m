@@ -14,7 +14,7 @@
 #import "Keys.h"
 #import "EvernoteSDK.h"
 #import "InfoViewController.h"
-#import "SFNativeRestAppDelegate.h"
+
 
 
 
@@ -156,7 +156,7 @@
 
 
 //Shows the InfoViewController
--(void)infoButtonPressed
+/*-(void)infoButtonPressed
 {
     NSString * userName = [((SFNativeRestAppDelegate *)[[UIApplication sharedApplication]delegate]) userName];
     
@@ -167,7 +167,7 @@
         [infoViewController release];
     }
 }
-
+*/
 
 -(void)changeSegmentControlBtnsWithOrientationAndDevice
 {

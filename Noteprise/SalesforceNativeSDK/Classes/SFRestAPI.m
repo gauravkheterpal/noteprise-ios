@@ -33,6 +33,7 @@
 #import "SFAccountManager.h"
 #import "SFAuthenticationManager.h"
 #import "SFSDKWebUtils.h"
+#import "SFLogger.h"
 
 NSString* const kSFRestDefaultAPIVersion = @"v23.0";
 NSString* const kSFRestErrorDomain = @"com.salesforce.RestAPI.ErrorDomain";

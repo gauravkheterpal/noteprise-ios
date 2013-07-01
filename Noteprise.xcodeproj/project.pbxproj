@@ -108,10 +108,6 @@
 		F4242563159E1C1A0038EA52 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F4242560159E1C1A0038EA52 /* Icon.png */; };
 		F4242564159E1C1A0038EA52 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4242561159E1C1A0038EA52 /* Icon@2x.png */; };
 		F42D1CC5159B2F7E00ECF3F4 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = F42D1CC4159B2F7E00ECF3F4 /* Utility.m */; };
-		F438D46815A013DB006ACD25 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F438D44E15A013DB006ACD25 /* libRestKit.a */; };
-		F438D46915A013DB006ACD25 /* libSalesforceOAuth.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F438D45415A013DB006ACD25 /* libSalesforceOAuth.a */; };
-		F438D46A15A013DB006ACD25 /* libSalesforceSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F438D45A15A013DB006ACD25 /* libSalesforceSDK.a */; };
-		F438D46B15A013DB006ACD25 /* libsbjson-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F438D46715A013DB006ACD25 /* libsbjson-ios.a */; };
 		F438D46D15A01563006ACD25 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F438D46C15A01563006ACD25 /* libxml2.dylib */; };
 		F43D3CE115F11D4000CD0EA9 /* CustomBlueToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = F43D3CE015F11D4000CD0EA9 /* CustomBlueToolbar.m */; };
 		F460DC0715E243F000E52380 /* ChatterUsersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F460DC0615E243F000E52380 /* ChatterUsersViewController.m */; };
@@ -169,9 +165,7 @@
 		F4D21281159B297400610A18 /* Default~iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = F4D21280159B297400610A18 /* Default~iPad.png */; };
 		F4D21287159B297400610A18 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D21286159B297400610A18 /* AppDelegate.m */; };
 		F4D2128A159B297400610A18 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D21289159B297400610A18 /* RootViewController.m */; };
-		F4D2128E159B297400610A18 /* SFAuthorizingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D2128D159B297400610A18 /* SFAuthorizingViewController.m */; };
 		F4D21290159B297400610A18 /* SFAuthorizingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4D2128F159B297400610A18 /* SFAuthorizingViewController.xib */; };
-		F4D21293159B297400610A18 /* SFNativeRestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D21292159B297400610A18 /* SFNativeRestAppDelegate.m */; };
 		F4D21299159B297400610A18 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F4D21298159B297400610A18 /* Settings.bundle */; };
 		F4D21331159B2CBC00610A18 /* AddNoteView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4D2131D159B2CBC00610A18 /* AddNoteView.xib */; };
 		F4D21332159B2CBC00610A18 /* AddNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D2131F159B2CBC00610A18 /* AddNoteViewController.m */; };
@@ -184,6 +178,74 @@
 		F4D2133A159B2CBC00610A18 /* SFObjsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D2132D159B2CBC00610A18 /* SFObjsViewController.m */; };
 		F4D2133B159B2CBC00610A18 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D2132F159B2CBC00610A18 /* SignInViewController.m */; };
 		F4D2133C159B2CBC00610A18 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4D21330159B2CBC00610A18 /* SignInViewController.xib */; };
+		F726857F177D8781005CEEA6 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F726857E177D8780005CEEA6 /* MessageUI.framework */; };
+		F7268581177D87C4005CEEA6 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F7268580177D87C4005CEEA6 /* libz.dylib */; };
+		F7268585177D8CC8005CEEA6 /* InitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7268583177D8CC8005CEEA6 /* InitialViewController.m */; };
+		F7268586177D8CC8005CEEA6 /* InitialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7268584177D8CC8005CEEA6 /* InitialViewController.xib */; };
+		F72685AD177D9234005CEEA6 /* RKRequestDelegateWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = F72685A0177D9234005CEEA6 /* RKRequestDelegateWrapper.m */; };
+		F72685AE177D9234005CEEA6 /* SFRestAPI+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = F72685A2177D9234005CEEA6 /* SFRestAPI+Blocks.m */; };
+		F72685AF177D9234005CEEA6 /* SFRestAPI+QueryBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = F72685A5177D9234005CEEA6 /* SFRestAPI+QueryBuilder.m */; };
+		F72685B0177D9234005CEEA6 /* SFRestAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = F72685A7177D9234005CEEA6 /* SFRestAPI.m */; };
+		F72685B1177D9234005CEEA6 /* SFRestRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F72685A9177D9234005CEEA6 /* SFRestRequest.m */; };
+		F72685B2177D9234005CEEA6 /* SFSessionRefresher.m in Sources */ = {isa = PBXBuildFile; fileRef = F72685AB177D9234005CEEA6 /* SFSessionRefresher.m */; };
+		F726869B177D9295005CEEA6 /* ant-contrib-1.0b3.jar in Frameworks */ = {isa = PBXBuildFile; fileRef = F72685B7177D9294005CEEA6 /* ant-contrib-1.0b3.jar */; };
+		F726869C177D9295005CEEA6 /* gcovr in Resources */ = {isa = PBXBuildFile; fileRef = F72685B8177D9294005CEEA6 /* gcovr */; };
+		F72686A0177D9295005CEEA6 /* SalesforceSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F72685BE177D9294005CEEA6 /* SalesforceSDKResources.bundle */; };
+		F72686C0177D9295005CEEA6 /* SFOAuth_NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = F72685F1177D9295005CEEA6 /* SFOAuth_NSString+Additions.m */; };
+		F72686C1177D9295005CEEA6 /* SFOAuth_UIDevice+Hardware.m in Sources */ = {isa = PBXBuildFile; fileRef = F72685F3177D9295005CEEA6 /* SFOAuth_UIDevice+Hardware.m */; };
+		F72686C2177D9295005CEEA6 /* SFOAuthCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = F72685F6177D9295005CEEA6 /* SFOAuthCoordinator.m */; };
+		F72686C3177D9295005CEEA6 /* SFOAuthCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = F72685F9177D9295005CEEA6 /* SFOAuthCredentials.m */; };
+		F72686C4177D9295005CEEA6 /* SFOAuthCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = F72685FB177D9295005CEEA6 /* SFOAuthCrypto.m */; };
+		F72686C5177D9295005CEEA6 /* SFOAuthInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F72685FE177D9295005CEEA6 /* SFOAuthInfo.m */; };
+		F72686CE177D9295005CEEA6 /* AppledocSettings-Docset.plist in Resources */ = {isa = PBXBuildFile; fileRef = F7268617177D9295005CEEA6 /* AppledocSettings-Docset.plist */; };
+		F72686CF177D9295005CEEA6 /* AppledocSettings-HTML.plist in Resources */ = {isa = PBXBuildFile; fileRef = F7268618177D9295005CEEA6 /* AppledocSettings-HTML.plist */; };
+		F72686D0177D9295005CEEA6 /* AppledocSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = F7268619177D9295005CEEA6 /* AppledocSettings.plist */; };
+		F72686D1177D9295005CEEA6 /* build.xml in Resources */ = {isa = PBXBuildFile; fileRef = F726861A177D9295005CEEA6 /* build.xml */; };
+		F72686D2177D9295005CEEA6 /* SFApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = F7268621177D9295005CEEA6 /* SFApplication.m */; };
+		F72686D3177D9295005CEEA6 /* SFUserActivityMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = F7268623177D9295005CEEA6 /* SFUserActivityMonitor.m */; };
+		F72686D4177D9295005CEEA6 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = F7268626177D9295005CEEA6 /* FMDatabase.m */; };
+		F72686D5177D9295005CEEA6 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F7268628177D9295005CEEA6 /* FMDatabaseAdditions.m */; };
+		F72686D6177D9295005CEEA6 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = F726862A177D9295005CEEA6 /* FMDatabasePool.m */; };
+		F72686D7177D9295005CEEA6 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = F726862C177D9295005CEEA6 /* FMDatabaseQueue.m */; };
+		F72686D8177D9295005CEEA6 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = F726862E177D9295005CEEA6 /* FMResultSet.m */; };
+		F72686D9177D9295005CEEA6 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = F726862F177D9295005CEEA6 /* LICENSE.txt */; };
+		F72686DA177D9295005CEEA6 /* SFIdentityCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = F7268633177D9295005CEEA6 /* SFIdentityCoordinator.m */; };
+		F72686DB177D9295005CEEA6 /* SFIdentityData.m in Sources */ = {isa = PBXBuildFile; fileRef = F7268635177D9295005CEEA6 /* SFIdentityData.m */; };
+		F72686DC177D9295005CEEA6 /* SFAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F7268638177D9295005CEEA6 /* SFAccountManager.m */; };
+		F72686DD177D9295005CEEA6 /* SFAuthenticationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F726863A177D9295005CEEA6 /* SFAuthenticationManager.m */; };
+		F72686DE177D9295005CEEA6 /* SFAuthorizingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F726863C177D9295005CEEA6 /* SFAuthorizingViewController.m */; };
+		F72686DF177D9295005CEEA6 /* SFPasscodeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F726863F177D9295005CEEA6 /* SFPasscodeManager.m */; };
+		F72686E0177D9295005CEEA6 /* SFPasscodeProviderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F7268642177D9295005CEEA6 /* SFPasscodeProviderManager.m */; };
+		F72686E1177D9295005CEEA6 /* SFPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7268644177D9295005CEEA6 /* SFPasscodeViewController.m */; };
+		F72686E2177D9295005CEEA6 /* SFPBKDF2PasscodeProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = F7268646177D9295005CEEA6 /* SFPBKDF2PasscodeProvider.m */; };
+		F72686E3177D9295005CEEA6 /* SFPBKDFData.m in Sources */ = {isa = PBXBuildFile; fileRef = F7268648177D9295005CEEA6 /* SFPBKDFData.m */; };
+		F72686E4177D9295005CEEA6 /* SFSecurityLockout.m in Sources */ = {isa = PBXBuildFile; fileRef = F726864B177D9295005CEEA6 /* SFSecurityLockout.m */; };
+		F72686E5177D9295005CEEA6 /* SFSHA256PasscodeProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = F726864D177D9295005CEEA6 /* SFSHA256PasscodeProvider.m */; };
+		F72686E6177D9295005CEEA6 /* SFQuerySpec.m in Sources */ = {isa = PBXBuildFile; fileRef = F7268650177D9295005CEEA6 /* SFQuerySpec.m */; };
+		F72686E7177D9295005CEEA6 /* SFSmartSqlHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F7268652177D9295005CEEA6 /* SFSmartSqlHelper.m */; };
+		F72686E8177D9295005CEEA6 /* SFSmartStore.m in Sources */ = {isa = PBXBuildFile; fileRef = F7268655177D9295005CEEA6 /* SFSmartStore.m */; };
+		F72686E9177D9295005CEEA6 /* SFSmartStoreDatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F7268657177D9295005CEEA6 /* SFSmartStoreDatabaseManager.m */; };
+		F72686EA177D9295005CEEA6 /* SFSoupIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = F7268659177D9295005CEEA6 /* SFSoupIndex.m */; };
+		F72686EB177D9295005CEEA6 /* SFStoreCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = F726865B177D9295005CEEA6 /* SFStoreCursor.m */; };
+		F72686EC177D9295005CEEA6 /* SqliteAdditions.c in Sources */ = {isa = PBXBuildFile; fileRef = F726865D177D9295005CEEA6 /* SqliteAdditions.c */; };
+		F72686ED177D9295005CEEA6 /* SFSDKTestRequestListener.m in Sources */ = {isa = PBXBuildFile; fileRef = F7268661177D9295005CEEA6 /* SFSDKTestRequestListener.m */; };
+		F72686EE177D9295005CEEA6 /* TestSetupUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F7268663177D9295005CEEA6 /* TestSetupUtils.m */; };
+		F72686EF177D9295005CEEA6 /* NSURL+SFStringUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F7268666177D9295005CEEA6 /* NSURL+SFStringUtils.m */; };
+		F72686F0177D9295005CEEA6 /* SFJsonUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F7268668177D9295005CEEA6 /* SFJsonUtils.m */; };
+		F72686F1177D9295005CEEA6 /* SFRootViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F726866A177D9295005CEEA6 /* SFRootViewManager.m */; };
+		F72686F2177D9295005CEEA6 /* SFSDKCryptoUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F726866C177D9295005CEEA6 /* SFSDKCryptoUtils.m */; };
+		F72686F3177D9295005CEEA6 /* SFSDKResourceUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F726866E177D9295005CEEA6 /* SFSDKResourceUtils.m */; };
+		F72686F4177D9295005CEEA6 /* SFSDKWebUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F7268670177D9295005CEEA6 /* SFSDKWebUtils.m */; };
+		F7268708177D9295005CEEA6 /* test_credentials.json in Resources */ = {isa = PBXBuildFile; fileRef = F726869A177D9295005CEEA6 /* test_credentials.json */; };
+		F72687EF177D9387005CEEA6 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F726871D177D9387005CEEA6 /* libcrypto.a */; };
+		F72687F0177D9387005CEEA6 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F726871E177D9387005CEEA6 /* libssl.a */; };
+		F72687F1177D9387005CEEA6 /* openssl_license.txt in Resources */ = {isa = PBXBuildFile; fileRef = F726876B177D9387005CEEA6 /* openssl_license.txt */; };
+		F72687F2177D9387005CEEA6 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F726876C177D9387005CEEA6 /* README.md */; };
+		F72687F3177D9387005CEEA6 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F72687C6177D9387005CEEA6 /* libRestKit.a */; };
+		F72687F4177D9387005CEEA6 /* commit.txt in Resources */ = {isa = PBXBuildFile; fileRef = F72687C8177D9387005CEEA6 /* commit.txt */; };
+		F72687F5177D9387005CEEA6 /* libSalesforceCommonUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F72687EB177D9387005CEEA6 /* libSalesforceCommonUtils.a */; };
+		F72687F6177D9387005CEEA6 /* libsqlcipher.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F72687ED177D9387005CEEA6 /* libsqlcipher.a */; };
+		F72687F7177D9387005CEEA6 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = F72687EE177D9387005CEEA6 /* LICENSE */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -296,103 +358,6 @@
 		F42D1CB0159B2ECC00ECF3F4 /* Keys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Keys.h; path = Classes/Keys.h; sourceTree = "<group>"; };
 		F42D1CC3159B2F7E00ECF3F4 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utility.h; path = Classes/Utility.h; sourceTree = "<group>"; };
 		F42D1CC4159B2F7E00ECF3F4 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utility.m; path = Classes/Utility.m; sourceTree = "<group>"; };
-		F438D3FE15A013DB006ACD25 /* CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreData.h; sourceTree = "<group>"; };
-		F438D3FF15A013DB006ACD25 /* Errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Errors.h; sourceTree = "<group>"; };
-		F438D40015A013DB006ACD25 /* FileMD5Hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileMD5Hash.h; sourceTree = "<group>"; };
-		F438D40115A013DB006ACD25 /* GCOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCOAuth.h; sourceTree = "<group>"; };
-		F438D40215A013DB006ACD25 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
-		F438D40315A013DB006ACD25 /* lcl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lcl.h; sourceTree = "<group>"; };
-		F438D40415A013DB006ACD25 /* lcl_config_components.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lcl_config_components.h; sourceTree = "<group>"; };
-		F438D40515A013DB006ACD25 /* lcl_config_components.template.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lcl_config_components.template.h; sourceTree = "<group>"; };
-		F438D40615A013DB006ACD25 /* lcl_config_extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lcl_config_extensions.h; sourceTree = "<group>"; };
-		F438D40715A013DB006ACD25 /* lcl_config_extensions.template.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lcl_config_extensions.template.h; sourceTree = "<group>"; };
-		F438D40815A013DB006ACD25 /* lcl_config_logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lcl_config_logger.h; sourceTree = "<group>"; };
-		F438D40915A013DB006ACD25 /* lcl_config_logger.template.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lcl_config_logger.template.h; sourceTree = "<group>"; };
-		F438D40A15A013DB006ACD25 /* LCLNSLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCLNSLog.h; sourceTree = "<group>"; };
-		F438D40B15A013DB006ACD25 /* Network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Network.h; sourceTree = "<group>"; };
-		F438D40C15A013DB006ACD25 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
-		F438D40D15A013DB006ACD25 /* NSData+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+MD5.h"; sourceTree = "<group>"; };
-		F438D40E15A013DB006ACD25 /* NSDictionary+RKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+RKAdditions.h"; sourceTree = "<group>"; };
-		F438D40F15A013DB006ACD25 /* NSDictionary+RKRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+RKRequestSerialization.h"; sourceTree = "<group>"; };
-		F438D41015A013DB006ACD25 /* NSManagedObject+ActiveRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+ActiveRecord.h"; sourceTree = "<group>"; };
-		F438D41115A013DB006ACD25 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
-		F438D41215A013DB006ACD25 /* NSString+RestKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RestKit.h"; sourceTree = "<group>"; };
-		F438D41315A013DB006ACD25 /* NSURL+RestKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+RestKit.h"; sourceTree = "<group>"; };
-		F438D41415A013DB006ACD25 /* ObjectMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectMapping.h; sourceTree = "<group>"; };
-		F438D41515A013DB006ACD25 /* RestKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestKit.h; sourceTree = "<group>"; };
-		F438D41615A013DB006ACD25 /* RKAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKAlert.h; sourceTree = "<group>"; };
-		F438D41715A013DB006ACD25 /* RKClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKClient.h; sourceTree = "<group>"; };
-		F438D41815A013DB006ACD25 /* RKDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKDirectory.h; sourceTree = "<group>"; };
-		F438D41915A013DB006ACD25 /* RKDotNetDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKDotNetDateFormatter.h; sourceTree = "<group>"; };
-		F438D41A15A013DB006ACD25 /* RKDynamicObjectMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKDynamicObjectMapping.h; sourceTree = "<group>"; };
-		F438D41B15A013DB006ACD25 /* RKErrorMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKErrorMessage.h; sourceTree = "<group>"; };
-		F438D41C15A013DB006ACD25 /* RKFixCategoryBug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKFixCategoryBug.h; sourceTree = "<group>"; };
-		F438D41D15A013DB006ACD25 /* RKJSONParserJSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKJSONParserJSONKit.h; sourceTree = "<group>"; };
-		F438D41E15A013DB006ACD25 /* RKLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKLog.h; sourceTree = "<group>"; };
-		F438D41F15A013DB006ACD25 /* RKManagedObjectCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKManagedObjectCache.h; sourceTree = "<group>"; };
-		F438D42015A013DB006ACD25 /* RKManagedObjectLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKManagedObjectLoader.h; sourceTree = "<group>"; };
-		F438D42115A013DB006ACD25 /* RKManagedObjectMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKManagedObjectMapping.h; sourceTree = "<group>"; };
-		F438D42215A013DB006ACD25 /* RKManagedObjectMappingOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKManagedObjectMappingOperation.h; sourceTree = "<group>"; };
-		F438D42315A013DB006ACD25 /* RKManagedObjectSeeder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKManagedObjectSeeder.h; sourceTree = "<group>"; };
-		F438D42415A013DB006ACD25 /* RKManagedObjectStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKManagedObjectStore.h; sourceTree = "<group>"; };
-		F438D42515A013DB006ACD25 /* RKManagedObjectThreadSafeInvocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKManagedObjectThreadSafeInvocation.h; sourceTree = "<group>"; };
-		F438D42615A013DB006ACD25 /* RKMappingOperationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKMappingOperationQueue.h; sourceTree = "<group>"; };
-		F438D42715A013DB006ACD25 /* RKMIMETypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKMIMETypes.h; sourceTree = "<group>"; };
-		F438D42815A013DB006ACD25 /* RKNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKNotifications.h; sourceTree = "<group>"; };
-		F438D42915A013DB006ACD25 /* RKOAuthClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKOAuthClient.h; sourceTree = "<group>"; };
-		F438D42A15A013DB006ACD25 /* RKObjectAttributeMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectAttributeMapping.h; sourceTree = "<group>"; };
-		F438D42B15A013DB006ACD25 /* RKObjectLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectLoader.h; sourceTree = "<group>"; };
-		F438D42C15A013DB006ACD25 /* RKObjectLoader_Internals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectLoader_Internals.h; sourceTree = "<group>"; };
-		F438D42D15A013DB006ACD25 /* RKObjectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectManager.h; sourceTree = "<group>"; };
-		F438D42E15A013DB006ACD25 /* RKObjectMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectMapper.h; sourceTree = "<group>"; };
-		F438D42F15A013DB006ACD25 /* RKObjectMapper_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectMapper_Private.h; sourceTree = "<group>"; };
-		F438D43015A013DB006ACD25 /* RKObjectMapperError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectMapperError.h; sourceTree = "<group>"; };
-		F438D43115A013DB006ACD25 /* RKObjectMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectMapping.h; sourceTree = "<group>"; };
-		F438D43215A013DB006ACD25 /* RKObjectMappingDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectMappingDefinition.h; sourceTree = "<group>"; };
-		F438D43315A013DB006ACD25 /* RKObjectMappingOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectMappingOperation.h; sourceTree = "<group>"; };
-		F438D43415A013DB006ACD25 /* RKObjectMappingProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectMappingProvider.h; sourceTree = "<group>"; };
-		F438D43515A013DB006ACD25 /* RKObjectMappingResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectMappingResult.h; sourceTree = "<group>"; };
-		F438D43615A013DB006ACD25 /* RKObjectPropertyInspector+CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RKObjectPropertyInspector+CoreData.h"; sourceTree = "<group>"; };
-		F438D43715A013DB006ACD25 /* RKObjectPropertyInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectPropertyInspector.h; sourceTree = "<group>"; };
-		F438D43815A013DB006ACD25 /* RKObjectRelationshipMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectRelationshipMapping.h; sourceTree = "<group>"; };
-		F438D43915A013DB006ACD25 /* RKObjectRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectRouter.h; sourceTree = "<group>"; };
-		F438D43A15A013DB006ACD25 /* RKObjectSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectSerializer.h; sourceTree = "<group>"; };
-		F438D43B15A013DB006ACD25 /* RKParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKParams.h; sourceTree = "<group>"; };
-		F438D43C15A013DB006ACD25 /* RKParamsAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKParamsAttachment.h; sourceTree = "<group>"; };
-		F438D43D15A013DB006ACD25 /* RKParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKParser.h; sourceTree = "<group>"; };
-		F438D43E15A013DB006ACD25 /* RKParserRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKParserRegistry.h; sourceTree = "<group>"; };
-		F438D43F15A013DB006ACD25 /* RKPathMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKPathMatcher.h; sourceTree = "<group>"; };
-		F438D44015A013DB006ACD25 /* RKReachabilityObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKReachabilityObserver.h; sourceTree = "<group>"; };
-		F438D44115A013DB006ACD25 /* RKRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKRequest.h; sourceTree = "<group>"; };
-		F438D44215A013DB006ACD25 /* RKRequest_Internals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKRequest_Internals.h; sourceTree = "<group>"; };
-		F438D44315A013DB006ACD25 /* RKRequestCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKRequestCache.h; sourceTree = "<group>"; };
-		F438D44415A013DB006ACD25 /* RKRequestQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKRequestQueue.h; sourceTree = "<group>"; };
-		F438D44515A013DB006ACD25 /* RKRequestSerializable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKRequestSerializable.h; sourceTree = "<group>"; };
-		F438D44615A013DB006ACD25 /* RKRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKRequestSerialization.h; sourceTree = "<group>"; };
-		F438D44715A013DB006ACD25 /* RKResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKResponse.h; sourceTree = "<group>"; };
-		F438D44815A013DB006ACD25 /* RKRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKRouter.h; sourceTree = "<group>"; };
-		F438D44915A013DB006ACD25 /* RKSearchEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKSearchEngine.h; sourceTree = "<group>"; };
-		F438D44A15A013DB006ACD25 /* RKURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKURL.h; sourceTree = "<group>"; };
-		F438D44B15A013DB006ACD25 /* RKXMLParserLibXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKXMLParserLibXML.h; sourceTree = "<group>"; };
-		F438D44C15A013DB006ACD25 /* SOCKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOCKit.h; sourceTree = "<group>"; };
-		F438D44D15A013DB006ACD25 /* Support.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Support.h; sourceTree = "<group>"; };
-		F438D44E15A013DB006ACD25 /* libRestKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libRestKit.a; sourceTree = "<group>"; };
-		F438D45215A013DB006ACD25 /* SFOAuthCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFOAuthCoordinator.h; sourceTree = "<group>"; };
-		F438D45315A013DB006ACD25 /* SFOAuthCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFOAuthCredentials.h; sourceTree = "<group>"; };
-		F438D45415A013DB006ACD25 /* libSalesforceOAuth.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSalesforceOAuth.a; sourceTree = "<group>"; };
-		F438D45815A013DB006ACD25 /* SFRestAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFRestAPI.h; sourceTree = "<group>"; };
-		F438D45915A013DB006ACD25 /* SFRestRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFRestRequest.h; sourceTree = "<group>"; };
-		F438D45A15A013DB006ACD25 /* libSalesforceSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSalesforceSDK.a; sourceTree = "<group>"; };
-		F438D45E15A013DB006ACD25 /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
-		F438D45F15A013DB006ACD25 /* SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson.h; sourceTree = "<group>"; };
-		F438D46015A013DB006ACD25 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
-		F438D46115A013DB006ACD25 /* SBJsonStreamParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParser.h; sourceTree = "<group>"; };
-		F438D46215A013DB006ACD25 /* SBJsonStreamParserAccumulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParserAccumulator.h; sourceTree = "<group>"; };
-		F438D46315A013DB006ACD25 /* SBJsonStreamParserAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParserAdapter.h; sourceTree = "<group>"; };
-		F438D46415A013DB006ACD25 /* SBJsonStreamWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamWriter.h; sourceTree = "<group>"; };
-		F438D46515A013DB006ACD25 /* SBJsonStreamWriterAccumulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamWriterAccumulator.h; sourceTree = "<group>"; };
-		F438D46615A013DB006ACD25 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
-		F438D46715A013DB006ACD25 /* libsbjson-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libsbjson-ios.a"; sourceTree = "<group>"; };
 		F438D46C15A01563006ACD25 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		F43D3CDF15F11D4000CD0EA9 /* CustomBlueToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomBlueToolbar.h; path = Classes/CustomBlueToolbar.h; sourceTree = "<group>"; };
 		F43D3CE015F11D4000CD0EA9 /* CustomBlueToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomBlueToolbar.m; path = Classes/CustomBlueToolbar.m; sourceTree = "<group>"; };
@@ -504,11 +469,7 @@
 		F4D21286159B297400610A18 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Classes/AppDelegate.m; sourceTree = "<group>"; };
 		F4D21288159B297400610A18 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = Classes/RootViewController.h; sourceTree = "<group>"; };
 		F4D21289159B297400610A18 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = Classes/RootViewController.m; sourceTree = "<group>"; };
-		F4D2128C159B297400610A18 /* SFAuthorizingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SFAuthorizingViewController.h; path = NativeRestApp/SFAuthorizingViewController.h; sourceTree = "<group>"; };
-		F4D2128D159B297400610A18 /* SFAuthorizingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SFAuthorizingViewController.m; path = NativeRestApp/SFAuthorizingViewController.m; sourceTree = "<group>"; };
 		F4D2128F159B297400610A18 /* SFAuthorizingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SFAuthorizingViewController.xib; path = NativeRestApp/SFAuthorizingViewController.xib; sourceTree = "<group>"; };
-		F4D21291159B297400610A18 /* SFNativeRestAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SFNativeRestAppDelegate.h; path = NativeRestApp/SFNativeRestAppDelegate.h; sourceTree = "<group>"; };
-		F4D21292159B297400610A18 /* SFNativeRestAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SFNativeRestAppDelegate.m; path = NativeRestApp/SFNativeRestAppDelegate.m; sourceTree = "<group>"; };
 		F4D21298159B297400610A18 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		F4D2131D159B2CBC00610A18 /* AddNoteView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddNoteView.xib; path = Classes/AddNoteView.xib; sourceTree = "<group>"; };
 		F4D2131E159B2CBC00610A18 /* AddNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddNoteViewController.h; path = Classes/AddNoteViewController.h; sourceTree = "<group>"; };
@@ -528,6 +489,327 @@
 		F4D2132E159B2CBC00610A18 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignInViewController.h; path = Classes/SignInViewController.h; sourceTree = "<group>"; };
 		F4D2132F159B2CBC00610A18 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignInViewController.m; path = Classes/SignInViewController.m; sourceTree = "<group>"; };
 		F4D21330159B2CBC00610A18 /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SignInViewController.xib; path = Classes/SignInViewController.xib; sourceTree = "<group>"; };
+		F726857E177D8780005CEEA6 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		F7268580177D87C4005CEEA6 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		F7268582177D8CC7005CEEA6 /* InitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InitialViewController.h; path = Classes/InitialViewController.h; sourceTree = "<group>"; };
+		F7268583177D8CC8005CEEA6 /* InitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InitialViewController.m; path = Classes/InitialViewController.m; sourceTree = "<group>"; };
+		F7268584177D8CC8005CEEA6 /* InitialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InitialViewController.xib; path = Classes/InitialViewController.xib; sourceTree = "<group>"; };
+		F726859F177D9234005CEEA6 /* RKRequestDelegateWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKRequestDelegateWrapper.h; sourceTree = "<group>"; };
+		F72685A0177D9234005CEEA6 /* RKRequestDelegateWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKRequestDelegateWrapper.m; sourceTree = "<group>"; };
+		F72685A1177D9234005CEEA6 /* SFRestAPI+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SFRestAPI+Blocks.h"; sourceTree = "<group>"; };
+		F72685A2177D9234005CEEA6 /* SFRestAPI+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SFRestAPI+Blocks.m"; sourceTree = "<group>"; };
+		F72685A3177D9234005CEEA6 /* SFRestAPI+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SFRestAPI+Internal.h"; sourceTree = "<group>"; };
+		F72685A4177D9234005CEEA6 /* SFRestAPI+QueryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SFRestAPI+QueryBuilder.h"; sourceTree = "<group>"; };
+		F72685A5177D9234005CEEA6 /* SFRestAPI+QueryBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SFRestAPI+QueryBuilder.m"; sourceTree = "<group>"; };
+		F72685A6177D9234005CEEA6 /* SFRestAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFRestAPI.h; sourceTree = "<group>"; };
+		F72685A7177D9234005CEEA6 /* SFRestAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFRestAPI.m; sourceTree = "<group>"; };
+		F72685A8177D9234005CEEA6 /* SFRestRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFRestRequest.h; sourceTree = "<group>"; };
+		F72685A9177D9234005CEEA6 /* SFRestRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFRestRequest.m; sourceTree = "<group>"; };
+		F72685AA177D9234005CEEA6 /* SFSessionRefresher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSessionRefresher.h; sourceTree = "<group>"; };
+		F72685AB177D9234005CEEA6 /* SFSessionRefresher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSessionRefresher.m; sourceTree = "<group>"; };
+		F72685AC177D9234005CEEA6 /* SalesforceNativeSDK-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SalesforceNativeSDK-Prefix.pch"; sourceTree = "<group>"; };
+		F72685B7177D9294005CEEA6 /* ant-contrib-1.0b3.jar */ = {isa = PBXFileReference; lastKnownFileType = archive.jar; path = "ant-contrib-1.0b3.jar"; sourceTree = "<group>"; };
+		F72685B8177D9294005CEEA6 /* gcovr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gcovr; sourceTree = "<group>"; };
+		F72685BE177D9294005CEEA6 /* SalesforceSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SalesforceSDKResources.bundle; sourceTree = "<group>"; };
+		F72685F0177D9295005CEEA6 /* SFOAuth_NSString+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SFOAuth_NSString+Additions.h"; sourceTree = "<group>"; };
+		F72685F1177D9295005CEEA6 /* SFOAuth_NSString+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SFOAuth_NSString+Additions.m"; sourceTree = "<group>"; };
+		F72685F2177D9295005CEEA6 /* SFOAuth_UIDevice+Hardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SFOAuth_UIDevice+Hardware.h"; sourceTree = "<group>"; };
+		F72685F3177D9295005CEEA6 /* SFOAuth_UIDevice+Hardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SFOAuth_UIDevice+Hardware.m"; sourceTree = "<group>"; };
+		F72685F4177D9295005CEEA6 /* SFOAuthCoordinator+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SFOAuthCoordinator+Internal.h"; sourceTree = "<group>"; };
+		F72685F5177D9295005CEEA6 /* SFOAuthCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFOAuthCoordinator.h; sourceTree = "<group>"; };
+		F72685F6177D9295005CEEA6 /* SFOAuthCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFOAuthCoordinator.m; sourceTree = "<group>"; };
+		F72685F7177D9295005CEEA6 /* SFOAuthCredentials+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SFOAuthCredentials+Internal.h"; sourceTree = "<group>"; };
+		F72685F8177D9295005CEEA6 /* SFOAuthCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFOAuthCredentials.h; sourceTree = "<group>"; };
+		F72685F9177D9295005CEEA6 /* SFOAuthCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFOAuthCredentials.m; sourceTree = "<group>"; };
+		F72685FA177D9295005CEEA6 /* SFOAuthCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFOAuthCrypto.h; sourceTree = "<group>"; };
+		F72685FB177D9295005CEEA6 /* SFOAuthCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFOAuthCrypto.m; sourceTree = "<group>"; };
+		F72685FC177D9295005CEEA6 /* SFOAuthInfo+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SFOAuthInfo+Internal.h"; sourceTree = "<group>"; };
+		F72685FD177D9295005CEEA6 /* SFOAuthInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFOAuthInfo.h; sourceTree = "<group>"; };
+		F72685FE177D9295005CEEA6 /* SFOAuthInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFOAuthInfo.m; sourceTree = "<group>"; };
+		F72685FF177D9295005CEEA6 /* SalesforceOAuth-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SalesforceOAuth-Prefix.pch"; sourceTree = "<group>"; };
+		F7268617177D9295005CEEA6 /* AppledocSettings-Docset.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AppledocSettings-Docset.plist"; sourceTree = "<group>"; };
+		F7268618177D9295005CEEA6 /* AppledocSettings-HTML.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AppledocSettings-HTML.plist"; sourceTree = "<group>"; };
+		F7268619177D9295005CEEA6 /* AppledocSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AppledocSettings.plist; sourceTree = "<group>"; };
+		F726861A177D9295005CEEA6 /* build.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = build.xml; sourceTree = "<group>"; };
+		F726861F177D9295005CEEA6 /* SalesforceSDKConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SalesforceSDKConstants.h; sourceTree = "<group>"; };
+		F7268620177D9295005CEEA6 /* SFApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFApplication.h; sourceTree = "<group>"; };
+		F7268621177D9295005CEEA6 /* SFApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFApplication.m; sourceTree = "<group>"; };
+		F7268622177D9295005CEEA6 /* SFUserActivityMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFUserActivityMonitor.h; sourceTree = "<group>"; };
+		F7268623177D9295005CEEA6 /* SFUserActivityMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFUserActivityMonitor.m; sourceTree = "<group>"; };
+		F7268625177D9295005CEEA6 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		F7268626177D9295005CEEA6 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		F7268627177D9295005CEEA6 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		F7268628177D9295005CEEA6 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		F7268629177D9295005CEEA6 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		F726862A177D9295005CEEA6 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		F726862B177D9295005CEEA6 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		F726862C177D9295005CEEA6 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		F726862D177D9295005CEEA6 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		F726862E177D9295005CEEA6 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		F726862F177D9295005CEEA6 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		F7268631177D9295005CEEA6 /* SFIdentityCoordinator+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SFIdentityCoordinator+Internal.h"; sourceTree = "<group>"; };
+		F7268632177D9295005CEEA6 /* SFIdentityCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFIdentityCoordinator.h; sourceTree = "<group>"; };
+		F7268633177D9295005CEEA6 /* SFIdentityCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFIdentityCoordinator.m; sourceTree = "<group>"; };
+		F7268634177D9295005CEEA6 /* SFIdentityData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFIdentityData.h; sourceTree = "<group>"; };
+		F7268635177D9295005CEEA6 /* SFIdentityData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFIdentityData.m; sourceTree = "<group>"; };
+		F7268637177D9295005CEEA6 /* SFAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFAccountManager.h; sourceTree = "<group>"; };
+		F7268638177D9295005CEEA6 /* SFAccountManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFAccountManager.m; sourceTree = "<group>"; };
+		F7268639177D9295005CEEA6 /* SFAuthenticationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFAuthenticationManager.h; sourceTree = "<group>"; };
+		F726863A177D9295005CEEA6 /* SFAuthenticationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFAuthenticationManager.m; sourceTree = "<group>"; };
+		F726863B177D9295005CEEA6 /* SFAuthorizingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFAuthorizingViewController.h; sourceTree = "<group>"; };
+		F726863C177D9295005CEEA6 /* SFAuthorizingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFAuthorizingViewController.m; sourceTree = "<group>"; };
+		F726863D177D9295005CEEA6 /* SFPasscodeManager+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SFPasscodeManager+Internal.h"; sourceTree = "<group>"; };
+		F726863E177D9295005CEEA6 /* SFPasscodeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFPasscodeManager.h; sourceTree = "<group>"; };
+		F726863F177D9295005CEEA6 /* SFPasscodeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFPasscodeManager.m; sourceTree = "<group>"; };
+		F7268640177D9295005CEEA6 /* SFPasscodeProviderManager+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SFPasscodeProviderManager+Internal.h"; sourceTree = "<group>"; };
+		F7268641177D9295005CEEA6 /* SFPasscodeProviderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFPasscodeProviderManager.h; sourceTree = "<group>"; };
+		F7268642177D9295005CEEA6 /* SFPasscodeProviderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFPasscodeProviderManager.m; sourceTree = "<group>"; };
+		F7268643177D9295005CEEA6 /* SFPasscodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFPasscodeViewController.h; sourceTree = "<group>"; };
+		F7268644177D9295005CEEA6 /* SFPasscodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFPasscodeViewController.m; sourceTree = "<group>"; };
+		F7268645177D9295005CEEA6 /* SFPBKDF2PasscodeProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFPBKDF2PasscodeProvider.h; sourceTree = "<group>"; };
+		F7268646177D9295005CEEA6 /* SFPBKDF2PasscodeProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFPBKDF2PasscodeProvider.m; sourceTree = "<group>"; };
+		F7268647177D9295005CEEA6 /* SFPBKDFData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFPBKDFData.h; sourceTree = "<group>"; };
+		F7268648177D9295005CEEA6 /* SFPBKDFData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFPBKDFData.m; sourceTree = "<group>"; };
+		F7268649177D9295005CEEA6 /* SFSecurityLockout+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SFSecurityLockout+Internal.h"; sourceTree = "<group>"; };
+		F726864A177D9295005CEEA6 /* SFSecurityLockout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSecurityLockout.h; sourceTree = "<group>"; };
+		F726864B177D9295005CEEA6 /* SFSecurityLockout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSecurityLockout.m; sourceTree = "<group>"; };
+		F726864C177D9295005CEEA6 /* SFSHA256PasscodeProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSHA256PasscodeProvider.h; sourceTree = "<group>"; };
+		F726864D177D9295005CEEA6 /* SFSHA256PasscodeProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSHA256PasscodeProvider.m; sourceTree = "<group>"; };
+		F726864F177D9295005CEEA6 /* SFQuerySpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFQuerySpec.h; sourceTree = "<group>"; };
+		F7268650177D9295005CEEA6 /* SFQuerySpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFQuerySpec.m; sourceTree = "<group>"; };
+		F7268651177D9295005CEEA6 /* SFSmartSqlHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSmartSqlHelper.h; sourceTree = "<group>"; };
+		F7268652177D9295005CEEA6 /* SFSmartSqlHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSmartSqlHelper.m; sourceTree = "<group>"; };
+		F7268653177D9295005CEEA6 /* SFSmartStore+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SFSmartStore+Internal.h"; sourceTree = "<group>"; };
+		F7268654177D9295005CEEA6 /* SFSmartStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSmartStore.h; sourceTree = "<group>"; };
+		F7268655177D9295005CEEA6 /* SFSmartStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSmartStore.m; sourceTree = "<group>"; };
+		F7268656177D9295005CEEA6 /* SFSmartStoreDatabaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSmartStoreDatabaseManager.h; sourceTree = "<group>"; };
+		F7268657177D9295005CEEA6 /* SFSmartStoreDatabaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSmartStoreDatabaseManager.m; sourceTree = "<group>"; };
+		F7268658177D9295005CEEA6 /* SFSoupIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSoupIndex.h; sourceTree = "<group>"; };
+		F7268659177D9295005CEEA6 /* SFSoupIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSoupIndex.m; sourceTree = "<group>"; };
+		F726865A177D9295005CEEA6 /* SFStoreCursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFStoreCursor.h; sourceTree = "<group>"; };
+		F726865B177D9295005CEEA6 /* SFStoreCursor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFStoreCursor.m; sourceTree = "<group>"; };
+		F726865D177D9295005CEEA6 /* SqliteAdditions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SqliteAdditions.c; sourceTree = "<group>"; };
+		F726865E177D9295005CEEA6 /* SqliteAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SqliteAdditions.h; sourceTree = "<group>"; };
+		F7268660177D9295005CEEA6 /* SFSDKTestRequestListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSDKTestRequestListener.h; sourceTree = "<group>"; };
+		F7268661177D9295005CEEA6 /* SFSDKTestRequestListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSDKTestRequestListener.m; sourceTree = "<group>"; };
+		F7268662177D9295005CEEA6 /* TestSetupUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestSetupUtils.h; sourceTree = "<group>"; };
+		F7268663177D9295005CEEA6 /* TestSetupUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestSetupUtils.m; sourceTree = "<group>"; };
+		F7268665177D9295005CEEA6 /* NSURL+SFStringUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+SFStringUtils.h"; sourceTree = "<group>"; };
+		F7268666177D9295005CEEA6 /* NSURL+SFStringUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+SFStringUtils.m"; sourceTree = "<group>"; };
+		F7268667177D9295005CEEA6 /* SFJsonUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFJsonUtils.h; sourceTree = "<group>"; };
+		F7268668177D9295005CEEA6 /* SFJsonUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFJsonUtils.m; sourceTree = "<group>"; };
+		F7268669177D9295005CEEA6 /* SFRootViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFRootViewManager.h; sourceTree = "<group>"; };
+		F726866A177D9295005CEEA6 /* SFRootViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFRootViewManager.m; sourceTree = "<group>"; };
+		F726866B177D9295005CEEA6 /* SFSDKCryptoUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSDKCryptoUtils.h; sourceTree = "<group>"; };
+		F726866C177D9295005CEEA6 /* SFSDKCryptoUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSDKCryptoUtils.m; sourceTree = "<group>"; };
+		F726866D177D9295005CEEA6 /* SFSDKResourceUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSDKResourceUtils.h; sourceTree = "<group>"; };
+		F726866E177D9295005CEEA6 /* SFSDKResourceUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSDKResourceUtils.m; sourceTree = "<group>"; };
+		F726866F177D9295005CEEA6 /* SFSDKWebUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSDKWebUtils.h; sourceTree = "<group>"; };
+		F7268670177D9295005CEEA6 /* SFSDKWebUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSDKWebUtils.m; sourceTree = "<group>"; };
+		F7268671177D9295005CEEA6 /* SalesforceSDKCore-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SalesforceSDKCore-Prefix.pch"; sourceTree = "<group>"; };
+		F726869A177D9295005CEEA6 /* test_credentials.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test_credentials.json; sourceTree = "<group>"; };
+		F726871D177D9387005CEEA6 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
+		F726871E177D9387005CEEA6 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
+		F7268720177D9387005CEEA6 /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
+		F7268721177D9387005CEEA6 /* asn1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn1.h; sourceTree = "<group>"; };
+		F7268722177D9387005CEEA6 /* asn1_mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn1_mac.h; sourceTree = "<group>"; };
+		F7268723177D9387005CEEA6 /* asn1t.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn1t.h; sourceTree = "<group>"; };
+		F7268724177D9387005CEEA6 /* bio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bio.h; sourceTree = "<group>"; };
+		F7268725177D9387005CEEA6 /* blowfish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blowfish.h; sourceTree = "<group>"; };
+		F7268726177D9387005CEEA6 /* bn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bn.h; sourceTree = "<group>"; };
+		F7268727177D9387005CEEA6 /* buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buffer.h; sourceTree = "<group>"; };
+		F7268728177D9387005CEEA6 /* camellia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = camellia.h; sourceTree = "<group>"; };
+		F7268729177D9387005CEEA6 /* cast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cast.h; sourceTree = "<group>"; };
+		F726872A177D9387005CEEA6 /* cmac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmac.h; sourceTree = "<group>"; };
+		F726872B177D9387005CEEA6 /* cms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cms.h; sourceTree = "<group>"; };
+		F726872C177D9387005CEEA6 /* comp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = comp.h; sourceTree = "<group>"; };
+		F726872D177D9387005CEEA6 /* conf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = conf.h; sourceTree = "<group>"; };
+		F726872E177D9387005CEEA6 /* conf_api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = conf_api.h; sourceTree = "<group>"; };
+		F726872F177D9387005CEEA6 /* crypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypto.h; sourceTree = "<group>"; };
+		F7268730177D9387005CEEA6 /* des.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = des.h; sourceTree = "<group>"; };
+		F7268731177D9387005CEEA6 /* des_old.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = des_old.h; sourceTree = "<group>"; };
+		F7268732177D9387005CEEA6 /* dh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dh.h; sourceTree = "<group>"; };
+		F7268733177D9387005CEEA6 /* dsa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dsa.h; sourceTree = "<group>"; };
+		F7268734177D9387005CEEA6 /* dso.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dso.h; sourceTree = "<group>"; };
+		F7268735177D9387005CEEA6 /* dtls1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtls1.h; sourceTree = "<group>"; };
+		F7268736177D9387005CEEA6 /* e_os2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = e_os2.h; sourceTree = "<group>"; };
+		F7268737177D9387005CEEA6 /* ebcdic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ebcdic.h; sourceTree = "<group>"; };
+		F7268738177D9387005CEEA6 /* ec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ec.h; sourceTree = "<group>"; };
+		F7268739177D9387005CEEA6 /* ecdh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ecdh.h; sourceTree = "<group>"; };
+		F726873A177D9387005CEEA6 /* ecdsa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ecdsa.h; sourceTree = "<group>"; };
+		F726873B177D9387005CEEA6 /* engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = engine.h; sourceTree = "<group>"; };
+		F726873C177D9387005CEEA6 /* err.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = err.h; sourceTree = "<group>"; };
+		F726873D177D9387005CEEA6 /* evp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = evp.h; sourceTree = "<group>"; };
+		F726873E177D9387005CEEA6 /* hmac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hmac.h; sourceTree = "<group>"; };
+		F726873F177D9387005CEEA6 /* idea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = idea.h; sourceTree = "<group>"; };
+		F7268740177D9387005CEEA6 /* krb5_asn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = krb5_asn.h; sourceTree = "<group>"; };
+		F7268741177D9387005CEEA6 /* kssl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kssl.h; sourceTree = "<group>"; };
+		F7268742177D9387005CEEA6 /* lhash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lhash.h; sourceTree = "<group>"; };
+		F7268743177D9387005CEEA6 /* md4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md4.h; sourceTree = "<group>"; };
+		F7268744177D9387005CEEA6 /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
+		F7268745177D9387005CEEA6 /* mdc2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mdc2.h; sourceTree = "<group>"; };
+		F7268746177D9387005CEEA6 /* modes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modes.h; sourceTree = "<group>"; };
+		F7268747177D9387005CEEA6 /* obj_mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = obj_mac.h; sourceTree = "<group>"; };
+		F7268748177D9387005CEEA6 /* objects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = objects.h; sourceTree = "<group>"; };
+		F7268749177D9387005CEEA6 /* ocsp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ocsp.h; sourceTree = "<group>"; };
+		F726874A177D9387005CEEA6 /* opensslconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = opensslconf.h; sourceTree = "<group>"; };
+		F726874B177D9387005CEEA6 /* opensslv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = opensslv.h; sourceTree = "<group>"; };
+		F726874C177D9387005CEEA6 /* ossl_typ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ossl_typ.h; sourceTree = "<group>"; };
+		F726874D177D9387005CEEA6 /* pem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pem.h; sourceTree = "<group>"; };
+		F726874E177D9387005CEEA6 /* pem2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pem2.h; sourceTree = "<group>"; };
+		F726874F177D9387005CEEA6 /* pkcs12.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs12.h; sourceTree = "<group>"; };
+		F7268750177D9387005CEEA6 /* pkcs7.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs7.h; sourceTree = "<group>"; };
+		F7268751177D9387005CEEA6 /* pqueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pqueue.h; sourceTree = "<group>"; };
+		F7268752177D9387005CEEA6 /* rand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rand.h; sourceTree = "<group>"; };
+		F7268753177D9387005CEEA6 /* rc2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rc2.h; sourceTree = "<group>"; };
+		F7268754177D9387005CEEA6 /* rc4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rc4.h; sourceTree = "<group>"; };
+		F7268755177D9387005CEEA6 /* ripemd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ripemd.h; sourceTree = "<group>"; };
+		F7268756177D9387005CEEA6 /* rsa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rsa.h; sourceTree = "<group>"; };
+		F7268757177D9387005CEEA6 /* safestack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = safestack.h; sourceTree = "<group>"; };
+		F7268758177D9387005CEEA6 /* seed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = seed.h; sourceTree = "<group>"; };
+		F7268759177D9387005CEEA6 /* sha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha.h; sourceTree = "<group>"; };
+		F726875A177D9387005CEEA6 /* srp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = srp.h; sourceTree = "<group>"; };
+		F726875B177D9387005CEEA6 /* srtp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = srtp.h; sourceTree = "<group>"; };
+		F726875C177D9387005CEEA6 /* ssl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssl.h; sourceTree = "<group>"; };
+		F726875D177D9387005CEEA6 /* ssl2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssl2.h; sourceTree = "<group>"; };
+		F726875E177D9387005CEEA6 /* ssl23.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssl23.h; sourceTree = "<group>"; };
+		F726875F177D9387005CEEA6 /* ssl3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssl3.h; sourceTree = "<group>"; };
+		F7268760177D9387005CEEA6 /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stack.h; sourceTree = "<group>"; };
+		F7268761177D9387005CEEA6 /* symhacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = symhacks.h; sourceTree = "<group>"; };
+		F7268762177D9387005CEEA6 /* tls1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tls1.h; sourceTree = "<group>"; };
+		F7268763177D9387005CEEA6 /* ts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ts.h; sourceTree = "<group>"; };
+		F7268764177D9387005CEEA6 /* txt_db.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = txt_db.h; sourceTree = "<group>"; };
+		F7268765177D9387005CEEA6 /* ui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ui.h; sourceTree = "<group>"; };
+		F7268766177D9387005CEEA6 /* ui_compat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ui_compat.h; sourceTree = "<group>"; };
+		F7268767177D9387005CEEA6 /* whrlpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = whrlpool.h; sourceTree = "<group>"; };
+		F7268768177D9387005CEEA6 /* x509.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509.h; sourceTree = "<group>"; };
+		F7268769177D9387005CEEA6 /* x509_vfy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509_vfy.h; sourceTree = "<group>"; };
+		F726876A177D9387005CEEA6 /* x509v3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509v3.h; sourceTree = "<group>"; };
+		F726876B177D9387005CEEA6 /* openssl_license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = openssl_license.txt; sourceTree = "<group>"; };
+		F726876C177D9387005CEEA6 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		F7268770177D9387005CEEA6 /* CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreData.h; sourceTree = "<group>"; };
+		F7268771177D9387005CEEA6 /* Errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Errors.h; sourceTree = "<group>"; };
+		F7268772177D9387005CEEA6 /* FileMD5Hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileMD5Hash.h; sourceTree = "<group>"; };
+		F7268773177D9387005CEEA6 /* FileMD5Hash_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileMD5Hash_Prefix.pch; sourceTree = "<group>"; };
+		F7268774177D9387005CEEA6 /* GCOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCOAuth.h; sourceTree = "<group>"; };
+		F7268775177D9387005CEEA6 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
+		F7268776177D9387005CEEA6 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		F7268777177D9387005CEEA6 /* lcl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lcl.h; sourceTree = "<group>"; };
+		F7268778177D9387005CEEA6 /* lcl_config_components.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lcl_config_components.h; sourceTree = "<group>"; };
+		F7268779177D9387005CEEA6 /* lcl_config_components.template.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lcl_config_components.template.h; sourceTree = "<group>"; };
+		F726877A177D9387005CEEA6 /* lcl_config_extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lcl_config_extensions.h; sourceTree = "<group>"; };
+		F726877B177D9387005CEEA6 /* lcl_config_extensions.template.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lcl_config_extensions.template.h; sourceTree = "<group>"; };
+		F726877C177D9387005CEEA6 /* lcl_config_logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lcl_config_logger.h; sourceTree = "<group>"; };
+		F726877D177D9387005CEEA6 /* lcl_config_logger.template.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lcl_config_logger.template.h; sourceTree = "<group>"; };
+		F726877E177D9387005CEEA6 /* LCLNSLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCLNSLog.h; sourceTree = "<group>"; };
+		F726877F177D9387005CEEA6 /* Network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Network.h; sourceTree = "<group>"; };
+		F7268780177D9387005CEEA6 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
+		F7268781177D9387005CEEA6 /* NSData+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+MD5.h"; sourceTree = "<group>"; };
+		F7268782177D9387005CEEA6 /* NSDictionary+RKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+RKAdditions.h"; sourceTree = "<group>"; };
+		F7268783177D9387005CEEA6 /* NSDictionary+RKRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+RKRequestSerialization.h"; sourceTree = "<group>"; };
+		F7268784177D9387005CEEA6 /* NSManagedObject+ActiveRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+ActiveRecord.h"; sourceTree = "<group>"; };
+		F7268785177D9387005CEEA6 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
+		F7268786177D9387005CEEA6 /* NSString+RestKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RestKit.h"; sourceTree = "<group>"; };
+		F7268787177D9387005CEEA6 /* NSURL+RestKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+RestKit.h"; sourceTree = "<group>"; };
+		F7268788177D9387005CEEA6 /* ObjectMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectMapping.h; sourceTree = "<group>"; };
+		F7268789177D9387005CEEA6 /* RestKit-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RestKit-Prefix.pch"; sourceTree = "<group>"; };
+		F726878A177D9387005CEEA6 /* RestKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestKit.h; sourceTree = "<group>"; };
+		F726878B177D9387005CEEA6 /* RKAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKAlert.h; sourceTree = "<group>"; };
+		F726878C177D9387005CEEA6 /* RKClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKClient.h; sourceTree = "<group>"; };
+		F726878D177D9387005CEEA6 /* RKConfigurationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKConfigurationDelegate.h; sourceTree = "<group>"; };
+		F726878E177D9387005CEEA6 /* RKDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKDirectory.h; sourceTree = "<group>"; };
+		F726878F177D9387005CEEA6 /* RKDotNetDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKDotNetDateFormatter.h; sourceTree = "<group>"; };
+		F7268790177D9387005CEEA6 /* RKDynamicObjectMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKDynamicObjectMapping.h; sourceTree = "<group>"; };
+		F7268791177D9387005CEEA6 /* RKErrorMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKErrorMessage.h; sourceTree = "<group>"; };
+		F7268792177D9387005CEEA6 /* RKFixCategoryBug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKFixCategoryBug.h; sourceTree = "<group>"; };
+		F7268793177D9387005CEEA6 /* RKJSONParserJSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKJSONParserJSONKit.h; sourceTree = "<group>"; };
+		F7268794177D9387005CEEA6 /* RKLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKLog.h; sourceTree = "<group>"; };
+		F7268795177D9387005CEEA6 /* RKManagedObjectCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKManagedObjectCache.h; sourceTree = "<group>"; };
+		F7268796177D9387005CEEA6 /* RKManagedObjectLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKManagedObjectLoader.h; sourceTree = "<group>"; };
+		F7268797177D9387005CEEA6 /* RKManagedObjectMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKManagedObjectMapping.h; sourceTree = "<group>"; };
+		F7268798177D9387005CEEA6 /* RKManagedObjectMappingOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKManagedObjectMappingOperation.h; sourceTree = "<group>"; };
+		F7268799177D9387005CEEA6 /* RKManagedObjectSeeder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKManagedObjectSeeder.h; sourceTree = "<group>"; };
+		F726879A177D9387005CEEA6 /* RKManagedObjectStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKManagedObjectStore.h; sourceTree = "<group>"; };
+		F726879B177D9387005CEEA6 /* RKManagedObjectThreadSafeInvocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKManagedObjectThreadSafeInvocation.h; sourceTree = "<group>"; };
+		F726879C177D9387005CEEA6 /* RKMappingOperationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKMappingOperationQueue.h; sourceTree = "<group>"; };
+		F726879D177D9387005CEEA6 /* RKMIMETypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKMIMETypes.h; sourceTree = "<group>"; };
+		F726879E177D9387005CEEA6 /* RKNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKNotifications.h; sourceTree = "<group>"; };
+		F726879F177D9387005CEEA6 /* RKOAuthClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKOAuthClient.h; sourceTree = "<group>"; };
+		F72687A0177D9387005CEEA6 /* RKObjectAttributeMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectAttributeMapping.h; sourceTree = "<group>"; };
+		F72687A1177D9387005CEEA6 /* RKObjectLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectLoader.h; sourceTree = "<group>"; };
+		F72687A2177D9387005CEEA6 /* RKObjectLoader_Internals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectLoader_Internals.h; sourceTree = "<group>"; };
+		F72687A3177D9387005CEEA6 /* RKObjectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectManager.h; sourceTree = "<group>"; };
+		F72687A4177D9387005CEEA6 /* RKObjectMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectMapper.h; sourceTree = "<group>"; };
+		F72687A5177D9387005CEEA6 /* RKObjectMapper_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectMapper_Private.h; sourceTree = "<group>"; };
+		F72687A6177D9387005CEEA6 /* RKObjectMapperError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectMapperError.h; sourceTree = "<group>"; };
+		F72687A7177D9387005CEEA6 /* RKObjectMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectMapping.h; sourceTree = "<group>"; };
+		F72687A8177D9387005CEEA6 /* RKObjectMappingDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectMappingDefinition.h; sourceTree = "<group>"; };
+		F72687A9177D9387005CEEA6 /* RKObjectMappingOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectMappingOperation.h; sourceTree = "<group>"; };
+		F72687AA177D9387005CEEA6 /* RKObjectMappingProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectMappingProvider.h; sourceTree = "<group>"; };
+		F72687AB177D9387005CEEA6 /* RKObjectMappingResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectMappingResult.h; sourceTree = "<group>"; };
+		F72687AC177D9387005CEEA6 /* RKObjectPaginator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectPaginator.h; sourceTree = "<group>"; };
+		F72687AD177D9387005CEEA6 /* RKObjectPropertyInspector+CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RKObjectPropertyInspector+CoreData.h"; sourceTree = "<group>"; };
+		F72687AE177D9387005CEEA6 /* RKObjectPropertyInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectPropertyInspector.h; sourceTree = "<group>"; };
+		F72687AF177D9387005CEEA6 /* RKObjectRelationshipMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectRelationshipMapping.h; sourceTree = "<group>"; };
+		F72687B0177D9387005CEEA6 /* RKObjectRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectRouter.h; sourceTree = "<group>"; };
+		F72687B1177D9387005CEEA6 /* RKObjectSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObjectSerializer.h; sourceTree = "<group>"; };
+		F72687B2177D9387005CEEA6 /* RKOrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKOrderedDictionary.h; sourceTree = "<group>"; };
+		F72687B3177D9387005CEEA6 /* RKParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKParams.h; sourceTree = "<group>"; };
+		F72687B4177D9387005CEEA6 /* RKParamsAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKParamsAttachment.h; sourceTree = "<group>"; };
+		F72687B5177D9387005CEEA6 /* RKParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKParser.h; sourceTree = "<group>"; };
+		F72687B6177D9387005CEEA6 /* RKParserRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKParserRegistry.h; sourceTree = "<group>"; };
+		F72687B7177D9387005CEEA6 /* RKPathMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKPathMatcher.h; sourceTree = "<group>"; };
+		F72687B8177D9387005CEEA6 /* RKReachabilityObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKReachabilityObserver.h; sourceTree = "<group>"; };
+		F72687B9177D9387005CEEA6 /* RKRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKRequest.h; sourceTree = "<group>"; };
+		F72687BA177D9387005CEEA6 /* RKRequest_Internals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKRequest_Internals.h; sourceTree = "<group>"; };
+		F72687BB177D9387005CEEA6 /* RKRequestCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKRequestCache.h; sourceTree = "<group>"; };
+		F72687BC177D9387005CEEA6 /* RKRequestQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKRequestQueue.h; sourceTree = "<group>"; };
+		F72687BD177D9387005CEEA6 /* RKRequestSerializable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKRequestSerializable.h; sourceTree = "<group>"; };
+		F72687BE177D9387005CEEA6 /* RKRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKRequestSerialization.h; sourceTree = "<group>"; };
+		F72687BF177D9387005CEEA6 /* RKResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKResponse.h; sourceTree = "<group>"; };
+		F72687C0177D9387005CEEA6 /* RKRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKRouter.h; sourceTree = "<group>"; };
+		F72687C1177D9387005CEEA6 /* RKSearchEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKSearchEngine.h; sourceTree = "<group>"; };
+		F72687C2177D9387005CEEA6 /* RKURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKURL.h; sourceTree = "<group>"; };
+		F72687C3177D9387005CEEA6 /* RKXMLParserLibXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKXMLParserLibXML.h; sourceTree = "<group>"; };
+		F72687C4177D9387005CEEA6 /* SOCKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOCKit.h; sourceTree = "<group>"; };
+		F72687C5177D9387005CEEA6 /* Support.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Support.h; sourceTree = "<group>"; };
+		F72687C6177D9387005CEEA6 /* libRestKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libRestKit.a; sourceTree = "<group>"; };
+		F72687C8177D9387005CEEA6 /* commit.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = commit.txt; sourceTree = "<group>"; };
+		F72687CB177D9387005CEEA6 /* NSData+SFAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+SFAdditions.h"; sourceTree = "<group>"; };
+		F72687CC177D9387005CEEA6 /* NSDictionary+SFAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+SFAdditions.h"; sourceTree = "<group>"; };
+		F72687CD177D9387005CEEA6 /* NSMutableAttributedString+SFAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+SFAdditions.h"; sourceTree = "<group>"; };
+		F72687CE177D9387005CEEA6 /* NSObject+SFBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SFBlocks.h"; sourceTree = "<group>"; };
+		F72687CF177D9387005CEEA6 /* NSString+SFAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SFAdditions.h"; sourceTree = "<group>"; };
+		F72687D0177D9387005CEEA6 /* NSString+SFPathAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SFPathAdditions.h"; sourceTree = "<group>"; };
+		F72687D1177D9387005CEEA6 /* NSURL+SFAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+SFAdditions.h"; sourceTree = "<group>"; };
+		F72687D2177D9387005CEEA6 /* SalesforceCommonUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SalesforceCommonUtils.h; sourceTree = "<group>"; };
+		F72687D3177D9387005CEEA6 /* SFCoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFCoverView.h; sourceTree = "<group>"; };
+		F72687D4177D9387005CEEA6 /* SFCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFCrypto.h; sourceTree = "<group>"; };
+		F72687D5177D9387005CEEA6 /* SFDateUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDateUtil.h; sourceTree = "<group>"; };
+		F72687D6177D9387005CEEA6 /* SFDeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDeviceInfo.h; sourceTree = "<group>"; };
+		F72687D7177D9387005CEEA6 /* SFEncryptionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFEncryptionManager.h; sourceTree = "<group>"; };
+		F72687D8177D9387005CEEA6 /* SFGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFGradientView.h; sourceTree = "<group>"; };
+		F72687D9177D9387005CEEA6 /* SFInactivityTimerCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFInactivityTimerCenter.h; sourceTree = "<group>"; };
+		F72687DA177D9387005CEEA6 /* SFKeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFKeychainItemWrapper.h; sourceTree = "<group>"; };
+		F72687DB177D9387005CEEA6 /* SFLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFLogger.h; sourceTree = "<group>"; };
+		F72687DC177D9387005CEEA6 /* SFMD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFMD5.h; sourceTree = "<group>"; };
+		F72687DD177D9387005CEEA6 /* SFPadPickListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFPadPickListViewController.h; sourceTree = "<group>"; };
+		F72687DE177D9387005CEEA6 /* SFPathUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFPathUtil.h; sourceTree = "<group>"; };
+		F72687DF177D9387005CEEA6 /* SFPhonePickListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFPhonePickListViewController.h; sourceTree = "<group>"; };
+		F72687E0177D9387005CEEA6 /* SFPickListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFPickListViewController.h; sourceTree = "<group>"; };
+		F72687E1177D9387005CEEA6 /* SFSoqlBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSoqlBuilder.h; sourceTree = "<group>"; };
+		F72687E2177D9387005CEEA6 /* SFSoslBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSoslBuilder.h; sourceTree = "<group>"; };
+		F72687E3177D9387005CEEA6 /* SFSoslReturningBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSoslReturningBuilder.h; sourceTree = "<group>"; };
+		F72687E4177D9387005CEEA6 /* SFTestContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFTestContext.h; sourceTree = "<group>"; };
+		F72687E5177D9387005CEEA6 /* SFUIUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFUIUtils.h; sourceTree = "<group>"; };
+		F72687E6177D9387005CEEA6 /* UIActionSheet+SFBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+SFBlocks.h"; sourceTree = "<group>"; };
+		F72687E7177D9387005CEEA6 /* UIAlertView+SFBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+SFBlocks.h"; sourceTree = "<group>"; };
+		F72687E8177D9387005CEEA6 /* UIBarButtonItem+SFAddtions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+SFAddtions.h"; sourceTree = "<group>"; };
+		F72687E9177D9387005CEEA6 /* UIDevice+SFHardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+SFHardware.h"; sourceTree = "<group>"; };
+		F72687EA177D9387005CEEA6 /* UILabel+SFAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+SFAdditions.h"; sourceTree = "<group>"; };
+		F72687EB177D9387005CEEA6 /* libSalesforceCommonUtils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSalesforceCommonUtils.a; sourceTree = "<group>"; };
+		F72687ED177D9387005CEEA6 /* libsqlcipher.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsqlcipher.a; sourceTree = "<group>"; };
+		F72687EE177D9387005CEEA6 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -535,6 +817,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7268581177D87C4005CEEA6 /* libz.dylib in Frameworks */,
+				F726857F177D8781005CEEA6 /* MessageUI.framework in Frameworks */,
 				840F6EA016E2052000BAF367 /* QuartzCore.framework in Frameworks */,
 				F4A8AF5A15C18B5E00D51071 /* CoreLocation.framework in Frameworks */,
 				F438D46D15A01563006ACD25 /* libxml2.dylib in Frameworks */,
@@ -546,10 +830,12 @@
 				F4D211FA159B297300610A18 /* CoreGraphics.framework in Frameworks */,
 				F4D211FC159B297300610A18 /* CFNetwork.framework in Frameworks */,
 				F4D211FE159B297300610A18 /* MobileCoreServices.framework in Frameworks */,
-				F438D46815A013DB006ACD25 /* libRestKit.a in Frameworks */,
-				F438D46915A013DB006ACD25 /* libSalesforceOAuth.a in Frameworks */,
-				F438D46A15A013DB006ACD25 /* libSalesforceSDK.a in Frameworks */,
-				F438D46B15A013DB006ACD25 /* libsbjson-ios.a in Frameworks */,
+				F726869B177D9295005CEEA6 /* ant-contrib-1.0b3.jar in Frameworks */,
+				F72687EF177D9387005CEEA6 /* libcrypto.a in Frameworks */,
+				F72687F0177D9387005CEEA6 /* libssl.a in Frameworks */,
+				F72687F3177D9387005CEEA6 /* libRestKit.a in Frameworks */,
+				F72687F5177D9387005CEEA6 /* libSalesforceCommonUtils.a in Frameworks */,
+				F72687F6177D9387005CEEA6 /* libsqlcipher.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -658,206 +944,6 @@
 			);
 			name = Images;
 			path = Resources/Images;
-			sourceTree = "<group>";
-		};
-		F438D3FA15A013DB006ACD25 /* dependencies */ = {
-			isa = PBXGroup;
-			children = (
-				F438D3FB15A013DB006ACD25 /* RestKit */,
-				F438D44F15A013DB006ACD25 /* SalesforceOAuth */,
-				F438D45515A013DB006ACD25 /* SalesforceSDK */,
-				F438D45B15A013DB006ACD25 /* SBJson */,
-			);
-			path = dependencies;
-			sourceTree = "<group>";
-		};
-		F438D3FB15A013DB006ACD25 /* RestKit */ = {
-			isa = PBXGroup;
-			children = (
-				F438D3FC15A013DB006ACD25 /* include */,
-				F438D44E15A013DB006ACD25 /* libRestKit.a */,
-			);
-			path = RestKit;
-			sourceTree = "<group>";
-		};
-		F438D3FC15A013DB006ACD25 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				F438D3FD15A013DB006ACD25 /* RestKit */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		F438D3FD15A013DB006ACD25 /* RestKit */ = {
-			isa = PBXGroup;
-			children = (
-				F438D3FE15A013DB006ACD25 /* CoreData.h */,
-				F438D3FF15A013DB006ACD25 /* Errors.h */,
-				F438D40015A013DB006ACD25 /* FileMD5Hash.h */,
-				F438D40115A013DB006ACD25 /* GCOAuth.h */,
-				F438D40215A013DB006ACD25 /* JSONKit.h */,
-				F438D40315A013DB006ACD25 /* lcl.h */,
-				F438D40415A013DB006ACD25 /* lcl_config_components.h */,
-				F438D40515A013DB006ACD25 /* lcl_config_components.template.h */,
-				F438D40615A013DB006ACD25 /* lcl_config_extensions.h */,
-				F438D40715A013DB006ACD25 /* lcl_config_extensions.template.h */,
-				F438D40815A013DB006ACD25 /* lcl_config_logger.h */,
-				F438D40915A013DB006ACD25 /* lcl_config_logger.template.h */,
-				F438D40A15A013DB006ACD25 /* LCLNSLog.h */,
-				F438D40B15A013DB006ACD25 /* Network.h */,
-				F438D40C15A013DB006ACD25 /* NSData+Base64.h */,
-				F438D40D15A013DB006ACD25 /* NSData+MD5.h */,
-				F438D40E15A013DB006ACD25 /* NSDictionary+RKAdditions.h */,
-				F438D40F15A013DB006ACD25 /* NSDictionary+RKRequestSerialization.h */,
-				F438D41015A013DB006ACD25 /* NSManagedObject+ActiveRecord.h */,
-				F438D41115A013DB006ACD25 /* NSString+MD5.h */,
-				F438D41215A013DB006ACD25 /* NSString+RestKit.h */,
-				F438D41315A013DB006ACD25 /* NSURL+RestKit.h */,
-				F438D41415A013DB006ACD25 /* ObjectMapping.h */,
-				F438D41515A013DB006ACD25 /* RestKit.h */,
-				F438D41615A013DB006ACD25 /* RKAlert.h */,
-				F438D41715A013DB006ACD25 /* RKClient.h */,
-				F438D41815A013DB006ACD25 /* RKDirectory.h */,
-				F438D41915A013DB006ACD25 /* RKDotNetDateFormatter.h */,
-				F438D41A15A013DB006ACD25 /* RKDynamicObjectMapping.h */,
-				F438D41B15A013DB006ACD25 /* RKErrorMessage.h */,
-				F438D41C15A013DB006ACD25 /* RKFixCategoryBug.h */,
-				F438D41D15A013DB006ACD25 /* RKJSONParserJSONKit.h */,
-				F438D41E15A013DB006ACD25 /* RKLog.h */,
-				F438D41F15A013DB006ACD25 /* RKManagedObjectCache.h */,
-				F438D42015A013DB006ACD25 /* RKManagedObjectLoader.h */,
-				F438D42115A013DB006ACD25 /* RKManagedObjectMapping.h */,
-				F438D42215A013DB006ACD25 /* RKManagedObjectMappingOperation.h */,
-				F438D42315A013DB006ACD25 /* RKManagedObjectSeeder.h */,
-				F438D42415A013DB006ACD25 /* RKManagedObjectStore.h */,
-				F438D42515A013DB006ACD25 /* RKManagedObjectThreadSafeInvocation.h */,
-				F438D42615A013DB006ACD25 /* RKMappingOperationQueue.h */,
-				F438D42715A013DB006ACD25 /* RKMIMETypes.h */,
-				F438D42815A013DB006ACD25 /* RKNotifications.h */,
-				F438D42915A013DB006ACD25 /* RKOAuthClient.h */,
-				F438D42A15A013DB006ACD25 /* RKObjectAttributeMapping.h */,
-				F438D42B15A013DB006ACD25 /* RKObjectLoader.h */,
-				F438D42C15A013DB006ACD25 /* RKObjectLoader_Internals.h */,
-				F438D42D15A013DB006ACD25 /* RKObjectManager.h */,
-				F438D42E15A013DB006ACD25 /* RKObjectMapper.h */,
-				F438D42F15A013DB006ACD25 /* RKObjectMapper_Private.h */,
-				F438D43015A013DB006ACD25 /* RKObjectMapperError.h */,
-				F438D43115A013DB006ACD25 /* RKObjectMapping.h */,
-				F438D43215A013DB006ACD25 /* RKObjectMappingDefinition.h */,
-				F438D43315A013DB006ACD25 /* RKObjectMappingOperation.h */,
-				F438D43415A013DB006ACD25 /* RKObjectMappingProvider.h */,
-				F438D43515A013DB006ACD25 /* RKObjectMappingResult.h */,
-				F438D43615A013DB006ACD25 /* RKObjectPropertyInspector+CoreData.h */,
-				F438D43715A013DB006ACD25 /* RKObjectPropertyInspector.h */,
-				F438D43815A013DB006ACD25 /* RKObjectRelationshipMapping.h */,
-				F438D43915A013DB006ACD25 /* RKObjectRouter.h */,
-				F438D43A15A013DB006ACD25 /* RKObjectSerializer.h */,
-				F438D43B15A013DB006ACD25 /* RKParams.h */,
-				F438D43C15A013DB006ACD25 /* RKParamsAttachment.h */,
-				F438D43D15A013DB006ACD25 /* RKParser.h */,
-				F438D43E15A013DB006ACD25 /* RKParserRegistry.h */,
-				F438D43F15A013DB006ACD25 /* RKPathMatcher.h */,
-				F438D44015A013DB006ACD25 /* RKReachabilityObserver.h */,
-				F438D44115A013DB006ACD25 /* RKRequest.h */,
-				F438D44215A013DB006ACD25 /* RKRequest_Internals.h */,
-				F438D44315A013DB006ACD25 /* RKRequestCache.h */,
-				F438D44415A013DB006ACD25 /* RKRequestQueue.h */,
-				F438D44515A013DB006ACD25 /* RKRequestSerializable.h */,
-				F438D44615A013DB006ACD25 /* RKRequestSerialization.h */,
-				F438D44715A013DB006ACD25 /* RKResponse.h */,
-				F438D44815A013DB006ACD25 /* RKRouter.h */,
-				F438D44915A013DB006ACD25 /* RKSearchEngine.h */,
-				F438D44A15A013DB006ACD25 /* RKURL.h */,
-				F438D44B15A013DB006ACD25 /* RKXMLParserLibXML.h */,
-				F438D44C15A013DB006ACD25 /* SOCKit.h */,
-				F438D44D15A013DB006ACD25 /* Support.h */,
-			);
-			path = RestKit;
-			sourceTree = "<group>";
-		};
-		F438D44F15A013DB006ACD25 /* SalesforceOAuth */ = {
-			isa = PBXGroup;
-			children = (
-				F438D45015A013DB006ACD25 /* include */,
-				F438D45415A013DB006ACD25 /* libSalesforceOAuth.a */,
-			);
-			path = SalesforceOAuth;
-			sourceTree = "<group>";
-		};
-		F438D45015A013DB006ACD25 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				F438D45115A013DB006ACD25 /* SalesforceOAuth */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		F438D45115A013DB006ACD25 /* SalesforceOAuth */ = {
-			isa = PBXGroup;
-			children = (
-				F438D45215A013DB006ACD25 /* SFOAuthCoordinator.h */,
-				F438D45315A013DB006ACD25 /* SFOAuthCredentials.h */,
-			);
-			path = SalesforceOAuth;
-			sourceTree = "<group>";
-		};
-		F438D45515A013DB006ACD25 /* SalesforceSDK */ = {
-			isa = PBXGroup;
-			children = (
-				F438D45615A013DB006ACD25 /* include */,
-				F438D45A15A013DB006ACD25 /* libSalesforceSDK.a */,
-			);
-			path = SalesforceSDK;
-			sourceTree = "<group>";
-		};
-		F438D45615A013DB006ACD25 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				F438D45715A013DB006ACD25 /* SalesforceSDK */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		F438D45715A013DB006ACD25 /* SalesforceSDK */ = {
-			isa = PBXGroup;
-			children = (
-				F438D45815A013DB006ACD25 /* SFRestAPI.h */,
-				F438D45915A013DB006ACD25 /* SFRestRequest.h */,
-			);
-			path = SalesforceSDK;
-			sourceTree = "<group>";
-		};
-		F438D45B15A013DB006ACD25 /* SBJson */ = {
-			isa = PBXGroup;
-			children = (
-				F438D45C15A013DB006ACD25 /* include */,
-				F438D46715A013DB006ACD25 /* libsbjson-ios.a */,
-			);
-			path = SBJson;
-			sourceTree = "<group>";
-		};
-		F438D45C15A013DB006ACD25 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				F438D45D15A013DB006ACD25 /* SBJson */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		F438D45D15A013DB006ACD25 /* SBJson */ = {
-			isa = PBXGroup;
-			children = (
-				F438D45E15A013DB006ACD25 /* NSObject+SBJson.h */,
-				F438D45F15A013DB006ACD25 /* SBJson.h */,
-				F438D46015A013DB006ACD25 /* SBJsonParser.h */,
-				F438D46115A013DB006ACD25 /* SBJsonStreamParser.h */,
-				F438D46215A013DB006ACD25 /* SBJsonStreamParserAccumulator.h */,
-				F438D46315A013DB006ACD25 /* SBJsonStreamParserAdapter.h */,
-				F438D46415A013DB006ACD25 /* SBJsonStreamWriter.h */,
-				F438D46515A013DB006ACD25 /* SBJsonStreamWriterAccumulator.h */,
-				F438D46615A013DB006ACD25 /* SBJsonWriter.h */,
-			);
-			path = SBJson;
 			sourceTree = "<group>";
 		};
 		F46C19F915A005B4008B8D50 /* evernote-sdk-ios */ = {
@@ -1022,6 +1108,8 @@
 		F4D211DF159B297300610A18 = {
 			isa = PBXGroup;
 			children = (
+				F7268580177D87C4005CEEA6 /* libz.dylib */,
+				F726857E177D8780005CEEA6 /* MessageUI.framework */,
 				F438D46C15A01563006ACD25 /* libxml2.dylib */,
 				F424255D159E19170038EA52 /* Entitlements.plist */,
 				F4D211FF159B297300610A18 /* Noteprise */,
@@ -1058,8 +1146,10 @@
 		F4D211FF159B297300610A18 /* Noteprise */ = {
 			isa = PBXGroup;
 			children = (
+				F726871B177D9387005CEEA6 /* dependencies */,
+				F72685B3177D9294005CEEA6 /* shared */,
+				F726859D177D9234005CEEA6 /* SalesforceNativeSDK */,
 				842855DA16FAEB87001746F8 /* SVProgressHUD */,
-				F438D3FA15A013DB006ACD25 /* dependencies */,
 				F4D21298159B297400610A18 /* Settings.bundle */,
 				F4D2126F159B297400610A18 /* Resources */,
 				F4D21284159B297400610A18 /* Classes */,
@@ -1116,6 +1206,9 @@
 		F4D21284159B297400610A18 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F7268582177D8CC7005CEEA6 /* InitialViewController.h */,
+				F7268583177D8CC8005CEEA6 /* InitialViewController.m */,
+				F7268584177D8CC8005CEEA6 /* InitialViewController.xib */,
 				F4D21285159B297400610A18 /* AppDelegate.h */,
 				F4D21286159B297400610A18 /* AppDelegate.m */,
 				F4D2132E159B2CBC00610A18 /* SignInViewController.h */,
@@ -1175,11 +1268,7 @@
 		F4D2128B159B297400610A18 /* NativeRestApp */ = {
 			isa = PBXGroup;
 			children = (
-				F4D2128C159B297400610A18 /* SFAuthorizingViewController.h */,
-				F4D2128D159B297400610A18 /* SFAuthorizingViewController.m */,
 				F4D2128F159B297400610A18 /* SFAuthorizingViewController.xib */,
-				F4D21291159B297400610A18 /* SFNativeRestAppDelegate.h */,
-				F4D21292159B297400610A18 /* SFNativeRestAppDelegate.m */,
 			);
 			name = NativeRestApp;
 			sourceTree = "<group>";
@@ -1190,6 +1279,591 @@
 				F46C19F915A005B4008B8D50 /* evernote-sdk-ios */,
 			);
 			path = EverNoteSpecific;
+			sourceTree = "<group>";
+		};
+		F726859D177D9234005CEEA6 /* SalesforceNativeSDK */ = {
+			isa = PBXGroup;
+			children = (
+				F726859E177D9234005CEEA6 /* Classes */,
+				F72685AC177D9234005CEEA6 /* SalesforceNativeSDK-Prefix.pch */,
+			);
+			path = SalesforceNativeSDK;
+			sourceTree = "<group>";
+		};
+		F726859E177D9234005CEEA6 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F726859F177D9234005CEEA6 /* RKRequestDelegateWrapper.h */,
+				F72685A0177D9234005CEEA6 /* RKRequestDelegateWrapper.m */,
+				F72685A1177D9234005CEEA6 /* SFRestAPI+Blocks.h */,
+				F72685A2177D9234005CEEA6 /* SFRestAPI+Blocks.m */,
+				F72685A3177D9234005CEEA6 /* SFRestAPI+Internal.h */,
+				F72685A4177D9234005CEEA6 /* SFRestAPI+QueryBuilder.h */,
+				F72685A5177D9234005CEEA6 /* SFRestAPI+QueryBuilder.m */,
+				F72685A6177D9234005CEEA6 /* SFRestAPI.h */,
+				F72685A7177D9234005CEEA6 /* SFRestAPI.m */,
+				F72685A8177D9234005CEEA6 /* SFRestRequest.h */,
+				F72685A9177D9234005CEEA6 /* SFRestRequest.m */,
+				F72685AA177D9234005CEEA6 /* SFSessionRefresher.h */,
+				F72685AB177D9234005CEEA6 /* SFSessionRefresher.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		F72685B3177D9294005CEEA6 /* shared */ = {
+			isa = PBXGroup;
+			children = (
+				F72685B4177D9294005CEEA6 /* common */,
+				F72685BD177D9294005CEEA6 /* resources */,
+				F72685BF177D9294005CEEA6 /* SalesforceOAuth */,
+				F726861B177D9295005CEEA6 /* SalesforceSDKCore */,
+				F7268699177D9295005CEEA6 /* test */,
+			);
+			path = shared;
+			sourceTree = "<group>";
+		};
+		F72685B4177D9294005CEEA6 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				F72685B5177D9294005CEEA6 /* build */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		F72685B5177D9294005CEEA6 /* build */ = {
+			isa = PBXGroup;
+			children = (
+				F72685B6177D9294005CEEA6 /* tools */,
+			);
+			path = build;
+			sourceTree = "<group>";
+		};
+		F72685B6177D9294005CEEA6 /* tools */ = {
+			isa = PBXGroup;
+			children = (
+				F72685B7177D9294005CEEA6 /* ant-contrib-1.0b3.jar */,
+				F72685B8177D9294005CEEA6 /* gcovr */,
+			);
+			path = tools;
+			sourceTree = "<group>";
+		};
+		F72685BD177D9294005CEEA6 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				F72685BE177D9294005CEEA6 /* SalesforceSDKResources.bundle */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
+		F72685BF177D9294005CEEA6 /* SalesforceOAuth */ = {
+			isa = PBXGroup;
+			children = (
+				F72685ED177D9295005CEEA6 /* SalesforceOAuth */,
+				F7268616177D9295005CEEA6 /* sfdc_build */,
+			);
+			path = SalesforceOAuth;
+			sourceTree = "<group>";
+		};
+		F72685ED177D9295005CEEA6 /* SalesforceOAuth */ = {
+			isa = PBXGroup;
+			children = (
+				F72685EE177D9295005CEEA6 /* Classes */,
+				F72685FF177D9295005CEEA6 /* SalesforceOAuth-Prefix.pch */,
+			);
+			path = SalesforceOAuth;
+			sourceTree = "<group>";
+		};
+		F72685EE177D9295005CEEA6 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F72685EF177D9295005CEEA6 /* Additions */,
+				F72685F4177D9295005CEEA6 /* SFOAuthCoordinator+Internal.h */,
+				F72685F5177D9295005CEEA6 /* SFOAuthCoordinator.h */,
+				F72685F6177D9295005CEEA6 /* SFOAuthCoordinator.m */,
+				F72685F7177D9295005CEEA6 /* SFOAuthCredentials+Internal.h */,
+				F72685F8177D9295005CEEA6 /* SFOAuthCredentials.h */,
+				F72685F9177D9295005CEEA6 /* SFOAuthCredentials.m */,
+				F72685FA177D9295005CEEA6 /* SFOAuthCrypto.h */,
+				F72685FB177D9295005CEEA6 /* SFOAuthCrypto.m */,
+				F72685FC177D9295005CEEA6 /* SFOAuthInfo+Internal.h */,
+				F72685FD177D9295005CEEA6 /* SFOAuthInfo.h */,
+				F72685FE177D9295005CEEA6 /* SFOAuthInfo.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		F72685EF177D9295005CEEA6 /* Additions */ = {
+			isa = PBXGroup;
+			children = (
+				F72685F0177D9295005CEEA6 /* SFOAuth_NSString+Additions.h */,
+				F72685F1177D9295005CEEA6 /* SFOAuth_NSString+Additions.m */,
+				F72685F2177D9295005CEEA6 /* SFOAuth_UIDevice+Hardware.h */,
+				F72685F3177D9295005CEEA6 /* SFOAuth_UIDevice+Hardware.m */,
+			);
+			path = Additions;
+			sourceTree = "<group>";
+		};
+		F7268616177D9295005CEEA6 /* sfdc_build */ = {
+			isa = PBXGroup;
+			children = (
+				F7268617177D9295005CEEA6 /* AppledocSettings-Docset.plist */,
+				F7268618177D9295005CEEA6 /* AppledocSettings-HTML.plist */,
+				F7268619177D9295005CEEA6 /* AppledocSettings.plist */,
+				F726861A177D9295005CEEA6 /* build.xml */,
+			);
+			path = sfdc_build;
+			sourceTree = "<group>";
+		};
+		F726861B177D9295005CEEA6 /* SalesforceSDKCore */ = {
+			isa = PBXGroup;
+			children = (
+				F726861C177D9295005CEEA6 /* SalesforceSDKCore */,
+			);
+			path = SalesforceSDKCore;
+			sourceTree = "<group>";
+		};
+		F726861C177D9295005CEEA6 /* SalesforceSDKCore */ = {
+			isa = PBXGroup;
+			children = (
+				F726861D177D9295005CEEA6 /* Classes */,
+				F7268671177D9295005CEEA6 /* SalesforceSDKCore-Prefix.pch */,
+			);
+			path = SalesforceSDKCore;
+			sourceTree = "<group>";
+		};
+		F726861D177D9295005CEEA6 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F726861E177D9295005CEEA6 /* Common */,
+				F7268624177D9295005CEEA6 /* Fmdb */,
+				F7268630177D9295005CEEA6 /* Identity */,
+				F7268636177D9295005CEEA6 /* Security */,
+				F726864E177D9295005CEEA6 /* SmartStore */,
+				F726865F177D9295005CEEA6 /* Test */,
+				F7268664177D9295005CEEA6 /* Util */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		F726861E177D9295005CEEA6 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				F726861F177D9295005CEEA6 /* SalesforceSDKConstants.h */,
+				F7268620177D9295005CEEA6 /* SFApplication.h */,
+				F7268621177D9295005CEEA6 /* SFApplication.m */,
+				F7268622177D9295005CEEA6 /* SFUserActivityMonitor.h */,
+				F7268623177D9295005CEEA6 /* SFUserActivityMonitor.m */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		F7268624177D9295005CEEA6 /* Fmdb */ = {
+			isa = PBXGroup;
+			children = (
+				F7268625177D9295005CEEA6 /* FMDatabase.h */,
+				F7268626177D9295005CEEA6 /* FMDatabase.m */,
+				F7268627177D9295005CEEA6 /* FMDatabaseAdditions.h */,
+				F7268628177D9295005CEEA6 /* FMDatabaseAdditions.m */,
+				F7268629177D9295005CEEA6 /* FMDatabasePool.h */,
+				F726862A177D9295005CEEA6 /* FMDatabasePool.m */,
+				F726862B177D9295005CEEA6 /* FMDatabaseQueue.h */,
+				F726862C177D9295005CEEA6 /* FMDatabaseQueue.m */,
+				F726862D177D9295005CEEA6 /* FMResultSet.h */,
+				F726862E177D9295005CEEA6 /* FMResultSet.m */,
+				F726862F177D9295005CEEA6 /* LICENSE.txt */,
+			);
+			path = Fmdb;
+			sourceTree = "<group>";
+		};
+		F7268630177D9295005CEEA6 /* Identity */ = {
+			isa = PBXGroup;
+			children = (
+				F7268631177D9295005CEEA6 /* SFIdentityCoordinator+Internal.h */,
+				F7268632177D9295005CEEA6 /* SFIdentityCoordinator.h */,
+				F7268633177D9295005CEEA6 /* SFIdentityCoordinator.m */,
+				F7268634177D9295005CEEA6 /* SFIdentityData.h */,
+				F7268635177D9295005CEEA6 /* SFIdentityData.m */,
+			);
+			path = Identity;
+			sourceTree = "<group>";
+		};
+		F7268636177D9295005CEEA6 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				F7268637177D9295005CEEA6 /* SFAccountManager.h */,
+				F7268638177D9295005CEEA6 /* SFAccountManager.m */,
+				F7268639177D9295005CEEA6 /* SFAuthenticationManager.h */,
+				F726863A177D9295005CEEA6 /* SFAuthenticationManager.m */,
+				F726863B177D9295005CEEA6 /* SFAuthorizingViewController.h */,
+				F726863C177D9295005CEEA6 /* SFAuthorizingViewController.m */,
+				F726863D177D9295005CEEA6 /* SFPasscodeManager+Internal.h */,
+				F726863E177D9295005CEEA6 /* SFPasscodeManager.h */,
+				F726863F177D9295005CEEA6 /* SFPasscodeManager.m */,
+				F7268640177D9295005CEEA6 /* SFPasscodeProviderManager+Internal.h */,
+				F7268641177D9295005CEEA6 /* SFPasscodeProviderManager.h */,
+				F7268642177D9295005CEEA6 /* SFPasscodeProviderManager.m */,
+				F7268643177D9295005CEEA6 /* SFPasscodeViewController.h */,
+				F7268644177D9295005CEEA6 /* SFPasscodeViewController.m */,
+				F7268645177D9295005CEEA6 /* SFPBKDF2PasscodeProvider.h */,
+				F7268646177D9295005CEEA6 /* SFPBKDF2PasscodeProvider.m */,
+				F7268647177D9295005CEEA6 /* SFPBKDFData.h */,
+				F7268648177D9295005CEEA6 /* SFPBKDFData.m */,
+				F7268649177D9295005CEEA6 /* SFSecurityLockout+Internal.h */,
+				F726864A177D9295005CEEA6 /* SFSecurityLockout.h */,
+				F726864B177D9295005CEEA6 /* SFSecurityLockout.m */,
+				F726864C177D9295005CEEA6 /* SFSHA256PasscodeProvider.h */,
+				F726864D177D9295005CEEA6 /* SFSHA256PasscodeProvider.m */,
+			);
+			path = Security;
+			sourceTree = "<group>";
+		};
+		F726864E177D9295005CEEA6 /* SmartStore */ = {
+			isa = PBXGroup;
+			children = (
+				F726864F177D9295005CEEA6 /* SFQuerySpec.h */,
+				F7268650177D9295005CEEA6 /* SFQuerySpec.m */,
+				F7268651177D9295005CEEA6 /* SFSmartSqlHelper.h */,
+				F7268652177D9295005CEEA6 /* SFSmartSqlHelper.m */,
+				F7268653177D9295005CEEA6 /* SFSmartStore+Internal.h */,
+				F7268654177D9295005CEEA6 /* SFSmartStore.h */,
+				F7268655177D9295005CEEA6 /* SFSmartStore.m */,
+				F7268656177D9295005CEEA6 /* SFSmartStoreDatabaseManager.h */,
+				F7268657177D9295005CEEA6 /* SFSmartStoreDatabaseManager.m */,
+				F7268658177D9295005CEEA6 /* SFSoupIndex.h */,
+				F7268659177D9295005CEEA6 /* SFSoupIndex.m */,
+				F726865A177D9295005CEEA6 /* SFStoreCursor.h */,
+				F726865B177D9295005CEEA6 /* SFStoreCursor.m */,
+				F726865C177D9295005CEEA6 /* sqlite */,
+			);
+			path = SmartStore;
+			sourceTree = "<group>";
+		};
+		F726865C177D9295005CEEA6 /* sqlite */ = {
+			isa = PBXGroup;
+			children = (
+				F726865D177D9295005CEEA6 /* SqliteAdditions.c */,
+				F726865E177D9295005CEEA6 /* SqliteAdditions.h */,
+			);
+			path = sqlite;
+			sourceTree = "<group>";
+		};
+		F726865F177D9295005CEEA6 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				F7268660177D9295005CEEA6 /* SFSDKTestRequestListener.h */,
+				F7268661177D9295005CEEA6 /* SFSDKTestRequestListener.m */,
+				F7268662177D9295005CEEA6 /* TestSetupUtils.h */,
+				F7268663177D9295005CEEA6 /* TestSetupUtils.m */,
+			);
+			path = Test;
+			sourceTree = "<group>";
+		};
+		F7268664177D9295005CEEA6 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				F7268665177D9295005CEEA6 /* NSURL+SFStringUtils.h */,
+				F7268666177D9295005CEEA6 /* NSURL+SFStringUtils.m */,
+				F7268667177D9295005CEEA6 /* SFJsonUtils.h */,
+				F7268668177D9295005CEEA6 /* SFJsonUtils.m */,
+				F7268669177D9295005CEEA6 /* SFRootViewManager.h */,
+				F726866A177D9295005CEEA6 /* SFRootViewManager.m */,
+				F726866B177D9295005CEEA6 /* SFSDKCryptoUtils.h */,
+				F726866C177D9295005CEEA6 /* SFSDKCryptoUtils.m */,
+				F726866D177D9295005CEEA6 /* SFSDKResourceUtils.h */,
+				F726866E177D9295005CEEA6 /* SFSDKResourceUtils.m */,
+				F726866F177D9295005CEEA6 /* SFSDKWebUtils.h */,
+				F7268670177D9295005CEEA6 /* SFSDKWebUtils.m */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		F7268699177D9295005CEEA6 /* test */ = {
+			isa = PBXGroup;
+			children = (
+				F726869A177D9295005CEEA6 /* test_credentials.json */,
+			);
+			path = test;
+			sourceTree = "<group>";
+		};
+		F726871B177D9387005CEEA6 /* dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				F726871C177D9387005CEEA6 /* openssl */,
+				F726876C177D9387005CEEA6 /* README.md */,
+				F726876D177D9387005CEEA6 /* RestKit */,
+				F72687C7177D9387005CEEA6 /* SalesforceCommonUtils */,
+				F72687EC177D9387005CEEA6 /* sqlcipher */,
+			);
+			path = dependencies;
+			sourceTree = "<group>";
+		};
+		F726871C177D9387005CEEA6 /* openssl */ = {
+			isa = PBXGroup;
+			children = (
+				F726871D177D9387005CEEA6 /* libcrypto.a */,
+				F726871E177D9387005CEEA6 /* libssl.a */,
+				F726871F177D9387005CEEA6 /* openssl */,
+				F726876B177D9387005CEEA6 /* openssl_license.txt */,
+			);
+			path = openssl;
+			sourceTree = "<group>";
+		};
+		F726871F177D9387005CEEA6 /* openssl */ = {
+			isa = PBXGroup;
+			children = (
+				F7268720177D9387005CEEA6 /* aes.h */,
+				F7268721177D9387005CEEA6 /* asn1.h */,
+				F7268722177D9387005CEEA6 /* asn1_mac.h */,
+				F7268723177D9387005CEEA6 /* asn1t.h */,
+				F7268724177D9387005CEEA6 /* bio.h */,
+				F7268725177D9387005CEEA6 /* blowfish.h */,
+				F7268726177D9387005CEEA6 /* bn.h */,
+				F7268727177D9387005CEEA6 /* buffer.h */,
+				F7268728177D9387005CEEA6 /* camellia.h */,
+				F7268729177D9387005CEEA6 /* cast.h */,
+				F726872A177D9387005CEEA6 /* cmac.h */,
+				F726872B177D9387005CEEA6 /* cms.h */,
+				F726872C177D9387005CEEA6 /* comp.h */,
+				F726872D177D9387005CEEA6 /* conf.h */,
+				F726872E177D9387005CEEA6 /* conf_api.h */,
+				F726872F177D9387005CEEA6 /* crypto.h */,
+				F7268730177D9387005CEEA6 /* des.h */,
+				F7268731177D9387005CEEA6 /* des_old.h */,
+				F7268732177D9387005CEEA6 /* dh.h */,
+				F7268733177D9387005CEEA6 /* dsa.h */,
+				F7268734177D9387005CEEA6 /* dso.h */,
+				F7268735177D9387005CEEA6 /* dtls1.h */,
+				F7268736177D9387005CEEA6 /* e_os2.h */,
+				F7268737177D9387005CEEA6 /* ebcdic.h */,
+				F7268738177D9387005CEEA6 /* ec.h */,
+				F7268739177D9387005CEEA6 /* ecdh.h */,
+				F726873A177D9387005CEEA6 /* ecdsa.h */,
+				F726873B177D9387005CEEA6 /* engine.h */,
+				F726873C177D9387005CEEA6 /* err.h */,
+				F726873D177D9387005CEEA6 /* evp.h */,
+				F726873E177D9387005CEEA6 /* hmac.h */,
+				F726873F177D9387005CEEA6 /* idea.h */,
+				F7268740177D9387005CEEA6 /* krb5_asn.h */,
+				F7268741177D9387005CEEA6 /* kssl.h */,
+				F7268742177D9387005CEEA6 /* lhash.h */,
+				F7268743177D9387005CEEA6 /* md4.h */,
+				F7268744177D9387005CEEA6 /* md5.h */,
+				F7268745177D9387005CEEA6 /* mdc2.h */,
+				F7268746177D9387005CEEA6 /* modes.h */,
+				F7268747177D9387005CEEA6 /* obj_mac.h */,
+				F7268748177D9387005CEEA6 /* objects.h */,
+				F7268749177D9387005CEEA6 /* ocsp.h */,
+				F726874A177D9387005CEEA6 /* opensslconf.h */,
+				F726874B177D9387005CEEA6 /* opensslv.h */,
+				F726874C177D9387005CEEA6 /* ossl_typ.h */,
+				F726874D177D9387005CEEA6 /* pem.h */,
+				F726874E177D9387005CEEA6 /* pem2.h */,
+				F726874F177D9387005CEEA6 /* pkcs12.h */,
+				F7268750177D9387005CEEA6 /* pkcs7.h */,
+				F7268751177D9387005CEEA6 /* pqueue.h */,
+				F7268752177D9387005CEEA6 /* rand.h */,
+				F7268753177D9387005CEEA6 /* rc2.h */,
+				F7268754177D9387005CEEA6 /* rc4.h */,
+				F7268755177D9387005CEEA6 /* ripemd.h */,
+				F7268756177D9387005CEEA6 /* rsa.h */,
+				F7268757177D9387005CEEA6 /* safestack.h */,
+				F7268758177D9387005CEEA6 /* seed.h */,
+				F7268759177D9387005CEEA6 /* sha.h */,
+				F726875A177D9387005CEEA6 /* srp.h */,
+				F726875B177D9387005CEEA6 /* srtp.h */,
+				F726875C177D9387005CEEA6 /* ssl.h */,
+				F726875D177D9387005CEEA6 /* ssl2.h */,
+				F726875E177D9387005CEEA6 /* ssl23.h */,
+				F726875F177D9387005CEEA6 /* ssl3.h */,
+				F7268760177D9387005CEEA6 /* stack.h */,
+				F7268761177D9387005CEEA6 /* symhacks.h */,
+				F7268762177D9387005CEEA6 /* tls1.h */,
+				F7268763177D9387005CEEA6 /* ts.h */,
+				F7268764177D9387005CEEA6 /* txt_db.h */,
+				F7268765177D9387005CEEA6 /* ui.h */,
+				F7268766177D9387005CEEA6 /* ui_compat.h */,
+				F7268767177D9387005CEEA6 /* whrlpool.h */,
+				F7268768177D9387005CEEA6 /* x509.h */,
+				F7268769177D9387005CEEA6 /* x509_vfy.h */,
+				F726876A177D9387005CEEA6 /* x509v3.h */,
+			);
+			path = openssl;
+			sourceTree = "<group>";
+		};
+		F726876D177D9387005CEEA6 /* RestKit */ = {
+			isa = PBXGroup;
+			children = (
+				F726876E177D9387005CEEA6 /* include */,
+				F72687C6177D9387005CEEA6 /* libRestKit.a */,
+			);
+			path = RestKit;
+			sourceTree = "<group>";
+		};
+		F726876E177D9387005CEEA6 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				F726876F177D9387005CEEA6 /* RestKit */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		F726876F177D9387005CEEA6 /* RestKit */ = {
+			isa = PBXGroup;
+			children = (
+				F7268770177D9387005CEEA6 /* CoreData.h */,
+				F7268771177D9387005CEEA6 /* Errors.h */,
+				F7268772177D9387005CEEA6 /* FileMD5Hash.h */,
+				F7268773177D9387005CEEA6 /* FileMD5Hash_Prefix.pch */,
+				F7268774177D9387005CEEA6 /* GCOAuth.h */,
+				F7268775177D9387005CEEA6 /* ISO8601DateFormatter.h */,
+				F7268776177D9387005CEEA6 /* JSONKit.h */,
+				F7268777177D9387005CEEA6 /* lcl.h */,
+				F7268778177D9387005CEEA6 /* lcl_config_components.h */,
+				F7268779177D9387005CEEA6 /* lcl_config_components.template.h */,
+				F726877A177D9387005CEEA6 /* lcl_config_extensions.h */,
+				F726877B177D9387005CEEA6 /* lcl_config_extensions.template.h */,
+				F726877C177D9387005CEEA6 /* lcl_config_logger.h */,
+				F726877D177D9387005CEEA6 /* lcl_config_logger.template.h */,
+				F726877E177D9387005CEEA6 /* LCLNSLog.h */,
+				F726877F177D9387005CEEA6 /* Network.h */,
+				F7268780177D9387005CEEA6 /* NSData+Base64.h */,
+				F7268781177D9387005CEEA6 /* NSData+MD5.h */,
+				F7268782177D9387005CEEA6 /* NSDictionary+RKAdditions.h */,
+				F7268783177D9387005CEEA6 /* NSDictionary+RKRequestSerialization.h */,
+				F7268784177D9387005CEEA6 /* NSManagedObject+ActiveRecord.h */,
+				F7268785177D9387005CEEA6 /* NSString+MD5.h */,
+				F7268786177D9387005CEEA6 /* NSString+RestKit.h */,
+				F7268787177D9387005CEEA6 /* NSURL+RestKit.h */,
+				F7268788177D9387005CEEA6 /* ObjectMapping.h */,
+				F7268789177D9387005CEEA6 /* RestKit-Prefix.pch */,
+				F726878A177D9387005CEEA6 /* RestKit.h */,
+				F726878B177D9387005CEEA6 /* RKAlert.h */,
+				F726878C177D9387005CEEA6 /* RKClient.h */,
+				F726878D177D9387005CEEA6 /* RKConfigurationDelegate.h */,
+				F726878E177D9387005CEEA6 /* RKDirectory.h */,
+				F726878F177D9387005CEEA6 /* RKDotNetDateFormatter.h */,
+				F7268790177D9387005CEEA6 /* RKDynamicObjectMapping.h */,
+				F7268791177D9387005CEEA6 /* RKErrorMessage.h */,
+				F7268792177D9387005CEEA6 /* RKFixCategoryBug.h */,
+				F7268793177D9387005CEEA6 /* RKJSONParserJSONKit.h */,
+				F7268794177D9387005CEEA6 /* RKLog.h */,
+				F7268795177D9387005CEEA6 /* RKManagedObjectCache.h */,
+				F7268796177D9387005CEEA6 /* RKManagedObjectLoader.h */,
+				F7268797177D9387005CEEA6 /* RKManagedObjectMapping.h */,
+				F7268798177D9387005CEEA6 /* RKManagedObjectMappingOperation.h */,
+				F7268799177D9387005CEEA6 /* RKManagedObjectSeeder.h */,
+				F726879A177D9387005CEEA6 /* RKManagedObjectStore.h */,
+				F726879B177D9387005CEEA6 /* RKManagedObjectThreadSafeInvocation.h */,
+				F726879C177D9387005CEEA6 /* RKMappingOperationQueue.h */,
+				F726879D177D9387005CEEA6 /* RKMIMETypes.h */,
+				F726879E177D9387005CEEA6 /* RKNotifications.h */,
+				F726879F177D9387005CEEA6 /* RKOAuthClient.h */,
+				F72687A0177D9387005CEEA6 /* RKObjectAttributeMapping.h */,
+				F72687A1177D9387005CEEA6 /* RKObjectLoader.h */,
+				F72687A2177D9387005CEEA6 /* RKObjectLoader_Internals.h */,
+				F72687A3177D9387005CEEA6 /* RKObjectManager.h */,
+				F72687A4177D9387005CEEA6 /* RKObjectMapper.h */,
+				F72687A5177D9387005CEEA6 /* RKObjectMapper_Private.h */,
+				F72687A6177D9387005CEEA6 /* RKObjectMapperError.h */,
+				F72687A7177D9387005CEEA6 /* RKObjectMapping.h */,
+				F72687A8177D9387005CEEA6 /* RKObjectMappingDefinition.h */,
+				F72687A9177D9387005CEEA6 /* RKObjectMappingOperation.h */,
+				F72687AA177D9387005CEEA6 /* RKObjectMappingProvider.h */,
+				F72687AB177D9387005CEEA6 /* RKObjectMappingResult.h */,
+				F72687AC177D9387005CEEA6 /* RKObjectPaginator.h */,
+				F72687AD177D9387005CEEA6 /* RKObjectPropertyInspector+CoreData.h */,
+				F72687AE177D9387005CEEA6 /* RKObjectPropertyInspector.h */,
+				F72687AF177D9387005CEEA6 /* RKObjectRelationshipMapping.h */,
+				F72687B0177D9387005CEEA6 /* RKObjectRouter.h */,
+				F72687B1177D9387005CEEA6 /* RKObjectSerializer.h */,
+				F72687B2177D9387005CEEA6 /* RKOrderedDictionary.h */,
+				F72687B3177D9387005CEEA6 /* RKParams.h */,
+				F72687B4177D9387005CEEA6 /* RKParamsAttachment.h */,
+				F72687B5177D9387005CEEA6 /* RKParser.h */,
+				F72687B6177D9387005CEEA6 /* RKParserRegistry.h */,
+				F72687B7177D9387005CEEA6 /* RKPathMatcher.h */,
+				F72687B8177D9387005CEEA6 /* RKReachabilityObserver.h */,
+				F72687B9177D9387005CEEA6 /* RKRequest.h */,
+				F72687BA177D9387005CEEA6 /* RKRequest_Internals.h */,
+				F72687BB177D9387005CEEA6 /* RKRequestCache.h */,
+				F72687BC177D9387005CEEA6 /* RKRequestQueue.h */,
+				F72687BD177D9387005CEEA6 /* RKRequestSerializable.h */,
+				F72687BE177D9387005CEEA6 /* RKRequestSerialization.h */,
+				F72687BF177D9387005CEEA6 /* RKResponse.h */,
+				F72687C0177D9387005CEEA6 /* RKRouter.h */,
+				F72687C1177D9387005CEEA6 /* RKSearchEngine.h */,
+				F72687C2177D9387005CEEA6 /* RKURL.h */,
+				F72687C3177D9387005CEEA6 /* RKXMLParserLibXML.h */,
+				F72687C4177D9387005CEEA6 /* SOCKit.h */,
+				F72687C5177D9387005CEEA6 /* Support.h */,
+			);
+			path = RestKit;
+			sourceTree = "<group>";
+		};
+		F72687C7177D9387005CEEA6 /* SalesforceCommonUtils */ = {
+			isa = PBXGroup;
+			children = (
+				F72687C8177D9387005CEEA6 /* commit.txt */,
+				F72687C9177D9387005CEEA6 /* Headers */,
+				F72687EB177D9387005CEEA6 /* libSalesforceCommonUtils.a */,
+			);
+			path = SalesforceCommonUtils;
+			sourceTree = "<group>";
+		};
+		F72687C9177D9387005CEEA6 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				F72687CA177D9387005CEEA6 /* SalesforceCommonUtils */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		F72687CA177D9387005CEEA6 /* SalesforceCommonUtils */ = {
+			isa = PBXGroup;
+			children = (
+				F72687CB177D9387005CEEA6 /* NSData+SFAdditions.h */,
+				F72687CC177D9387005CEEA6 /* NSDictionary+SFAdditions.h */,
+				F72687CD177D9387005CEEA6 /* NSMutableAttributedString+SFAdditions.h */,
+				F72687CE177D9387005CEEA6 /* NSObject+SFBlocks.h */,
+				F72687CF177D9387005CEEA6 /* NSString+SFAdditions.h */,
+				F72687D0177D9387005CEEA6 /* NSString+SFPathAdditions.h */,
+				F72687D1177D9387005CEEA6 /* NSURL+SFAdditions.h */,
+				F72687D2177D9387005CEEA6 /* SalesforceCommonUtils.h */,
+				F72687D3177D9387005CEEA6 /* SFCoverView.h */,
+				F72687D4177D9387005CEEA6 /* SFCrypto.h */,
+				F72687D5177D9387005CEEA6 /* SFDateUtil.h */,
+				F72687D6177D9387005CEEA6 /* SFDeviceInfo.h */,
+				F72687D7177D9387005CEEA6 /* SFEncryptionManager.h */,
+				F72687D8177D9387005CEEA6 /* SFGradientView.h */,
+				F72687D9177D9387005CEEA6 /* SFInactivityTimerCenter.h */,
+				F72687DA177D9387005CEEA6 /* SFKeychainItemWrapper.h */,
+				F72687DB177D9387005CEEA6 /* SFLogger.h */,
+				F72687DC177D9387005CEEA6 /* SFMD5.h */,
+				F72687DD177D9387005CEEA6 /* SFPadPickListViewController.h */,
+				F72687DE177D9387005CEEA6 /* SFPathUtil.h */,
+				F72687DF177D9387005CEEA6 /* SFPhonePickListViewController.h */,
+				F72687E0177D9387005CEEA6 /* SFPickListViewController.h */,
+				F72687E1177D9387005CEEA6 /* SFSoqlBuilder.h */,
+				F72687E2177D9387005CEEA6 /* SFSoslBuilder.h */,
+				F72687E3177D9387005CEEA6 /* SFSoslReturningBuilder.h */,
+				F72687E4177D9387005CEEA6 /* SFTestContext.h */,
+				F72687E5177D9387005CEEA6 /* SFUIUtils.h */,
+				F72687E6177D9387005CEEA6 /* UIActionSheet+SFBlocks.h */,
+				F72687E7177D9387005CEEA6 /* UIAlertView+SFBlocks.h */,
+				F72687E8177D9387005CEEA6 /* UIBarButtonItem+SFAddtions.h */,
+				F72687E9177D9387005CEEA6 /* UIDevice+SFHardware.h */,
+				F72687EA177D9387005CEEA6 /* UILabel+SFAdditions.h */,
+			);
+			path = SalesforceCommonUtils;
+			sourceTree = "<group>";
+		};
+		F72687EC177D9387005CEEA6 /* sqlcipher */ = {
+			isa = PBXGroup;
+			children = (
+				F72687ED177D9387005CEEA6 /* libsqlcipher.a */,
+				F72687EE177D9387005CEEA6 /* LICENSE */,
+			);
+			path = sqlcipher;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1352,6 +2026,19 @@
 				841E1F99170ADB23000C5C94 /* image4.jpg in Resources */,
 				841E1F9A170ADB23000C5C94 /* image5.jpg in Resources */,
 				841E1F9C170AEB58000C5C94 /* LoginButton.png in Resources */,
+				F7268586177D8CC8005CEEA6 /* InitialViewController.xib in Resources */,
+				F726869C177D9295005CEEA6 /* gcovr in Resources */,
+				F72686A0177D9295005CEEA6 /* SalesforceSDKResources.bundle in Resources */,
+				F72686CE177D9295005CEEA6 /* AppledocSettings-Docset.plist in Resources */,
+				F72686CF177D9295005CEEA6 /* AppledocSettings-HTML.plist in Resources */,
+				F72686D0177D9295005CEEA6 /* AppledocSettings.plist in Resources */,
+				F72686D1177D9295005CEEA6 /* build.xml in Resources */,
+				F72686D9177D9295005CEEA6 /* LICENSE.txt in Resources */,
+				F7268708177D9295005CEEA6 /* test_credentials.json in Resources */,
+				F72687F1177D9387005CEEA6 /* openssl_license.txt in Resources */,
+				F72687F2177D9387005CEEA6 /* README.md in Resources */,
+				F72687F4177D9387005CEEA6 /* commit.txt in Resources */,
+				F72687F7177D9387005CEEA6 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1365,8 +2052,6 @@
 				F4D21206159B297300610A18 /* main.m in Sources */,
 				F4D21287159B297400610A18 /* AppDelegate.m in Sources */,
 				F4D2128A159B297400610A18 /* RootViewController.m in Sources */,
-				F4D2128E159B297400610A18 /* SFAuthorizingViewController.m in Sources */,
-				F4D21293159B297400610A18 /* SFNativeRestAppDelegate.m in Sources */,
 				F4D21332159B2CBC00610A18 /* AddNoteViewController.m in Sources */,
 				F4D21333159B2CBC00610A18 /* FieldsViewController.m in Sources */,
 				F4D21335159B2CBC00610A18 /* NotesListViewController.m in Sources */,
@@ -1415,6 +2100,53 @@
 				84169C5E16DB8EED00B99256 /* InfoViewController.m in Sources */,
 				840D379016E7548B0068F0D8 /* ProgressIndicatorView.m in Sources */,
 				842855DF16FAEB87001746F8 /* SVProgressHUD.m in Sources */,
+				F7268585177D8CC8005CEEA6 /* InitialViewController.m in Sources */,
+				F72685AD177D9234005CEEA6 /* RKRequestDelegateWrapper.m in Sources */,
+				F72685AE177D9234005CEEA6 /* SFRestAPI+Blocks.m in Sources */,
+				F72685AF177D9234005CEEA6 /* SFRestAPI+QueryBuilder.m in Sources */,
+				F72685B0177D9234005CEEA6 /* SFRestAPI.m in Sources */,
+				F72685B1177D9234005CEEA6 /* SFRestRequest.m in Sources */,
+				F72685B2177D9234005CEEA6 /* SFSessionRefresher.m in Sources */,
+				F72686C0177D9295005CEEA6 /* SFOAuth_NSString+Additions.m in Sources */,
+				F72686C1177D9295005CEEA6 /* SFOAuth_UIDevice+Hardware.m in Sources */,
+				F72686C2177D9295005CEEA6 /* SFOAuthCoordinator.m in Sources */,
+				F72686C3177D9295005CEEA6 /* SFOAuthCredentials.m in Sources */,
+				F72686C4177D9295005CEEA6 /* SFOAuthCrypto.m in Sources */,
+				F72686C5177D9295005CEEA6 /* SFOAuthInfo.m in Sources */,
+				F72686D2177D9295005CEEA6 /* SFApplication.m in Sources */,
+				F72686D3177D9295005CEEA6 /* SFUserActivityMonitor.m in Sources */,
+				F72686D4177D9295005CEEA6 /* FMDatabase.m in Sources */,
+				F72686D5177D9295005CEEA6 /* FMDatabaseAdditions.m in Sources */,
+				F72686D6177D9295005CEEA6 /* FMDatabasePool.m in Sources */,
+				F72686D7177D9295005CEEA6 /* FMDatabaseQueue.m in Sources */,
+				F72686D8177D9295005CEEA6 /* FMResultSet.m in Sources */,
+				F72686DA177D9295005CEEA6 /* SFIdentityCoordinator.m in Sources */,
+				F72686DB177D9295005CEEA6 /* SFIdentityData.m in Sources */,
+				F72686DC177D9295005CEEA6 /* SFAccountManager.m in Sources */,
+				F72686DD177D9295005CEEA6 /* SFAuthenticationManager.m in Sources */,
+				F72686DE177D9295005CEEA6 /* SFAuthorizingViewController.m in Sources */,
+				F72686DF177D9295005CEEA6 /* SFPasscodeManager.m in Sources */,
+				F72686E0177D9295005CEEA6 /* SFPasscodeProviderManager.m in Sources */,
+				F72686E1177D9295005CEEA6 /* SFPasscodeViewController.m in Sources */,
+				F72686E2177D9295005CEEA6 /* SFPBKDF2PasscodeProvider.m in Sources */,
+				F72686E3177D9295005CEEA6 /* SFPBKDFData.m in Sources */,
+				F72686E4177D9295005CEEA6 /* SFSecurityLockout.m in Sources */,
+				F72686E5177D9295005CEEA6 /* SFSHA256PasscodeProvider.m in Sources */,
+				F72686E6177D9295005CEEA6 /* SFQuerySpec.m in Sources */,
+				F72686E7177D9295005CEEA6 /* SFSmartSqlHelper.m in Sources */,
+				F72686E8177D9295005CEEA6 /* SFSmartStore.m in Sources */,
+				F72686E9177D9295005CEEA6 /* SFSmartStoreDatabaseManager.m in Sources */,
+				F72686EA177D9295005CEEA6 /* SFSoupIndex.m in Sources */,
+				F72686EB177D9295005CEEA6 /* SFStoreCursor.m in Sources */,
+				F72686EC177D9295005CEEA6 /* SqliteAdditions.c in Sources */,
+				F72686ED177D9295005CEEA6 /* SFSDKTestRequestListener.m in Sources */,
+				F72686EE177D9295005CEEA6 /* TestSetupUtils.m in Sources */,
+				F72686EF177D9295005CEEA6 /* NSURL+SFStringUtils.m in Sources */,
+				F72686F0177D9295005CEEA6 /* SFJsonUtils.m in Sources */,
+				F72686F1177D9295005CEEA6 /* SFRootViewManager.m in Sources */,
+				F72686F2177D9295005CEEA6 /* SFSDKCryptoUtils.m in Sources */,
+				F72686F3177D9295005CEEA6 /* SFSDKResourceUtils.m in Sources */,
+				F72686F4177D9295005CEEA6 /* SFSDKWebUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1478,10 +2210,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Noteprise/dependencies/RestKit\"",
-					"\"$(SRCROOT)/Noteprise/dependencies/SalesforceOAuth\"",
-					"\"$(SRCROOT)/Noteprise/dependencies/SalesforceSDK\"",
-					"\"$(SRCROOT)/Noteprise/dependencies/SBJson\"",
 					"\"$(SDKROOT)//usr/lib\"",
+					"\"$(SRCROOT)/Noteprise/dependencies/openssl\"",
+					"\"$(SRCROOT)/Noteprise/dependencies/SalesforceCommonUtils/Libraries\"",
+					"\"$(SRCROOT)/Noteprise/dependencies/sqlcipher\"",
+					"\"$(SRCROOT)/Noteprise/dependencies/SalesforceCommonUtils\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "6FEB30E1-3415-4776-BB39-BA4ABFC23C78";
@@ -1560,10 +2293,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Noteprise/dependencies/RestKit\"",
-					"\"$(SRCROOT)/Noteprise/dependencies/SalesforceOAuth\"",
-					"\"$(SRCROOT)/Noteprise/dependencies/SalesforceSDK\"",
-					"\"$(SRCROOT)/Noteprise/dependencies/SBJson\"",
 					"\"$(SDKROOT)//usr/lib\"",
+					"\"$(SRCROOT)/Noteprise/dependencies/openssl\"",
+					"\"$(SRCROOT)/Noteprise/dependencies/SalesforceCommonUtils/Libraries\"",
+					"\"$(SRCROOT)/Noteprise/dependencies/sqlcipher\"",
+					"\"$(SRCROOT)/Noteprise/dependencies/SalesforceCommonUtils\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "6FEB30E1-3415-4776-BB39-BA4ABFC23C78";
@@ -1582,10 +2316,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Noteprise/dependencies/RestKit\"",
-					"\"$(SRCROOT)/Noteprise/dependencies/SalesforceOAuth\"",
-					"\"$(SRCROOT)/Noteprise/dependencies/SalesforceSDK\"",
-					"\"$(SRCROOT)/Noteprise/dependencies/SBJson\"",
 					"\"$(SDKROOT)//usr/lib\"",
+					"\"$(SRCROOT)/Noteprise/dependencies/openssl\"",
+					"\"$(SRCROOT)/Noteprise/dependencies/SalesforceCommonUtils/Libraries\"",
+					"\"$(SRCROOT)/Noteprise/dependencies/sqlcipher\"",
+					"\"$(SRCROOT)/Noteprise/dependencies/SalesforceCommonUtils\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8C28877D-1BEC-4C1E-A77C-91AF569D00B8";

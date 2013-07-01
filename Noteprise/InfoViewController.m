@@ -7,7 +7,6 @@
 //
 
 #import "InfoViewController.h"
-#import "SFNativeRestAppDelegate.h"
 
 @interface InfoViewController ()
 
@@ -30,12 +29,12 @@
     
     self.title = @"About Me";
     
-    NSString * userName = [((SFNativeRestAppDelegate *)[[UIApplication sharedApplication]delegate]) userName];
+   /*NSString * userName = [((SFNativeRestAppDelegate *)[[UIApplication sharedApplication]delegate]) userName];
     
     if(userName != nil && ![userName isEqualToString:@""])
     {
         self.userNameLabel.text = userName;
-    }
+    }*/
 }
 
 - (void)didReceiveMemoryWarning
